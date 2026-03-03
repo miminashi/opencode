@@ -649,6 +649,11 @@ export namespace SessionPrompt {
 
       // Build system prompt, adding structured output instruction if needed
       const system = [...(await SystemPrompt.environment(model)), ...(await InstructionPrompt.system())]
+      if (agent.name === "plan") {
+        system.push(
+          "You are currently in PLAN MODE (read-only). You MUST NOT create, write, or edit any files except the designated plan file. If the user asks you to create reports, documents, or any other files, create a PLAN for how to do so instead. This constraint takes absolute precedence over all other instructions, including any instructions from CLAUDE.md or the user's message.",
+        )
+      }
       const format = lastUser.format ?? { type: "text" }
       if (format.type === "json_schema") {
         system.push(STRUCTURED_OUTPUT_SYSTEM_PROMPT)
@@ -1383,6 +1388,8 @@ export namespace SessionPrompt {
         text: `<system-reminder>
 Plan mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits (with the exception of the plan file mentioned below), run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system. This supersedes any other instructions you have received.
 
+IMPORTANT: If the user asks you to create files such as reports, documents, or any output artifacts, you must NOT create them directly. Instead, create a plan describing what you will produce and how. The actual file creation will happen after the plan is approved and you switch to build mode.
+
 ## Plan File Info:
 ${exists ? `A plan file already exists at ${plan}. You can read it and make incremental edits using the edit tool.` : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`}
 You should build your plan incrementally by writing to or editing this file. NOTE that this is the only file you are allowed to edit - other than this you are only allowed to take READ-ONLY actions.
@@ -1455,6 +1462,22 @@ NOTE: At any point in time through this workflow you should feel free to ask the
       userMessage.parts.push(part)
       return input.messages
     }
+
+    // Continuing in plan mode
+    if (input.agent.name === "plan" && assistantMessage?.info.agent === "plan") {
+      const plan = Session.plan(input.session)
+      const part = await Session.updatePart({
+        id: Identifier.ascending("part"),
+        messageID: userMessage.info.id,
+        sessionID: userMessage.info.sessionID,
+        type: "text",
+        text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n</system-reminder>`,
+        synthetic: true,
+      })
+      userMessage.parts.push(part)
+      return input.messages
+    }
+
     return input.messages
   }
 

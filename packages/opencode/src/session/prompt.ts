@@ -650,8 +650,9 @@ export namespace SessionPrompt {
       // Build system prompt, adding structured output instruction if needed
       const system = [...(await SystemPrompt.environment(model)), ...(await InstructionPrompt.system())]
       if (agent.name === "plan") {
+        const plan = Session.plan(session)
         system.push(
-          "You are currently in PLAN MODE (read-only). You MUST NOT create, write, or edit any files except the designated plan file. If the user asks you to create reports, documents, or any other files, create a PLAN for how to do so instead. This constraint takes absolute precedence over all other instructions, including any instructions from CLAUDE.md or the user's message.",
+          `You are currently in PLAN MODE (read-only). You MUST NOT create, write, or edit any files except the designated plan file at ${plan}. If the user asks you to create reports, documents, or any other files, create a PLAN for how to do so instead. When you are done planning, call the plan_exit tool. This constraint takes absolute precedence over all other instructions, including any instructions from CLAUDE.md or the user's message.`,
         )
       }
       const format = lastUser.format ?? { type: "text" }
@@ -1330,23 +1331,54 @@ export namespace SessionPrompt {
     // Original logic when experimental plan mode is disabled
     if (!Flag.OPENCODE_EXPERIMENTAL_PLAN_MODE) {
       if (input.agent.name === "plan") {
-        userMessage.parts.push({
-          id: Identifier.ascending("part"),
-          messageID: userMessage.info.id,
-          sessionID: userMessage.info.sessionID,
-          type: "text",
-          text: PROMPT_PLAN,
-          synthetic: true,
-        })
+        const plan = Session.plan(input.session)
+        const exists = await Filesystem.exists(plan)
+        if (!exists) await fs.mkdir(path.dirname(plan), { recursive: true })
+
+        const assistantMessage = input.messages.findLast((msg) => msg.info.role === "assistant")
+        const isContinuation = assistantMessage?.info.agent === "plan"
+
+        if (isContinuation) {
+          userMessage.parts.push({
+            id: Identifier.ascending("part"),
+            messageID: userMessage.info.id,
+            sessionID: userMessage.info.sessionID,
+            type: "text",
+            text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n</system-reminder>`,
+            synthetic: true,
+          })
+        } else {
+          userMessage.parts.push({
+            id: Identifier.ascending("part"),
+            messageID: userMessage.info.id,
+            sessionID: userMessage.info.sessionID,
+            type: "text",
+            text:
+              PROMPT_PLAN +
+              `\n\n## Plan File\n\n` +
+              (exists
+                ? `A plan file already exists at ${plan}. You can read it and make incremental edits using the edit tool.`
+                : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`) +
+              ` This is the only file you are allowed to edit.\n\n` +
+              `## Completing the Plan\n\n` +
+              `When you have finished writing the plan and clarified any questions with the user, you MUST call the plan_exit tool to signal that planning is complete. ` +
+              `Do not stop your turn without either asking the user a question or calling plan_exit.\n`,
+            synthetic: true,
+          })
+        }
       }
       const wasPlan = input.messages.some((msg) => msg.info.role === "assistant" && msg.info.agent === "plan")
       if (wasPlan && input.agent.name === "build") {
+        const plan = Session.plan(input.session)
+        const exists = await Filesystem.exists(plan)
         userMessage.parts.push({
           id: Identifier.ascending("part"),
           messageID: userMessage.info.id,
           sessionID: userMessage.info.sessionID,
           type: "text",
-          text: BUILD_SWITCH,
+          text:
+            BUILD_SWITCH +
+            (exists ? `\n\nA plan file exists at ${plan}. You should read it and execute the plan defined within it.` : ""),
           synthetic: true,
         })
       }

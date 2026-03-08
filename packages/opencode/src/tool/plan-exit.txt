@@ -4,10 +4,12 @@ This tool will ask the user if they want to switch to build agent to start imple
 
 Call this tool:
 - After you have written a complete plan to the plan file
+- After you have presented the plan content to the user in the conversation
 - After you have clarified any questions with the user
 - When you are confident the plan is ready for implementation
 
 Do NOT call this tool:
 - Before you have created or finalized the plan
+- Before you have output the plan content as text in the conversation
 - If you still have unanswered questions about the implementation
 - If the user has indicated they want to continue planning

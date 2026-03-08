@@ -64,6 +64,8 @@ upstream からの fork 後に適用したバグ修正・改善の一覧。
 | migration name フィールド修正 | drizzle-orm 1.0.0-beta.16 で必要な `name` フィールドをバンドル済みマイグレーションに含めるよう修正 | `packages/opencode/script/build.ts` |
 | OSC52 クリップボード (tmux 対応) | tmux 環境で DCS passthrough 形式の OSC52 シーケンスを送出し、クリップボードコピーを動作させる | `packages/opencode/src/cli/cmd/tui/util/clipboard.ts` |
 | spinner コンポーネント登録 | サイドエフェクトインポートを明示的な `extend()` 呼び出しに置換し、Bun バンドラーの初期化順序に依存しないようにする | `packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx` |
+| plan モード新規/既存タスク判別 | 既存プランがある場合に新規タスクか既存タスクの修正かを評価し、新規タスクなら上書きするよう指示を追加 | `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/tool/plan-exit.txt` |
+| plan モード実行リクエスト対応 | 「実行してください」等の実行リクエスト時に read-only 拒否せず `plan_exit` で build モードに切り替えるよう指示を追加 | `packages/opencode/src/session/prompt.ts` |
 
 ---
 

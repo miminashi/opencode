@@ -22,6 +22,29 @@ function writeOsc52(text: string): void {
   process.stdout.write(sequence)
 }
 
+export interface OscCopier {
+  copyToClipboardOSC52(text: string): boolean
+  rendererPtr?: unknown
+  lib?: { writeOut(renderer: unknown, data: string | Uint8Array): void }
+}
+
+function writeOsc52ViaRenderer(renderer: OscCopier, text: string): boolean {
+  try {
+    const r = renderer as any
+    const lib = r.lib
+    const ptr = r.rendererPtr
+    if (!lib || !ptr || typeof lib.writeOut !== "function") return false
+    const base64 = Buffer.from(text).toString("base64")
+    const osc52 = `\x1b]52;c;${base64}\x07`
+    const tmux = process.env["TMUX"] || process.env["STY"]
+    const sequence = tmux ? `\x1bPtmux;\x1b${osc52}\x1b\\` : osc52
+    lib.writeOut(ptr, sequence)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export namespace Clipboard {
   export interface Content {
     data: string
@@ -158,8 +181,20 @@ export namespace Clipboard {
     }
   })
 
-  export async function copy(text: string): Promise<void> {
-    writeOsc52(text)
+  export async function copy(text: string, renderer?: OscCopier): Promise<void> {
+    const inTmux = !!(process.env["TMUX"] || process.env["STY"])
+    let oscSent = false
+    if (renderer && inTmux) {
+      // In tmux: use DCS passthrough via Zig writeOut (same thread, no interleave)
+      // Native copyToClipboardOSC52 sends raw OSC52 which tmux may not forward
+      oscSent = writeOsc52ViaRenderer(renderer, text)
+    }
+    if (!oscSent && renderer) {
+      oscSent = renderer.copyToClipboardOSC52(text)
+    }
+    if (!oscSent) {
+      writeOsc52(text)
+    }
     await getCopyMethod()(text)
   }
 }

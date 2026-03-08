@@ -363,7 +363,7 @@ export function Session() {
       },
       onSelect: async (dialog) => {
         const copy = (url: string) =>
-          Clipboard.copy(url)
+          Clipboard.copy(url, renderer)
             .then(() => toast.show({ message: "Share URL copied to clipboard!", variant: "success" }))
             .catch(() => toast.show({ message: "Failed to copy URL to clipboard", variant: "error" }))
         const url = session()?.share?.url
@@ -811,7 +811,7 @@ export function Session() {
           return
         }
 
-        Clipboard.copy(text)
+        Clipboard.copy(text, renderer)
           .then(() => toast.show({ message: "Message copied to clipboard!", variant: "success" }))
           .catch(() => toast.show({ message: "Failed to copy to clipboard", variant: "error" }))
         dialog.clear()
@@ -838,7 +838,7 @@ export function Session() {
               assistantMetadata: showAssistantMetadata(),
             },
           )
-          await Clipboard.copy(transcript)
+          await Clipboard.copy(transcript, renderer)
           toast.show({ message: "Session transcript copied to clipboard!", variant: "success" })
         } catch (error) {
           toast.show({ message: "Failed to copy session transcript", variant: "error" })

@@ -249,7 +249,7 @@ function App() {
   renderer.console.onCopySelection = async (text: string) => {
     if (!text || text.length === 0) return
 
-    await Clipboard.copy(text)
+    await Clipboard.copy(text, renderer)
       .then(() => toast.show({ message: "Copied to clipboard", variant: "info" }))
       .catch(toast.error)
 

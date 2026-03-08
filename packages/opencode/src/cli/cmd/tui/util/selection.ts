@@ -1,11 +1,11 @@
-import { Clipboard } from "./clipboard"
+import { Clipboard, type OscCopier } from "./clipboard"
 
 type Toast = {
   show: (input: { message: string; variant: "info" | "success" | "warning" | "error" }) => void
   error: (err: unknown) => void
 }
 
-type Renderer = {
+type Renderer = OscCopier & {
   getSelection: () => { getSelectedText: () => string } | null
   clearSelection: () => void
 }
@@ -15,7 +15,7 @@ export namespace Selection {
     const text = renderer.getSelection()?.getSelectedText()
     if (!text) return false
 
-    Clipboard.copy(text)
+    Clipboard.copy(text, renderer)
       .then(() => toast.show({ message: "Copied to clipboard", variant: "info" }))
       .catch(toast.error)
 

@@ -78,6 +78,13 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 （結果や得られた知見を記載）
 ```
 
+## ビルド & 型チェック
+
+- ビルド: `cd packages/opencode && bun run build --single`
+- 型チェック: `cd packages/opencode && bunx tsgo --noEmit`
+- ビルド（`bun run build`）はトランスパイルのみで型チェックを行わない。コード修正後は `tsgo --noEmit` で型エラーがないことを確認すること
+- pre-push フックが `bun typecheck`（= `tsgo --noEmit`）を実行するため、型エラーがあると push できない
+
 ## ワークツリー運用ルール
 
 1. **コードの修正を行うときは、必ずワークツリーを作成して作業する**

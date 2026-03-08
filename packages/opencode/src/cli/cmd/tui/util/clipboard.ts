@@ -24,8 +24,6 @@ function writeOsc52(text: string): void {
 
 export interface OscCopier {
   copyToClipboardOSC52(text: string): boolean
-  rendererPtr?: unknown
-  lib?: { writeOut(renderer: unknown, data: string | Uint8Array): void }
 }
 
 function writeOsc52ViaRenderer(renderer: OscCopier, text: string): boolean {

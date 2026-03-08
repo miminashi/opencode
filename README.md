@@ -48,6 +48,7 @@
 ```bash
 cd packages/opencode
 bun run build --single
+bunx tsgo --noEmit          # 型チェック（ビルドでは型検査されないため手動で実施）
 OPENCODE_EXPERIMENTAL_PLAN_MODE=1 /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
 ```
 

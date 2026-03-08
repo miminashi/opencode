@@ -43,6 +43,29 @@
 
 ---
 
+### 手動ビルド & 実行（plan mode 有効）
+
+```bash
+cd packages/opencode
+bun run build --single
+OPENCODE_EXPERIMENTAL_PLAN_MODE=1 /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
+```
+
+### このフォークでの変更点
+
+upstream からの fork 後に適用したバグ修正・改善の一覧。
+
+| 修正 | 概要 | 対象ファイル |
+|---|---|---|
+| plan_exit ツール登録修正 | `OPENCODE_EXPERIMENTAL_PLAN_MODE` フラグなしでも `plan_exit` ツールが登録されるよう条件を変更 | `packages/opencode/src/tool/registry.ts` |
+| plan モードプロンプト強化 | 非実験モードでも plan ファイルパスや `plan_exit` 呼び出し指示を LLM に渡すよう修正 | `packages/opencode/src/session/prompt.ts` |
+| plan モードファイル作成制限 | plan モード中に LLM がファイルを直接作成しないよう、システムプロンプトとリマインダーに制約を追加 | `packages/opencode/src/session/prompt.ts` |
+| migration name フィールド修正 | drizzle-orm 1.0.0-beta.16 で必要な `name` フィールドをバンドル済みマイグレーションに含めるよう修正 | `packages/opencode/script/build.ts` |
+| OSC52 クリップボード (tmux 対応) | tmux 環境で DCS passthrough 形式の OSC52 シーケンスを送出し、クリップボードコピーを動作させる | `packages/opencode/src/cli/cmd/tui/util/clipboard.ts` |
+| spinner コンポーネント登録 | サイドエフェクトインポートを明示的な `extend()` 呼び出しに置換し、Bun バンドラーの初期化順序に依存しないようにする | `packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx` |
+
+---
+
 ### Installation
 
 ```bash

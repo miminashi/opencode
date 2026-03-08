@@ -1346,7 +1346,7 @@ export namespace SessionPrompt {
             messageID: userMessage.info.id,
             sessionID: userMessage.info.sessionID,
             type: "text",
-            text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n</system-reminder>`,
+            text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "実行してください", "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
             synthetic: true,
           })
         } else {
@@ -1359,11 +1359,13 @@ export namespace SessionPrompt {
               PROMPT_PLAN +
               `\n\n## Plan File\n\n` +
               (exists
-                ? `A plan file already exists at ${plan}. You can read it and make incremental edits using the edit tool.`
+                ? `A plan file already exists at ${plan} from a previous planning session.\n\n**Before proceeding, you MUST evaluate** whether the user's current request relates to the existing plan or is a completely new/different task:\n- If the user's request is a MODIFICATION or REFINEMENT of the existing plan: read the existing plan and make incremental edits using the edit tool.\n- If the user's request is a NEW TASK unrelated to the existing plan: overwrite the plan file with a completely fresh plan using the write tool. Do NOT try to incorporate or append to the old plan.\n\nRead the existing plan file first to make this determination.`
                 : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`) +
               ` This is the only file you are allowed to edit.\n\n` +
+              `## Execution-Only Requests\n\n` +
+              `If the user's request is purely about EXECUTING something (running tests, running commands, deploying, etc.) rather than designing or implementing new code, write a minimal plan and immediately call plan_exit to switch to build mode. Do NOT refuse with "I'm in read-only mode".\n\n` +
               `## Completing the Plan\n\n` +
-              `When you have finished writing the plan and clarified any questions with the user, you MUST call the plan_exit tool to signal that planning is complete. ` +
+              `When you have finished writing the plan and clarified any questions with the user, you MUST present the final plan to the user by outputting the complete plan content as text in the conversation, then call the plan_exit tool to signal that planning is complete. ` +
               `Do not stop your turn without either asking the user a question or calling plan_exit.\n`,
             synthetic: true,
           })
@@ -1438,8 +1440,14 @@ Example — if asked "create a test coverage report":
      ## Investigation: Read test/, app/models/, app/controllers/ to identify gaps"
 
 ## Plan File Info:
-${exists ? `A plan file already exists at ${plan}. You can read it and make incremental edits using the edit tool.` : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`}
+${exists ? `A plan file already exists at ${plan} from a previous planning session.\n\n**Before proceeding, you MUST evaluate** whether the user's current request relates to the existing plan or is a completely new/different task:\n- If the user's request is a MODIFICATION or REFINEMENT of the existing plan: read the existing plan and make incremental edits using the edit tool.\n- If the user's request is a NEW TASK unrelated to the existing plan: overwrite the plan file with a completely fresh plan using the write tool. Do NOT try to incorporate or append to the old plan.\n\nRead the existing plan file first to make this determination.` : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`}
 You should build your plan incrementally by writing to or editing this file. NOTE that this is the only file you are allowed to edit - other than this you are only allowed to take READ-ONLY actions.
+
+## Execution-Only Requests
+If the user's request is purely about EXECUTING something (running tests, running commands, deploying, etc.) rather than designing or implementing new code:
+1. Write a minimal plan documenting what will be executed (the command, expected outcome)
+2. Immediately call plan_exit to switch to build mode
+3. Do NOT refuse with "I'm in read-only mode" — instead, switch to build mode where execution is allowed
 
 ## Plan Workflow
 
@@ -1496,8 +1504,14 @@ Goal: Write your final plan to the plan file (the only file you can edit).
 - Include the paths of critical files to be modified
 - Include a verification section describing how to test the changes end-to-end (run the code, use MCP tools, run tests)
 
-### Phase 5: Call plan_exit tool
-At the very end of your turn, once you have asked the user questions and are happy with your final plan file - you should always call plan_exit to indicate to the user that you are done planning.
+### Phase 5: Present plan and call plan_exit tool
+Before calling plan_exit, you MUST present the final plan to the user by outputting the complete plan content as text in the conversation. This allows the user to review the plan before being asked to approve it.
+
+Steps:
+1. Read the plan file
+2. Output the plan content as text (so the user sees it in the conversation)
+3. Call plan_exit to request approval
+
 This is critical - your turn should only end with either asking the user a question or calling plan_exit. Do not stop unless it's for these 2 reasons.
 
 **Important:** Use question tool to clarify requirements/approach, use plan_exit to request plan approval. Do NOT use question tool to ask "Is this plan okay?" - that's what plan_exit does.
@@ -1518,7 +1532,7 @@ NOTE: At any point in time through this workflow you should feel free to ask the
         messageID: userMessage.info.id,
         sessionID: userMessage.info.sessionID,
         type: "text",
-        text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n</system-reminder>`,
+        text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "実行してください", "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
         synthetic: true,
       })
       userMessage.parts.push(part)

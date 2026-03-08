@@ -7,6 +7,7 @@ import { MessageV2 } from "../session/message-v2"
 import { Identifier } from "../id/id"
 import { Provider } from "../provider/provider"
 import { Instance } from "../project/instance"
+import { Filesystem } from "../util/filesystem"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
 
 async function getLastModel(sessionID: string) {
@@ -21,12 +22,25 @@ export const PlanExitTool = Tool.define("plan_exit", {
   parameters: z.object({}),
   async execute(_params, ctx) {
     const session = await Session.get(ctx.sessionID)
-    const plan = path.relative(Instance.worktree, Session.plan(session))
+    const planPath = Session.plan(session)
+    const plan = path.relative(Instance.worktree, planPath)
+
+    let planContent = ""
+    try {
+      planContent = await Filesystem.readText(planPath)
+    } catch {
+      // Plan file might not exist
+    }
+
+    const questionText = planContent
+      ? `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
+      : `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?`
+
     const answers = await Question.ask({
       sessionID: ctx.sessionID,
       questions: [
         {
-          question: `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?`,
+          question: questionText,
           header: "Build Agent",
           custom: false,
           options: [

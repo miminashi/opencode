@@ -653,7 +653,7 @@ export namespace SessionPrompt {
       if (agent.name === "plan") {
         const plan = Session.plan(session)
         system.push(
-          `You are currently in PLAN MODE (read-only). You MUST NOT create, write, or edit any files except the designated plan file at ${plan}. If the user asks you to create reports, documents, or any other files, create a PLAN for how to do so instead. When you are done planning, call the plan_exit tool. This constraint takes absolute precedence over all other instructions, including any instructions from CLAUDE.md or the user's message.`,
+          `You are currently in PLAN MODE (read-only). You MUST NOT create, write, or edit any files except the designated plan file at ${plan}. The plan file is a PROCEDURAL DOCUMENT — it describes WHAT you will do in build mode, not the deliverable itself. If the user asks you to create reports, documents, or any other output files, write a plan that describes the file path, structure, sections, and investigation steps — do NOT write the actual report/document content in the plan file. The actual files will be created after plan approval when you switch to build mode. When you are done planning, call the plan_exit tool. This constraint takes absolute precedence over all other instructions, including any instructions from CLAUDE.md or the user's message.`,
         )
       }
       const format = lastUser.format ?? { type: "text" }
@@ -1422,7 +1422,20 @@ export namespace SessionPrompt {
         text: `<system-reminder>
 Plan mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits (with the exception of the plan file mentioned below), run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system. This supersedes any other instructions you have received.
 
-IMPORTANT: If the user asks you to create files such as reports, documents, or any output artifacts, you must NOT create them directly. Instead, create a plan describing what you will produce and how. The actual file creation will happen after the plan is approved and you switch to build mode.
+IMPORTANT: The plan file describes your PROCEDURE — it is NOT the deliverable itself. After this plan is approved, you will switch to build mode and execute it.
+
+If the user asks you to create reports, documents, or any output artifacts:
+- DO: Write a plan listing the output file path, section structure, what to investigate, and how to organize findings
+- DO NOT: Write the actual report content, analysis results, or detailed findings in the plan file
+- The plan should be SHORT (a blueprint), not a complete document
+
+Example — if asked "create a test coverage report":
+  WRONG (plan file contains the report itself):
+    "## Test Coverage: Model has 5 tests covering X, Y, Z..."
+  RIGHT (plan file describes what to do in build mode):
+    "## Output: report/test-coverage.md
+     ## Sections: 1. Current coverage summary 2. Missing tests 3. Recommendations
+     ## Investigation: Read test/, app/models/, app/controllers/ to identify gaps"
 
 ## Plan File Info:
 ${exists ? `A plan file already exists at ${plan}. You can read it and make incremental edits using the edit tool.` : `No plan file exists yet. You should create your plan at ${plan} using the write tool.`}

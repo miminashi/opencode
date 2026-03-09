@@ -1,7 +1,7 @@
 import { createStore } from "solid-js/store"
 import { createMemo, createSignal, For, Show } from "solid-js"
-import { useKeyboard } from "@opentui/solid"
-import type { TextareaRenderable } from "@opentui/core"
+import { useKeyboard, useTerminalDimensions } from "@opentui/solid"
+import type { ScrollBoxRenderable, TextareaRenderable } from "@opentui/core"
 import { useKeybind } from "../../context/keybind"
 import { selectedForeground, tint, useTheme } from "../../context/theme"
 import type { QuestionAnswer, QuestionRequest } from "@opencode-ai/sdk/v2"
@@ -29,6 +29,9 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
   })
 
   let textarea: TextareaRenderable | undefined
+  let scrollRef: ScrollBoxRenderable | undefined
+
+  const dimensions = useTerminalDimensions()
 
   const question = createMemo(() => questions()[store.tab])
   const confirm = createMemo(() => !single() && store.tab === questions().length)
@@ -41,6 +44,18 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
     const value = input()
     if (!value) return false
     return store.answers[store.tab]?.includes(value) ?? false
+  })
+
+  const questionHeader = createMemo(() => {
+    const q = question()?.question ?? ""
+    const idx = q.indexOf("\n\n---\n\n")
+    return idx === -1 ? q : q.substring(0, idx)
+  })
+
+  const questionBody = createMemo(() => {
+    const q = question()?.question ?? ""
+    const idx = q.indexOf("\n\n---\n\n")
+    return idx === -1 ? "" : q.substring(idx + 7)
   })
 
   function submit() {
@@ -215,6 +230,29 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
         reject()
       }
     } else {
+      if (questionBody() && scrollRef) {
+        if (evt.ctrl && evt.name === "u") {
+          evt.preventDefault()
+          scrollRef.scrollBy(-0.5, "viewport")
+          return
+        }
+        if (evt.ctrl && evt.name === "d") {
+          evt.preventDefault()
+          scrollRef.scrollBy(0.5, "viewport")
+          return
+        }
+        if (evt.name === "pageup") {
+          evt.preventDefault()
+          scrollRef.scrollBy(-1, "viewport")
+          return
+        }
+        if (evt.name === "pagedown") {
+          evt.preventDefault()
+          scrollRef.scrollBy(1, "viewport")
+          return
+        }
+      }
+
       const opts = options()
       const total = opts.length + (custom() ? 1 : 0)
       const max = Math.min(total, 9)
@@ -312,14 +350,30 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
         </Show>
 
         <Show when={!confirm()}>
-          <box paddingLeft={1} gap={1}>
-            <box>
+          <box paddingLeft={1} gap={1} maxHeight={Math.max(10, dimensions().height - 10)}>
+            <box flexShrink={0}>
               <text fg={theme.text}>
-                {question()?.question}
+                {questionHeader()}
                 {multi() ? " (select all that apply)" : ""}
               </text>
             </box>
-            <box>
+            <Show when={questionBody()}>
+              <scrollbox
+                ref={(val: ScrollBoxRenderable) => {
+                  scrollRef = val
+                }}
+                flexGrow={1}
+                verticalScrollbarOptions={{
+                  trackOptions: {
+                    backgroundColor: theme.background,
+                    foregroundColor: theme.borderActive,
+                  },
+                }}
+              >
+                <text fg={theme.textMuted}>{questionBody()}</text>
+              </scrollbox>
+            </Show>
+            <box flexShrink={0}>
               <For each={options()}>
                 {(opt, i) => {
                   const active = () => i() === store.selected
@@ -459,6 +513,11 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
           <text fg={theme.text}>
             esc <span style={{ fg: theme.textMuted }}>dismiss</span>
           </text>
+          <Show when={questionBody()}>
+            <text fg={theme.text}>
+              {"ctrl+u/d"} <span style={{ fg: theme.textMuted }}>scroll</span>
+            </text>
+          </Show>
         </box>
       </box>
     </box>

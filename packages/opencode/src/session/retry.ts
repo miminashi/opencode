@@ -62,6 +62,10 @@ export namespace SessionRetry {
     // context overflow errors should not be retried
     if (MessageV2.ContextOverflowError.isInstance(error)) return undefined
     if (MessageV2.APIError.isInstance(error)) {
+      // Detect server-side tool call parse failures (e.g. llama.cpp)
+      if (/failed to parse input/i.test(error.data.message)) {
+        return "Tool call parse error, retrying"
+      }
       if (!error.data.isRetryable) return undefined
       if (error.data.responseBody?.includes("FreeUsageLimitError"))
         return `Free usage exceeded, add credits https://opencode.ai/zen`

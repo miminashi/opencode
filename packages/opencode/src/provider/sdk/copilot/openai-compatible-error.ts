@@ -1,17 +1,22 @@
 import { z, type ZodType } from "zod/v4"
 
-export const openaiCompatibleErrorDataSchema = z.object({
-  error: z.object({
-    message: z.string(),
+export const openaiCompatibleErrorDataSchema = z.union([
+  z.object({
+    error: z.object({
+      message: z.string(),
 
-    // The additional information below is handled loosely to support
-    // OpenAI-compatible providers that have slightly different error
-    // responses:
-    type: z.string().nullish(),
-    param: z.any().nullish(),
-    code: z.union([z.string(), z.number()]).nullish(),
+      // The additional information below is handled loosely to support
+      // OpenAI-compatible providers that have slightly different error
+      // responses:
+      type: z.string().nullish(),
+      param: z.any().nullish(),
+      code: z.union([z.string(), z.number()]).nullish(),
+    }),
   }),
-})
+  z.object({
+    error: z.string(),
+  }),
+])
 
 export type OpenAICompatibleErrorData = z.infer<typeof openaiCompatibleErrorDataSchema>
 
@@ -23,5 +28,6 @@ export type ProviderErrorStructure<T> = {
 
 export const defaultOpenAICompatibleErrorStructure: ProviderErrorStructure<OpenAICompatibleErrorData> = {
   errorSchema: openaiCompatibleErrorDataSchema,
-  errorToMessage: (data) => data.error.message,
+  errorToMessage: (data) =>
+    typeof data.error === "string" ? data.error : data.error.message,
 }

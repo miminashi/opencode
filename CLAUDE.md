@@ -4,6 +4,10 @@
 
 承認プロンプトの発生を防ぐため、以下のルールに従うこと。
 
+### 原則
+
+**判断に迷ったら、承認プロンプトが出そうな構文は避ける。** シェル演算子（`|`, `||`, `;`, `>`, `<`, `$()`, `` ` ` ``, `\`, `(`, `)` など）を含むコマンドは承認対象になりやすい。専用ツールや単純なコマンドで代替できないか常に検討すること。
+
 ### 禁止事項
 
 1. **コマンド文字列内に `#` コメント行を含めない**
@@ -23,15 +27,20 @@
    - NG: `git show origin/dev:path/to/file | sed -n '80,100p'`
    - OK: `git show origin/dev:path/to/file` の出力を確認後、`Read` ツールを使用
 
-4. **`2>/dev/null` 等のリダイレクトを使わない**
+4. **`2>/dev/null`, `2>&1` 等のリダイレクトを使わない**
    - エラー出力はそのまま表示させる
    - NG: `ls -la /path 2>/dev/null`
+   - NG: `command 2>&1`
    - OK: `ls -la /path`
 
 5. **パイプ (`|`) を使わない**
    - 専用ツールを使う: `| grep` → Grep ツール、`| head`/`| tail` → Read ツール (offset/limit)
    - NG: `ss -tlnp | grep -E '8080'`
+   - NG: `git log | head -20`
+   - NG: `ls -la | grep -v node_modules`
+   - NG: `command | tail -5`
    - OK: Bash で `ss -tlnp` を実行し、結果を目視確認
+   - OK: `git log -20`（git 自体のオプションで件数制限）
 
 6. **`||` (OR チェーン) を使わない**
    - 代替コマンドを試す場合は別々の Bash 呼び出しとして順次実行する
@@ -51,6 +60,32 @@
 9. **`rm`, `rmdir` は原則使わない**
    - ファイル削除は破壊的操作のため承認プロンプトを維持する
    - 必要な場合はユーザーに確認してから実行する
+
+10. **`find` コマンドを使わない**
+    - ファイル検索: Glob ツールを使う
+    - 内容検索: Grep ツールを使う
+    - `find -exec \;` はバックスラッシュがシェル演算子を隠すため承認対象になる
+    - `find \( \)` も同様に承認対象になる
+    - NG: `find . -name "*.ts" -type f`
+    - NG: `find . -name "*.log" -exec rm {} \;`
+    - OK: Glob ツールで `**/*.ts` を検索
+
+11. **`;` (セミコロン) でコマンドを分離しない**
+    - `&&` と同様に別々の Bash 呼び出しに分割する
+    - NG: `mkdir -p dist ; cp file dist/`
+    - OK: `mkdir -p dist && cp file dist/`（依存関係がある場合）
+    - OK: 別々の Bash 呼び出しとして実行
+
+12. **`export` と他のコマンドを `&&` で連結しない**
+    - 環境変数が必要な場合は `env VAR=value command` 形式か、別々の Bash 呼び出しにする
+    - NG: `export PATH="$HOME/.bun/bin:$PATH" && bun run build`
+    - OK: `env PATH="$HOME/.bun/bin:$PATH" bun run build`
+
+13. **`echo` をコマンド出力に使わない**
+    - 区切り文字の出力や確認メッセージに echo を使わない
+    - 出力テキストは Bash ツールの外で直接記載する
+    - NG: `git status && echo "---" && git diff`
+    - OK: `git status` と `git diff` を別々の Bash 呼び出しで実行
 
 ## レポート作成ルール
 
@@ -115,6 +150,7 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 - 型チェック: `cd packages/opencode && bunx tsgo --noEmit`
 - ビルド（`bun run build`）はトランスパイルのみで型チェックを行わない。コード修正後は `tsgo --noEmit` で型エラーがないことを確認すること
 - pre-push フックが `bun typecheck`（= `tsgo --noEmit`）を実行するため、型エラーがあると push できない
+- ワークツリーで作業している場合は、ワークツリー内の `packages/opencode/` でビルド・型チェックを実行すること（バイナリはワークツリーの `dist/` に出力される）
 
 ## ワークツリー運用ルール
 

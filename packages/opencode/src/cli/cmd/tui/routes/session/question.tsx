@@ -421,7 +421,11 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                     </box>
                     <box backgroundColor={other() ? theme.backgroundElement : undefined}>
                       <text fg={other() ? theme.secondary : customPicked() ? theme.success : theme.text}>
-                        {multi() ? `[${customPicked() ? "✓" : " "}] Type your own answer` : "Type your own answer"}
+                        {multi()
+                          ? `[${customPicked() ? "✓" : " "}] Type your own answer`
+                          : questionBody()
+                            ? "Provide feedback"
+                            : "Type your own answer"}
                       </text>
                     </box>
 
@@ -440,7 +444,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                           })
                         }}
                         initialValue={input()}
-                        placeholder="Type your own answer"
+                        placeholder={questionBody() ? "Describe changes you'd like to the plan" : "Type your own answer"}
                         minHeight={1}
                         maxHeight={6}
                         textColor={theme.text}

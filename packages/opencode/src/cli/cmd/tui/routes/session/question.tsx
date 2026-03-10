@@ -380,6 +380,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                   const picked = () => store.answers[store.tab]?.includes(opt.label) ?? false
                   return (
                     <box
+                      alignSelf="flex-start"
                       onMouseOver={() => moveTo(i())}
                       onMouseDown={() => moveTo(i())}
                       onMouseUp={() => selectOption()}
@@ -409,6 +410,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
               </For>
               <Show when={custom()}>
                 <box
+                  alignSelf="flex-start"
                   onMouseOver={() => moveTo(options().length)}
                   onMouseDown={() => moveTo(options().length)}
                   onMouseUp={() => selectOption()}

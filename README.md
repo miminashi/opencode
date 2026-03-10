@@ -56,21 +56,21 @@ OPENCODE_EXPERIMENTAL_PLAN_MODE=1 /home/ubuntu/projects/opencode/packages/openco
 
 upstream からの fork 後に適用したバグ修正・改善の一覧。
 
-| 修正 | 概要 | 対象ファイル |
-|---|---|---|
-| plan_exit ツール登録修正 | `OPENCODE_EXPERIMENTAL_PLAN_MODE` フラグなしでも `plan_exit` ツールが登録されるよう条件を変更 | `packages/opencode/src/tool/registry.ts` |
-| plan モードプロンプト強化 | 非実験モードでも plan ファイルパスや `plan_exit` 呼び出し指示を LLM に渡すよう修正 | `packages/opencode/src/session/prompt.ts` |
-| plan モードファイル作成制限 | plan モード中に LLM がファイルを直接作成しないよう、システムプロンプトとリマインダーに制約を追加 | `packages/opencode/src/session/prompt.ts` |
-| migration name フィールド修正 | drizzle-orm 1.0.0-beta.16 で必要な `name` フィールドをバンドル済みマイグレーションに含めるよう修正 | `packages/opencode/script/build.ts` |
-| OSC52 クリップボード (tmux 対応) | tmux 環境で DCS passthrough 形式の OSC52 シーケンスを送出し、クリップボードコピーを動作させる | `packages/opencode/src/cli/cmd/tui/util/clipboard.ts` |
-| spinner コンポーネント登録 | サイドエフェクトインポートを明示的な `extend()` 呼び出しに置換し、Bun バンドラーの初期化順序に依存しないようにする | `packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx` |
-| plan モード新規/既存タスク判別 | 既存プランがある場合に新規タスクか既存タスクの修正かを評価し、新規タスクなら上書きするよう指示を追加 | `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/tool/plan-exit.txt` |
-| plan モード実行リクエスト対応 | 「実行してください」等の実行リクエスト時に read-only 拒否せず `plan_exit` で build モードに切り替えるよう指示を追加 | `packages/opencode/src/session/prompt.ts` |
-| plan モードレポート混同修正 | plan モードで成果物の内容をプランに直接書いてしまう問題を修正し、プランは手順書であることを明確化 | `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/session/prompt/plan.txt` |
-| llama-server エラーハンドリング | `{error: string}` 形式のエラーレスポンスに対応し、ツールコールパースエラーをリトライ可能にする | `packages/opencode/src/provider/sdk/chat/openai-compatible-chat-language-model.ts`, `packages/opencode/src/provider/sdk/copilot/openai-compatible-error.ts`, `packages/opencode/src/session/retry.ts` |
-| QuestionPrompt スクロール対応 | plan_exit 時の長いプラン本文を scrollbox で表示し Ctrl+u/d / PageUp/PageDown でスクロール可能にする | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
-| plan_exit フィードバック入力 | Yes/No 以外にカスタムテキスト入力（Provide feedback）を追加し、フィードバックを LLM に返す | `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
-| QuestionPrompt マウス当たり判定修正 | 選択肢の当たり判定をコンテンツ幅に縮小し、空白クリックでの意図しない選択を防止 | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
+| 種別 | 修正 | 概要 | 対象ファイル |
+|---|---|---|---|
+| fix | plan_exit ツール登録修正 | `OPENCODE_EXPERIMENTAL_PLAN_MODE` フラグなしでも `plan_exit` ツールが登録されるよう条件を変更 | `packages/opencode/src/tool/registry.ts` |
+| fix | plan モードプロンプト強化 | 非実験モードでも plan ファイルパスや `plan_exit` 呼び出し指示を LLM に渡すよう修正 | `packages/opencode/src/session/prompt.ts` |
+| fix | plan モードファイル作成制限 | plan モード中に LLM がファイルを直接作成しないよう、システムプロンプトとリマインダーに制約を追加 | `packages/opencode/src/session/prompt.ts` |
+| fix | migration name フィールド修正 | drizzle-orm 1.0.0-beta.16 で必要な `name` フィールドをバンドル済みマイグレーションに含めるよう修正 | `packages/opencode/script/build.ts` |
+| feat | OSC52 クリップボード (tmux 対応) | tmux 環境で DCS passthrough 形式の OSC52 シーケンスを送出し、クリップボードコピーを動作させる | `packages/opencode/src/cli/cmd/tui/util/clipboard.ts` |
+| fix | spinner コンポーネント登録 | サイドエフェクトインポートを明示的な `extend()` 呼び出しに置換し、Bun バンドラーの初期化順序に依存しないようにする | `packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx` |
+| feat | plan モード新規/既存タスク判別 | 既存プランがある場合に新規タスクか既存タスクの修正かを評価し、新規タスクなら上書きするよう指示を追加 | `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/tool/plan-exit.txt` |
+| feat | plan モード実行リクエスト対応 | 「実行してください」等の実行リクエスト時に read-only 拒否せず `plan_exit` で build モードに切り替えるよう指示を追加 | `packages/opencode/src/session/prompt.ts` |
+| fix | plan モードレポート混同修正 | plan モードで成果物の内容をプランに直接書いてしまう問題を修正し、プランは手順書であることを明確化 | `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/session/prompt/plan.txt` |
+| fix | llama-server エラーハンドリング | `{error: string}` 形式のエラーレスポンスに対応し、ツールコールパースエラーをリトライ可能にする | `packages/opencode/src/provider/sdk/chat/openai-compatible-chat-language-model.ts`, `packages/opencode/src/provider/sdk/copilot/openai-compatible-error.ts`, `packages/opencode/src/session/retry.ts` |
+| feat | QuestionPrompt スクロール対応 | plan_exit 時の長いプラン本文を scrollbox で表示し Ctrl+u/d / PageUp/PageDown でスクロール可能にする | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
+| feat | plan_exit フィードバック入力 | Yes/No 以外にカスタムテキスト入力（Provide feedback）を追加し、フィードバックを LLM に返す | `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
+| fix | QuestionPrompt マウス当たり判定修正 | 選択肢の当たり判定をコンテンツ幅に縮小し、空白クリックでの意図しない選択を防止 | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
 
 ---
 

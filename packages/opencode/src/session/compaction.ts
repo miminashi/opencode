@@ -105,6 +105,7 @@ export namespace SessionCompaction {
     abort: AbortSignal
     auto: boolean
     overflow?: boolean
+    continueText?: string
   }) {
     const userMessage = input.messages.findLast((m) => m.info.id === input.parentID)!.info as MessageV2.User
 
@@ -270,10 +271,11 @@ When constructing the summary, try to stick to this template:
           model: userMessage.model,
         })
         const text =
-          (input.overflow
+          input.continueText ??
+          ((input.overflow
             ? "The previous request exceeded the provider's size limit due to large media attachments. The conversation was compacted and media files were removed from context. If the user was asking about attached images or files, explain that the attachments were too large to process and suggest they try again with smaller or fewer files.\n\n"
             : "") +
-          "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed."
+          "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.")
         await Session.updatePart({
           id: Identifier.ascending("part"),
           messageID: continueMsg.id,
@@ -303,6 +305,7 @@ When constructing the summary, try to stick to this template:
       }),
       auto: z.boolean(),
       overflow: z.boolean().optional(),
+      continueText: z.string().optional(),
     }),
     async (input) => {
       const msg = await Session.updateMessage({
@@ -322,6 +325,7 @@ When constructing the summary, try to stick to this template:
         type: "compaction",
         auto: input.auto,
         overflow: input.overflow,
+        continueText: input.continueText,
       })
     },
   )

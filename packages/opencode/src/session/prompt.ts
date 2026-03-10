@@ -535,6 +535,7 @@ export namespace SessionPrompt {
           sessionID,
           auto: task.auto,
           overflow: task.overflow,
+          continueText: task.continueText,
         })
         if (result === "stop") break
         continue

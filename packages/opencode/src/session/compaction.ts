@@ -106,6 +106,7 @@ export namespace SessionCompaction {
     auto: boolean
     overflow?: boolean
     continueText?: string
+    clear?: boolean
   }) {
     const userMessage = input.messages.findLast((m) => m.info.id === input.parentID)!.info as MessageV2.User
 
@@ -159,6 +160,46 @@ export namespace SessionCompaction {
         created: Date.now(),
       },
     })) as MessageV2.Assistant
+
+    if (input.clear) {
+      await Session.updatePart({
+        id: Identifier.ascending("part"),
+        messageID: msg.id,
+        sessionID: input.sessionID,
+        type: "text",
+        text: "Context cleared. Follow the instructions in the next message.",
+        synthetic: true,
+        time: { start: Date.now(), end: Date.now() },
+      })
+
+      msg.finish = "stop"
+      msg.time.completed = Date.now()
+      await Session.updateMessage(msg)
+
+      if (input.auto) {
+        const continueMsg = await Session.updateMessage({
+          id: Identifier.ascending("message"),
+          role: "user",
+          sessionID: input.sessionID,
+          time: { created: Date.now() },
+          agent: userMessage.agent,
+          model: userMessage.model,
+        })
+        await Session.updatePart({
+          id: Identifier.ascending("part"),
+          messageID: continueMsg.id,
+          sessionID: input.sessionID,
+          type: "text",
+          synthetic: true,
+          text: input.continueText ?? "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.",
+          time: { start: Date.now(), end: Date.now() },
+        })
+      }
+
+      Bus.publish(Event.Compacted, { sessionID: input.sessionID })
+      return "continue"
+    }
+
     const processor = SessionProcessor.create({
       assistantMessage: msg,
       sessionID: input.sessionID,
@@ -306,6 +347,7 @@ When constructing the summary, try to stick to this template:
       auto: z.boolean(),
       overflow: z.boolean().optional(),
       continueText: z.string().optional(),
+      clear: z.boolean().optional(),
     }),
     async (input) => {
       const msg = await Session.updateMessage({
@@ -326,6 +368,7 @@ When constructing the summary, try to stick to this template:
         auto: input.auto,
         overflow: input.overflow,
         continueText: input.continueText,
+        clear: input.clear,
       })
     },
   )

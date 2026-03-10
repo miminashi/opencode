@@ -202,6 +202,7 @@ export namespace MessageV2 {
     auto: z.boolean(),
     overflow: z.boolean().optional(),
     continueText: z.string().optional(),
+    clear: z.boolean().optional(),
   }).meta({
     ref: "CompactionPart",
   })

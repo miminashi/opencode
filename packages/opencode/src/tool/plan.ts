@@ -74,6 +74,7 @@ export const PlanExitTool = Tool.define("plan_exit", {
         model: { providerID: model.providerID, modelID: model.modelID },
         auto: true,
         continueText: buildSwitchText,
+        clear: true,
       })
 
       return {

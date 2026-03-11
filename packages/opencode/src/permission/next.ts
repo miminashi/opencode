@@ -279,6 +279,11 @@ export namespace PermissionNext {
     }
   }
 
+  export async function approve(rules: Ruleset) {
+    const s = await state()
+    s.approved.push(...rules)
+  }
+
   export async function list() {
     const s = await state()
     return Object.values(s.pending).map((x) => x.info)

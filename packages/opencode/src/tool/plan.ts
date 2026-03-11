@@ -8,6 +8,9 @@ import { Identifier } from "../id/id"
 import { Provider } from "../provider/provider"
 import { Instance } from "../project/instance"
 import { Filesystem } from "../util/filesystem"
+import { SessionCompaction } from "../session/compaction"
+import { PermissionNext } from "../permission/next"
+import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
 
 async function getLastModel(sessionID: string) {
@@ -29,12 +32,16 @@ export const PlanExitTool = Tool.define("plan_exit", {
     try {
       planContent = await Filesystem.readText(planPath)
     } catch {
-      // Plan file might not exist
+      // Plan file doesn't exist
     }
 
-    const questionText = planContent
-      ? `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
-      : `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?`
+    if (!planContent) {
+      throw new Error(
+        `Plan file does not exist at ${plan}. You must save the plan to this file using the Write tool before calling plan_exit.`,
+      )
+    }
+
+    const questionText = `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
 
     const answers = await Question.ask({
       sessionID: ctx.sessionID,
@@ -45,6 +52,7 @@ export const PlanExitTool = Tool.define("plan_exit", {
           custom: true,
           options: [
             { label: "Yes", description: "Switch to build agent and start implementing the plan" },
+            { label: "Yes, clear context and auto-accept edits", description: "Compact conversation, auto-approve file edits, and start implementing" },
             { label: "No", description: "Stay with plan agent to continue refining the plan" },
           ],
         },
@@ -54,6 +62,32 @@ export const PlanExitTool = Tool.define("plan_exit", {
 
     const answer = answers[0]?.[0]
     if (answer === "No") throw new Question.RejectedError()
+
+    const autoAcceptLabel = "Yes, clear context and auto-accept edits"
+    if (answer === autoAcceptLabel) {
+      await PermissionNext.approve([
+        { permission: "edit", pattern: "*", action: "allow" },
+      ])
+
+      const model = await getLastModel(ctx.sessionID)
+      const buildSwitchText = BUILD_SWITCH + "\n\n" +
+        `A plan file exists at ${plan}. You should execute on the plan defined within it`
+      await SessionCompaction.create({
+        sessionID: ctx.sessionID,
+        agent: "build",
+        model: { providerID: model.providerID, modelID: model.modelID },
+        auto: true,
+        continueText: buildSwitchText,
+        clear: true,
+      })
+
+      return {
+        title: "Switching to build agent (clearing context, auto-accept edits)",
+        output: "User approved switching to build agent with context clearing and auto-accept edits. Wait for further instructions.",
+        metadata: {},
+      }
+    }
+
     if (answer !== "Yes") {
       throw new Error(
         `The user wants you to refine the plan with the following feedback:\n\n${answer}\n\nRevise the plan file at ${plan} and call plan_exit again.`,

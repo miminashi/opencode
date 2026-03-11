@@ -71,6 +71,9 @@ upstream からの fork 後に適用したバグ修正・改善の一覧。
 | feat | QuestionPrompt スクロール対応 | plan_exit 時の長いプラン本文を scrollbox で表示し Ctrl+u/d / PageUp/PageDown でスクロール可能にする | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
 | feat | plan_exit フィードバック入力 | Yes/No 以外にカスタムテキスト入力（Provide feedback）を追加し、フィードバックを LLM に返す | `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
 | fix | QuestionPrompt マウス当たり判定修正 | 選択肢の当たり判定をコンテンツ幅に縮小し、空白クリックでの意図しない選択を防止 | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
+| feat | plan_exit コンテキストクリア＆自動承認 | plan_exit ダイアログに「Yes, clear context and auto-accept edits」オプションを追加し、会話履歴クリア＋ファイル編集自動承認で build agent に切り替え | `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/session/compaction.ts`, `packages/opencode/src/permission/next.ts` |
+| fix | plan_exit コンテキストクリアを真のクリアに変更 | LLM による会話要約ではなく、会話履歴を実際に削除する真のコンテキストクリアを実装 | `packages/opencode/src/session/compaction.ts`, `packages/opencode/src/tool/plan.ts` |
+| fix | plan_exit プランファイル存在バリデーション | plan_exit 呼出時にプランファイルが存在しない場合エラーを throw し、LLM に Write ツールでの保存を促す | `packages/opencode/src/tool/plan.ts` |
 
 ---
 

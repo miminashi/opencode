@@ -54,8 +54,14 @@
 
 8. **`cd /path && command` の代わりに専用オプションを使う**
    - git: `git -C /path` を使う
+   - bun: バイナリの絶対パスと `--cwd` オプションを使う（`--cwd` は `run` サブコマンドの後に置く）
+   - bunx: `bunx --cwd` は動作しないため、`bun run --cwd` でスクリプト名を指定する
    - NG: `cd /path && git diff`
+   - NG: `cd /path/packages/opencode && bun run build --single`
+   - NG: `cd /path/packages/opencode && bunx tsgo --noEmit`
    - OK: `git -C /path diff`
+   - OK: `/home/ubuntu/.bun/bin/bun run --cwd /path/packages/opencode build --single`
+   - OK: `/home/ubuntu/.bun/bin/bun run --cwd /path/packages/opencode typecheck`
 
 9. **`rm`, `rmdir` は原則使わない**
    - ファイル削除は破壊的操作のため承認プロンプトを維持する
@@ -76,16 +82,31 @@
     - OK: `mkdir -p dist && cp file dist/`（依存関係がある場合）
     - OK: 別々の Bash 呼び出しとして実行
 
-12. **`export` と他のコマンドを `&&` で連結しない**
-    - 環境変数が必要な場合は `env VAR=value command` 形式か、別々の Bash 呼び出しにする
+12. **環境変数の設定を伴うコマンド実行を使わない**
+    - `export VAR && command`、`env VAR=value command`、`VAR=value command` はすべて承認対象になる
+    - PATH にバイナリが含まれていない場合はバイナリの絶対パスを直接指定する
     - NG: `export PATH="$HOME/.bun/bin:$PATH" && bun run build`
-    - OK: `env PATH="$HOME/.bun/bin:$PATH" bun run build`
+    - NG: `env PATH="$HOME/.bun/bin:$PATH" bun run build`
+    - NG: `PATH="$HOME/.bun/bin:$PATH" bunx tsgo --noEmit`
+    - OK: `/home/ubuntu/.bun/bin/bun run build`
+    - OK: `/home/ubuntu/.bun/bin/bun run typecheck`
 
 13. **`echo` をコマンド出力に使わない**
     - 区切り文字の出力や確認メッセージに echo を使わない
     - 出力テキストは Bash ツールの外で直接記載する
     - NG: `git status && echo "---" && git diff`
     - OK: `git status` と `git diff` を別々の Bash 呼び出しで実行
+
+14. **プロジェクトルート外のパスに不必要にアクセスしない**
+    - プロジェクト外（`~/.local/share/`, `/tmp/` 等）への読み書きは承認対象になる
+    - やむを得ない場合はユーザーに目的を説明してから実行する
+    - NG: `ls -la /home/ubuntu/.local/share/opencode/`（事前説明なし）
+    - NG: `mkdir -p /home/ubuntu/.local/share/opencode/opencode-feat`（事前説明なし）
+
+15. **コマンド引数内で `$HOME`, `$PATH` 等のシェル変数展開を使わない**
+    - 絶対パスをリテラルで記載する
+    - NG: `ls "$HOME/.bun/bin/"`
+    - OK: `ls /home/ubuntu/.bun/bin/`
 
 ## レポート作成ルール
 
@@ -146,11 +167,22 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 
 ## ビルド & 型チェック
 
-- ビルド: `cd packages/opencode && bun run build --single`
-- 型チェック: `cd packages/opencode && bunx tsgo --noEmit`
-- ビルド（`bun run build`）はトランスパイルのみで型チェックを行わない。コード修正後は `tsgo --noEmit` で型エラーがないことを確認すること
+- ビルド: `/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/packages/opencode build --single`
+- 型チェック: `/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/packages/opencode typecheck`
+- ビルド（`bun run build`）はトランスパイルのみで型チェックを行わない。コード修正後は typecheck で型エラーがないことを確認すること
 - pre-push フックが `bun typecheck`（= `tsgo --noEmit`）を実行するため、型エラーがあると push できない
-- ワークツリーで作業している場合は、ワークツリー内の `packages/opencode/` でビルド・型チェックを実行すること（バイナリはワークツリーの `dist/` に出力される）
+- ワークツリーで作業している場合は、パスの `packages/opencode` 部分をワークツリー内のパスに置き換える
+  - 例: `/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/.worktree/<name>/packages/opencode build --single`
+- **注意**: `--cwd` は `run` サブコマンドの後に置くこと（`bun --cwd /path run ...` は動作しない）
+- **注意**: `bunx --cwd` は動作しない。`bun run --cwd /path typecheck` を使うこと
+
+## 実行確認ルール
+
+1. **コードを修正した場合は、必ず実行して動作を確認すること**
+2. **実行確認には `opencode-test` という名前の tmux ウインドウを使用する**
+   - ウインドウが存在しない場合は作成する
+   - 例: `tmux new-window -t default -n opencode-test` で作成
+   - コマンド実行: `tmux send-keys -t default:opencode-test 'command' C-m` で実行
 
 ## ワークツリー運用ルール
 

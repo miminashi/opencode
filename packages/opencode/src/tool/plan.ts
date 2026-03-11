@@ -32,12 +32,16 @@ export const PlanExitTool = Tool.define("plan_exit", {
     try {
       planContent = await Filesystem.readText(planPath)
     } catch {
-      // Plan file might not exist
+      // Plan file doesn't exist
     }
 
-    const questionText = planContent
-      ? `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
-      : `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?`
+    if (!planContent) {
+      throw new Error(
+        `Plan file does not exist at ${plan}. You must save the plan to this file using the Write tool before calling plan_exit.`,
+      )
+    }
+
+    const questionText = `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
 
     const answers = await Question.ask({
       sessionID: ctx.sessionID,

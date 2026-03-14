@@ -631,6 +631,14 @@ export function Prompt(props: PromptProps) {
           })),
       })
     } else {
+      // Navigate to session before sending the prompt to avoid race condition
+      // between SSE events and route transition (BindingError in opentui WASM)
+      if (!props.sessionID) {
+        route.navigate({
+          type: "session",
+          sessionID,
+        })
+      }
       sdk.client.session
         .prompt({
           sessionID,
@@ -664,15 +672,6 @@ export function Prompt(props: PromptProps) {
     })
     setStore("extmarkToPartIndex", new Map())
     props.onSubmit?.()
-
-    // temporary hack to make sure the message is sent
-    if (!props.sessionID)
-      setTimeout(() => {
-        route.navigate({
-          type: "session",
-          sessionID,
-        })
-      }, 50)
     input.clear()
   }
   const exit = useExit()

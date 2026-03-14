@@ -1432,6 +1432,9 @@ export namespace SessionPrompt {
         sessionID: userMessage.info.sessionID,
         type: "text",
         text: `<system-reminder>
+## CRITICAL REQUIREMENT: You MUST call plan_exit
+Your turn MUST end with either calling plan_exit or asking the user a question. You are FORBIDDEN from stopping your turn without doing one of these two things. If you have written a plan, you MUST call plan_exit.
+
 Plan mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits (with the exception of the plan file mentioned below), run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system. This supersedes any other instructions you have received.
 
 IMPORTANT: The plan file describes your PROCEDURE — it is NOT the deliverable itself. After this plan is approved, you will switch to build mode and execute it.
@@ -1461,6 +1464,14 @@ If the user's request is purely about EXECUTING something (running tests, runnin
 
 ## Plan Workflow
 
+For SIMPLE tasks (single file edits, adding comments, small changes), compress the workflow:
+1. Read the relevant file(s) directly — do NOT launch agents for trivial tasks
+2. Write the plan to the plan file
+3. Output the plan as text, then call plan_exit
+Do NOT ask clarifying questions for simple, unambiguous tasks.
+
+For COMPLEX tasks, follow the full workflow:
+
 ### Phase 1: Initial Understanding
 Goal: Gain a comprehensive understanding of the user's request by reading through code and asking them questions. Critical: In this phase you should only use the explore subagent type.
 
@@ -1472,7 +1483,7 @@ Goal: Gain a comprehensive understanding of the user's request by reading throug
    - Quality over quantity - 3 agents maximum, but you should try to use the minimum number of agents necessary (usually just 1)
    - If using multiple agents: Provide each agent with a specific search focus or area to explore. Example: One agent searches for existing implementations, another explores related components, a third investigates testing patterns
 
-3. After exploring the code, use the question tool to clarify ambiguities in the user request up front.
+3. After exploring the code, use the question tool ONLY if there are genuine ambiguities that would lead to significantly different plans. Do NOT ask questions for simple tasks or stylistic preferences.
 
 ### Phase 2: Design
 Goal: Design an implementation approach.
@@ -1485,27 +1496,10 @@ You can launch up to 1 agent(s) in parallel.
 - **Default**: Launch at least 1 Plan agent for most tasks - it helps validate your understanding and consider alternatives
 - **Skip agents**: Only for truly trivial tasks (typo fixes, single-line changes, simple renames)
 
-Examples of when to use multiple agents:
-- The task touches multiple parts of the codebase
-- It's a large refactor or architectural change
-- There are many edge cases to consider
-- You'd benefit from exploring different approaches
-
-Example perspectives by task type:
-- New feature: simplicity vs performance vs maintainability
-- Bug fix: root cause vs workaround vs prevention
-- Refactoring: minimal change vs clean architecture
-
-In the agent prompt:
-- Provide comprehensive background context from Phase 1 exploration including filenames and code path traces
-- Describe requirements and constraints
-- Request a detailed implementation plan
-
 ### Phase 3: Review
 Goal: Review the plan(s) from Phase 2 and ensure alignment with the user's intentions.
 1. Read the critical files identified by agents to deepen your understanding
 2. Ensure that the plans align with the user's original request
-3. Use question tool to clarify any remaining questions with the user
 
 ### Phase 4: Final Plan
 Goal: Write your final plan to the plan file (the only file you can edit).
@@ -1522,11 +1516,8 @@ Steps:
 2. Output the plan content as text (so the user sees it in the conversation)
 3. Call plan_exit to request approval
 
-This is critical - your turn should only end with either asking the user a question or calling plan_exit. Do not stop unless it's for these 2 reasons.
-
-**Important:** Use question tool to clarify requirements/approach, use plan_exit to request plan approval. Do NOT use question tool to ask "Is this plan okay?" - that's what plan_exit does.
-
-NOTE: At any point in time through this workflow you should feel free to ask the user questions or clarifications. Don't make large assumptions about user intent. The goal is to present a well researched plan to the user, and tie any loose ends before implementation begins.
+## FINAL REMINDER
+You MUST call plan_exit when your plan is complete. Do NOT output text and stop. Do NOT end your turn without a tool call. After writing and presenting your plan, your very next action MUST be to call the plan_exit tool. There is no exception to this rule. If you find yourself about to stop without calling plan_exit, call it NOW.
 </system-reminder>`,
         synthetic: true,
       })

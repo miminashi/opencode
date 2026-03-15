@@ -15,6 +15,9 @@ import { Plugin } from "@/plugin"
 import { Config } from "@/config/config"
 import { ProviderTransform } from "@/provider/transform"
 import { ModelID, ProviderID } from "@/provider/schema"
+import path from "path"
+import { Glob } from "@/util/glob"
+import { Filesystem } from "@/util/filesystem"
 
 export namespace SessionCompaction {
   const log = Log.create({ service: "session.compaction" })
@@ -97,6 +100,61 @@ export namespace SessionCompaction {
       }
       log.info("pruned", { count: toPrune.length })
     }
+  }
+
+  async function discoverStateFiles(): Promise<string[]> {
+    try {
+      const files = await Glob.scan("*_STATE.json", {
+        cwd: Instance.directory,
+        absolute: true,
+        include: "file",
+      })
+      if (files.length === 0) return []
+
+      const sections: string[] = [
+        "The following state files track the progress of ongoing workflows.",
+        "Preserve their content accurately in your summary so the next agent can continue the work:",
+      ]
+      for (const file of files) {
+        try {
+          const content = await Filesystem.readText(file)
+          const basename = path.basename(file)
+          sections.push(`\n<state_file path="${basename}">\n${content}\n</state_file>`)
+        } catch (e) {
+          log.warn("failed to read state file", { file, error: e })
+        }
+      }
+      return sections.length > 2 ? [sections.join("\n")] : []
+    } catch (e) {
+      log.warn("failed to discover state files", { error: e })
+      return []
+    }
+  }
+
+  function extractUsedSkills(messages: MessageV2.WithParts[]): string[] {
+    const skills = new Set<string>()
+    for (const msg of messages) {
+      for (const part of msg.parts) {
+        if (
+          part.type === "tool" &&
+          part.tool === "skill" &&
+          part.state.status === "completed" &&
+          part.state.metadata?.name
+        ) {
+          skills.add(part.state.metadata.name as string)
+        }
+      }
+    }
+    return Array.from(skills)
+  }
+
+  function skillReloadHint(skills: string[]): string {
+    if (skills.length === 0) return ""
+    return (
+      "\n\nThe following skills were actively used before context compaction: " +
+      skills.map((n) => `"${n}"`).join(", ") +
+      ". If they are relevant to your continued work, reload them using the skill tool."
+    )
   }
 
   export async function process(input: {
@@ -241,7 +299,8 @@ When constructing the summary, try to stick to this template:
 [Construct a structured list of relevant files that have been read, edited, or created that pertain to the task at hand. If all the files in a directory are relevant, include the path to the directory.]
 ---`
 
-    const promptText = compacting.prompt ?? [defaultPrompt, ...compacting.context].join("\n\n")
+    const stateContext = await discoverStateFiles()
+    const promptText = compacting.prompt ?? [defaultPrompt, ...compacting.context, ...stateContext].join("\n\n")
     const result = await processor.process({
       user: userMessage,
       agent,
@@ -274,6 +333,9 @@ When constructing the summary, try to stick to this template:
       await Session.updateMessage(processor.message)
       return "stop"
     }
+
+    const usedSkills = extractUsedSkills(input.messages)
+    const skillHint = skillReloadHint(usedSkills)
 
     if (result === "continue" && input.auto) {
       if (replay) {
@@ -317,7 +379,8 @@ When constructing the summary, try to stick to this template:
           ((input.overflow
             ? "The previous request exceeded the provider's size limit due to large media attachments. The conversation was compacted and media files were removed from context. If the user was asking about attached images or files, explain that the attachments were too large to process and suggest they try again with smaller or fewer files.\n\n"
             : "") +
-          "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.")
+          "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed." +
+          skillHint)
         await Session.updatePart({
           id: PartID.ascending(),
           messageID: continueMsg.id,

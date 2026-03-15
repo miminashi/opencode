@@ -655,7 +655,9 @@ export namespace MessageV2 {
           if (part.type === "compaction") {
             userMessage.parts.push({
               type: "text",
-              text: "What did we do so far?",
+              text: part.clear
+                ? "Context was cleared to save memory. See the following message for instructions on what to do next."
+                : "What did we do so far?",
             })
           }
           if (part.type === "subtask") {

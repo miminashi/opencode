@@ -71,7 +71,9 @@ export const PlanExitTool = Tool.define("plan_exit", {
 
       const model = await getLastModel(ctx.sessionID)
       const buildSwitchText = BUILD_SWITCH + "\n\n" +
-        `A plan file exists at ${plan}. You should execute on the plan defined within it`
+        `A plan file exists at ${plan}. ` +
+        `Your FIRST action must be to read this plan file, then execute every step defined in it. ` +
+        `Do not ask for confirmation or summarize the plan — begin executing immediately by reading the file.`
       await SessionCompaction.create({
         sessionID: ctx.sessionID,
         agent: "build",

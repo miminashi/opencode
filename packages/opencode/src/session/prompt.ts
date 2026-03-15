@@ -1403,6 +1403,9 @@ export namespace SessionPrompt {
     const assistantMessage = input.messages.findLast((msg) => msg.info.role === "assistant")
 
     // Switching from plan mode to build mode
+    const hasBuildSwitchAlready = userMessage.parts.some(
+      (p) => p.type === "text" && p.text.includes("operational mode has changed from plan to build"),
+    )
     if (input.agent.name !== "plan" && assistantMessage?.info.agent === "plan") {
       const plan = Session.plan(input.session)
       const exists = await Filesystem.exists(plan)
@@ -1413,11 +1416,24 @@ export namespace SessionPrompt {
           sessionID: userMessage.info.sessionID,
           type: "text",
           text:
-            BUILD_SWITCH + "\n\n" + `A plan file exists at ${plan}. You should execute on the plan defined within it`,
+            BUILD_SWITCH +
+            "\n\n" +
+            `A plan file exists at ${plan}. ` +
+            `Your FIRST action must be to read this plan file, then execute every step defined in it. ` +
+            `Do not ask for confirmation or summarize the plan — begin executing immediately by reading the file.`,
           synthetic: true,
         })
         userMessage.parts.push(part)
       }
+      return input.messages
+    }
+
+    // Post-compaction plan→build transition: BUILD_SWITCH is already in continueText
+    if (
+      input.agent.name !== "plan" &&
+      assistantMessage?.info.agent === "compaction" &&
+      hasBuildSwitchAlready
+    ) {
       return input.messages
     }
 

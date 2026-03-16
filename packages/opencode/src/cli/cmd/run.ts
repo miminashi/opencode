@@ -300,7 +300,7 @@ export const RunCommand = cmd({
       .option("thinking", {
         type: "boolean",
         describe: "show thinking blocks",
-        default: false,
+        default: true,
       })
   },
   handler: async (args) => {
@@ -443,6 +443,8 @@ export const RunCommand = cmd({
 
       async function loop() {
         const toggles = new Map<string, boolean>()
+        const reasoningPartIDs = new Set<string>()
+        let reasoningStreaming = false
 
         for await (const event of events.stream) {
           if (
@@ -494,6 +496,13 @@ export const RunCommand = cmd({
             }
 
             if (part.type === "text" && part.time?.end) {
+              if (reasoningStreaming) {
+                if (process.stdout.isTTY) {
+                  process.stderr.write(`\u001b[0m${UI.Style.TEXT_NORMAL}`)
+                }
+                process.stderr.write(EOL)
+                reasoningStreaming = false
+              }
               if (emit("text", { part })) continue
               const text = part.text.trim()
               if (!text) continue
@@ -506,18 +515,52 @@ export const RunCommand = cmd({
               UI.empty()
             }
 
-            if (part.type === "reasoning" && part.time?.end && args.thinking) {
-              if (emit("reasoning", { part })) continue
-              const text = part.text.trim()
-              if (!text) continue
-              const line = `Thinking: ${text}`
-              if (process.stdout.isTTY) {
-                UI.empty()
-                UI.println(`${UI.Style.TEXT_DIM}\u001b[3m${line}\u001b[0m${UI.Style.TEXT_NORMAL}`)
-                UI.empty()
+            if (part.type === "reasoning") {
+              if (!part.time?.end) {
+                reasoningPartIDs.add(part.id)
+                if (emit("reasoning_start", { partID: part.id })) continue
+                if (args.thinking) {
+                  reasoningStreaming = true
+                  if (process.stdout.isTTY) {
+                    UI.empty()
+                    process.stderr.write(`${UI.Style.TEXT_DIM}\u001b[3mThinking: `)
+                  } else {
+                    process.stdout.write("Thinking: ")
+                  }
+                } else {
+                  if (process.stdout.isTTY) {
+                    UI.empty()
+                    UI.println(`${UI.Style.TEXT_DIM}Thinking...${UI.Style.TEXT_NORMAL}`)
+                  }
+                }
                 continue
               }
-              process.stdout.write(line + EOL)
+
+              reasoningPartIDs.delete(part.id)
+              if (emit("reasoning", { part })) continue
+              if (!args.thinking) continue
+              if (reasoningStreaming) {
+                if (process.stdout.isTTY) {
+                  process.stderr.write(`\u001b[0m${UI.Style.TEXT_NORMAL}`)
+                }
+                process.stderr.write(EOL)
+                reasoningStreaming = false
+              }
+            }
+          }
+
+          if (event.type === "message.part.delta") {
+            const props = event.properties
+            if (props.sessionID !== sessionID) continue
+            if (props.field !== "text") continue
+
+            if (reasoningPartIDs.has(props.partID) && args.thinking) {
+              if (emit("reasoning_delta", { partID: props.partID, delta: props.delta })) continue
+              if (process.stdout.isTTY) {
+                process.stderr.write(`${UI.Style.TEXT_DIM}\u001b[3m${props.delta}\u001b[0m`)
+              } else {
+                process.stdout.write(props.delta)
+              }
             }
           }
 

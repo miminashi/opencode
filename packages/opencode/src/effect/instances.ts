@@ -1,23 +1,27 @@
 import { Effect, Layer, LayerMap, ServiceMap } from "effect"
 import { registerDisposer } from "./instance-registry"
+import { InstanceContext } from "./instance-context"
 import { ProviderAuthService } from "@/provider/auth-service"
 import { QuestionService } from "@/question/service"
 import { PermissionService } from "@/permission/service"
+import { FileWatcherService } from "@/file/watcher"
+import { VcsService } from "@/project/vcs"
+import { FileTimeService } from "@/file/time"
+import { FormatService } from "@/format"
+import { FileService } from "@/file"
 import { Instance } from "@/project/instance"
-import type { Project } from "@/project/project"
 
-export declare namespace InstanceContext {
-  export interface Shape {
-    readonly directory: string
-    readonly project: Project.Info
-  }
-}
+export { InstanceContext } from "./instance-context"
 
-export class InstanceContext extends ServiceMap.Service<InstanceContext, InstanceContext.Shape>()(
-  "opencode/InstanceContext",
-) {}
-
-export type InstanceServices = QuestionService | PermissionService | ProviderAuthService
+export type InstanceServices =
+  | QuestionService
+  | PermissionService
+  | ProviderAuthService
+  | FileWatcherService
+  | VcsService
+  | FileTimeService
+  | FormatService
+  | FileService
 
 function lookup(directory: string) {
   const project = Instance.project
@@ -26,6 +30,11 @@ function lookup(directory: string) {
     Layer.fresh(QuestionService.layer),
     Layer.fresh(PermissionService.layer),
     Layer.fresh(ProviderAuthService.layer),
+    Layer.fresh(FileWatcherService.layer).pipe(Layer.orDie),
+    Layer.fresh(VcsService.layer),
+    Layer.fresh(FileTimeService.layer).pipe(Layer.orDie),
+    Layer.fresh(FormatService.layer),
+    Layer.fresh(FileService.layer),
   ).pipe(Layer.provide(ctx))
 }
 

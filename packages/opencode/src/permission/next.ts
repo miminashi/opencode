@@ -62,7 +62,7 @@ export namespace PermissionNext {
   )
 
   export async function approve(rules: Ruleset) {
-    return runPromise((service) => service.approve(rules))
+    return runPromiseInstance(S.PermissionService.use((service) => service.approve(rules)))
   }
 
   export async function list() {

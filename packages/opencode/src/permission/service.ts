@@ -238,8 +238,7 @@ export class PermissionService extends ServiceMap.Service<PermissionService, Per
       })
 
       const approve = Effect.fn("PermissionService.approve")(function* (rules: Ruleset) {
-        const state = yield* InstanceState.get(instanceState)
-        state.approved.push(...rules)
+        approved.push(...rules)
       })
 
       return PermissionService.of({ ask, reply, list, approve })

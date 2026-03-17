@@ -2,111 +2,77 @@
 
 ## Bash コマンド記載ルール
 
-承認プロンプトの発生を防ぐため、以下のルールに従うこと。
+### 専用ツールの優先使用
 
-### 原則
+ユーザー体験向上のため、Bash コマンドより専用ツールを優先すること:
 
-**判断に迷ったら、承認プロンプトが出そうな構文は避ける。** シェル演算子（`|`, `||`, `;`, `>`, `<`, `$()`, `` ` ` ``, `\`, `(`, `)` など）を含むコマンドは承認対象になりやすい。専用ツールや単純なコマンドで代替できないか常に検討すること。
+- ファイル読み取り: Read ツール（`cat`/`head`/`tail` ではなく）
+- ファイル一覧: Glob ツール（`ls`/`find` ではなく）
+- 内容検索: Grep ツール（`grep`/`rg` ではなく）
+- ファイル編集: Edit ツール（`sed`/`awk` ではなく）
+- ファイル作成: Write ツール（`echo >` ではなく）
+- 変数表示・exit code 確認: `echo` コマンドは使用しない
+  - `echo $?` は動作しない（Bash ツールは呼び出しごとに別プロセスで `$?` は常に 0）
+  - 変数展開（`$VAR`）を含むコマンドはセキュリティチェックで承認を求められる場合がある
+  - 値の確認が必要な場合は、コマンド自体の出力や専用ツールを使う
 
-### 禁止事項
+### bun コマンドの注意事項
 
-1. **コマンド文字列内に `#` コメント行を含めない**
-   - コメントは Bash ツールの `description` パラメータに記載する
-   - NG: `# Check status\ngit status`
-   - OK: description に "Check status" と記載し、コマンドは `git status` のみ
+- bun は絶対パスで実行: `/home/ubuntu/.bun/bin/bun`
+- `--cwd` は `run` サブコマンドの**後**に置く（`bun --cwd /path run ...` は動作しない）
+- `bunx --cwd` は動作しない → `bun run --cwd /path <script>` で代替
 
-2. **改行で複数コマンドを分離しない**
-   - 依存関係がある場合は `&&` で1行に連結する
-   - 独立したコマンドは別々の Bash ツール呼び出しに分割する
-   - NG: `git fetch origin\ngit log origin/dev`
-   - OK: `git fetch origin && git log origin/dev`
-   - OK: 別々の Bash 呼び出しとして並列実行
+### 複合コマンドの禁止
 
-3. **ファイル内容の取得に `head`/`tail`/`sed`/`cat` をパイプで使わない**
-   - `Read` ツールの `offset`/`limit` パラメータを使用する
-   - NG: `git show origin/dev:path/to/file | sed -n '80,100p'`
-   - OK: `git show origin/dev:path/to/file` の出力を確認後、`Read` ツールを使用
+承認プロンプトを回避するため、以下のパターンは**使用禁止**:
 
-4. **`2>/dev/null`, `2>&1` 等のリダイレクトを使わない**
-   - エラー出力はそのまま表示させる
-   - NG: `ls -la /path 2>/dev/null`
-   - NG: `command 2>&1`
-   - OK: `ls -la /path`
+- `cd /path && ...`（bare repository attack / path resolution bypass 検知で必ず承認を求められる）
+  - git の場合: `git -C /path <subcommand>` で代替
+  - ファイル読み取りの場合: Read ツールで絶対パスを指定
+  - ファイル検索の場合: Grep/Glob ツールで path パラメータを指定
+  - 例: `git -C .worktree/branch-name status`
+  - 例: `git -C .worktree/branch-name log --oneline -5`
+- **`&&`/`;` によるコマンドチェーンを原則使用しない**
+  - 複数のコマンドが必要な場合は、**個別の Bash ツール呼び出しに分ける**
+  - 例外: 単一目的の短いパイプ（`echo "$var" | grep -q pattern`）は許可
+- `&&`/`;` チェーンに引用符付き文字列を含めない（quoted characters 検知を回避）
+- **`2>/dev/null` を使用しない**（output redirection `>` 検知で必ず承認を求められる）
+  - エラー出力はそのまま表示させる
+  - ファイルの存在確認は `test -f /path` や Glob ツールで代替
+- **バックスラッシュ+シェル演算子（`\;` `\|` `\&` `\<` `\>`）を含むコマンドを使用しない**
+  - セキュリティチェック（"backslash before shell operator"）により allow ルールがあっても承認を求められる
+  - `find -exec ... \;` → Glob + Grep ツールで代替
+  - `grep "pat1\|pat2"` → Grep ツール（正規表現 `pat1|pat2` をそのまま使用可能）
 
-5. **パイプ (`|`) を使わない**
-   - 専用ツールを使う: `| grep` → Grep ツール、`| head`/`| tail` → Read ツール (offset/limit)
-   - NG: `ss -tlnp | grep -E '8080'`
-   - NG: `git log | head -20`
-   - NG: `ls -la | grep -v node_modules`
-   - NG: `command | tail -5`
-   - OK: Bash で `ss -tlnp` を実行し、結果を目視確認
-   - OK: `git log -20`（git 自体のオプションで件数制限）
+### 複雑なコマンドのスクリプト化
 
-6. **`||` (OR チェーン) を使わない**
-   - 代替コマンドを試す場合は別々の Bash 呼び出しとして順次実行する
-   - NG: `which bun || ls ~/.bun/bin/bun`
-   - OK: まず `which bun` を実行、失敗したら `ls ~/.bun/bin/bun`
+専用ツールで代替できない複雑なコマンドが必要な場合は、スクリプトファイルに書き出して実行する:
 
-7. **`$()` コマンド置換を使わない**
-   - git commit は `-m` に直接文字列を渡す
-   - NG: `git commit -m "$(cat <<'EOF' ... EOF)"`
-   - OK: HEREDOC は Bash ツール側で処理（CLAUDE.md の既存例のとおり）
+- スクリプトは `./tmp/` ディレクトリに配置する
+- 許可済みコマンド（`bash`、`python3`、`ruby` 等）でスクリプトを実行する
+  - 例: Write ツールで `./tmp/search.sh` を作成 → `bash ./tmp/search.sh` で実行
+- これにより、バックスラッシュ・特殊文字・複合コマンドのセキュリティチェックを回避できる
 
-8. **`cd /path && command` の代わりに専用オプションを使う**
-   - git: `git -C /path` を使う
-   - bun: バイナリの絶対パスと `--cwd` オプションを使う（`--cwd` は `run` サブコマンドの後に置く）
-   - bunx: `bunx --cwd` は動作しないため、`bun run --cwd` でスクリプト名を指定する
-   - NG: `cd /path && git diff`
-   - NG: `cd /path/packages/opencode && bun run build --single`
-   - NG: `cd /path/packages/opencode && bunx tsgo --noEmit`
-   - OK: `git -C /path diff`
-   - OK: `/home/ubuntu/.bun/bin/bun run --cwd /path/packages/opencode build --single`
-   - OK: `/home/ubuntu/.bun/bin/bun run --cwd /path/packages/opencode typecheck`
+### 破壊的操作
 
-9. **`rm`, `rmdir` は原則使わない**
-   - ファイル削除は破壊的操作のため承認プロンプトを維持する
-   - 必要な場合はユーザーに確認してから実行する
+- `rm`/`rmdir` 等のファイル削除はユーザーに確認してから実行する
 
-10. **`find` コマンドを使わない**
-    - ファイル検索: Glob ツールを使う
-    - 内容検索: Grep ツールを使う
-    - `find -exec \;` はバックスラッシュがシェル演算子を隠すため承認対象になる
-    - `find \( \)` も同様に承認対象になる
-    - NG: `find . -name "*.ts" -type f`
-    - NG: `find . -name "*.log" -exec rm {} \;`
-    - OK: Glob ツールで `**/*.ts` を検索
+### プロジェクトルート外へのアクセス
 
-11. **`;` (セミコロン) でコマンドを分離しない**
-    - `&&` と同様に別々の Bash 呼び出しに分割する
-    - NG: `mkdir -p dist ; cp file dist/`
-    - OK: `mkdir -p dist && cp file dist/`（依存関係がある場合）
-    - OK: 別々の Bash 呼び出しとして実行
+- それ以外のプロジェクト外パス（`~/.local/share/`, `/tmp/` 等）はユーザーに確認してから操作
 
-12. **環境変数の設定を伴うコマンド実行を使わない**
-    - `export VAR && command`、`env VAR=value command`、`VAR=value command` はすべて承認対象になる
-    - PATH にバイナリが含まれていない場合はバイナリの絶対パスを直接指定する
-    - NG: `export PATH="$HOME/.bun/bin:$PATH" && bun run build`
-    - NG: `env PATH="$HOME/.bun/bin:$PATH" bun run build`
-    - NG: `PATH="$HOME/.bun/bin:$PATH" bunx tsgo --noEmit`
-    - OK: `/home/ubuntu/.bun/bin/bun run build`
-    - OK: `/home/ubuntu/.bun/bin/bun run typecheck`
+### ytdlor プロジェクトの操作方針
 
-13. **`echo` をコマンド出力に使わない**
-    - 区切り文字の出力や確認メッセージに echo を使わない
-    - 出力テキストは Bash ツールの外で直接記載する
-    - NG: `git status && echo "---" && git diff`
-    - OK: `git status` と `git diff` を別々の Bash 呼び出しで実行
-
-14. **プロジェクトルート外のパスに不必要にアクセスしない**
-    - プロジェクト外（`~/.local/share/`, `/tmp/` 等）への読み書きは承認対象になる
-    - やむを得ない場合はユーザーに目的を説明してから実行する
-    - NG: `ls -la /home/ubuntu/.local/share/opencode/`（事前説明なし）
-    - NG: `mkdir -p /home/ubuntu/.local/share/opencode/opencode-feat`（事前説明なし）
-
-15. **コマンド引数内で `$HOME`, `$PATH` 等のシェル変数展開を使わない**
-    - 絶対パスをリテラルで記載する
-    - NG: `ls "$HOME/.bun/bin/"`
-    - OK: `ls /home/ubuntu/.bun/bin/`
+- `/home/ubuntu/projects/ytdlor` への読み取りは許可（確認不要）
+- ytdlor に対する一般的な操作（ファイル編集、テスト実行、マイグレーション、コード生成等）は、opencode TUI に指示して実行する
+  - opencode-test ウインドウで opencode を起動し、プロンプトに操作内容を入力する
+- 以下の場合は直接操作してよい:
+  - コードの閲覧・調査（Read/Grep/Glob）
+  - git 読み取り操作（status, log, diff, show 等）
+  - git ブランチ管理操作（checkout, switch, branch 作成, merge, branch -d 等）— コード内容を直接変更しないリポジトリ管理操作
+  - `.claude/` ディレクトリ配下全体の編集（CLAUDE.md, settings.json, skills/, memory/ 等の opencode 設定・定義ファイル）
+- **TUI 失敗時の対処ルール**: TUI がループ・タイムアウト等で失敗した場合、TUI を中断して「直接操作」に切り替えるのは**禁止**。問題を特定し、修正済みのプロンプトで TUI を再起動すること
+- **`tmux send-keys` による直接操作の禁止**: `tmux send-keys` で opencode TUI を経由せずにシェルコマンド（`docker compose build`、`bundle install` 等）を ytdlor 内で直接実行するのは「直接操作」に該当する。TUI の中断後にシェルプロンプトが表示されても、そこでコマンドを直接実行してはならない
 
 ## レポート作成ルール
 

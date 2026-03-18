@@ -1,0 +1,81 @@
+=== plan_exit E2E Test (merge-upstream-5) ===
+Binary: /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 10, Timeout: 10min (iterations: 60)
+Start: 2026年  3月 15日 日曜日 06:44:03 JST
+
+Test 1: 06:44:03
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 0
+  Latest: 1773523578788-tidy-harbor.md
+
+Test 2: 06:54:10
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 241s
+  New plan files: 1
+  Latest: 1773525257007-tidy-nebula.md
+
+Test 3: 06:58:29
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 1
+  Latest: 1773525515457-eager-cabin.md
+
+Test 4: 07:08:33
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 1
+  Latest: 1773526118757-lucky-eagle.md
+
+Test 5: 07:18:37
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 0
+  Latest: 1773526118757-lucky-eagle.md
+
+Test 6: 07:28:44
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 210s
+  New plan files: 1
+  Latest: 1773527329705-proud-wizard.md
+
+Test 7: 07:32:32
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 421s
+  New plan files: 1
+  Latest: 1773527558235-clever-comet.md
+
+Test 8: 07:39:51
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 340s
+  New plan files: 1
+  Latest: 1773527997093-playful-wolf.md
+
+Test 9: 07:45:49
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 0
+  Latest: 1773527997093-playful-wolf.md
+
+Test 10: 07:55:53
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 291s
+  New plan files: 1
+  Latest: 1773528959131-proud-panda.md
+
+=== Summary ===
+Total: 10
+Success: 5
+Timeout: 5
+Validation triggered: 0
+End: 2026年  3月 15日 日曜日 08:01:02 JST

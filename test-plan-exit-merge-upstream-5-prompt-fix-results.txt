@@ -1,0 +1,91 @@
+=== plan_exit E2E Test (merge-upstream-5-prompt-fix) ===
+Binary: /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 10, Timeout: 10min (iterations: 60)
+Start: 2026年  3月 15日 日曜日 08:12:57 JST
+
+Test 1: 08:12:57
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 210s
+  New plan files: 1
+  Latest: 1773529983605-misty-planet.md
+
+Test 2: 08:16:45
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 210s
+  New plan files: 1
+  Latest: 1773530210865-witty-panda.md
+
+Test 3: 08:20:33
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 181s
+  New plan files: 1
+  Latest: 1773530438920-quiet-pixel.md
+
+Test 4: 08:23:52
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 200s
+  New plan files: 1
+  Latest: 1773530638434-swift-star.md
+
+Test 5: 08:27:30
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 210s
+  New plan files: 1
+  Latest: 1773530856936-happy-panda.md
+
+Test 6: 08:31:18
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 190s
+  New plan files: 1
+  Latest: 1773531084637-calm-knight.md
+
+Test 7: 08:34:47
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 270s
+  New plan files: 1
+  Latest: 1773531293597-happy-panda.md
+
+Test 8: 08:39:35
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 181s
+  New plan files: 1
+  Latest: 1773531580941-quick-rocket.md
+
+Test 9: 08:42:54
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 190s
+  New plan files: 1
+  Latest: 1773531779346-mighty-mountain.md
+
+Test 10: 08:46:22
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 180s
+  New plan files: 1
+  Latest: 1773531988479-cosmic-falcon.md
+
+=== Summary ===
+Total: 10
+Success: 10
+Timeout: 0
+Validation triggered: 0
+End: 2026年  3月 15日 日曜日 08:49:40 JST

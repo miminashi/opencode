@@ -1,0 +1,201 @@
+=== plan_exit E2E Test ===
+Start: 2026年  3月 11日 水曜日 12:06:04 JST
+
+Test 1: 12:06:04
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773198368868-sunny-sailor.md
+
+Test 2: 12:13:43
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773198827670-glowing-eagle.md
+
+Test 3: 12:16:31
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773198827670-glowing-eagle.md
+
+Test 4: 12:26:38
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773199603271-brave-nebula.md
+
+Test 5: 12:31:16
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773199881498-proud-sailor.md
+
+Test 6: 12:34:35
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773199881498-proud-sailor.md
+
+Test 7: 12:44:42
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773200686712-calm-falcon.md
+
+Test 8: 12:50:30
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773201035496-quiet-pixel.md
+
+Test 9: 13:00:34
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773201639378-calm-rocket.md
+
+Test 10: 13:04:23
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773201867731-cosmic-pixel.md
+
+Test 11: 13:14:27
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773202471696-glowing-lagoon.md
+
+Test 12: 13:24:31
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773202471696-glowing-lagoon.md
+
+Test 13: 13:34:37
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773203682670-lucky-otter.md
+
+Test 14: 13:37:26
+  Validation: TRIGGERED
+  Retry: SUCCESS
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773203850966-eager-cactus.md
+
+Test 15: 13:43:14
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773204199558-lucky-engine.md
+
+Test 16: 13:53:18
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773204803610-neon-river.md
+
+Test 17: 13:57:57
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773205081961-playful-tiger.md
+
+Test 18: 14:08:04
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773205689117-stellar-lagoon.md
+
+Test 19: 14:11:42
+  Validation: TRIGGERED
+  Retry: SUCCESS
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773205907563-nimble-mountain.md
+
+Test 20: 14:16:51
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773206215852-misty-wolf.md
+
+Test 21: 14:26:55
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773206819804-nimble-cactus.md
+
+Test 22: 14:29:53
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773206998271-gentle-river.md
+
+Test 23: 14:33:51
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773207236854-curious-sailor.md
+
+Test 24: 14:37:50
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773207475105-kind-wizard.md
+
+Test 25: 14:40:48
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773207653456-quick-circuit.md
+
+Test 26: 14:48:57
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773208142068-calm-circuit.md
+
+Test 27: 14:59:01
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773208142068-calm-circuit.md
+
+Test 28: 15:09:08
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773209353448-curious-cabin.md
+
+Test 29: 15:12:06
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773209531370-witty-mountain.md
+
+Test 30: 15:15:55
+  Dialog: No plan content (should not happen)
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773209759736-sunny-engine.md
+
+=== Summary ===
+Total: 30
+Success: 19
+Timeout: 11
+Validation triggered: 2
+End: 2026年  3月 11日 水曜日 15:19:53 JST

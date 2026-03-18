@@ -1,0 +1,85 @@
+=== plan_exit E2E Test (timeout-investigation-60m) ===
+Binary: /home/ubuntu/projects/opencode/.worktree/merge-upstream-4/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 10, Timeout: 60min (iterations: 360)
+Start: 2026年  3月 12日 木曜日 02:59:44 JST
+
+Test 1: 02:59:44
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 241s
+  New plan files: 1
+  Latest: 1773251989809-curious-garden.md
+
+Test 2: 03:04:03
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 170s
+  New plan files: 1
+  Latest: 1773252248133-proud-cabin.md
+
+Test 3: 03:07:11
+  Result: TIMEOUT
+  Elapsed: 3606s
+  New plan files: 0
+  Latest: 1773252248133-proud-cabin.md
+
+Test 4: 04:07:20
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 260s
+  New plan files: 1
+  Latest: 1773256045395-jolly-river.md
+
+Test 5: 04:11:58
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 130s
+  New plan files: 1
+  Latest: 1773256323680-neon-comet.md
+
+Test 6: 04:14:26
+  Result: TIMEOUT
+  Elapsed: 3606s
+  New plan files: 1
+  Latest: 1773256471946-happy-canyon.md
+
+Test 7: 05:14:35
+  Result: TIMEOUT
+  Elapsed: 3606s
+  New plan files: 0
+  Latest: 1773256471946-happy-canyon.md
+
+Test 8: 06:14:47
+  Result: TIMEOUT
+  Elapsed: 3605s
+  New plan files: 0
+  Latest: 1773256471946-happy-canyon.md
+
+Test 9: 07:14:59
+  Validation: TRIGGERED
+  Retry: SUCCESS
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 260s
+  New plan files: 1
+  Latest: 1773267304155-swift-pixel.md
+
+Test 10: 07:19:37
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 270s
+  New plan files: 1
+  Latest: 1773267582855-nimble-wizard.md
+
+=== Summary ===
+Total: 10
+Success: 6
+Timeout: 4
+Validation triggered: 1
+End: 2026年  3月 12日 木曜日 07:24:26 JST

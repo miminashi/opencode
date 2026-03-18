@@ -1,0 +1,89 @@
+=== plan_exit E2E Test (compaction-phase2) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/compaction-phase2/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 10, Timeout: 10min (iterations: 60)
+Start: 2026年  3月 15日 日曜日 19:25:54 JST
+
+Test 1: 19:25:54
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 191s
+  New plan files: 1
+  Latest: 1773570360322-misty-garden.md
+
+Test 2: 19:29:23
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 260s
+  New plan files: 1
+  Latest: 1773570568679-glowing-planet.md
+
+Test 3: 19:34:01
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 191s
+  New plan files: 1
+  Latest: 1773570846863-tidy-wizard.md
+
+Test 4: 19:37:30
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 150s
+  New plan files: 1
+  Latest: 1773571055927-glowing-moon.md
+
+Test 5: 19:40:18
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 110s
+  New plan files: 1
+  Latest: 1773571223326-swift-nebula.md
+
+Test 6: 19:42:26
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 180s
+  New plan files: 1
+  Latest: 1773571351504-brave-panda.md
+
+Test 7: 19:45:44
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 1
+  Latest: 1773571549878-happy-falcon.md
+
+Test 8: 19:55:48
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 181s
+  New plan files: 1
+  Latest: 1773572153856-clever-cabin.md
+
+Test 9: 19:59:07
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 240s
+  New plan files: 1
+  Latest: 1773572352425-misty-nebula.md
+
+Test 10: 20:03:25
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 231s
+  New plan files: 1
+  Latest: 1773572610756-neon-rocket.md
+
+=== Summary ===
+Total: 10
+Success: 9
+Timeout: 1
+Validation triggered: 0
+End: 2026年  3月 15日 日曜日 20:07:34 JST

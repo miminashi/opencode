@@ -1,0 +1,49 @@
+=== plan_exit E2E Test (compaction-merge) ===
+Binary: /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5, Timeout: 10min (iterations: 60)
+Start: 2026年  3月 15日 日曜日 17:08:19 JST
+
+Test 1: 17:08:19
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 190s
+  New plan files: 1
+  Latest: 1773562105272-silent-cabin.md
+
+Test 2: 17:11:47
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 170s
+  New plan files: 1
+  Latest: 1773562312792-swift-comet.md
+
+Test 3: 17:14:55
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 231s
+  New plan files: 1
+  Latest: 1773562500861-witty-sailor.md
+
+Test 4: 17:19:07
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 200s
+  New plan files: 1
+  Latest: 1773562752333-clever-river.md
+
+Test 5: 17:22:45
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 1
+  Latest: 1773562970930-curious-lagoon.md
+
+=== Summary ===
+Total: 5
+Success: 4
+Timeout: 1
+Validation triggered: 0
+End: 2026年  3月 15日 日曜日 17:32:49 JST

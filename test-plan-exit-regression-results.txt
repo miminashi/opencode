@@ -1,0 +1,65 @@
+=== plan_exit Regression Test (merge-upstream-4) ===
+Start: 2026年  3月 11日 水曜日 23:12:04 JST
+
+Test 1: 23:12:04
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773238329422-witty-cactus.md
+
+Test 2: 23:22:08
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773238329422-witty-cactus.md
+
+Test 3: 23:32:15
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773238329422-witty-cactus.md
+
+Test 4: 23:42:22
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773240147450-gentle-circuit.md
+
+Test 5: 23:45:20
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773240147450-gentle-circuit.md
+
+Test 6: 23:55:27
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773240932472-quiet-wizard.md
+
+Test 7: 00:05:31
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773241536622-playful-canyon.md
+
+Test 8: 00:11:19
+  Result: TIMEOUT
+  New plan files: 1
+  Latest: 1773241885131-silent-panda.md
+
+Test 9: 00:21:23
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  New plan files: 1
+  Latest: 1773242489022-shiny-canyon.md
+
+Test 10: 00:25:52
+  Result: TIMEOUT
+  New plan files: 0
+  Latest: 1773242489022-shiny-canyon.md
+
+=== Summary ===
+Total: 10
+Success: 3
+Timeout: 7
+Validation triggered: 0
+End: 2026年  3月 12日 木曜日 00:35:56 JST

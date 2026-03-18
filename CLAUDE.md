@@ -30,8 +30,8 @@
   - git の場合: `git -C /path <subcommand>` で代替
   - ファイル読み取りの場合: Read ツールで絶対パスを指定
   - ファイル検索の場合: Grep/Glob ツールで path パラメータを指定
-  - 例: `git -C .worktree/branch-name status`
-  - 例: `git -C .worktree/branch-name log --oneline -5`
+  - 例: `git -C .claude/worktrees/branch-name status`
+  - 例: `git -C .claude/worktrees/branch-name log --oneline -5`
 - **`&&`/`;` によるコマンドチェーンを原則使用しない**
   - 複数のコマンドが必要な場合は、**個別の Bash ツール呼び出しに分ける**
   - 例外: 単一目的の短いパイプ（`echo "$var" | grep -q pattern`）は許可
@@ -138,7 +138,7 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 - ビルド（`bun run build`）はトランスパイルのみで型チェックを行わない。コード修正後は typecheck で型エラーがないことを確認すること
 - pre-push フックが `bun typecheck`（= `tsgo --noEmit`）を実行するため、型エラーがあると push できない
 - ワークツリーで作業している場合は、パスの `packages/opencode` 部分をワークツリー内のパスに置き換える
-  - 例: `/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/.worktree/<name>/packages/opencode build --single`
+  - 例: `/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/.claude/worktrees/<name>/packages/opencode build --single`
 - **注意**: `--cwd` は `run` サブコマンドの後に置くこと（`bun --cwd /path run ...` は動作しない）
 - **注意**: `bunx --cwd` は動作しない。`bun run --cwd /path typecheck` を使うこと
 
@@ -154,5 +154,5 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 
 1. **コードの修正を行うときは、必ずワークツリーを作成して作業する**
 2. **upstream をマージするときは、必ずワークツリーを作成して作業する**
-3. ワークツリーはプロジェクトルートの `.worktree/` 以下に作成する
+3. ワークツリーはプロジェクトルートの `.claude/worktrees/` 以下に作成する
 4. 作成したワークツリーは削除しない

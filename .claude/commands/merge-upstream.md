@@ -18,21 +18,21 @@ git log --oneline HEAD..upstream/dev
 
 ## 2. ワークツリーを作成
 
-`.worktree/` 配下にワークツリーを作成する。ブランチ名は `merge-upstream-N`（N は連番）とする。
+`.claude/worktrees/` 配下にワークツリーを作成する。ブランチ名は `merge-upstream-N`（N は連番）とする。
 
 ```
-git worktree add -b merge-upstream-N .worktree/merge-upstream-N dev
+git worktree add -b merge-upstream-N .claude/worktrees/merge-upstream-N dev
 ```
 
 既存のワークツリーを確認して重複しない番号を使うこと:
 ```
-ls .worktree/ | grep merge-upstream
+ls .claude/worktrees/ | grep merge-upstream
 ```
 
 ## 3. ワークツリーで upstream/dev をマージ
 
 ```
-cd .worktree/merge-upstream-N
+cd .claude/worktrees/merge-upstream-N
 git fetch upstream
 git merge upstream/dev
 ```

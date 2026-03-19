@@ -23,7 +23,8 @@ export namespace TruncateEffect {
   export interface Options {
     maxLines?: number
     maxBytes?: number
-    direction?: "head" | "tail"
+    direction?: "head" | "tail" | "rolling"
+    headRatio?: number // rolling: ratio of head portion (default: 0.3)
   }
 
   function hasTaskTool(agent?: Agent.Info) {
@@ -62,7 +63,7 @@ export namespace TruncateEffect {
       const output = Effect.fn("Truncate.output")(function* (text: string, options: Options = {}, agent?: Agent.Info) {
         const maxLines = options.maxLines ?? MAX_LINES
         const maxBytes = options.maxBytes ?? MAX_BYTES
-        const direction = options.direction ?? "head"
+        const direction = options.direction ?? "rolling"
         const lines = text.split("\n")
         const totalBytes = Buffer.byteLength(text, "utf-8")
 
@@ -70,13 +71,13 @@ export namespace TruncateEffect {
           return { content: text, truncated: false } as const
         }
 
-        const out: string[] = []
-        let i = 0
+        let preview: string
         let bytes = 0
         let hitBytes = false
 
         if (direction === "head") {
-          for (i = 0; i < lines.length && i < maxLines; i++) {
+          const out: string[] = []
+          for (let i = 0; i < lines.length && i < maxLines; i++) {
             const size = Buffer.byteLength(lines[i], "utf-8") + (i > 0 ? 1 : 0)
             if (bytes + size > maxBytes) {
               hitBytes = true
@@ -85,8 +86,10 @@ export namespace TruncateEffect {
             out.push(lines[i])
             bytes += size
           }
-        } else {
-          for (i = lines.length - 1; i >= 0 && out.length < maxLines; i--) {
+          preview = out.join("\n")
+        } else if (direction === "tail") {
+          const out: string[] = []
+          for (let i = lines.length - 1; i >= 0 && out.length < maxLines; i--) {
             const size = Buffer.byteLength(lines[i], "utf-8") + (out.length > 0 ? 1 : 0)
             if (bytes + size > maxBytes) {
               hitBytes = true
@@ -95,11 +98,45 @@ export namespace TruncateEffect {
             out.unshift(lines[i])
             bytes += size
           }
+          preview = out.join("\n")
+        } else {
+          // rolling: preserve head + tail
+          const headRatio = options.headRatio ?? 0.3
+          const headMaxLines = Math.max(1, Math.floor(maxLines * headRatio))
+          const tailMaxLines = Math.max(1, maxLines - headMaxLines)
+          const headMaxBytes = Math.floor(maxBytes * headRatio)
+          const tailMaxBytes = maxBytes - headMaxBytes
+
+          const headLines: string[] = []
+          let headBytes = 0
+          for (let h = 0; h < lines.length && h < headMaxLines; h++) {
+            const size = Buffer.byteLength(lines[h], "utf-8") + (h > 0 ? 1 : 0)
+            if (headBytes + size > headMaxBytes) {
+              hitBytes = true
+              break
+            }
+            headLines.push(lines[h])
+            headBytes += size
+          }
+
+          const tailLines: string[] = []
+          let tailBytes = 0
+          for (let t = lines.length - 1; t >= headLines.length && tailLines.length < tailMaxLines; t--) {
+            const size = Buffer.byteLength(lines[t], "utf-8") + (tailLines.length > 0 ? 1 : 0)
+            if (tailBytes + size > tailMaxBytes) {
+              hitBytes = true
+              break
+            }
+            tailLines.unshift(lines[t])
+            tailBytes += size
+          }
+
+          bytes = headBytes + tailBytes
+          const removed = hitBytes ? totalBytes - bytes : lines.length - headLines.length - tailLines.length
+          const unit = hitBytes ? "bytes" : "lines"
+          preview = `${headLines.join("\n")}\n\n[... ${removed} ${unit} truncated ...]\n\n${tailLines.join("\n")}`
         }
 
-        const removed = hitBytes ? totalBytes - bytes : lines.length - out.length
-        const unit = hitBytes ? "bytes" : "lines"
-        const preview = out.join("\n")
         const file = path.join(TRUNCATION_DIR, ToolID.ascending())
 
         yield* fs.ensureDir(TRUNCATION_DIR).pipe(Effect.orDie)
@@ -109,11 +146,21 @@ export namespace TruncateEffect {
           ? `The tool call succeeded but the output was truncated. Full output saved to: ${file}\nUse the Task tool to have explore agent process this file with Grep and Read (with offset/limit). Do NOT read the full file yourself - delegate to save context.`
           : `The tool call succeeded but the output was truncated. Full output saved to: ${file}\nUse Grep to search the full content or Read with offset/limit to view specific sections.`
 
+        let content: string
+        if (direction === "rolling") {
+          content = `${preview}\n\n${hint}`
+        } else if (direction === "head") {
+          const removed = hitBytes ? totalBytes - bytes : lines.length - preview.split("\n").length
+          const unit = hitBytes ? "bytes" : "lines"
+          content = `${preview}\n\n...${removed} ${unit} truncated...\n\n${hint}`
+        } else {
+          const removed = hitBytes ? totalBytes - bytes : lines.length - preview.split("\n").length
+          const unit = hitBytes ? "bytes" : "lines"
+          content = `...${removed} ${unit} truncated...\n\n${hint}\n\n${preview}`
+        }
+
         return {
-          content:
-            direction === "head"
-              ? `${preview}\n\n...${removed} ${unit} truncated...\n\n${hint}`
-              : `...${removed} ${unit} truncated...\n\n${hint}\n\n${preview}`,
+          content,
           truncated: true,
           outputPath: file,
         } as const

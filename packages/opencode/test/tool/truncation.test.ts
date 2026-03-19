@@ -18,7 +18,7 @@ describe("Truncate", () => {
       const result = await Truncate.output(content)
 
       expect(result.truncated).toBe(true)
-      expect(result.content).toContain("truncated...")
+      expect(result.content).toContain("truncated")
       if (result.truncated) expect(result.outputPath).toBeDefined()
     })
 
@@ -30,9 +30,20 @@ describe("Truncate", () => {
       expect(result.content).toBe(content)
     })
 
-    test("truncates by line count", async () => {
+    test("truncates by line count with rolling (default)", async () => {
       const lines = Array.from({ length: 100 }, (_, i) => `line${i}`).join("\n")
       const result = await Truncate.output(lines, { maxLines: 10 })
+
+      expect(result.truncated).toBe(true)
+      expect(result.content).toContain("truncated")
+      // rolling: both head and tail preserved
+      expect(result.content).toContain("line0")
+      expect(result.content).toContain("line99")
+    })
+
+    test("truncates by line count with head direction", async () => {
+      const lines = Array.from({ length: 100 }, (_, i) => `line${i}`).join("\n")
+      const result = await Truncate.output(lines, { maxLines: 10, direction: "head" })
 
       expect(result.truncated).toBe(true)
       expect(result.content).toContain("...90 lines truncated...")
@@ -43,12 +54,25 @@ describe("Truncate", () => {
       const result = await Truncate.output(content, { maxBytes: 100 })
 
       expect(result.truncated).toBe(true)
-      expect(result.content).toContain("truncated...")
+      expect(result.content).toContain("truncated")
     })
 
-    test("truncates from head by default", async () => {
+    test("rolling truncation preserves head and tail by default", async () => {
       const lines = Array.from({ length: 10 }, (_, i) => `line${i}`).join("\n")
       const result = await Truncate.output(lines, { maxLines: 3 })
+
+      expect(result.truncated).toBe(true)
+      // headRatio=0.3: floor(3*0.3)=0 -> max(1,0)=1 head line, 2 tail lines
+      expect(result.content).toContain("line0")
+      expect(result.content).toContain("line8")
+      expect(result.content).toContain("line9")
+      expect(result.content).toContain("[...")
+      expect(result.content).toContain("truncated ...]")
+    })
+
+    test("truncates from head when direction is head", async () => {
+      const lines = Array.from({ length: 10 }, (_, i) => `line${i}`).join("\n")
+      const result = await Truncate.output(lines, { maxLines: 3, direction: "head" })
 
       expect(result.truncated).toBe(true)
       expect(result.content).toContain("line0")
@@ -78,7 +102,7 @@ describe("Truncate", () => {
       const result = await Truncate.output(content)
 
       expect(result.truncated).toBe(true)
-      expect(result.content).toContain("bytes truncated...")
+      expect(result.content).toContain("bytes truncated")
       expect(Buffer.byteLength(content, "utf-8")).toBeGreaterThan(Truncate.MAX_BYTES)
     })
 
@@ -115,6 +139,41 @@ describe("Truncate", () => {
       expect(result.truncated).toBe(true)
       expect(result.content).toContain("Grep")
       expect(result.content).not.toContain("Task tool")
+    })
+
+    test("rolling: head and tail do not overlap", async () => {
+      const lines = Array.from({ length: 20 }, (_, i) => `line${i}`).join("\n")
+      const result = await Truncate.output(lines, { maxLines: 10 })
+
+      expect(result.truncated).toBe(true)
+      // headRatio=0.3: floor(10*0.3)=3 head lines, 7 tail lines
+      expect(result.content).toContain("line0")
+      expect(result.content).toContain("line1")
+      expect(result.content).toContain("line2")
+      expect(result.content).toContain("line13")
+      expect(result.content).toContain("line19")
+      // Lines in the middle should not appear
+      expect(result.content).not.toContain("line5\n")
+    })
+
+    test("rolling: custom headRatio", async () => {
+      const lines = Array.from({ length: 20 }, (_, i) => `line${i}`).join("\n")
+      const result = await Truncate.output(lines, { maxLines: 10, headRatio: 0.7 })
+
+      expect(result.truncated).toBe(true)
+      // headRatio=0.7: floor(10*0.7)=7 head lines, 3 tail lines
+      expect(result.content).toContain("line0")
+      expect(result.content).toContain("line6")
+      expect(result.content).toContain("line17")
+      expect(result.content).toContain("line19")
+    })
+
+    test("rolling: marker contains truncated count", async () => {
+      const lines = Array.from({ length: 20 }, (_, i) => `line${i}`).join("\n")
+      const result = await Truncate.output(lines, { maxLines: 10 })
+
+      expect(result.truncated).toBe(true)
+      expect(result.content).toContain("[... 10 lines truncated ...]")
     })
 
     test("does not write file when not truncated", async () => {

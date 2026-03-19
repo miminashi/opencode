@@ -293,6 +293,8 @@ export namespace SessionPrompt {
     let structuredOutput: unknown | undefined
 
     let step = 0
+    let planExitReminderCount = 0
+    const MAX_PLAN_EXIT_REMINDERS = 2
     const session = await Session.get(sessionID)
     while (true) {
       SessionStatus.set(sessionID, { type: "busy" })
@@ -719,6 +721,47 @@ export namespace SessionPrompt {
       }
 
       if (result === "stop") break
+
+      // Plan mode: remind LLM to call plan_exit if it ended without doing so
+      if (
+        agent.name === "plan" &&
+        modelFinished &&
+        !processor.message.error &&
+        result !== "compact" &&
+        planExitReminderCount < MAX_PLAN_EXIT_REMINDERS
+      ) {
+        const assistantParts = await MessageV2.parts(processor.message.id)
+        const calledPlanExit = assistantParts.some(
+          (p) => p.type === "tool" && p.tool === "plan_exit",
+        )
+
+        if (!calledPlanExit) {
+          planExitReminderCount++
+          log.info("plan_exit reminder", { sessionID, attempt: planExitReminderCount })
+
+          const reminderMsg: MessageV2.User = {
+            id: MessageID.ascending(),
+            sessionID,
+            role: "user",
+            time: { created: Date.now() },
+            agent: lastUser.agent,
+            model: lastUser.model,
+          }
+          await Session.updateMessage(reminderMsg)
+          await Session.updatePart({
+            id: PartID.ascending(),
+            messageID: reminderMsg.id,
+            sessionID,
+            type: "text",
+            text: planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
+              ? "<system-reminder>You stopped without calling plan_exit. This is your FINAL reminder. You MUST call the plan_exit tool NOW.</system-reminder>"
+              : "<system-reminder>You ended your turn without calling the plan_exit tool. You MUST call plan_exit to complete your planning turn. Do NOT end without calling plan_exit.</system-reminder>",
+            synthetic: true,
+          } satisfies MessageV2.TextPart)
+          continue
+        }
+      }
+
       if (result === "compact") {
         await SessionCompaction.create({
           sessionID,

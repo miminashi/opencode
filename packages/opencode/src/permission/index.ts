@@ -117,6 +117,7 @@ export namespace PermissionNext {
     readonly ask: (input: z.infer<typeof AskInput>) => Effect.Effect<void, Error>
     readonly reply: (input: z.infer<typeof ReplyInput>) => Effect.Effect<void>
     readonly list: () => Effect.Effect<Request[]>
+    readonly approve: (rules: Ruleset) => Effect.Effect<void>
   }
 
   interface PendingEntry {
@@ -242,7 +243,11 @@ export namespace PermissionNext {
         return Array.from(pending.values(), (item) => item.info)
       })
 
-      return Service.of({ ask, reply, list })
+      const approve = Effect.fn("Permission.approve")(function* (rules: Ruleset) {
+        approved.push(...rules)
+      })
+
+      return Service.of({ ask, reply, list, approve })
     }),
   )
 
@@ -278,6 +283,10 @@ export namespace PermissionNext {
 
   export async function list() {
     return runPromiseInstance(Service.use((svc) => svc.list()))
+  }
+
+  export async function approve(rules: Ruleset) {
+    return runPromiseInstance(Service.use((svc) => svc.approve(rules)))
   }
 
   const EDIT_TOOLS = ["edit", "write", "apply_patch", "multiedit"]

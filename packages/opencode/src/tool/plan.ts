@@ -8,7 +8,7 @@ import { Provider } from "../provider/provider"
 import { Instance } from "../project/instance"
 import { Filesystem } from "../util/filesystem"
 import { SessionCompaction } from "../session/compaction"
-import { PermissionNext } from "../permission"
+import { Permission } from "../permission"
 import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import { type SessionID, MessageID, PartID } from "../session/schema"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
@@ -65,7 +65,7 @@ export const PlanExitTool = Tool.define("plan_exit", {
 
     const autoAcceptLabel = "Yes, clear context and auto-accept edits"
     if (answer === autoAcceptLabel) {
-      await PermissionNext.approve([
+      await Permission.approve([
         { permission: "edit", pattern: "*", action: "allow" },
       ])
 

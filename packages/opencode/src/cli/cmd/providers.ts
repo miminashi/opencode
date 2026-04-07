@@ -303,7 +303,7 @@ export const ProvidersLoginCommand = cmd({
           prompts.outro("Done")
           return
         }
-        await ModelsDev.refresh().catch(() => {})
+        await ModelsDev.refresh(true).catch(() => {})
 
         const config = await Config.get()
 
@@ -349,7 +349,6 @@ export const ProvidersLoginCommand = cmd({
               value: x.id,
               hint: {
                 opencode: "recommended",
-                anthropic: "API key",
                 openai: "ChatGPT Plus/Pro or API key",
               }[x.id],
             })),

@@ -295,6 +295,8 @@ export namespace SessionPrompt {
     let step = 0
     let planExitReminderCount = 0
     const MAX_PLAN_EXIT_REMINDERS = 2
+    let truncationRetryCount = 0
+    const MAX_TRUNCATION_RETRIES = 2
     const session = await Session.get(sessionID)
     while (true) {
       SessionStatus.set(sessionID, { type: "busy" })
@@ -717,6 +719,48 @@ export namespace SessionPrompt {
           }).toObject()
           await Session.updateMessage(processor.message)
           break
+        }
+      }
+
+      // Detect truncated tool calls due to output token limit
+      if (processor.message.finish === "length" && !processor.message.error) {
+        const assistantParts = await MessageV2.parts(processor.message.id)
+        const truncatedTools = assistantParts
+          .filter(
+            (p): p is MessageV2.ToolPart =>
+              p.type === "tool" && p.tool === "invalid" && p.state.status === "completed",
+          )
+          .map((p) => (p.state as MessageV2.ToolStateCompleted).input?.tool ?? "unknown")
+
+        if (truncatedTools.length > 0) {
+          truncationRetryCount++
+          log.info("truncated tool call detected", { sessionID, attempt: truncationRetryCount })
+
+          if (truncationRetryCount > MAX_TRUNCATION_RETRIES) {
+            log.info("truncation retry limit reached", { sessionID })
+            break
+          }
+
+          const toolNames = [...new Set(truncatedTools)].join(", ")
+          const tokenLimit = ProviderTransform.maxOutputTokens(model)
+          const reminderMsg: MessageV2.User = {
+            id: MessageID.ascending(),
+            sessionID,
+            role: "user",
+            time: { created: Date.now() },
+            agent: lastUser.agent,
+            model: lastUser.model,
+          }
+          await Session.updateMessage(reminderMsg)
+          await Session.updatePart({
+            id: PartID.ascending(),
+            messageID: reminderMsg.id,
+            sessionID,
+            type: "text",
+            text: `<system-reminder>Your previous "${toolNames}" tool call was TRUNCATED because your output exceeded the maximum token limit (${tokenLimit} tokens). The JSON arguments were cut off mid-string.\n\nYou MUST reduce the content size. Strategies:\n- Write a much shorter version of the content\n- Break large writes into multiple smaller tool calls\n- Use the edit tool to append sections incrementally\n\nDo NOT retry with the same large content.</system-reminder>`,
+            synthetic: true,
+          } satisfies MessageV2.TextPart)
+          continue
         }
       }
 

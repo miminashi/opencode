@@ -10,6 +10,7 @@ import { EmptyBorder, SplitBorder } from "@tui/component/border"
 import { useSDK } from "@tui/context/sdk"
 import { useRoute } from "@tui/context/route"
 import { useSync } from "@tui/context/sync"
+import { useEvent } from "@tui/context/event"
 import { MessageID, PartID } from "@/session/schema"
 import { createStore, produce } from "solid-js/store"
 import { useKeybind } from "@tui/context/keybind"
@@ -36,7 +37,6 @@ import { useToast } from "../../ui/toast"
 import { useKV } from "../../context/kv"
 import { useTextareaKeybindings } from "../textarea-keybindings"
 import { DialogSkill } from "../dialog-skill"
-import { CONSOLE_MANAGED_ICON, consoleManagedProviderLabel } from "@tui/util/provider-origin"
 
 export type PromptProps = {
   sessionID?: string
@@ -96,15 +96,8 @@ export function Prompt(props: PromptProps) {
   const list = createMemo(() => props.placeholders?.normal ?? [])
   const shell = createMemo(() => props.placeholders?.shell ?? [])
   const [auto, setAuto] = createSignal<AutocompleteRef>()
-  const activeOrgName = createMemo(() => sync.data.console_state.activeOrgName)
-  const canSwitchOrgs = createMemo(() => sync.data.console_state.switchableOrgCount > 1)
-  const currentProviderLabel = createMemo(() => {
-    const current = local.model.current()
-    const provider = local.model.parsed().provider
-    if (!current) return provider
-    return consoleManagedProviderLabel(sync.data.console_state.consoleManagedProviders, current.providerID, provider)
-  })
-  const hasRightContent = createMemo(() => Boolean(props.right || activeOrgName()))
+  const currentProviderLabel = createMemo(() => local.model.parsed().provider)
+  const hasRightContent = createMemo(() => Boolean(props.right))
 
   function promptModelWarning() {
     toast.show({
@@ -123,8 +116,9 @@ export function Prompt(props: PromptProps) {
   const agentStyleId = syntax().getStyleId("extmark.agent")!
   const pasteStyleId = syntax().getStyleId("extmark.paste")!
   let promptPartTypeId = 0
+  const event = useEvent()
 
-  sdk.event.on(TuiEvent.PromptAppend.type, (evt) => {
+  event.on(TuiEvent.PromptAppend.type, (evt) => {
     if (!input || input.isDestroyed) return
     input.insertText(evt.properties.text)
     setTimeout(() => {
@@ -595,6 +589,13 @@ export function Prompt(props: PromptProps) {
   ])
 
   async function submit() {
+    // IME: double-defer may fire before onContentChange flushes the last
+    // composed character (e.g. Korean hangul) to the store, so read
+    // plainText directly and sync before any downstream reads.
+    if (input && !input.isDestroyed && input.plainText !== store.prompt.input) {
+      setStore("prompt", "input", input.plainText)
+      syncExtmarksWithPromptParts()
+    }
     if (props.disabled) return
     if (autocomplete?.visible) return
     if (!store.prompt.input) return
@@ -999,7 +1000,11 @@ export function Prompt(props: PromptProps) {
                     input.cursorOffset = input.plainText.length
                 }
               }}
-              onSubmit={submit}
+              onSubmit={() => {
+                // IME: double-defer so the last composed character (e.g. Korean
+                // hangul) is flushed to plainText before we read it for submission.
+                setTimeout(() => setTimeout(() => submit(), 0), 0)
+              }}
               onPaste={async (event: PasteEvent) => {
                 if (props.disabled) {
                   event.preventDefault()
@@ -1119,17 +1124,6 @@ export function Prompt(props: PromptProps) {
               <Show when={hasRightContent()}>
                 <box flexDirection="row" gap={1} alignItems="center">
                   {props.right}
-                  <Show when={activeOrgName()}>
-                    <text
-                      fg={theme.textMuted}
-                      onMouseUp={() => {
-                        if (!canSwitchOrgs()) return
-                        command.trigger("console.org.switch")
-                      }}
-                    >
-                      {`${CONSOLE_MANAGED_ICON} ${activeOrgName()}`}
-                    </text>
-                  </Show>
                 </box>
               </Show>
             </box>
@@ -1161,7 +1155,7 @@ export function Prompt(props: PromptProps) {
             }
           />
         </box>
-        <box flexDirection="row" justifyContent="space-between">
+        <box width="100%" flexDirection="row" justifyContent="space-between">
           <Show when={status().type !== "idle"} fallback={props.hint ?? <text />}>
             <box
               flexDirection="row"

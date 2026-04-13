@@ -1,5 +1,6 @@
 import z from "zod"
 import path from "path"
+import { Effect } from "effect"
 import { Tool } from "./tool"
 import { Question } from "../question"
 import { Session } from "../session"
@@ -13,174 +14,143 @@ import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import { type SessionID, MessageID, PartID } from "../session/schema"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
 
-async function getLastModel(sessionID: SessionID) {
-  for await (const item of MessageV2.stream(sessionID)) {
+function getLastModel(sessionID: SessionID) {
+  for (const item of MessageV2.stream(sessionID)) {
     if (item.info.role === "user" && item.info.model) return item.info.model
   }
-  return Provider.defaultModel()
+  return undefined
 }
 
-export const PlanExitTool = Tool.define("plan_exit", {
-  description: EXIT_DESCRIPTION,
-  parameters: z.object({}),
-  async execute(_params, ctx) {
-    const session = await Session.get(ctx.sessionID)
-    const planPath = Session.plan(session)
-    const plan = path.relative(Instance.worktree, planPath)
-
-    let planContent = ""
-    try {
-      planContent = await Filesystem.readText(planPath)
-    } catch {
-      // Plan file doesn't exist
-    }
-
-    if (!planContent) {
-      throw new Error(
-        `Plan file does not exist at ${plan}. You must save the plan to this file using the Write tool before calling plan_exit.`,
-      )
-    }
-
-    const questionText = `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
-
-    const answers = await Question.ask({
-      sessionID: ctx.sessionID,
-      questions: [
-        {
-          question: questionText,
-          header: "Build Agent",
-          custom: true,
-          options: [
-            { label: "Yes", description: "Switch to build agent and start implementing the plan" },
-            { label: "Yes, clear context and auto-accept edits", description: "Compact conversation, auto-approve file edits, and start implementing" },
-            { label: "No", description: "Stay with plan agent to continue refining the plan" },
-          ],
-        },
-      ],
-      tool: ctx.callID ? { messageID: ctx.messageID, callID: ctx.callID } : undefined,
-    })
-
-    const answer = answers[0]?.[0]
-    if (answer === "No") throw new Question.RejectedError()
-
-    const autoAcceptLabel = "Yes, clear context and auto-accept edits"
-    if (answer === autoAcceptLabel) {
-      await Permission.approve([
-        { permission: "edit", pattern: "*", action: "allow" },
-      ])
-
-      const model = await getLastModel(ctx.sessionID)
-      const buildSwitchText = BUILD_SWITCH + "\n\n" +
-        `A plan file exists at ${plan}. ` +
-        `Your FIRST action must be to read this plan file, then execute every step defined in it. ` +
-        `Do not ask for confirmation or summarize the plan — begin executing immediately by reading the file.`
-      await SessionCompaction.create({
-        sessionID: ctx.sessionID,
-        agent: "build",
-        model: { providerID: model.providerID, modelID: model.modelID },
-        auto: true,
-        continueText: buildSwitchText,
-        clear: true,
-      })
-
-      return {
-        title: "Switching to build agent (clearing context, auto-accept edits)",
-        output: "User approved switching to build agent with context clearing and auto-accept edits. Wait for further instructions.",
-        metadata: {},
-      }
-    }
-
-    if (answer !== "Yes") {
-      throw new Error(
-        `The user wants you to refine the plan with the following feedback:\n\n${answer}\n\nRevise the plan file at ${plan} and call plan_exit again.`,
-      )
-    }
-
-    const model = await getLastModel(ctx.sessionID)
-
-    const userMsg: MessageV2.User = {
-      id: MessageID.ascending(),
-      sessionID: ctx.sessionID,
-      role: "user",
-      time: {
-        created: Date.now(),
-      },
-      agent: "build",
-      model,
-    }
-    await Session.updateMessage(userMsg)
-    await Session.updatePart({
-      id: PartID.ascending(),
-      messageID: userMsg.id,
-      sessionID: ctx.sessionID,
-      type: "text",
-      text: `The plan at ${plan} has been approved, you can now edit files. Execute the plan`,
-      synthetic: true,
-    } satisfies MessageV2.TextPart)
+export const PlanExitTool = Tool.define(
+  "plan_exit",
+  Effect.gen(function* () {
+    const session = yield* Session.Service
+    const question = yield* Question.Service
+    const provider = yield* Provider.Service
+    const permission = yield* Permission.Service
+    const compaction = yield* SessionCompaction.Service
 
     return {
-      title: "Switching to build agent",
-      output: "User approved switching to build agent. Wait for further instructions.",
-      metadata: {},
+      description: EXIT_DESCRIPTION,
+      parameters: z.object({}),
+      execute: (_params: {}, ctx: Tool.Context) =>
+        Effect.gen(function* () {
+          const info = yield* session.get(ctx.sessionID)
+          const planPath = Session.plan(info)
+          const plan = path.relative(Instance.worktree, planPath)
+
+          let planContent = ""
+          try {
+            planContent = yield* Effect.promise(() => Filesystem.readText(planPath))
+          } catch {
+            // Plan file doesn't exist
+          }
+
+          if (!planContent) {
+            throw new Error(
+              `Plan file does not exist at ${plan}. You must save the plan to this file using the Write tool before calling plan_exit.`,
+            )
+          }
+
+          const questionText = `Plan at ${plan} is complete. Would you like to switch to the build agent and start implementing?\n\n---\n\n${planContent}`
+
+          const answers = yield* question.ask({
+            sessionID: ctx.sessionID,
+            questions: [
+              {
+                question: questionText,
+                header: "Build Agent",
+                custom: true,
+                options: [
+                  { label: "Yes", description: "Switch to build agent and start implementing the plan" },
+                  { label: "Yes, clear context and auto-accept edits", description: "Compact conversation, auto-approve file edits, and start implementing" },
+                  { label: "No", description: "Stay with plan agent to continue refining the plan" },
+                ],
+              },
+            ],
+            tool: ctx.callID ? { messageID: ctx.messageID, callID: ctx.callID } : undefined,
+          })
+
+          const answer = answers[0]?.[0]
+          if (answer === "No") yield* new Question.RejectedError()
+
+          const autoAcceptLabel = "Yes, clear context and auto-accept edits"
+          if (answer === autoAcceptLabel) {
+            yield* permission.approve([
+              { permission: "edit", pattern: "*", action: "allow" },
+            ])
+
+            const model = getLastModel(ctx.sessionID) ?? (yield* provider.defaultModel())
+            const buildSwitchText = BUILD_SWITCH + "\n\n" +
+              `A plan file exists at ${plan}. ` +
+              `Your FIRST action must be to read this plan file, then execute every step defined in it. ` +
+              `Do not ask for confirmation or summarize the plan — begin executing immediately by reading the file.`
+            yield* compaction.create({
+              sessionID: ctx.sessionID,
+              agent: "build",
+              model: { providerID: model.providerID, modelID: model.modelID },
+              auto: true,
+              overflow: false,
+            })
+
+            // Insert a synthetic user message with build switch text after compaction
+            const continueMsg: MessageV2.User = {
+              id: MessageID.ascending(),
+              sessionID: ctx.sessionID,
+              role: "user",
+              time: { created: Date.now() },
+              agent: "build",
+              model,
+            }
+            yield* session.updateMessage(continueMsg)
+            yield* session.updatePart({
+              id: PartID.ascending(),
+              messageID: continueMsg.id,
+              sessionID: ctx.sessionID,
+              type: "text",
+              text: buildSwitchText,
+              synthetic: true,
+            } satisfies MessageV2.TextPart)
+
+            return {
+              title: "Switching to build agent (clearing context, auto-accept edits)",
+              output: "User approved switching to build agent with context clearing and auto-accept edits. Wait for further instructions.",
+              metadata: {},
+            }
+          }
+
+          if (answer !== "Yes") {
+            throw new Error(
+              `The user wants you to refine the plan with the following feedback:\n\n${answer}\n\nRevise the plan file at ${plan} and call plan_exit again.`,
+            )
+          }
+
+          const model = getLastModel(ctx.sessionID) ?? (yield* provider.defaultModel())
+
+          const msg: MessageV2.User = {
+            id: MessageID.ascending(),
+            sessionID: ctx.sessionID,
+            role: "user",
+            time: { created: Date.now() },
+            agent: "build",
+            model,
+          }
+          yield* session.updateMessage(msg)
+          yield* session.updatePart({
+            id: PartID.ascending(),
+            messageID: msg.id,
+            sessionID: ctx.sessionID,
+            type: "text",
+            text: `The plan at ${plan} has been approved, you can now edit files. Execute the plan`,
+            synthetic: true,
+          } satisfies MessageV2.TextPart)
+
+          return {
+            title: "Switching to build agent",
+            output: "User approved switching to build agent. Wait for further instructions.",
+            metadata: {},
+          }
+        }).pipe(Effect.orDie),
     }
-  },
-})
-
-/*
-export const PlanEnterTool = Tool.define("plan_enter", {
-  description: ENTER_DESCRIPTION,
-  parameters: z.object({}),
-  async execute(_params, ctx) {
-    const session = await Session.get(ctx.sessionID)
-    const plan = path.relative(Instance.worktree, Session.plan(session))
-
-    const answers = await Question.ask({
-      sessionID: ctx.sessionID,
-      questions: [
-        {
-          question: `Would you like to switch to the plan agent and create a plan saved to ${plan}?`,
-          header: "Plan Mode",
-          custom: false,
-          options: [
-            { label: "Yes", description: "Switch to plan agent for research and planning" },
-            { label: "No", description: "Stay with build agent to continue making changes" },
-          ],
-        },
-      ],
-      tool: ctx.callID ? { messageID: ctx.messageID, callID: ctx.callID } : undefined,
-    })
-
-    const answer = answers[0]?.[0]
-
-    if (answer === "No") throw new Question.RejectedError()
-
-    const model = await getLastModel(ctx.sessionID)
-
-    const userMsg: MessageV2.User = {
-      id: MessageID.ascending(),
-      sessionID: ctx.sessionID,
-      role: "user",
-      time: {
-        created: Date.now(),
-      },
-      agent: "plan",
-      model,
-    }
-    await Session.updateMessage(userMsg)
-    await Session.updatePart({
-      id: PartID.ascending(),
-      messageID: userMsg.id,
-      sessionID: ctx.sessionID,
-      type: "text",
-      text: "User has requested to enter plan mode. Switch to plan mode and begin planning.",
-      synthetic: true,
-    } satisfies MessageV2.TextPart)
-
-    return {
-      title: "Switching to plan agent",
-      output: `User confirmed to switch to plan mode. A new message has been created to switch you to plan mode. The plan file will be at ${plan}. Begin planning.`,
-      metadata: {},
-    }
-  },
-})
-*/
+  }),
+)

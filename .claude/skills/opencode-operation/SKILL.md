@@ -357,6 +357,7 @@ CLAUDE.md「ytdlor プロジェクトの操作方針」に従い、以下を判�
 
 ## チェックリスト（操作前の確認）
 
+- [ ] LLM サーバー（llama-server）が起動しているか（`curl -s http://10.1.4.14:8000/slots` で確認。未起動なら `llama-server` スキルで起動）
 - [ ] `OPENCODE_EXPERIMENTAL_PLAN_MODE=1` を付けているか（plan agent 使用時）
 - [ ] `C-m` を使って Enter を送っているか（`Enter` リテラルではなく）
 - [ ] テキストと `C-m` を分けて送っているか
@@ -423,6 +424,7 @@ tmux capture-pane -t default:opencode-test -p
 2. **手順妥当性**: 各ステップが論理的に正しいか、順序は適切か
 3. **リスク配慮**: 破壊的操作、データ損失、セキュリティリスクへの配慮があるか
 4. **テスト計画**: 変更の検証手段が含まれているか
+5. **言語**: 計画が日本語で記述されているか。日本語以外の場合は修正を指示する
 
 ### Step 6: 計画の承認または修正
 
@@ -442,6 +444,14 @@ tmux send-keys -t default:opencode-test '2'
 tmux send-keys -t default:opencode-test '3'
 # plan agent に戻ったら追加指示を送信
 tmux send-keys -t default:opencode-test '修正指示内容' C-m
+```
+
+**言語チェック**: 計画が日本語以外で提示された場合、"3" を選択して日本語での再作成を指示する:
+
+```bash
+tmux send-keys -t default:opencode-test '3'
+# plan agent に戻ったら日本語での再作成を指示
+tmux send-keys -t default:opencode-test '計画を日本語で再作成してください' C-m
 ```
 
 ### Step 7: build agent の監視

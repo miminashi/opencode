@@ -7,14 +7,18 @@
 ユーザー体験向上のため、Bash コマンドより専用ツールを優先すること:
 
 - ファイル読み取り: Read ツール（`cat`/`head`/`tail` ではなく）
-- ファイル一覧: Glob ツール（`ls`/`find` ではなく）
-- 内容検索: Grep ツール（`grep`/`rg` ではなく）
+- ファイル一覧: Glob ツール（`ls`/`find` ではなく。Bash の `find` コマンドは使用禁止）
+- 内容検索: Grep ツール（`grep`/`rg` ではなく。Bash の `grep` コマンドは使用禁止。`grep ... 2>/dev/null` は grep 自体と `2>/dev/null` の二重違反）
 - ファイル編集: Edit ツール（`sed`/`awk` ではなく）
 - ファイル作成: Write ツール（`echo >` ではなく）
 - 変数表示・exit code 確認: `echo` コマンドは使用しない
   - `echo $?` は動作しない（Bash ツールは呼び出しごとに別プロセスで `$?` は常に 0）
   - 変数展開（`$VAR`）を含むコマンドはセキュリティチェックで承認を求められる場合がある
   - 値の確認が必要な場合は、コマンド自体の出力や専用ツールを使う
+- シェル環境の調査コマンド（`alias`、`type`、`set`、`env`）を使用しない
+  - `alias` → "evaluates arguments as shell code" で承認を求められる
+  - `type`/`which` で外部コマンドを探す代わりに、パスが既知のコマンドは絶対パスで実行する
+  - 環境変数の確認は `printenv VAR_NAME` を使う（`echo $VAR` ではなく）
 
 ### bun コマンドの注意事項
 
@@ -22,21 +26,35 @@
 - `--cwd` は `run` サブコマンドの**後**に置く（`bun --cwd /path run ...` は動作しない）
 - `bunx --cwd` は動作しない → `bun run --cwd /path <script>` で代替
 
-### 複合コマンドの禁止
+### tmux コマンドの注意事項
 
-承認プロンプトを回避するため、以下のパターンは**使用禁止**:
+- `tmux list-windows` に `-F` フラグで `#` を含むフォーマット文字列を指定しない
+  - `tmux list-windows -t default -F '#W'` → `#` がセキュリティチェックに引っかかり allow ルールがあっても承認を求められる
+  - `tmux list-windows -t default` で代替（デフォルト出力にウインドウ名が含まれる）
 
-- `cd /path && ...`（bare repository attack / path resolution bypass 検知で必ず承認を求められる）
+### 複合コマンド・特殊構文の禁止
+
+承認プロンプトを回避するため、以下のパターンは**使用禁止**（allow ルールでは回避不可能なハードコードされたセキュリティチェック）:
+
+- **`cd /path && ...` は絶対に使用しない**（bare repository attack / path resolution bypass 検知）
   - git の場合: `git -C /path <subcommand>` で代替
   - ファイル読み取りの場合: Read ツールで絶対パスを指定
   - ファイル検索の場合: Grep/Glob ツールで path パラメータを指定
   - 例: `git -C .claude/worktrees/branch-name status`
-  - 例: `git -C .claude/worktrees/branch-name log --oneline -5`
-- **`&&`/`;` によるコマンドチェーンを原則使用しない**
+  - 例: `git -C /home/ubuntu/projects/ytdlor log --oneline -5`
+  - 例: `git -C /home/ubuntu/projects/ytdlor branch -a`
+  - 例: `git -C /home/ubuntu/projects/ytdlor diff ref1:file ref2:file`
+  - 例: `git -C /home/ubuntu/projects/ytdlor show branch-name:path/to/file`
+- **`&&`/`||`/`;` によるコマンドチェーンを使用しない**
   - 複数のコマンドが必要な場合は、**個別の Bash ツール呼び出しに分ける**
-  - 例外: 単一目的の短いパイプ（`echo "$var" | grep -q pattern`）は許可
-- `&&`/`;` チェーンに引用符付き文字列を含めない（quoted characters 検知を回避）
-- **`2>/dev/null` を使用しない**（output redirection `>` 検知で必ず承認を求められる）
+- **パイプ（`|`）を含むコマンドを使用しない**
+  - `tmux list-windows ... | grep ...` → `tmux list-windows -t default` 単独で実行
+  - `curl ... | python3 ...` → スクリプトファイルに書き出して実行
+  - allow ルールはパイプの左側コマンドにのみ適用され、右側は別途チェックされる
+- **プロセス置換 `<()` を使用しない**
+  - `diff <(git show ref1:file) <(git show ref2:file)` → `git -C /path diff ref1:file ref2:file` で代替
+- **全てのリダイレクション演算子を使用しない**（`>`, `2>`, `&>`, `2>&1`, `2>/dev/null`）
+  - output redirection 検知で必ず承認を求められる
   - エラー出力はそのまま表示させる
   - ファイルの存在確認は `test -f /path` や Glob ツールで代替
 - **バックスラッシュ+シェル演算子（`\;` `\|` `\&` `\<` `\>`）を含むコマンドを使用しない**
@@ -52,6 +70,18 @@
 - 許可済みコマンド（`bash`、`python3`、`ruby` 等）でスクリプトを実行する
   - 例: Write ツールで `./tmp/search.sh` を作成 → `bash ./tmp/search.sh` で実行
 - これにより、バックスラッシュ・特殊文字・複合コマンドのセキュリティチェックを回避できる
+- **`python3 -c "..."` は絶対に使用しない** — 必ずファイルに書き出してから実行する
+  - Write ツールで `./tmp/<適切な名前>.py` を作成 → `python3 ./tmp/<名前>.py` で実行
+  - 以下の条件で allow ルールがあっても承認を求められる（回避不可能）:
+    - 複数行コード内の `#` コメント → "quoted newline followed by #-prefixed line"
+    - 連続する引用符（`'...'` 内の `"` 等）→ "consecutive quote characters"
+  - `curl` の出力を Python で処理する場合も、スクリプトファイル内で `subprocess` を使う
+
+### sensitive file アクセスの回避
+
+- **`.claude/plans/` ファイルのコピーに `cp` コマンドを使用しない**
+  - `cp` で `.claude/plans/` にアクセスすると "sensitive file" 警告が発生する
+  - Read ツールで読み取り → Write ツールで書き出しに代替する
 
 ### 破壊的操作
 
@@ -59,7 +89,10 @@
 
 ### プロジェクトルート外へのアクセス
 
-- それ以外のプロジェクト外パス（`~/.local/share/`, `/tmp/` 等）はユーザーに確認してから操作
+- プロジェクト外パス（`/tmp/`, `/var/samba/`, `~/.local/share/`, `/usr/local/bin/` 等）への**読み取り・書き込み・ディレクトリ作成**はユーザーに確認してから操作
+- Glob/Read ツールでプロジェクト外パスを指定する場合も承認プロンプトが出る
+- システムの探索（`ls /var/...`、`ls ~/bin/`、Glob で `/usr/local/bin/` を検索等）は行わない
+- `mkdir -p /tmp/...` もプロジェクト外アクセスに該当するため確認が必要
 
 ### ytdlor プロジェクトの操作方針
 
@@ -68,8 +101,8 @@
   - opencode-test ウインドウで opencode を起動し、プロンプトに操作内容を入力する
 - 以下の場合は直接操作してよい:
   - コードの閲覧・調査（Read/Grep/Glob）
-  - git 読み取り操作（status, log, diff, show 等）
-  - git ブランチ管理操作（checkout, switch, branch 作成, merge, branch -d 等）— コード内容を直接変更しないリポジトリ管理操作
+  - git 読み取り操作（status, log, diff, show 等）— **`git -C /home/ubuntu/projects/ytdlor` を必ず使う**（`cd && git` やパイプは禁止。上記「複合コマンド・特殊構文の禁止」参照）
+  - git ブランチ管理操作（checkout, switch, branch 作成, merge, branch -d 等）— コード内容を直接変更しないリポジトリ管理操作。**`git -C` を使う**
   - `.claude/` ディレクトリ配下全体の編集（CLAUDE.md, settings.json, skills/, memory/ 等の opencode 設定・定義ファイル）
 - **TUI 失敗時の対処ルール**: TUI がループ・タイムアウト等で失敗した場合、TUI を中断して「直接操作」に切り替えるのは**禁止**。問題を特定し、修正済みのプロンプトで TUI を再起動すること
 - **`tmux send-keys` による直接操作の禁止**: `tmux send-keys` で opencode TUI を経由せずにシェルコマンド（`docker compose build`、`bundle install` 等）を ytdlor 内で直接実行するのは「直接操作」に該当する。TUI の中断後にシェルプロンプトが表示されても、そこでコマンドを直接実行してはならない
@@ -95,24 +128,39 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 
 - タイトルは日本語で記載する
 - 日時（分まで）を記載する
+- レポート内の日時表記は JST (日本標準時) で記載すること。システムが UTC の場合は +9 時間に変換する
 - 以下のセクションを必要に応じて設ける:
   - **前提条件・目的**: 作業やタスクの背景・目的を記載する
+  - **環境情報**: 実験レポートではサーバ構成・ストレージ構成等の環境情報を記載する
   - **再現方法**: 手順やコマンドなど、再現に必要な情報を記載する
   - **参照レポート**: 過去のレポートを参照した場合は、そのレポートへの相対リンクを記載する
   - **結果・所見**: 作業結果や得られた知見を記載する
+
+### 添付ファイル
+
+- スクリーンショット・ログファイル等の添付ファイルは `report/attachment/<レポートファイル名>/` ディレクトリに格納する
+  - `<レポートファイル名>` は `.md` を除いたファイル名（例: `2025-01-15_143000_investigation`）
+- レポート本文から相対パスでリンクする（例: `![screenshot](./attachment/2025-01-15_143000_investigation/screenshot.png)`）
+- プランモードで作成したプランファイルは、添付ファイルディレクトリにコピーして保存する
 
 ### フォーマット例
 
 ```markdown
 # 〇〇機能の実装レポート
 
-- 日時: 2025-01-15 14:30
+- 日時: 2025-01-15 14:30 JST
 - 作成者: Claude
 
 ## 前提条件・目的
 
 - 目的: 〇〇機能を追加するため
 - 前提: △△が既に実装済みであること
+
+## 環境情報
+
+- サーバ: Ubuntu 24.04 LTS
+- ランタイム: Bun v1.x
+- LLM: Qwen3.5-35B-A3B (Q4_K_M)
 
 ## 参照レポート
 
@@ -149,6 +197,13 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
    - ウインドウが存在しない場合は作成する
    - 例: `tmux new-window -t default -n opencode-test` で作成
    - コマンド実行: `tmux send-keys -t default:opencode-test 'command' C-m` で実行
+
+## LLM サーバー前提条件
+
+opencode を実行する前に、LLM サーバー（llama-server）が起動しているか確認すること。
+
+1. `/slots` エンドポイントで起動状態を確認: `curl -s http://10.1.4.14:8000/slots`
+2. サーバーが起動していない場合は、`llama-server` スキルを使用して起動する
 
 ## ワークツリー運用ルール
 

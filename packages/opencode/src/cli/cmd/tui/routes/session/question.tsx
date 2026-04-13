@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store"
-import { createMemo, createSignal, For, Show } from "solid-js"
+import { createMemo, createSignal, For, Match, Show, Switch } from "solid-js"
 import { useKeyboard, useTerminalDimensions } from "@opentui/solid"
 import type { ScrollBoxRenderable, TextareaRenderable } from "@opentui/core"
 import { useKeybind } from "../../context/keybind"
@@ -9,10 +9,11 @@ import { useSDK } from "../../context/sdk"
 import { SplitBorder } from "../../component/border"
 import { useTextareaKeybindings } from "../../component/textarea-keybindings"
 import { useDialog } from "../../ui/dialog"
+import { Flag } from "@/flag/flag"
 
 export function QuestionPrompt(props: { request: QuestionRequest }) {
   const sdk = useSDK()
-  const { theme } = useTheme()
+  const { theme, syntax } = useTheme()
   const keybind = useKeybind()
   const bindings = useTextareaKeybindings()
 
@@ -370,7 +371,29 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                   },
                 }}
               >
-                <text fg={theme.textMuted}>{questionBody()}</text>
+                <Switch>
+                  <Match when={Flag.OPENCODE_EXPERIMENTAL_MARKDOWN}>
+                    <markdown
+                      syntaxStyle={syntax()}
+                      streaming={false}
+                      content={questionBody()!}
+                      conceal={false}
+                      fg={theme.markdownText}
+                      bg={theme.backgroundPanel}
+                    />
+                  </Match>
+                  <Match when={!Flag.OPENCODE_EXPERIMENTAL_MARKDOWN}>
+                    <code
+                      filetype="markdown"
+                      drawUnstyledText={false}
+                      streaming={false}
+                      syntaxStyle={syntax()}
+                      content={questionBody()!}
+                      conceal={false}
+                      fg={theme.text}
+                    />
+                  </Match>
+                </Switch>
               </scrollbox>
             </Show>
             <box flexShrink={0}>

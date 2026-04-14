@@ -117,6 +117,7 @@ export namespace Permission {
     readonly ask: (input: z.infer<typeof AskInput>) => Effect.Effect<void, Error>
     readonly reply: (input: z.infer<typeof ReplyInput>) => Effect.Effect<void>
     readonly list: () => Effect.Effect<Request[]>
+    readonly approve: (rules: Ruleset) => Effect.Effect<void>
   }
 
   interface PendingEntry {
@@ -263,7 +264,12 @@ export namespace Permission {
         return Array.from(pending.values(), (item) => item.info)
       })
 
-      return Service.of({ ask, reply, list })
+      const approve = Effect.fn("Permission.approve")(function* (rules: Ruleset) {
+        const { approved } = yield* InstanceState.get(state)
+        approved.push(...rules)
+      })
+
+      return Service.of({ ask, reply, list, approve })
     }),
   )
 

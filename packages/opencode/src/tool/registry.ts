@@ -329,28 +329,31 @@ export namespace ToolRegistry {
   )
 
   export const defaultLayer = Layer.suspend(() =>
-    layer.pipe(
-      Layer.provide(Config.defaultLayer),
-      Layer.provide(Env.defaultLayer),
-      Layer.provide(Plugin.defaultLayer),
-      Layer.provide(Question.defaultLayer),
-      Layer.provide(Todo.defaultLayer),
-      Layer.provide(Skill.defaultLayer),
-      Layer.provide(Agent.defaultLayer),
-      Layer.provide(Session.defaultLayer),
-      Layer.provide(Provider.defaultLayer),
-      Layer.provide(LSP.defaultLayer),
-      Layer.provide(FileTime.defaultLayer),
-      Layer.provide(Instruction.defaultLayer),
-      Layer.provide(AppFileSystem.defaultLayer),
-      Layer.provide(Bus.layer),
-      Layer.provide(FetchHttpClient.layer),
-      Layer.provide(Format.defaultLayer),
-      Layer.provide(CrossSpawnSpawner.defaultLayer),
-      Layer.provide(Ripgrep.defaultLayer),
-      Layer.provide(Truncate.defaultLayer),
-      Layer.provide(Permission.defaultLayer),
-      Layer.provide(SessionCompaction.defaultLayer),
-    ),
+    layer
+      .pipe(
+        Layer.provide(Config.defaultLayer),
+        Layer.provide(Env.defaultLayer),
+        Layer.provide(Plugin.defaultLayer),
+        Layer.provide(Question.defaultLayer),
+        Layer.provide(Todo.defaultLayer),
+        Layer.provide(Skill.defaultLayer),
+        Layer.provide(Agent.defaultLayer),
+        Layer.provide(Session.defaultLayer),
+        Layer.provide(Provider.defaultLayer),
+        Layer.provide(LSP.defaultLayer),
+        Layer.provide(FileTime.defaultLayer),
+        Layer.provide(Instruction.defaultLayer),
+        Layer.provide(AppFileSystem.defaultLayer),
+        Layer.provide(Bus.layer),
+        Layer.provide(FetchHttpClient.layer),
+        Layer.provide(Format.defaultLayer),
+        Layer.provide(CrossSpawnSpawner.defaultLayer),
+        Layer.provide(Ripgrep.defaultLayer),
+        Layer.provide(Truncate.defaultLayer),
+      )
+      .pipe(
+        Layer.provide(Permission.defaultLayer),
+        Layer.provide(SessionCompaction.defaultLayer),
+      ),
   )
 }

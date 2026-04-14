@@ -39,6 +39,7 @@ import { MCP } from "../../src/mcp"
 import { Permission } from "../../src/permission"
 import { Plugin } from "../../src/plugin"
 import { Provider as ProviderSvc } from "../../src/provider/provider"
+import { Env } from "../../src/env"
 import { Question } from "../../src/question"
 import { Skill } from "../../src/skill"
 import { SystemPrompt } from "../../src/session/system"
@@ -121,6 +122,7 @@ function makeHttp() {
     Session.defaultLayer,
     Snapshot.defaultLayer,
     LLM.defaultLayer,
+    Env.defaultLayer,
     AgentSvc.defaultLayer,
     Command.defaultLayer,
     Permission.defaultLayer,
@@ -136,7 +138,7 @@ function makeHttp() {
   const question = Question.layer.pipe(Layer.provideMerge(deps))
   const todo = Todo.layer.pipe(Layer.provideMerge(deps))
   const trunc = Truncate.layer.pipe(Layer.provideMerge(deps))
-  const proc = SessionProcessor.layer.pipe(Layer.provideMerge(deps))
+  const proc = SessionProcessor.layer.pipe(Layer.provide(SessionSummary.defaultLayer), Layer.provideMerge(deps))
   const compact = SessionCompaction.layer.pipe(Layer.provideMerge(proc), Layer.provideMerge(deps))
   const registry = ToolRegistry.layer.pipe(
     Layer.provide(Skill.defaultLayer),
@@ -151,8 +153,10 @@ function makeHttp() {
   )
   return Layer.mergeAll(
     TestLLMServer.layer,
+    SessionSummary.defaultLayer,
     SessionPrompt.layer.pipe(
       Layer.provide(SessionRevert.defaultLayer),
+      Layer.provide(SessionSummary.defaultLayer),
       Layer.provideMerge(run),
       Layer.provideMerge(compact),
       Layer.provideMerge(proc),
@@ -201,6 +205,7 @@ it.live("tool execution produces non-empty session diff (snapshot race)", () =>
     Effect.fnUntraced(function* ({ dir, llm }) {
       const prompt = yield* SessionPrompt.Service
       const sessions = yield* Session.Service
+      const summary = yield* SessionSummary.Service
 
       const session = yield* sessions.create({
         title: "snapshot race test",
@@ -245,9 +250,9 @@ it.live("tool execution produces non-empty session diff (snapshot race)", () =>
       expect(tool?.state.status).toBe("completed")
 
       // Poll for diff — summarize() is fire-and-forget
-      let diff: Awaited<ReturnType<typeof SessionSummary.diff>> = []
+      let diff: Array<{ file: string }> = []
       for (let i = 0; i < 50; i++) {
-        diff = yield* Effect.promise(() => SessionSummary.diff({ sessionID: session.id }))
+        diff = yield* summary.diff({ sessionID: session.id })
         if (diff.length > 0) break
         yield* Effect.sleep("100 millis")
       }

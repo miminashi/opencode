@@ -2,7 +2,6 @@ import { Bus } from "@/bus"
 import { BusEvent } from "@/bus/bus-event"
 import { Config } from "@/config/config"
 import { InstanceState } from "@/effect/instance-state"
-import { makeRuntime } from "@/effect/run-service"
 import { ProjectID } from "@/project/schema"
 import { Instance } from "@/project/instance"
 import { MessageID, SessionID } from "@/session/schema"
@@ -118,7 +117,6 @@ export namespace Permission {
     readonly ask: (input: z.infer<typeof AskInput>) => Effect.Effect<void, Error>
     readonly reply: (input: z.infer<typeof ReplyInput>) => Effect.Effect<void>
     readonly list: () => Effect.Effect<Request[]>
-    readonly approve: (rules: Ruleset) => Effect.Effect<void>
   }
 
   interface PendingEntry {
@@ -265,12 +263,7 @@ export namespace Permission {
         return Array.from(pending.values(), (item) => item.info)
       })
 
-      const approve = Effect.fn("Permission.approve")(function* (rules: Ruleset) {
-        const { approved } = yield* InstanceState.get(state)
-        approved.push(...rules)
-      })
-
-      return Service.of({ ask, reply, list, approve })
+      return Service.of({ ask, reply, list })
     }),
   )
 
@@ -314,22 +307,4 @@ export namespace Permission {
   }
 
   export const defaultLayer = layer.pipe(Layer.provide(Bus.layer))
-
-  export const { runPromise } = makeRuntime(Service, defaultLayer)
-
-  export async function ask(input: z.infer<typeof AskInput>) {
-    return runPromise((s) => s.ask(input))
-  }
-
-  export async function reply(input: z.infer<typeof ReplyInput>) {
-    return runPromise((s) => s.reply(input))
-  }
-
-  export async function list() {
-    return runPromise((s) => s.list())
-  }
-
-  export async function approve(rules: Ruleset) {
-    return runPromise((s) => s.approve(rules))
-  }
 }

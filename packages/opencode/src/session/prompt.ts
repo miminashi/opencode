@@ -46,7 +46,6 @@ import { Process } from "@/util/process"
 import { Cause, Effect, Exit, Layer, Option, Scope, Context } from "effect"
 import { EffectLogger } from "@/effect/logger"
 import { InstanceState } from "@/effect/instance-state"
-import { makeRuntime } from "@/effect/run-service"
 import { TaskTool, type TaskPromptOps } from "@/tool/task"
 import { SessionRunState } from "./run-state"
 
@@ -102,13 +101,14 @@ export namespace SessionPrompt {
       const instruction = yield* Instruction.Service
       const state = yield* SessionRunState.Service
       const revert = yield* SessionRevert.Service
+      const summary = yield* SessionSummary.Service
       const sys = yield* SystemPrompt.Service
       const llm = yield* LLM.Service
+      const ctx = yield* Effect.context()
 
       const run = {
-        promise: <A, E>(effect: Effect.Effect<A, E>) =>
-          Effect.runPromise(effect.pipe(Effect.provide(EffectLogger.layer))),
-        fork: <A, E>(effect: Effect.Effect<A, E>) => Effect.runFork(effect.pipe(Effect.provide(EffectLogger.layer))),
+        promise: <A, E>(effect: Effect.Effect<A, E>) => Effect.runPromiseWith(ctx)(effect),
+        fork: <A, E>(effect: Effect.Effect<A, E>) => Effect.runForkWith(ctx)(effect),
       }
 
       const cancel = Effect.fn("SessionPrompt.cancel")(function* (sessionID: SessionID) {
@@ -1531,7 +1531,10 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                 })
               }
 
-              if (step === 1) SessionSummary.summarize({ sessionID, messageID: lastUser.id })
+              if (step === 1)
+                yield* summary
+                  .summarize({ sessionID, messageID: lastUser.id })
+                  .pipe(Effect.ignore, Effect.forkIn(scope))
 
               if (step > 1 && lastFinished) {
                 for (const m of msgs) {
@@ -1868,6 +1871,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
       Layer.provide(Plugin.defaultLayer),
       Layer.provide(Session.defaultLayer),
       Layer.provide(SessionRevert.defaultLayer),
+      Layer.provide(SessionSummary.defaultLayer),
       Layer.provide(
         Layer.mergeAll(
           Agent.defaultLayer,
@@ -1879,8 +1883,6 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
       ),
     ),
   )
-  const { runPromise } = makeRuntime(Service, defaultLayer)
-
   export const PromptInput = z.object({
     sessionID: SessionID.zod,
     messageID: MessageID.zod.optional(),
@@ -1948,25 +1950,9 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
   })
   export type PromptInput = z.infer<typeof PromptInput>
 
-  export async function prompt(input: PromptInput) {
-    return runPromise((svc) => svc.prompt(PromptInput.parse(input)))
-  }
-
-  export async function resolvePromptParts(template: string) {
-    return runPromise((svc) => svc.resolvePromptParts(z.string().parse(template)))
-  }
-
-  export async function cancel(sessionID: SessionID) {
-    return runPromise((svc) => svc.cancel(SessionID.zod.parse(sessionID)))
-  }
-
   export const LoopInput = z.object({
     sessionID: SessionID.zod,
   })
-
-  export async function loop(input: z.infer<typeof LoopInput>) {
-    return runPromise((svc) => svc.loop(LoopInput.parse(input)))
-  }
 
   export const ShellInput = z.object({
     sessionID: SessionID.zod,
@@ -1981,10 +1967,6 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
     command: z.string(),
   })
   export type ShellInput = z.infer<typeof ShellInput>
-
-  export async function shell(input: ShellInput) {
-    return runPromise((svc) => svc.shell(ShellInput.parse(input)))
-  }
 
   export const CommandInput = z.object({
     messageID: MessageID.zod.optional(),
@@ -2008,10 +1990,6 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
       .optional(),
   })
   export type CommandInput = z.infer<typeof CommandInput>
-
-  export async function command(input: CommandInput) {
-    return runPromise((svc) => svc.command(CommandInput.parse(input)))
-  }
 
   /** @internal Exported for testing */
   export function createStructuredOutputTool(input: {

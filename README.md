@@ -56,6 +56,16 @@ OPENCODE_EXPERIMENTAL_PLAN_MODE=1 /home/ubuntu/projects/opencode/packages/openco
 
 upstream からの fork 後に適用したバグ修正・改善の一覧。
 
+主要な変更領域:
+
+- **plan モード強化**: 非実験モードでの `plan_exit` 有効化、プロンプト改善、新規/既存タスク判別、実行リクエスト対応、レポート混同修正、未呼出時リマインダー、コンテキストクリア＆自動承認
+- **plan_exit ダイアログ拡張**: スクロール対応、フィードバック入力、markdown 描画、マウス当たり判定修正、auto-accept クラッシュ修正
+- **TUI 安定化**: OSC52 クリップボード（tmux 対応）、spinner 登録、SSE race condition 回避、`opencode run` での reasoning ストリーム
+- **ツール出力制御**: head 30%/tail 70% の rolling truncation をデフォルト化、tool call 切り詰め検知＆リトライ
+- **ローカル LLM 対応**: llama-server エラーレスポンス処理とリトライ、compaction 時の状態保持、drizzle migration `name` フィールド修正
+
+詳細は以下のテーブルを参照。
+
 | 種別 | 修正 | 概要 | 対象ファイル |
 |---|---|---|---|
 | fix | plan_exit ツール登録修正 | `OPENCODE_EXPERIMENTAL_PLAN_MODE` フラグなしでも `plan_exit` ツールが登録されるよう条件を変更 | `packages/opencode/src/tool/registry.ts` |

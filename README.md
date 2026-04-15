@@ -85,6 +85,16 @@ upstream からの fork 後に適用したバグ修正・改善の一覧。
 | feat | plan_exit コンテキストクリア＆自動承認 | plan_exit ダイアログに「Yes, clear context and auto-accept edits」オプションを追加し、会話履歴クリア＋ファイル編集自動承認で build agent に切り替え | `packages/opencode/src/tool/plan.ts`, `packages/opencode/src/session/compaction.ts`, `packages/opencode/src/permission/next.ts` |
 | fix | plan_exit コンテキストクリアを真のクリアに変更 | LLM による会話要約ではなく、会話履歴を実際に削除する真のコンテキストクリアを実装 | `packages/opencode/src/session/compaction.ts`, `packages/opencode/src/tool/plan.ts` |
 | fix | plan_exit プランファイル存在バリデーション | plan_exit 呼出時にプランファイルが存在しない場合エラーを throw し、LLM に Write ツールでの保存を促す | `packages/opencode/src/tool/plan.ts` |
+| fix | TUI SSE race condition 回避 | `--prompt` CLI フラグ使用時の BindingError クラッシュを防ぐため、`route.navigate()` を `session.prompt()` 呼び出しより前に移動 | `packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx` |
+| fix | plan_exit プロンプト簡素化 | CRITICAL REQUIREMENT と FINAL REMINDER を追加し、冗長な設計例を削除して plan_exit 未呼出によるタイムアウトを低減 | `packages/opencode/src/session/prompt.ts` |
+| feat | compaction 時の状態保持 | 会話 compaction プロンプトに `*_STATE.json` 内容を注入し、使用済みスキルの再ロードヒントを continue メッセージに追加 | `packages/opencode/src/session/compaction.ts` |
+| fix | plan_exit 後 build agent ハング修正 | clear compaction 後に build agent が確認を求めてハングする問題を修正（compaction 文言の差し替え、build-switch 指示の強化、重複注入検知の追加） | `packages/opencode/src/session/message-v2.ts`, `packages/opencode/src/session/prompt.ts`, `packages/opencode/src/tool/plan.ts` |
+| feat | reasoning トークンのリアルタイムストリーム | `opencode run` 実行時に reasoning トークンをリアルタイム表示するよう変更 | `packages/opencode/src/cli/cmd/run.ts` |
+| fix | plan_exit auto-accept クラッシュ修正 | plan_exit ダイアログで「auto-accept edits」選択時に発生する `runPromise` / `InstanceState` 未定義参照のクラッシュを修正 | `packages/opencode/src/permission/next.ts`, `packages/opencode/src/permission/service.ts` |
+| feat | ツール出力 rolling truncation | head 30% + tail 70% を保持する rolling 方式をデフォルトの truncation に変更し、`headRatio` オプションを追加 | `packages/opencode/src/tool/truncate-effect.ts`, `packages/opencode/test/tool/truncation.test.ts` |
+| feat | plan_exit 未呼出時のリマインダー | LLM が plan_exit を呼ばずに停止した場合、最大 2 回まで合成ユーザメッセージで再促しする | `packages/opencode/src/session/prompt.ts` |
+| fix | tool call 切り詰め検知＆リトライ | 出力トークン上限で tool call JSON が途中で切れた場合を検知し、サイズ削減指示を注入して最大 2 回までリトライ | `packages/opencode/src/session/prompt.ts` |
+| feat | plan_exit ダイアログ markdown 描画 | QuestionPrompt のプラン本文を markdown／コードブロックとしてレンダリングし、チャットメッセージと同じ描画パイプラインを再利用 | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
 
 ---
 

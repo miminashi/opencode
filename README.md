@@ -46,6 +46,7 @@
 ### 手動ビルド & 実行（plan mode 有効）
 
 ```bash
+bun install                 # 依存関係のインストール（clone 直後・マージ後は必須）
 cd packages/opencode
 bun run build --single
 bunx tsgo --noEmit          # 型チェック（ビルドでは型検査されないため手動で実施）

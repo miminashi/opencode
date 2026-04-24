@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import path from "path"
 import { Session as SessionNs } from "../../src/session"
 import { Bus } from "../../src/bus"
-import { Log } from "../../src/util/log"
+import { Log } from "../../src/util"
 import { Instance } from "../../src/project/instance"
 import { MessageV2 } from "../../src/session/message-v2"
 import { MessageID, PartID, type SessionID } from "../../src/session/schema"
@@ -10,7 +10,7 @@ import { AppRuntime } from "../../src/effect/app-runtime"
 import { tmpdir } from "../fixture/fixture"
 
 const projectRoot = path.join(__dirname, "../..")
-Log.init({ print: false })
+void Log.init({ print: false })
 
 function create(input?: SessionNs.CreateInput) {
   return AppRuntime.runPromise(SessionNs.Service.use((svc) => svc.create(input)))
@@ -111,9 +111,12 @@ describe("step-finish token propagation via Bus event", () => {
             mode: "",
           } as unknown as MessageV2.Info)
 
+          // Bus subscribers receive readonly Schema.Type payloads; `MessageV2.Part`
+          // is the mutable domain type. Cast bridges the two — safe because the
+          // test only reads the value afterwards.
           let received: MessageV2.Part | undefined
           const unsub = Bus.subscribe(MessageV2.Event.PartUpdated, (event) => {
-            received = event.properties.part
+            received = event.properties.part as MessageV2.Part
           })
 
           const tokens = {

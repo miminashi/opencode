@@ -24,23 +24,23 @@ import MAX_STEPS from "../session/prompt/max-steps.txt"
 import { ToolRegistry } from "../tool"
 import { MCP } from "../mcp"
 import { LSP } from "../lsp"
-import { Flag } from "../flag/flag"
+import { Flag } from "@opencode-ai/core/flag/flag"
 import { ulid } from "ulid"
 import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"
-import * as CrossSpawnSpawner from "@/effect/cross-spawn-spawner"
+import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
 import * as Stream from "effect/Stream"
 import { Command } from "../command"
 import { pathToFileURL, fileURLToPath } from "url"
 import { ConfigMarkdown } from "../config"
 import { SessionSummary } from "./summary"
-import { NamedError } from "@opencode-ai/shared/util/error"
+import { NamedError } from "@opencode-ai/core/util/error"
 import { SessionProcessor } from "./processor"
 import { Tool } from "@/tool"
 import { Permission } from "@/permission"
 import { SessionStatus } from "./status"
 import { LLM } from "./llm"
 import { Shell } from "@/shell/shell"
-import { AppFileSystem } from "@opencode-ai/shared/filesystem"
+import { AppFileSystem } from "@opencode-ai/core/filesystem"
 import { Truncate } from "@/tool"
 import { decodeDataUrl } from "@/util/data-url"
 import { Process } from "@/util"
@@ -869,6 +869,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
       const shellName = (
         process.platform === "win32" ? path.win32.basename(sh, ".exe") : path.basename(sh)
       ).toLowerCase()
+      const cwd = ctx.directory
       const invocations: Record<string, { args: string[] }> = {
         nu: { args: ["-c", input.command] },
         fish: { args: ["-c", input.command] },
@@ -877,12 +878,13 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
             "-l",
             "-c",
             `
-              __oc_cwd=$PWD
               [[ -f ~/.zshenv ]] && source ~/.zshenv >/dev/null 2>&1 || true
               [[ -f "\${ZDOTDIR:-$HOME}/.zshrc" ]] && source "\${ZDOTDIR:-$HOME}/.zshrc" >/dev/null 2>&1 || true
-              cd "$__oc_cwd"
+              cd -- "$1"
               eval ${JSON.stringify(input.command)}
             `,
+            "opencode",
+            cwd,
           ],
         },
         bash: {
@@ -890,12 +892,13 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
             "-l",
             "-c",
             `
-              __oc_cwd=$PWD
               shopt -s expand_aliases
               [[ -f ~/.bashrc ]] && source ~/.bashrc >/dev/null 2>&1 || true
-              cd "$__oc_cwd"
+              cd -- "$1"
               eval ${JSON.stringify(input.command)}
             `,
+            "opencode",
+            cwd,
           ],
         },
         cmd: { args: ["/c", input.command] },
@@ -905,7 +908,6 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
       }
 
       const args = (invocations[shellName] ?? invocations[""]).args
-      const cwd = ctx.directory
       const shellEnv = yield* plugin.trigger(
         "shell.env",
         { cwd, sessionID: input.sessionID, callID: part.callID },

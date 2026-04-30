@@ -137,6 +137,12 @@ export const layer = Layer.effect(
                   [path.join(".opencode", "plans", "*.md")]: "allow",
                   [path.relative(ctx.worktree, path.join(Global.Path.data, path.join("plans", "*.md")))]: "allow",
                 },
+                // Plan モードから呼べる subagent は読み取り専用の explore のみ。
+                // general 等は edit/write 権限を持つため、間接的にファイル編集を許してしまう。
+                task: {
+                  "*": "deny",
+                  explore: "allow",
+                },
               }),
               user,
             ),

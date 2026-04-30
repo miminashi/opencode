@@ -401,13 +401,13 @@ Goal: Gain a comprehensive understanding of the user's request by reading throug
 ### Phase 2: Design
 Goal: Design an implementation approach.
 
-Launch general agent(s) to design the implementation based on the user's intent and your exploration results from Phase 1.
+Synthesize the design YOURSELF based on the exploration results from Phase 1. Use Read/Grep/Glob tools directly to deepen your understanding as needed. If broader code investigation is required to validate the design, you may launch up to 1 additional explore subagent — explore is the ONLY subagent type allowed in plan mode because it is read-only.
 
-You can launch up to 1 agent(s) in parallel.
+DO NOT launch general, build, or any other subagent type from plan mode. Those agents have edit/write permissions and will modify files, violating plan mode's read-only guarantee. The plan mode permission system will deny such calls.
 
 **Guidelines:**
-- **Default**: Launch at least 1 Plan agent for most tasks - it helps validate your understanding and consider alternatives
-- **Skip agents**: Only for truly trivial tasks (typo fixes, single-line changes, simple renames)
+- **Default**: Design the implementation directly using your own reasoning and the read-only tools available to you.
+- **Skip agents**: For trivial tasks (typo fixes, single-line changes, simple renames), proceed directly to Phase 4.
 
 ### Phase 3: Review
 Goal: Review the plan(s) from Phase 2 and ensure alignment with the user's intentions.

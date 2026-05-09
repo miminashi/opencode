@@ -1368,6 +1368,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
         const MAX_PLAN_EXIT_REMINDERS = 2
         let forcePlanExitNext = false
         let syntheticPlanExitDone = false
+        let stallRecoveryUsed = false
         let truncationRetryCount = 0
         const MAX_TRUNCATION_RETRIES = 2
         const session = yield* sessions.get(sessionID)
@@ -1567,6 +1568,47 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
               model,
               toolChoice: useForcePlanExit ? "required" : format.type === "json_schema" ? "required" : undefined,
             })
+
+            // Plan-mode stall recovery. The processor's stall watchdog (only
+            // active when agent.name === "plan") aborts the stream when the
+            // LLM emits no chunks for OPENCODE_STALL_TIMEOUT_MS (default 120s).
+            // Reminder / synthetic plan_exit safeguards below depend on a
+            // finishReason and never fire for a stalled stream, so this
+            // branch is the only path that can rescue the session. We allow
+            // exactly one recovery per session to avoid infinite retry loops.
+            if (
+              agent.name === "plan" &&
+              !stallRecoveryUsed &&
+              handle.message.error &&
+              handle.message.error.name === "StallTimeoutError"
+            ) {
+              stallRecoveryUsed = true
+              const stalledThreshold = handle.message.error.data.thresholdMs
+              log.info("stall recovery", { sessionID, thresholdMs: stalledThreshold })
+
+              handle.message.error = undefined
+              yield* sessions.updateMessage(handle.message)
+
+              const recoveryMsg = yield* sessions.updateMessage({
+                id: MessageID.ascending(),
+                sessionID,
+                role: "user",
+                time: { created: Date.now() },
+                agent: lastUser.agent,
+                model: lastUser.model,
+              })
+              yield* sessions.updatePart({
+                id: PartID.ascending(),
+                messageID: recoveryMsg.id,
+                sessionID,
+                type: "text",
+                text: `<system-reminder>Your previous turn produced no output for over ${Math.round(
+                  stalledThreshold / 1000,
+                )} seconds and was aborted. Resume planning concisely. If you are nearly done, write/finalize the plan file and call plan_exit on this turn.</system-reminder>`,
+                synthetic: true,
+              })
+              return "continue" as const
+            }
 
             if (structured !== undefined) {
               handle.message.structured = structured

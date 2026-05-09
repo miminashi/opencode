@@ -185,6 +185,14 @@ export type ContextOverflowError = {
   }
 }
 
+export type StallTimeoutError = {
+  name: "StallTimeoutError"
+  data: {
+    message: string
+    thresholdMs: number
+  }
+}
+
 export type ApiError = {
   name: "APIError"
   data: {
@@ -212,6 +220,7 @@ export type EventSessionError = {
       | MessageAbortedError
       | StructuredOutputError
       | ContextOverflowError
+      | StallTimeoutError
       | ApiError
   }
 }
@@ -594,6 +603,7 @@ export type AssistantMessage = {
     | MessageAbortedError
     | StructuredOutputError
     | ContextOverflowError
+    | StallTimeoutError
     | ApiError
   parentID: string
   modelID: string

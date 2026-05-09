@@ -123,6 +123,19 @@ export const layer: Layer.Layer<
         reasoningMap: {},
       }
       let aborted = false
+      // Stall watchdog state. `watchdogActive` is true while the LLM is
+      // expected to be generating output (between start-step / *-start /
+      // tool-result and *-end / tool-call / finish-step). When active, the
+      // watchdog aborts the stream if no chunk arrives within thresholdMs.
+      let lastChunkTs = Date.now()
+      let watchdogActive = false
+      let stallDetected = false
+      let stallController: AbortController | undefined
+      const stallThresholdMs: number = (() => {
+        const raw = globalThis.process.env["OPENCODE_STALL_TIMEOUT_MS"]
+        const parsed = raw ? parseInt(raw, 10) : Number.NaN
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : 120_000
+      })()
       const slog = log.clone().tag("session.id", input.sessionID).tag("messageID", input.assistantMessage.id)
 
       const parse = (e: unknown) =>
@@ -214,6 +227,27 @@ export const layer: Layer.Layer<
       })
 
       const handleEvent = Effect.fnUntraced(function* (value: StreamEvent) {
+        // Drive the stall watchdog. Anything that indicates LLM progress
+        // (or that we're entering a phase where progress is expected)
+        // resets the timer; anything that signals "now waiting on tool / done"
+        // suspends it so a slow tool execution doesn't trip the watchdog.
+        switch (value.type) {
+          case "start-step":
+          case "reasoning-start":
+          case "reasoning-delta":
+          case "text-start":
+          case "text-delta":
+          case "tool-result":
+            watchdogActive = true
+            lastChunkTs = Date.now()
+            break
+          case "tool-call":
+          case "finish-step":
+          case "finish":
+            watchdogActive = false
+            break
+        }
+
         switch (value.type) {
           case "start":
             yield* status.set(ctx.sessionID, { type: "busy" })
@@ -542,22 +576,94 @@ export const layer: Layer.Layer<
         ctx.shouldBreak = (yield* config.get()).experimental?.continue_loop_on_deny !== true
 
         return yield* Effect.gen(function* () {
+          let watchdogTimer: ReturnType<typeof setInterval> | undefined
           yield* Effect.gen(function* () {
             ctx.currentText = undefined
             ctx.reasoningMap = {}
-            const stream = llm.stream(streamInput)
+            stallDetected = false
+            watchdogActive = false
+            lastChunkTs = Date.now()
+            stallController = new AbortController()
+
+            // Stall watchdog: only enabled in plan mode. The reminder /
+            // synthetic plan_exit safeguards in prompt.ts depend on the
+            // model emitting a finishReason; if the stream is hanging
+            // mid-reasoning, those never run. This watchdog aborts the
+            // stream so the runLoop can recover.
+            const watchdogEnabled = streamInput.agent.name === "plan"
+            const checkIntervalMs = Math.min(10_000, Math.max(1_000, Math.floor(stallThresholdMs / 4)))
+            const watchdogCtrl = stallController
+            if (watchdogEnabled) {
+              watchdogTimer = setInterval(() => {
+                if (!watchdogActive) return
+                if (Date.now() - lastChunkTs > stallThresholdMs) {
+                  stallDetected = true
+                  slog.warn("stall detected", {
+                    thresholdMs: stallThresholdMs,
+                    idleMs: Date.now() - lastChunkTs,
+                  })
+                  watchdogCtrl.abort(new DOMException("Stall timeout", "AbortError"))
+                }
+              }, checkIntervalMs)
+            }
+
+            const stream = llm.stream({
+              ...streamInput,
+              abortSignal: watchdogEnabled ? stallController.signal : streamInput.abortSignal,
+            })
 
             yield* stream.pipe(
               Stream.tap((event) => handleEvent(event)),
               Stream.takeUntil(() => ctx.needsCompaction),
               Stream.runDrain,
             )
+
+            // The AI SDK delivers AbortController-induced cancellation as an
+            // "abort" stream event (not an Effect interrupt) and the stream
+            // typically ends without throwing. Promote stall detection to a
+            // structured error so the runLoop's recovery branch can pick it
+            // up; otherwise the assistant message would have an undefined
+            // finishReason and the loop would simply restart the step
+            // without any recovery action.
+            if (stallDetected && !ctx.assistantMessage.error) {
+              ctx.assistantMessage.error = new MessageV2.StallTimeoutError({
+                message: "LLM stream stalled (no chunks within threshold)",
+                thresholdMs: stallThresholdMs,
+              }).toObject()
+              yield* session.updateMessage(ctx.assistantMessage)
+              yield* bus.publish(Session.Event.Error, {
+                sessionID: ctx.assistantMessage.sessionID,
+                error: ctx.assistantMessage.error,
+              })
+              yield* status.set(ctx.sessionID, { type: "idle" })
+            }
           }).pipe(
+            Effect.ensuring(
+              Effect.sync(() => {
+                if (watchdogTimer) {
+                  clearInterval(watchdogTimer)
+                  watchdogTimer = undefined
+                }
+              }),
+            ),
             Effect.onInterrupt(() =>
               Effect.gen(function* () {
                 aborted = true
                 if (!ctx.assistantMessage.error) {
-                  yield* halt(new DOMException("Aborted", "AbortError"))
+                  if (stallDetected) {
+                    ctx.assistantMessage.error = new MessageV2.StallTimeoutError({
+                      message: "LLM stream stalled (no chunks within threshold)",
+                      thresholdMs: stallThresholdMs,
+                    }).toObject()
+                    yield* session.updateMessage(ctx.assistantMessage)
+                    yield* bus.publish(Session.Event.Error, {
+                      sessionID: ctx.assistantMessage.sessionID,
+                      error: ctx.assistantMessage.error,
+                    })
+                    yield* status.set(ctx.sessionID, { type: "idle" })
+                  } else {
+                    yield* halt(new DOMException("Aborted", "AbortError"))
+                  }
                 }
               }),
             ),

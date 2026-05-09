@@ -61,6 +61,10 @@ export const ContextOverflowError = namedSchemaError("ContextOverflowError", {
   message: Schema.String,
   responseBody: Schema.optional(Schema.String),
 })
+export const StallTimeoutError = namedSchemaError("StallTimeoutError", {
+  message: Schema.String,
+  thresholdMs: Schema.Number,
+})
 
 export class OutputFormatText extends Schema.Class<OutputFormatText>("OutputFormatText")({
   type: Schema.Literal("text"),
@@ -459,6 +463,7 @@ const AssistantErrorZod = z.discriminatedUnion("name", [
   AbortedError.Schema,
   StructuredOutputError.Schema,
   ContextOverflowError.Schema,
+  StallTimeoutError.Schema,
   APIError.Schema,
 ])
 type AssistantError = z.infer<typeof AssistantErrorZod>

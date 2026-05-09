@@ -42,6 +42,7 @@ export type StreamInput = {
   tools: Record<string, Tool>
   retries?: number
   toolChoice?: "auto" | "required" | "none"
+  abortSignal?: AbortSignal
 }
 
 export type StreamRequest = StreamInput & {
@@ -421,7 +422,13 @@ const live: Layer.Layer<
               (ctrl) => Effect.sync(() => ctrl.abort()),
             )
 
-            const result = yield* run({ ...input, abort: ctrl.signal })
+            // Combine the scope-bound signal with any externally supplied one
+            // (e.g. from a stall watchdog). Either signal aborts the stream.
+            const signal = input.abortSignal
+              ? AbortSignal.any([ctrl.signal, input.abortSignal])
+              : ctrl.signal
+
+            const result = yield* run({ ...input, abort: signal })
 
             return Stream.fromAsyncIterable(result.fullStream, (e) => (e instanceof Error ? e : new Error(String(e))))
           }),

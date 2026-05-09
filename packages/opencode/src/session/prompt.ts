@@ -42,6 +42,8 @@ import { SessionStatus } from "./status"
 import { LLM } from "./llm"
 import { Shell } from "@/shell/shell"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
+import { Filesystem } from "../util/filesystem"
+import { Instance } from "../project/instance"
 import { Truncate } from "@/tool/truncate"
 import { decodeDataUrl } from "@/util/data-url"
 import { Process } from "@/util/process"
@@ -51,6 +53,7 @@ import { withStatics } from "@/util/schema"
 import * as EffectLogger from "@opencode-ai/core/effect/logger"
 import { InstanceState } from "@/effect/instance-state"
 import { TaskTool, type TaskPromptOps } from "@/tool/task"
+import { commitPlanExitSynthetic } from "@/tool/plan"
 import { SessionRunState } from "./run-state"
 import { EffectBridge } from "@/effect/bridge"
 
@@ -244,7 +247,7 @@ export const layer = Layer.effect(
               messageID: userMessage.info.id,
               sessionID: userMessage.info.sessionID,
               type: "text",
-              text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
+              text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n\nIMPORTANT: If a subagent (\`task\`) call returns a permission-denied error, do NOT retry with a different \`subagent_type\` — every non-\`explore\` subagent is denied in plan mode. Call \`plan_exit\` instead to switch to build mode.\n</system-reminder>`,
               synthetic: true,
             })
           } else {
@@ -328,7 +331,7 @@ export const layer = Layer.effect(
           messageID: userMessage.info.id,
           sessionID: userMessage.info.sessionID,
           type: "text",
-          text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
+          text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n\nIMPORTANT: If a subagent (\`task\`) call returns a permission-denied error, do NOT retry with a different \`subagent_type\` — every non-\`explore\` subagent is denied in plan mode. Call \`plan_exit\` instead to switch to build mode.\n</system-reminder>`,
           synthetic: true,
         })
         userMessage.parts.push(part)
@@ -404,6 +407,8 @@ Goal: Design an implementation approach.
 Synthesize the design YOURSELF based on the exploration results from Phase 1. Use Read/Grep/Glob tools directly to deepen your understanding as needed. If broader code investigation is required to validate the design, you may launch up to 1 additional explore subagent — explore is the ONLY subagent type allowed in plan mode because it is read-only.
 
 DO NOT launch general, build, or any other subagent type from plan mode. Those agents have edit/write permissions and will modify files, violating plan mode's read-only guarantee. The plan mode permission system will deny such calls.
+
+If a task call (or any other subagent invocation) is denied by the permission system, do NOT retry with a different subagent_type — every non-explore subagent is denied in plan mode by design. Instead, either complete the design yourself using the read-only tools available to you, or call plan_exit to switch to build mode where execution is allowed.
 
 **Guidelines:**
 - **Default**: Design the implementation directly using your own reasoning and the read-only tools available to you.
@@ -1361,6 +1366,8 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
         let step = 0
         let planExitReminderCount = 0
         const MAX_PLAN_EXIT_REMINDERS = 2
+        let forcePlanExitNext = false
+        let syntheticPlanExitDone = false
         let truncationRetryCount = 0
         const MAX_TRUNCATION_RETRIES = 2
         const session = yield* sessions.get(sessionID)
@@ -1483,7 +1490,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
             const lastUserMsg = msgs.findLast((m) => m.info.role === "user")
             const bypassAgentCheck = lastUserMsg?.parts.some((p) => p.type === "agent") ?? false
 
-            const tools = yield* resolveTools({
+            let tools = yield* resolveTools({
               agent,
               session,
               model,
@@ -1500,6 +1507,14 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                   structured = output
                 },
               })
+            }
+
+            // After a plan_exit reminder fires, restrict the next iteration to ONLY
+            // plan_exit so the model cannot evade by calling other tools (e.g. task).
+            const useForcePlanExit = forcePlanExitNext && agent.name === "plan" && "plan_exit" in tools
+            forcePlanExitNext = false
+            if (useForcePlanExit) {
+              tools = { plan_exit: tools.plan_exit }
             }
 
             if (step === 1)
@@ -1550,7 +1565,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
               messages: [...modelMsgs, ...(isLastStep ? [{ role: "assistant" as const, content: MAX_STEPS }] : [])],
               tools,
               model,
-              toolChoice: format.type === "json_schema" ? "required" : undefined,
+              toolChoice: useForcePlanExit ? "required" : format.type === "json_schema" ? "required" : undefined,
             })
 
             if (structured !== undefined) {
@@ -1613,46 +1628,123 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
               }
             }
 
-            if (result === "stop") {
-              // Plan mode: remind LLM to call plan_exit if it ended without doing so
-              const finishedStop = handle.message.finish && !["tool-calls", "unknown"].includes(handle.message.finish)
-              if (
-                agent.name === "plan" &&
-                finishedStop &&
-                !handle.message.error &&
-                planExitReminderCount < MAX_PLAN_EXIT_REMINDERS
-              ) {
-                const assistantParts = MessageV2.parts(handle.message.id)
-                const calledPlanExit = assistantParts.some((p) => p.type === "tool" && p.tool === "plan_exit")
+            // Plan mode: remind LLM to call plan_exit if it ended without doing so.
+            // Fires for any "finished" assistant turn (normal stop, blocked, or error)
+            // except "tool-calls" / "unknown" / "length" (truncation handled above).
+            // The reminder gating is independent of `result` because a normal stop
+            // returns "continue" — without this, the early-break at the top of the
+            // outer loop exits without ever invoking the reminder.
+            if (
+              agent.name === "plan" &&
+              handle.message.finish &&
+              !["tool-calls", "unknown", "length"].includes(handle.message.finish) &&
+              !handle.message.error &&
+              planExitReminderCount < MAX_PLAN_EXIT_REMINDERS
+            ) {
+              const assistantParts = MessageV2.parts(handle.message.id)
+              const calledPlanExit = assistantParts.some((p) => p.type === "tool" && p.tool === "plan_exit")
 
-                if (!calledPlanExit) {
-                  planExitReminderCount++
-                  log.info("plan_exit reminder", { sessionID, attempt: planExitReminderCount })
+              if (!calledPlanExit) {
+                planExitReminderCount++
 
-                  const reminderMsg = yield* sessions.updateMessage({
-                    id: MessageID.ascending(),
-                    sessionID,
-                    role: "user",
-                    time: { created: Date.now() },
-                    agent: lastUser.agent,
-                    model: lastUser.model,
-                  })
-                  yield* sessions.updatePart({
-                    id: PartID.ascending(),
-                    messageID: reminderMsg.id,
-                    sessionID,
-                    type: "text",
-                    text:
-                      planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
-                        ? "<system-reminder>You stopped without calling plan_exit. This is your FINAL reminder. You MUST call the plan_exit tool NOW.</system-reminder>"
-                        : "<system-reminder>You ended your turn without calling the plan_exit tool. You MUST call plan_exit to complete your planning turn. Do NOT end without calling plan_exit.</system-reminder>",
-                    synthetic: true,
-                  })
-                  return "continue" as const
+                // Check if the plan file actually exists. If it doesn't, forcing
+                // plan_exit on the next turn would just throw ENOENT in a loop —
+                // the synthetic reminder text persists in history, so the model
+                // keeps calling plan_exit instead of writing the plan first.
+                const reminderPlanPath = Session.plan(session)
+                let planExists = false
+                try {
+                  const reminderPlanContent = yield* Effect.promise(() => Filesystem.readText(reminderPlanPath))
+                  planExists = !!reminderPlanContent
+                } catch {
+                  // Plan file does not exist
+                }
+
+                if (planExists) forcePlanExitNext = true
+                log.info("plan_exit reminder", {
+                  sessionID,
+                  attempt: planExitReminderCount,
+                  planExists,
+                })
+
+                const planRel = path.relative(Instance.worktree, reminderPlanPath)
+                const reminderText = planExists
+                  ? planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
+                    ? "<system-reminder>FINAL REMINDER. On your next turn the only tool available is plan_exit (no parameters). Call plan_exit now. Do not generate text or other tool calls.</system-reminder>"
+                    : "<system-reminder>You ended your turn without calling plan_exit. On your next turn the only tool available is plan_exit (it takes no parameters). Call plan_exit now. Do not call any other tool or attempt to use task.</system-reminder>"
+                  : planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
+                    ? `<system-reminder>FINAL REMINDER. The plan file at ${planRel} still does not exist. Use the Write tool to save your plan to ${planRel}, then call plan_exit. Do NOT call plan_exit before the file exists.</system-reminder>`
+                    : `<system-reminder>You ended your turn without calling plan_exit. The plan file at ${planRel} does not exist yet. You MUST save your plan to that file using the Write tool first, then call plan_exit. Do NOT call plan_exit before writing the plan file.</system-reminder>`
+
+                const reminderMsg = yield* sessions.updateMessage({
+                  id: MessageID.ascending(),
+                  sessionID,
+                  role: "user",
+                  time: { created: Date.now() },
+                  agent: lastUser.agent,
+                  model: lastUser.model,
+                })
+                yield* sessions.updatePart({
+                  id: PartID.ascending(),
+                  messageID: reminderMsg.id,
+                  sessionID,
+                  type: "text",
+                  text: reminderText,
+                  synthetic: true,
+                })
+                return "continue" as const
+              }
+            }
+
+            // Synthetic plan_exit safeguard. 122B-A10B + ctx>=64k では FINAL
+            // リマインダーすら効かないまま reasoning 末尾に "plan_exit を呼ぶべき"
+            // と書いて自然停止する故障モードが構造的に発生する
+            // (report 2026-05-02_063235)。reminder MAX 到達後にもう一度自然停止
+            // し、末尾文に plan_exit 系キーワードがあって plan ファイルが存在
+            // するなら opencode 側で 1 回だけ疑似発火する。
+            if (
+              agent.name === "plan" &&
+              !syntheticPlanExitDone &&
+              handle.message.finish &&
+              !["tool-calls", "unknown", "length"].includes(handle.message.finish) &&
+              !handle.message.error &&
+              planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
+            ) {
+              const safeguardParts = MessageV2.parts(handle.message.id)
+              const calledPlanExit = safeguardParts.some((p) => p.type === "tool" && p.tool === "plan_exit")
+
+              if (!calledPlanExit) {
+                const safeguardPlanPath = Session.plan(session)
+                let safeguardPlanExists = false
+                try {
+                  const safeguardPlanContent = yield* Effect.promise(() => Filesystem.readText(safeguardPlanPath))
+                  safeguardPlanExists = !!safeguardPlanContent
+                } catch {
+                  // Plan file does not exist
+                }
+
+                if (safeguardPlanExists) {
+                  const tailParts = safeguardParts
+                    .filter((p) => p.type === "reasoning" || p.type === "text")
+                    .slice(-3)
+                  const tailText = tailParts.map((p) => ("text" in p ? p.text : "")).join(" ")
+                  const PLAN_EXIT_KEYWORDS = /plan[_\s-]?exit|exit[\s_-]+plan[\s_-]+mode|switch[\s_-]+to[\s_-]+build/i
+
+                  if (PLAN_EXIT_KEYWORDS.test(tailText)) {
+                    log.info("synthetic plan_exit emission", { sessionID })
+                    syntheticPlanExitDone = true
+                    yield* commitPlanExitSynthetic(sessionID).pipe(
+                      Effect.provideService(Session.Service, sessions),
+                      Effect.provideService(Provider.Service, provider),
+                      Effect.ignore,
+                    )
+                    return "break" as const
+                  }
                 }
               }
-              return "break" as const
             }
+
+            if (result === "stop") return "break" as const
             if (result === "compact") {
               yield* compaction.create({
                 sessionID,

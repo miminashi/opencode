@@ -42,7 +42,6 @@ import { LLM } from "./llm"
 import { Shell } from "@/shell/shell"
 import { ShellID } from "@/tool/shell/id"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
-import { Instance } from "../project/instance"
 import { Truncate } from "@/tool/truncate"
 import { Image } from "@/image/image"
 import { decodeDataUrl } from "@/util/data-url"
@@ -241,8 +240,9 @@ export const layer = Layer.effect(
       if (!userMessage) return input.messages
 
       if (!Flag.OPENCODE_EXPERIMENTAL_PLAN_MODE) {
+        const ctx = yield* InstanceState.context
         if (input.agent.name === "plan") {
-          const plan = Session.plan(input.session)
+          const plan = Session.plan(input.session, ctx)
           const exists = yield* fsys.existsSafe(plan)
           if (!exists) yield* fsys.ensureDir(path.dirname(plan)).pipe(Effect.catch(Effect.die))
 
@@ -282,7 +282,7 @@ export const layer = Layer.effect(
         }
         const wasPlan = input.messages.some((msg) => msg.info.role === "assistant" && msg.info.agent === "plan")
         if (wasPlan && input.agent.name === "build") {
-          const plan = Session.plan(input.session)
+          const plan = Session.plan(input.session, ctx)
           const exists = yield* fsys.existsSafe(plan)
           userMessage.parts.push({
             id: PartID.ascending(),
@@ -1828,7 +1828,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                 // plan_exit on the next turn would just throw ENOENT in a loop —
                 // the synthetic reminder text persists in history, so the model
                 // keeps calling plan_exit instead of writing the plan first.
-                const reminderPlanPath = Session.plan(session)
+                const reminderPlanPath = Session.plan(session, ctx)
                 const reminderPlanContent = yield* Session.readPlanContent(reminderPlanPath)
                 const planExists = !!reminderPlanContent
 
@@ -1839,7 +1839,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                   planExists,
                 })
 
-                const planRel = path.relative(Instance.worktree, reminderPlanPath)
+                const planRel = path.relative(ctx.worktree, reminderPlanPath)
                 const reminderText = planExists
                   ? planExitReminderCount >= MAX_PLAN_EXIT_REMINDERS
                     ? "<system-reminder>FINAL REMINDER. On your next turn the only tool available is plan_exit (no parameters). Call plan_exit now. Do not generate text or other tool calls.</system-reminder>"
@@ -1886,7 +1886,7 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
               const calledPlanExit = safeguardParts.some((p) => p.type === "tool" && p.tool === "plan_exit")
 
               if (!calledPlanExit) {
-                const safeguardPlanPath = Session.plan(session)
+                const safeguardPlanPath = Session.plan(session, ctx)
                 const safeguardPlanContent = yield* Session.readPlanContent(safeguardPlanPath)
                 const safeguardPlanExists = !!safeguardPlanContent
 

@@ -87,7 +87,7 @@ test("plan agent denies edits except .opencode/plans/*", async () => {
 
 test("plan agent denies arbitrary bash but allows read-only commands", async () => {
   await using tmp = await tmpdir()
-  await Instance.provide({
+  await WithInstance.provide({
     directory: tmp.path,
     fn: async () => {
       const plan = await load(tmp.path, (svc) => svc.get("plan"))
@@ -148,7 +148,7 @@ test("plan agent denies arbitrary bash but allows read-only commands", async () 
 
 test("explore subagent retains bash allow even after plan denies bash", async () => {
   await using tmp = await tmpdir()
-  await Instance.provide({
+  await WithInstance.provide({
     directory: tmp.path,
     fn: async () => {
       const explore = await load(tmp.path, (svc) => svc.get("explore"))

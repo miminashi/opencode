@@ -69,7 +69,7 @@ export function retryable(error: Err, provider: string) {
   if (MessageV2.APIError.isInstance(error)) {
     // Detect server-side tool call parse failures (e.g. llama.cpp)
     if (/failed to parse input/i.test(error.data.message)) {
-      return "Tool call parse error, retrying"
+      return { message: "Tool call parse error, retrying" }
     }
     const status = error.data.statusCode
     // 5xx errors are transient server failures and should always be retried,

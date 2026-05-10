@@ -1,15 +1,15 @@
 #!/bin/bash
-OPENCODE_BIN="/home/ubuntu/projects/opencode/.claude/worktrees/compaction-phase2/packages/opencode/dist/opencode-linux-x64/bin/opencode"
+OPENCODE_BIN="/home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-13/packages/opencode/dist/opencode-linux-x64/bin/opencode"
 PROJECT_DIR="/home/ubuntu/projects/ytdlor"
 PLANS_DIR="/home/ubuntu/projects/ytdlor/.opencode/plans"
-RESULTS_FILE="/home/ubuntu/projects/opencode/test-plan-exit-compaction-phase2-results.txt"
-TMUX_TARGET="default:opencode-test"
-TOTAL_TESTS=10
-WAIT_ITERATIONS=60
+RESULTS_FILE="/home/ubuntu/projects/opencode/test-plan-exit-merge-upstream-13-results.txt"
+TMUX_TARGET="opencode:opencode-test"
+TOTAL_TESTS=3
+WAIT_ITERATIONS=120
 
-echo "=== plan_exit E2E Test (compaction-phase2) ===" > "$RESULTS_FILE"
+echo "=== plan_exit E2E Test (merge-upstream-13) ===" > "$RESULTS_FILE"
 echo "Binary: $OPENCODE_BIN" >> "$RESULTS_FILE"
-echo "Tests: $TOTAL_TESTS, Timeout: 10min (iterations: $WAIT_ITERATIONS)" >> "$RESULTS_FILE"
+echo "Tests: $TOTAL_TESTS, Timeout: 20min (iterations: $WAIT_ITERATIONS)" >> "$RESULTS_FILE"
 echo "Start: $(date)" >> "$RESULTS_FILE"
 echo "" >> "$RESULTS_FILE"
 

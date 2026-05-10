@@ -200,10 +200,29 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 
 ## LLM サーバー前提条件
 
-opencode を実行する前に、LLM サーバー（llama-server）が起動しているか確認すること。
+**llama-server を必要とするタスクを開始する前**（opencode 実行、`plan-exit-regression`、`merge-upstream` の動作確認、ベンチマーク等）に、以下の順で GPU サーバと LLM サーバの起動状態を確認し、未起動なら対応するスキルを使って起動すること。タスクを始めてから「サーバが落ちていた」で失敗するのを防ぐため、必ず**事前**に確認する。
 
-1. `/slots` エンドポイントで起動状態を確認: `curl -s http://10.1.4.14:8000/slots`
-2. サーバーが起動していない場合は、`llama-server` スキルを使用して起動する
+### 手順
+
+1. **GPU サーバの電源確認**
+   - `gpu-server` スキルの `power.sh <server> status` で電源状態を確認
+   - 例: `/home/ubuntu/.claude/plugins/cache/claude-plugins-official/gpu-server/1.0.0/skills/gpu-server/scripts/power.sh t120h-p100 status`
+   - 電源 OFF の場合は `power.sh <server> on` で起動する（OS 起動完了まで数分待つ）
+
+2. **llama-server の起動状態確認**
+   - `/slots` エンドポイントで確認: `curl -s http://10.1.4.14:8000/slots`
+   - レスポンスが返れば起動済み。タイムアウト・接続エラーの場合は未起動
+
+3. **llama-server が未起動なら `llama-server` スキルで起動**
+   - 既定モデルは `unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M`（fit モード）
+   - `start.sh` → `wait-ready.sh` の順に実行する（詳細は `llama-server` skill を参照）
+   - **注意**: 既に他者が使用中の llama-server を勝手に停止・再起動しないこと
+
+### サーバ・モデル選択
+
+- 既定サーバ: `t120h-p100`（10.1.4.14）— P100 を最優先（`gpu-server` skill 方針）
+- 既定モデル: `unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M`（fit モード）— 現行 opencode 設定値
+- ロックが必要な操作の前に `gpu-server` skill の `lock.sh` を取得すること
 
 ## ワークツリー運用ルール
 

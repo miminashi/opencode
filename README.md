@@ -43,15 +43,21 @@
 
 ---
 
-### 手動ビルド & 実行（plan mode 有効）
+### 手動ビルド & 実行
 
 ```bash
 bun install                 # 依存関係のインストール（clone 直後・マージ後は必須）
 cd packages/opencode
-bun run build --single
-bunx tsgo --noEmit          # 型チェック（ビルドでは型検査されないため手動で実施）
-OPENCODE_EXPERIMENTAL_PLAN_MODE=1 /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
+bun run build --single      # opencode-linux-x64 バイナリを生成
+bun run typecheck           # 型チェック（任意。後述の既知エラーあり）
+/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode
 ```
+
+> [!NOTE]
+> このフォークでは plan モードがデフォルトで有効化されており、`OPENCODE_EXPERIMENTAL_PLAN_MODE` フラグの指定は不要です（後述の「plan_exit ツール登録修正」による）。
+
+> [!NOTE]
+> `bun run typecheck` には現状 15 件の pre-existing エラーが残っています（`OscCopier` 型不整合 9 件、`src/tool/truncate-effect.ts` のモジュール解決 5 件、`test/session/prompt.test.ts` の Layer 型 1 件）。これらは `bun run build --single` のバイナリ生成や実行には影響しません。修正対応中。
 
 ### このフォークでの変更点
 
@@ -95,6 +101,7 @@ upstream からの fork 後に適用したバグ修正・改善の一覧。
 | feat | plan_exit 未呼出時のリマインダー | LLM が plan_exit を呼ばずに停止した場合、最大 2 回まで合成ユーザメッセージで再促しする | `packages/opencode/src/session/prompt.ts` |
 | fix | tool call 切り詰め検知＆リトライ | 出力トークン上限で tool call JSON が途中で切れた場合を検知し、サイズ削減指示を注入して最大 2 回までリトライ | `packages/opencode/src/session/prompt.ts` |
 | feat | plan_exit ダイアログ markdown 描画 | QuestionPrompt のプラン本文を markdown／コードブロックとしてレンダリングし、チャットメッセージと同じ描画パイプラインを再利用 | `packages/opencode/src/cli/cmd/tui/routes/session/question.tsx` |
+| fix | upstream API 変更追従 | merge-upstream-13 取り込み時の整合性修正：facade refactor で削除された `Permission.approve` を復元、`ToolRegistry.defaultLayer` の pipe を 20 引数制限対応で 2 連結に分割、`Identifier.create` の direction API を新しい `"ascending"` 形式に追従 | `packages/opencode/src/permission/index.ts`, `packages/opencode/src/tool/registry.ts`, `packages/opencode/src/tool/truncate-effect.ts` |
 
 ---
 

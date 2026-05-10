@@ -32,9 +32,8 @@ ls .claude/worktrees/ | grep merge-upstream
 ## 3. ワークツリーで upstream/dev をマージ
 
 ```
-cd .claude/worktrees/merge-upstream-N
-git fetch upstream
-git merge upstream/dev
+git -C .claude/worktrees/merge-upstream-N fetch upstream
+git -C .claude/worktrees/merge-upstream-N merge upstream/dev
 ```
 
 コンフリクトがあれば解消する。解消方法をレポートに記録すること。
@@ -42,12 +41,25 @@ git merge upstream/dev
 ## 4. ビルド
 
 ```
-export PATH="$HOME/.bun/bin:$PATH"
-bun install
-cd packages/opencode && bun run build --single
+/home/ubuntu/.bun/bin/bun install
+/home/ubuntu/.bun/bin/bun run --cwd .claude/worktrees/merge-upstream-N/packages/opencode build --single
 ```
 
 ビルドが失敗した場合は原因を調査して修正する。
+
+### 4.1. 修正のコミット (必須)
+
+ビルドエラーを修正した場合、ワークツリー上で**必ず commit すること**。
+未コミットの diff は §6 の `git merge --ff-only` で dev に持ち越されないため、
+コミットせずに進めると dev 側でビルドが再び壊れる（merge-upstream-14 で実際に発生）。
+
+```
+git -C .claude/worktrees/merge-upstream-N add <修正ファイル>
+git -C .claude/worktrees/merge-upstream-N commit -m "fix: <修正内容>"
+```
+
+`upstream/dev` のマージコミットに加えて修正コミットがワークツリーブランチ HEAD に
+載っていることを `git -C .claude/worktrees/merge-upstream-N log --oneline -5` で確認する。
 
 ## 5. 動作確認
 
@@ -63,11 +75,27 @@ tmux で `~/projects/ytdlor` にて opencode を起動し、以下を確認:
 
 ## 6. 本体 dev を fast-forward
 
-動作確認 OK なら、プロジェクトルートに戻って dev を更新:
+動作確認 OK なら、dev を更新する。
+
+**事前確認 (必須)**: ワークツリーが clean であること:
 
 ```
-cd /home/ubuntu/projects/opencode
-git merge merge-upstream-N --ff-only
+git -C .claude/worktrees/merge-upstream-N status
+```
+
+modified / staged / untracked の変更があれば §4.1 に戻ってコミットしてから fast-forward する。
+未コミットの diff があると、それは worktree の working tree に残るだけで dev には反映されない。
+
+clean を確認したら fast-forward:
+
+```
+git -C /home/ubuntu/projects/opencode merge merge-upstream-N --ff-only
+```
+
+fast-forward 後、dev でも改めてビルド確認することを推奨:
+
+```
+/home/ubuntu/.bun/bin/bun run --cwd /home/ubuntu/projects/opencode/packages/opencode build --single
 ```
 
 ## 7. レポート作成

@@ -68,6 +68,80 @@ test("plan agent denies edits except .opencode/plans/*", async () => {
   })
 })
 
+test("plan agent denies arbitrary bash but allows read-only commands", async () => {
+  await using tmp = await tmpdir()
+  await Instance.provide({
+    directory: tmp.path,
+    fn: async () => {
+      const plan = await load(tmp.path, (svc) => svc.get("plan"))
+      expect(plan).toBeDefined()
+
+      // Wildcard is denied — bash 経路でのファイル編集を防ぐ
+      expect(evalPerm(plan, "bash")).toBe("deny")
+
+      // 編集系 / 破壊系コマンドが deny されること
+      const denied = [
+        "echo test > foo",
+        "echo test >> AGENTS.md",
+        "tee foo.md",
+        "sed -i s/a/b/ foo",
+        "awk -i inplace 1 foo",
+        "rm -rf foo",
+        "cp src dst",
+        "mv src dst",
+        "cat foo > bar",
+        "head foo",
+        "tail foo",
+        "find . -type f",
+        "grep pattern foo",
+      ]
+      for (const cmd of denied) {
+        expect(Permission.evaluate("bash", cmd, plan!.permission).action).toBe("deny")
+      }
+
+      // 読み取り系コマンドの whitelist が通ること
+      const allowed = [
+        "git status",
+        "git status -sb",
+        "git log",
+        "git log -5 --oneline",
+        "git show HEAD",
+        "git diff HEAD~1",
+        "git branch -a",
+        "git remote -v",
+        "git blame foo",
+        "git ls-files",
+        "git rev-parse HEAD",
+        "git config --get user.email",
+        "ls",
+        "ls -la",
+        "pwd",
+        "wc -l foo",
+        "file foo",
+        "stat foo",
+        "du -sh .",
+        "tree -L 2",
+      ]
+      for (const cmd of allowed) {
+        expect(Permission.evaluate("bash", cmd, plan!.permission).action).toBe("allow")
+      }
+    },
+  })
+})
+
+test("explore subagent retains bash allow even after plan denies bash", async () => {
+  await using tmp = await tmpdir()
+  await Instance.provide({
+    directory: tmp.path,
+    fn: async () => {
+      const explore = await load(tmp.path, (svc) => svc.get("explore"))
+      expect(explore).toBeDefined()
+      // explore subagent has independent permission set (bash: allow)
+      expect(evalPerm(explore, "bash")).toBe("allow")
+    },
+  })
+})
+
 test("explore agent denies edit and write", async () => {
   await using tmp = await tmpdir()
   await Instance.provide({

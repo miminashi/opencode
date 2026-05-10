@@ -42,7 +42,6 @@ import { SessionStatus } from "./status"
 import { LLM } from "./llm"
 import { Shell } from "@/shell/shell"
 import { AppFileSystem } from "@opencode-ai/core/filesystem"
-import { Filesystem } from "../util/filesystem"
 import { Instance } from "../project/instance"
 import { Truncate } from "@/tool/truncate"
 import { decodeDataUrl } from "@/util/data-url"
@@ -1694,13 +1693,8 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                 // the synthetic reminder text persists in history, so the model
                 // keeps calling plan_exit instead of writing the plan first.
                 const reminderPlanPath = Session.plan(session)
-                let planExists = false
-                try {
-                  const reminderPlanContent = yield* Effect.promise(() => Filesystem.readText(reminderPlanPath))
-                  planExists = !!reminderPlanContent
-                } catch {
-                  // Plan file does not exist
-                }
+                const reminderPlanContent = yield* Session.readPlanContent(reminderPlanPath)
+                const planExists = !!reminderPlanContent
 
                 if (planExists) forcePlanExitNext = true
                 log.info("plan_exit reminder", {
@@ -1757,13 +1751,8 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
 
               if (!calledPlanExit) {
                 const safeguardPlanPath = Session.plan(session)
-                let safeguardPlanExists = false
-                try {
-                  const safeguardPlanContent = yield* Effect.promise(() => Filesystem.readText(safeguardPlanPath))
-                  safeguardPlanExists = !!safeguardPlanContent
-                } catch {
-                  // Plan file does not exist
-                }
+                const safeguardPlanContent = yield* Session.readPlanContent(safeguardPlanPath)
+                const safeguardPlanExists = !!safeguardPlanContent
 
                 if (safeguardPlanExists) {
                   const tailParts = safeguardParts

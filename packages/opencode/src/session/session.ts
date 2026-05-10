@@ -39,6 +39,7 @@ import { Global } from "@opencode-ai/core/global"
 import { Effect, Layer, Option, Context, Schema, Types } from "effect"
 import { zod } from "@/util/effect-zod"
 import { optionalOmitUndefined, withStatics } from "@/util/schema"
+import { Filesystem } from "../util/filesystem"
 
 const log = Log.create({ service: "session" })
 
@@ -313,6 +314,15 @@ export function plan(input: { slug: string; time: { created: number } }) {
     : path.join(Global.Path.data, "plans")
   return path.join(base, [input.time.created, input.slug].join("-") + ".md")
 }
+
+// ENOENT のみを空文字に倒し、その他のエラー（EACCES, EISDIR 等）は die として
+// 上位に伝播させる。Effect.promise + try/catch だと defect が握り潰せず、
+// reminder/safeguard 経路で表面化していた (report 2026-05-10_163412)。
+export const readPlanContent = (planPath: string) =>
+  Effect.tryPromise({
+    try: () => Filesystem.readText(planPath),
+    catch: (e) => e,
+  }).pipe(Effect.catch((e: unknown) => (Filesystem.isEnoent(e) ? Effect.succeed("") : Effect.die(e))))
 
 export const getUsage = (input: { model: Provider.Model; usage: LanguageModelUsage; metadata?: ProviderMetadata }) => {
   const safe = (value: number) => {

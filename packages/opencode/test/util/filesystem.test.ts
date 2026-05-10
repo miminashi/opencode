@@ -199,6 +199,39 @@ describe("filesystem", () => {
     })
   })
 
+  describe("isEnoent()", () => {
+    test("returns true for ENOENT-coded error", () => {
+      const err = Object.assign(new Error("nope"), { code: "ENOENT" })
+      expect(Filesystem.isEnoent(err)).toBe(true)
+    })
+
+    test("returns false for non-ENOENT error code", () => {
+      const err = Object.assign(new Error("nope"), { code: "EACCES" })
+      expect(Filesystem.isEnoent(err)).toBe(false)
+    })
+
+    test("returns false for plain Error without code", () => {
+      expect(Filesystem.isEnoent(new Error("plain"))).toBe(false)
+    })
+
+    test("returns false for non-object input", () => {
+      expect(Filesystem.isEnoent("ENOENT")).toBe(false)
+      expect(Filesystem.isEnoent(undefined)).toBe(false)
+      expect(Filesystem.isEnoent(null)).toBe(false)
+    })
+
+    test("captures real ENOENT thrown by readText", async () => {
+      await using tmp = await tmpdir()
+      const filepath = path.join(tmp.path, "missing-" + Date.now() + ".txt")
+      try {
+        await Filesystem.readText(filepath)
+        throw new Error("readText did not throw")
+      } catch (e) {
+        expect(Filesystem.isEnoent(e)).toBe(true)
+      }
+    })
+  })
+
   describe("readJson()", () => {
     test("reads and parses JSON", async () => {
       await using tmp = await tmpdir()

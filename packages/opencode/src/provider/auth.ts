@@ -75,6 +75,8 @@ export const OauthCodeMissing = namedSchemaError("ProviderAuthOauthCodeMissing",
 
 export const OauthCallbackFailed = namedSchemaError("ProviderAuthOauthCallbackFailed", {})
 
+export const OauthAuthorizeFailed = namedSchemaError("ProviderAuthOauthAuthorizeFailed", {})
+
 export const ValidationFailed = namedSchemaError("ProviderAuthValidationFailed", {
   field: Schema.String,
   message: Schema.String,
@@ -85,6 +87,7 @@ export type Error =
   | InstanceType<typeof OauthMissing>
   | InstanceType<typeof OauthCodeMissing>
   | InstanceType<typeof OauthCallbackFailed>
+  | InstanceType<typeof OauthAuthorizeFailed>
   | InstanceType<typeof ValidationFailed>
 
 type Hook = NonNullable<Hooks["auth"]>
@@ -174,7 +177,10 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service> =
         }
       }
 
-      const result = yield* Effect.promise(() => method.authorize(input.inputs))
+      const result = yield* Effect.tryPromise({
+        try: () => method.authorize(input.inputs),
+        catch: (e) => new OauthAuthorizeFailed({}, { cause: e }),
+      })
       pending.set(input.providerID, result)
       return {
         url: result.url,
@@ -191,9 +197,10 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service> =
         return yield* Effect.fail(new OauthCodeMissing({ providerID: input.providerID }))
       }
 
-      const result = yield* Effect.promise(() =>
-        match.method === "code" ? match.callback(input.code!) : match.callback(),
-      )
+      const result = yield* Effect.tryPromise({
+        try: () => (match.method === "code" ? match.callback(input.code!) : match.callback()),
+        catch: (e) => new OauthCallbackFailed({}, { cause: e }),
+      })
       if (!result || result.type !== "success") return yield* Effect.fail(new OauthCallbackFailed({}))
 
       if ("key" in result) {

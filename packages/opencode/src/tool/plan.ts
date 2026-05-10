@@ -6,7 +6,6 @@ import { Session } from "@/session/session"
 import { MessageV2 } from "../session/message-v2"
 import { Provider } from "@/provider/provider"
 import { Instance } from "../project/instance"
-import { Filesystem } from "../util/filesystem"
 import { SessionCompaction } from "../session/compaction"
 import { Permission } from "../permission"
 import BUILD_SWITCH from "../session/prompt/build-switch.txt"
@@ -40,12 +39,7 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
     const planPath = Session.plan(info)
     const plan = path.relative(Instance.worktree, planPath)
 
-    let planContent = ""
-    try {
-      planContent = yield* Effect.promise(() => Filesystem.readText(planPath))
-    } catch {
-      // Plan file doesn't exist
-    }
+    const planContent = yield* Session.readPlanContent(planPath)
 
     if (!planContent) {
       throw new Error(
@@ -92,12 +86,7 @@ export const PlanExitTool = Tool.define(
           const planPath = Session.plan(info)
           const plan = path.relative(Instance.worktree, planPath)
 
-          let planContent = ""
-          try {
-            planContent = yield* Effect.promise(() => Filesystem.readText(planPath))
-          } catch {
-            // Plan file doesn't exist
-          }
+          const planContent = yield* Session.readPlanContent(planPath)
 
           if (!planContent) {
             throw new Error(

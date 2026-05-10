@@ -5,9 +5,9 @@ import { Question } from "../question"
 import { Session } from "@/session/session"
 import { MessageV2 } from "../session/message-v2"
 import { Provider } from "@/provider/provider"
-import { Instance } from "../project/instance"
 import { SessionCompaction } from "../session/compaction"
 import { Permission } from "../permission"
+import { InstanceState } from "@/effect/instance-state"
 import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import { type SessionID, MessageID, PartID } from "../session/schema"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
@@ -36,8 +36,9 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
     const provider = yield* Provider.Service
 
     const info = yield* session.get(sessionID)
-    const planPath = Session.plan(info)
-    const plan = path.relative(Instance.worktree, planPath)
+    const instance = yield* InstanceState.context
+    const planPath = Session.plan(info, instance)
+    const plan = path.relative(instance.worktree, planPath)
 
     const planContent = yield* Session.readPlanContent(planPath)
 
@@ -83,8 +84,8 @@ export const PlanExitTool = Tool.define(
       execute: (_params: {}, ctx: Tool.Context) =>
         Effect.gen(function* () {
           const info = yield* session.get(ctx.sessionID)
-          const planPath = Session.plan(info)
-          const plan = path.relative(Instance.worktree, planPath)
+          const planPath = Session.plan(info, instance)
+          const plan = path.relative(instance.worktree, planPath)
 
           const planContent = yield* Session.readPlanContent(planPath)
 

@@ -549,9 +549,10 @@ You MUST call plan_exit when your plan is complete. Do NOT output text and stop.
                 { args },
               )
               yield* ctx.ask({ permission: key, metadata: {}, patterns: ["*"], always: ["*"] })
-              const result: Awaited<ReturnType<NonNullable<typeof execute>>> = yield* Effect.promise(() =>
-                execute(args, opts),
-              )
+              const result: Awaited<ReturnType<NonNullable<typeof execute>>> = yield* Effect.tryPromise({
+                try: () => execute(args, opts),
+                catch: (e) => e,
+              })
               yield* plugin.trigger(
                 "tool.execute.after",
                 { tool: key, sessionID: ctx.sessionID, callID: opts.toolCallId, args },

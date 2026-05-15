@@ -24,7 +24,7 @@ describe("Effect.tryPromise vs Effect.promise (reject handling)", () => {
     const cause = new Error("network down")
     const eff = Effect.tryPromise({
       try: () => Promise.reject(cause),
-      catch: (e) => new ProviderAuth.OauthAuthorizeFailed({}, { cause: e }),
+      catch: (e) => new ProviderAuth.OauthAuthorizeFailed({ cause: e }),
     })
     const exit = await Effect.runPromiseExit(eff)
     expect(exit._tag).toBe("Failure")
@@ -38,13 +38,9 @@ describe("Effect.tryPromise vs Effect.promise (reject handling)", () => {
 describe("ProviderAuth NamedError shapes", () => {
   test("OauthAuthorizeFailed exposes the canonical tag and preserves cause", () => {
     const cause = new Error("provider timeout")
-    const err = new ProviderAuth.OauthAuthorizeFailed({}, { cause })
-    expect(err.name).toBe("ProviderAuthOauthAuthorizeFailed")
+    const err = new ProviderAuth.OauthAuthorizeFailed({ cause })
+    expect(err._tag).toBe("ProviderAuthOauthAuthorizeFailed")
     expect(err.cause).toBe(cause)
-    expect(err.toObject()).toEqual({
-      name: "ProviderAuthOauthAuthorizeFailed",
-      data: {},
-    })
   })
 
   test("OauthAuthorizeFailed.isInstance discriminates by tag", () => {
@@ -55,8 +51,8 @@ describe("ProviderAuth NamedError shapes", () => {
 
   test("OauthCallbackFailed accepts a cause for reject scenarios", () => {
     const cause = new Error("callback boom")
-    const err = new ProviderAuth.OauthCallbackFailed({}, { cause })
-    expect(err.name).toBe("ProviderAuthOauthCallbackFailed")
+    const err = new ProviderAuth.OauthCallbackFailed({ cause })
+    expect(err._tag).toBe("ProviderAuthOauthCallbackFailed")
     expect(err.cause).toBe(cause)
   })
 })
@@ -65,7 +61,7 @@ describe("Effect.tryPromise integration with NamedError catch", () => {
   test("authorize-style: surfaces OauthAuthorizeFailed instance as the failure value", async () => {
     const eff = Effect.tryPromise({
       try: () => Promise.reject(new Error("provider down")),
-      catch: (e) => new ProviderAuth.OauthAuthorizeFailed({}, { cause: e }),
+      catch: (e) => new ProviderAuth.OauthAuthorizeFailed({ cause: e }),
     })
     const exit = await Effect.runPromiseExit(eff)
     expect(exit._tag).toBe("Failure")
@@ -79,7 +75,7 @@ describe("Effect.tryPromise integration with NamedError catch", () => {
   test("callback-style: surfaces OauthCallbackFailed instance as the failure value", async () => {
     const eff = Effect.tryPromise({
       try: () => Promise.reject(new Error("callback errored")),
-      catch: (e) => new ProviderAuth.OauthCallbackFailed({}, { cause: e }),
+      catch: (e) => new ProviderAuth.OauthCallbackFailed({ cause: e }),
     })
     const exit = await Effect.runPromiseExit(eff)
     expect(exit._tag).toBe("Failure")

@@ -12,6 +12,13 @@ import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import { type SessionID, MessageID, PartID } from "../session/schema"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
 
+function getLastModel(sessionID: SessionID) {
+  for (const item of MessageV2.stream(sessionID)) {
+    if (item.info.role === "user" && item.info.model) return item.info.model
+  }
+  return undefined
+}
+
 export const Parameters = Schema.Struct({})
 
 /**

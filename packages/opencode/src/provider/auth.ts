@@ -73,13 +73,25 @@ export class OauthCodeMissing extends Schema.TaggedErrorClass<OauthCodeMissing>(
 
 export class OauthCallbackFailed extends Schema.TaggedErrorClass<OauthCallbackFailed>()(
   "ProviderAuthOauthCallbackFailed",
-  {},
-) {}
+  {
+    cause: Schema.optional(Schema.Defect),
+  },
+) {
+  static isInstance(input: unknown): input is OauthCallbackFailed {
+    return input instanceof OauthCallbackFailed
+  }
+}
 
 export class OauthAuthorizeFailed extends Schema.TaggedErrorClass<OauthAuthorizeFailed>()(
   "ProviderAuthOauthAuthorizeFailed",
-  {},
-) {}
+  {
+    cause: Schema.optional(Schema.Defect),
+  },
+) {
+  static isInstance(input: unknown): input is OauthAuthorizeFailed {
+    return input instanceof OauthAuthorizeFailed
+  }
+}
 
 export class ValidationFailed extends Schema.TaggedErrorClass<ValidationFailed>()("ProviderAuthValidationFailed", {
   field: Schema.String,
@@ -185,7 +197,7 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service> =
 
       const result = yield* Effect.tryPromise({
         try: () => method.authorize(input.inputs),
-        catch: (e) => new OauthAuthorizeFailed({}, { cause: e }),
+        catch: (e) => new OauthAuthorizeFailed({ cause: e }),
       })
       pending.set(input.providerID, result)
       return {
@@ -205,7 +217,7 @@ export const layer: Layer.Layer<Service, never, Auth.Service | Plugin.Service> =
 
       const result = yield* Effect.tryPromise({
         try: () => (match.method === "code" ? match.callback(input.code!) : match.callback()),
-        catch: (e) => new OauthCallbackFailed({}, { cause: e }),
+        catch: (e) => new OauthCallbackFailed({ cause: e }),
       })
       if (!result || result.type !== "success") return yield* new OauthCallbackFailed({})
 

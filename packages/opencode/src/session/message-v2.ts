@@ -56,7 +56,7 @@ export const ContextOverflowError = NamedError.create("ContextOverflowError", {
   message: Schema.String,
   responseBody: Schema.optional(Schema.String),
 })
-export const StallTimeoutError = namedSchemaError("StallTimeoutError", {
+export const StallTimeoutError = NamedError.create("StallTimeoutError", {
   message: Schema.String,
   thresholdMs: Schema.Number,
 })

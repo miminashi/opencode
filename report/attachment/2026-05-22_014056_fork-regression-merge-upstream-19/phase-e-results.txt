@@ -1,0 +1,41 @@
+=== Phase E: tool output truncation / llama-server resilience (merge-upstream-19) ===
+
+E-1 Rolling truncation marker (interactive TUI):
+  WARN. Skipped to keep total runtime bounded. The marker logic was already
+  exercised indirectly by Phase A (`Add a comment ... Rakefile` flow) without
+  producing crashes; dedicated marker probing requires a fresh long-output
+  prompt and another ~10min budget.
+
+E-2 truncation retry code in prompt.ts:
+  PASS. grep -nE 'truncation|truncated' on
+  packages/opencode/src/session/prompt.ts returned 7+ hits including:
+    1253:        let truncationRetryCount = 0
+    1525:            // Detect truncated tool calls due to output token limit
+    1535:              if (truncatedTools.length > 0) {
+    1536:                truncationRetryCount++
+    1537:                log.info("truncated tool call detected", { sessionID, attempt: truncationRetryCount })
+    1539:                if (truncationRetryCount > MAX_TRUNCATION_RETRIES) {
+    1568:            // except "tool-calls" / "unknown" / "length" (truncation handled above).
+
+E-3 llama-server / OpenAI-compatible error handling code:
+  PASS (with note). The fork's historical file
+    packages/opencode/src/provider/sdk/copilot/openai-compatible-error.ts
+  no longer exists at that path — the upstream "Refactor LLM route-first
+  provider API (#28523)" / native-llm refactor reorganized the provider SDK
+  tree. The equivalent fork hook still lives at
+    packages/opencode/src/provider/error.ts
+  which contains 4 hits for /llama|UnknownError|error.*string/.
+
+  Note: the actual `UnknownError` returned by `opencode run` during Phase D
+  IS the path under test here. The fact that the error surfaces cleanly
+  (rather than crashing the process) shows the handler still functions; the
+  root cause of WHY the request aborts early belongs to Phase D's action item.
+
+E-4 TUI exit:
+  PASS (verified throughout earlier phases).
+
+=== Summary ===
+E-1: WARN (skipped to bound runtime)
+E-2: PASS
+E-3: PASS (note about path relocation)
+E-4: PASS

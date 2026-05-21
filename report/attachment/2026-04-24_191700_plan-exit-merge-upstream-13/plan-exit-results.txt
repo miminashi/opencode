@@ -1,0 +1,35 @@
+=== plan_exit E2E Test (merge-upstream-13) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-13/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 3, Timeout: 20min (iterations: 120)
+Start: 2026年  4月 24日 金曜日 18:56:45 JST
+
+Test 1: 18:56:45
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 391s
+  New plan files: 1
+  Latest: 1777024611471-hidden-planet.md
+
+Test 2: 19:03:34
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 341s
+  New plan files: 1
+  Latest: 1777025020293-playful-canyon.md
+
+Test 3: 19:09:33
+  Dialog: Plan content displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 280s
+  New plan files: 1
+  Latest: 1777025378901-crisp-sailor.md
+
+=== Summary ===
+Total: 3
+Success: 3
+Timeout: 0
+Validation triggered: 0
+End: 2026年  4月 24日 金曜日 19:14:31 JST

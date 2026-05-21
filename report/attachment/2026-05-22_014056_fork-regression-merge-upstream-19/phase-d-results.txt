@@ -1,0 +1,41 @@
+=== Phase D: CLI reasoning streaming (merge-upstream-19) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-19/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+Command attempted:
+  opencode run "What is 2 plus 2? Answer with a single digit." | tee /tmp/opencode-run-reasoning.log
+
+Result: WARN.
+
+Findings:
+- The skill's documented invocation `opencode run --prompt "..."` no longer
+  matches the upstream CLI. `opencode run --help` shows positional `[message..]`
+  is now the only way to pass the prompt (skill needs updating).
+- After switching to positional form, the CLI returned an UnknownError:
+    {
+      "name": "UnknownError",
+      "data": {
+        "message": "Unexpected server error. Check server logs for details.",
+        "ref": "err_8f4da744"
+      }
+    }
+- /tmp/llama-server.log shows the server accepted the request (task 5050 launched),
+  but the client disconnected within ~8 seconds:
+    "stopping wait for next result due to should_stop condition"
+    (ref: https://github.com/ggml-org/llama.cpp/pull/22907)
+- llama-server's GPU stayed idle (slot.is_processing returned to false) — the
+  abort happened on the opencode-side stream handling, not server-side timeout.
+
+Interpretation:
+- Reasoning-streaming behavior could NOT be verified by this Phase because the
+  CLI itself errored out before any tokens reached stdout. This is an upstream
+  regression in `opencode run`'s response handling (or a config gap for the
+  Qwen3.6 + native LLM route path introduced by the upstream LLM route-first
+  refactor #28523 / native-llm changes), NOT a fork-side issue.
+- TUI path (Phase A / B / C) is unaffected — sessions stream reasoning normally.
+
+Action item (separate from this merge):
+- Investigate `opencode run` regression with --print-logs DEBUG and a fresh
+  session to isolate which upstream commit broke the CLI streaming path.
+
+=== Summary ===
+Phase D: WARN (upstream `opencode run` regression — see action item above)

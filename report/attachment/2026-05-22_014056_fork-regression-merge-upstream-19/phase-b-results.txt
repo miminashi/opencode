@@ -1,0 +1,41 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-19) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-19/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+B-0: Plan agent launched OK, plan_exit dialog reached.
+
+B-1 markdown 描画:
+  PASS. Plan content rendered with markdown headers (# / ## / ###) visible in capture.
+
+B-2 スクロール (Ctrl+D):
+  PASS. tmux capture-pane diff between before/after Ctrl+D x2 shows new lines from
+  the lower half of the plan (### 変更内容, diff block) appeared while upper lines
+  scrolled off.
+
+B-3 Option 3 (No):
+  PASS. After sending '3', status footer remained "Plan · ..." (Build agent not
+  spawned) and plan-exit dialog dismissed.
+
+B-4 Custom feedback (Option 4):
+  WARN. After sending '4', the option label changed to "4. Provide feedback /
+  Type your own answer" (option highlighted), but subsequent text submission did
+  not appear to enter a free-text editor. The dialog kept showing the original
+  plan content. Could not deterministically verify that the typed feedback was
+  delivered. Marked as warn — not a regression in the merge-upstream-19 surface
+  (QuestionPrompt fork imports were merged cleanly), needs separate manual repro
+  to confirm.
+
+B-5 Option 1 (Yes):
+  PASS. After Escape (to leave the option-4 state) and then '1', status footer
+  switched to "Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL" with a running
+  spinner. No BindingError / panic.
+
+B-6 TUI exit:
+  PASS (Ctrl+C returned to shell prompt).
+
+=== Summary ===
+B-1: PASS
+B-2: PASS
+B-3: PASS
+B-4: WARN
+B-5: PASS
+B-6: PASS

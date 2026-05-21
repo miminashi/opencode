@@ -1,0 +1,20 @@
+=== Phase C: TUI stability smoke (merge-upstream-19) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-19/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+C-1 --prompt flag launch:
+  PASS. opencode launched with --prompt "hi" produced a Build agent TUI,
+  spinner running, prompt visible in the left pane, status footer showed
+  "Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL". No BindingError / panic.
+
+C-2 OSC52 strings present in binary:
+  PASS. strings | grep -cE 'OSC.{0,4}52|tmux.*passthrough|copyToClipboardOSC52' = 15
+  Fork's clipboard.ts source confirmed present at
+    packages/opencode/src/cli/cmd/tui/util/clipboard.ts
+
+C-3 TUI exit:
+  PASS (Ctrl+C returned to shell prompt).
+
+=== Summary ===
+C-1: PASS
+C-2: PASS
+C-3: PASS

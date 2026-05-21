@@ -1,0 +1,55 @@
+=== Phase B-4 manual reproduction (2026-05-22 05:30 JST 頃) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Version: 0.0.0-fix-merge-upstream-19-warns-202605212010
+
+手順:
+  1. opencode TUI 起動 (~/projects/ytdlor)
+  2. Tab で Plan agent に切替
+  3. プロンプト送信: "Create a simple plan for adding a new endpoint /healthz that returns 200 OK to the existing API."
+  4. Plan 完成 → plan_exit dialog が "Provide feedback" 選択肢付きで表示
+  5. `4` キー押下 → option 4 highlight + textarea 描画 + "Type your own answer" placeholder 表示
+  6. `hello` と入力 → textarea に反映
+  7. Enter (C-m) → feedback 送信、plan agent が "The user said hello" として再計画開始
+
+dialog (Step 4 直後) の capture:
+  ┃  1. Yes
+  ┃     Switch to build agent and start implementing the plan
+  ┃  2. Yes, clear context and auto-accept edits
+  ┃     Compact conversation, auto-approve file edits, and start implementing
+  ┃  3. No
+  ┃     Stay with plan agent to continue refining the plan
+  ┃  4. Provide feedback
+  ┃
+  ┃  ↑↓ select  enter submit  esc dismiss  ctrl+u/d scroll
+
+`4` 押下後の capture (Step 5):
+  ┃  4. Provide feedback
+  ┃     Type your own answer  <-- textarea の placeholder
+  ┃
+  ┃  ↑↓ select  enter submit  esc dismiss  ctrl+u/d scroll
+
+`hello` 入力後の capture (Step 6):
+  ┃  4. Provide feedback
+  ┃     hello  <-- textarea に typed text 反映
+  ┃
+  ┃  ↑↓ select  enter submit  esc dismiss  ctrl+u/d scroll
+
+Enter 後の capture (Step 7):
+     ⚙ plan_exit
+     The user wants you to refine the plan with the following feedback:
+
+     hello
+
+     Revise the plan file at .opencode/plans/1779394679287-calm-forest.md and call plan_exit again.
+
+     Thinking: The user said "hello"
+
+判定:
+  - placeholder ("Type your own answer") 表示: PASS
+  - typed text ("hello") 反映: PASS
+  - Enter 送信 → plan agent が feedback を受領: PASS
+  - 結論: Phase B-4 は実機で完全動作。元 fork-regression report の WARN は
+    capture-pane タイミング限界による偽陽性であった。
+
+=== Summary ===
+Phase B-4: PASS（手動再現）— fork 側に regression なし

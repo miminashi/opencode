@@ -68,10 +68,30 @@ git -C .claude/worktrees/merge-upstream-N commit -m "fix: <修正内容>"
 ./packages/opencode/dist/opencode-linux-x64/bin/opencode --version
 ```
 
-tmux で `~/projects/ytdlor` にて opencode を起動し、以下を確認:
+### 5.1. fork-regression-test skill によるリグレッションテスト (推奨)
+
+fork 独自機能のリグレッション検出のため `fork-regression-test` skill を呼び出す:
+
+```
+binary_path = .claude/worktrees/merge-upstream-N/packages/opencode/dist/opencode-linux-x64/bin/opencode
+label       = merge-upstream-N
+num_plan_a  = 5   # 標準。時間制約があれば 3 まで下げてよい
+```
+
+skill が生成するレポート (`report/{ts}_fork-regression-{label}.md`) の Phase A-E が
+すべて pass または warn の場合のみ §6 へ進む。fail が 1 件でも検出されれば原因を調査し、
+§4.1 に戻って修正コミットを作成すること。
+
+### 5.2. 最小スモーク (緊急マージ時のみ)
+
+hotfix 等で時間がない場合のみ、5.1 の代わりに以下を許可する (要レポート明記):
+
+- tmux `opencode-test` ウインドウで `~/projects/ytdlor` にて opencode を起動
 - TUI が正常に表示されること
-- セッションが作成できること
+- 1 プロンプト送信してセッションが作成・LLM 応答受信できること
 - クラッシュしないこと
+
+その場合は §7 のレポートに「fork-regression-test skip 理由」と「次回マージで補完する旨」を必ず明記する。
 
 ## 6. 本体 dev を fast-forward
 
@@ -108,4 +128,6 @@ CLAUDE.md のレポート作成ルールに従うこと。
 - コンフリクトの有無と解消方法
 - ビルド結果
 - 動作確認結果
+  - 5.1 を実行した場合: `fork-regression-test` のレポートファイル (`report/{ts}_fork-regression-{label}.md`) への相対リンクを必須記載
+  - 5.2 (skip) を選んだ場合: skip 理由と次回マージで補完する旨
 - 発見した問題とその修正

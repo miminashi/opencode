@@ -6,9 +6,8 @@ import { selectedForeground, tint, useTheme } from "../../context/theme"
 import type { QuestionAnswer, QuestionRequest } from "@opencode-ai/sdk/v2"
 import { useSDK } from "../../context/sdk"
 import { SplitBorder } from "../../component/border"
-import { useDialog } from "../../ui/dialog"
 import { useTuiConfig } from "../../context/tui-config"
-import { useBindings } from "../../keymap"
+import { OPENCODE_BASE_MODE, useBindings } from "../../keymap"
 import { Flag } from "@opencode-ai/core/flag/flag"
 
 export function QuestionPrompt(props: { request: QuestionRequest }) {
@@ -136,9 +135,8 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
     pick(opt.label)
   }
 
-  const dialog = useDialog()
-
   useBindings(() => ({
+    mode: OPENCODE_BASE_MODE,
     enabled: store.editing && !confirm(),
     commands: [
       {
@@ -220,7 +218,8 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
     const hasBody = !!questionBody()
 
     return {
-      enabled: dialog.stack.length === 0 && !store.editing,
+      mode: OPENCODE_BASE_MODE,
+      enabled: !store.editing,
       commands: [
         {
           name: "app.exit",
@@ -460,7 +459,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                           </text>
                         </box>
                         <Show when={!multi()}>
-                          <text fg={theme.success}>{picked() ? "✓" : ""}</text>
+                          <text fg={theme.success}>{picked() ? " ✓" : ""}</text>
                         </Show>
                       </box>
 
@@ -498,7 +497,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
                     </box>
 
                     <Show when={!multi()}>
-                      <text fg={theme.success}>{customPicked() ? "✓" : ""}</text>
+                      <text fg={theme.success}>{customPicked() ? " ✓" : ""}</text>
                     </Show>
                   </box>
                   <Show when={store.editing}>

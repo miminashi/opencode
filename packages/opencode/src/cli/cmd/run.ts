@@ -219,6 +219,15 @@ export const RunCommand = effectCmd({
         describe: "show thinking blocks",
         default: true,
       })
+      .option("replay", {
+        type: "boolean",
+        default: false,
+        describe: "replay visible session history on interactive resume",
+      })
+      .option("replay-limit", {
+        type: "number",
+        describe: "cap visible interactive replay to the newest N messages",
+      })
       .option("interactive", {
         alias: ["i"],
         type: "boolean",
@@ -270,6 +279,21 @@ export const RunCommand = effectCmd({
         die("--interactive cannot be used with --format json")
       }
 
+      if (args.replay && !args.interactive) {
+        die("--replay requires --interactive")
+      }
+
+      if (args["replay-limit"] !== undefined && !args.interactive) {
+        die("--replay-limit requires --interactive")
+      }
+
+      if (
+        args["replay-limit"] !== undefined &&
+        (!Number.isInteger(args["replay-limit"]) || args["replay-limit"] <= 0)
+      ) {
+        die("--replay-limit must be a positive integer")
+      }
+
       if (args.interactive && !process.stdout.isTTY) {
         die("--interactive requires a TTY stdout")
       }
@@ -281,6 +305,8 @@ export const RunCommand = effectCmd({
           dieInteractive(error)
         }
       }
+
+      const replay = args.replay || args["replay-limit"] !== undefined
 
       const root = Filesystem.resolve(process.env.PWD ?? process.cwd())
       const directory = (() => {
@@ -433,7 +459,7 @@ export const RunCommand = effectCmd({
         const name = title()
         const result = await sdk.session.create({
           title: name,
-          permission: rules,
+          permission: [...rules],
         })
         const id = result.data?.id
         if (!id) {
@@ -476,7 +502,7 @@ export const RunCommand = effectCmd({
                 variant: input.variant,
               }
             : undefined,
-          permission: rules,
+          permission: [...rules],
         })
         const id = result.data?.id
         if (!id) {
@@ -830,6 +856,8 @@ export const RunCommand = effectCmd({
             sessionID,
             sessionTitle: sess.title,
             resume: Boolean(args.session || args.continue) && !args.fork,
+            replay,
+            replayLimit: args["replay-limit"],
             agent,
             model,
             variant: args.variant,
@@ -865,6 +893,8 @@ export const RunCommand = effectCmd({
             agent: args.agent,
             model,
             variant: args.variant,
+            replay,
+            replayLimit: args["replay-limit"],
             files,
             initialInput,
             thinking,

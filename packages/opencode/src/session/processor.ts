@@ -322,7 +322,7 @@ export const layer = Layer.effect(
         // resets the timer; anything that signals "now waiting on tool / done"
         // suspends it so a slow tool execution doesn't trip the watchdog.
         switch (value.type) {
-          case "start-step":
+          case "step-start":
           case "reasoning-start":
           case "reasoning-delta":
           case "text-start":
@@ -332,7 +332,7 @@ export const layer = Layer.effect(
             lastChunkTs = Date.now()
             break
           case "tool-call":
-          case "finish-step":
+          case "step-finish":
           case "finish":
             watchdogActive = false
             break

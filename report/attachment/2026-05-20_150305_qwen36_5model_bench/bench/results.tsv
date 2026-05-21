@@ -1,0 +1,46 @@
+model_short	task	trial	wall_time_s	opencode_rc	opencode_timeout	test_rc	test_passed	test_count	test_failures	test_errors	diff_files_changed	diff_lines_added	diff_lines_removed	tokens_output	tokens_reasoning	eval_rate_tps_approx	step_count	tool_use_total	tool_errors	auto_score	llm_judge_score
+q36-27b-mtp	S	1	434	0	False	1	True	8	3	0	3	74	46	1084	0	2.5	5	6	0	3	4
+q36-27b-mtp	S	2	434	0	False	1	True	8	3	0	3	77	46	1010	0	2.33	4	6	0	3	4
+q36-27b-mtp	S	3	516	0	False	1	True	8	3	0	3	75	46	2268	0	4.4	10	11	0	3	3
+q36-27b-mtp	M	1	1072	0	False	1	True	13	3	0	5	98	47	6083	0	5.67	19	23	0	3	4
+q36-27b-mtp	M	2	1264	0	False	1	True	13	3	0	8	119	47	5648	0	4.47	24	26	0	3	3
+q36-27b-mtp	M	3	931	0	False	1	True	13	3	0	5	109	47	5841	0	6.27	19	23	0	3	5
+q36-27b-mtp	L	1																			
+q36-27b-mtp	L	2																			
+q36-27b-mtp	L	3																			
+q36-35b-mtp	S	1	195	0	False	1	True	8	3	0	3	75	46	1074	0	5.51	5	5	0	3	4
+q36-35b-mtp	S	2	267	0	False	1	True	8	3	0	3	75	46	1647	0	6.17	7	7	0	3	4
+q36-35b-mtp	S	3	192	0	False	1	True	8	3	0	3	75	46	989	0	5.15	5	5	0	3	4
+q36-35b-mtp	M	1	515	0	False	1	True	13	3	0	5	93	47	4660	0	9.05	14	19	0	3	4
+q36-35b-mtp	M	2	583	0	False	1	True	13	3	0	7	102	47	4747	0	8.14	19	24	0	3	3
+q36-35b-mtp	M	3	523	0	False	1	True	13	3	0	5	97	47	6028	0	11.53	20	26	0	3	4
+q36-35b-mtp	L	1	376	0	False	0	True	7	0	0	12	191	45	4715	0	12.54	14	28	0	3	4
+q36-35b-mtp	L	2	364	0	False	0	True	6	0	0	12	176	45	4333	0	11.9	13	27	0	3	4
+q36-35b-mtp	L	3	163	0	False	1	False	None	None	None	1	46	46	807	0	4.95	3	10	1	2	1
+q36-27b	S	1	275	0	False	1	True	5	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	S	2	4	0	False	1	True	5	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	S	3	4	0	False	1	True	5	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	M	1	4	0	False	1	True	9	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	M	2	3	0	False	1	True	9	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	M	3	4	0	False	1	True	9	3	0	1	46	46	None	None	None	0	0	0	3	1
+q36-27b	L	1	3	0	False	1	False	None	None	None	1	46	46	None	None	None	0	0	0	2	1
+q36-27b	L	2	3	0	False	1	False	None	None	None	1	46	46	None	None	None	0	0	0	2	1
+q36-27b	L	3	4	0	False	1	False	None	None	None	1	46	46	None	None	None	0	0	0	2	1
+q36-35b	S	1	163	0	False	1	True	8	3	0	3	75	46	1592	0	9.77	7	8	0	3	4
+q36-35b	S	2	142	0	False	1	True	8	3	0	3	75	46	1004	0	7.07	5	5	0	3	4
+q36-35b	S	3	151	0	False	1	True	8	3	0	3	75	46	1257	0	8.32	5	5	0	3	4
+q36-35b	M	1	448	0	False	1	True	13	3	0	7	103	47	4678	0	10.44	19	23	0	3	5
+q36-35b	M	2	485	0	False	1	True	13	3	0	5	98	47	6621	0	13.65	22	25	0	3	5
+q36-35b	M	3	446	0	False	1	True	13	3	0	5	102	52	4730	0	10.61	16	21	0	3	4
+q36-35b	L	1	361	0	False	0	True	6	0	0	12	179	46	5566	0	15.42	21	34	0	3	5
+q36-35b	L	2	257	0	False	0	True	7	0	0	12	191	45	4378	0	17.04	12	24	0	3	5
+q36-35b	L	3	829	0	False	0	True	6	0	0	12	194	46	12917	0	15.58	54	66	0	3	4
+q35-122b	S	1	682	0	False	1	True	8	3	0	3	84	48	1700	0	2.49	9	10	0	3	4
+q35-122b	S	2	634	0	False	1	True	8	3	0	3	78	48	1620	0	2.56	10	10	0	3	5
+q35-122b	S	3	561	0	False	1	True	8	3	0	3	76	46	1051	0	1.87	4	5	0	3	5
+q35-122b	M	1	1500	124	True	1	False	None	None	None	5	113	49	2014	0	1.34	7	10	0	2	2
+q35-122b	M	2	1500	124	True	1	True	9	3	0	1	46	46	292	0	0.19	3	5	0	3	1
+q35-122b	M	3	1500	124	True	1	True	13	3	0	5	102	49	6949	0	4.63	24	28	0	3	4
+q35-122b	L	1	896	0	False	0	True	6	0	0	12	185	45	2803	0	3.13	7	21	0	3	5
+q35-122b	L	2	1088	0	False	0	True	7	0	0	12	190	45	5778	0	5.31	22	32	0	3	5
+q35-122b	L	3	1064	0	False	0	True	7	0	0	14	205	45	5536	0	5.2	17	32	0	3	4

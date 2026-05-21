@@ -1,0 +1,38 @@
+あなたはこの Rails 8.1 プロジェクト（ytdlor）の開発者です。以下を実装してください。
+
+# タスク: Archive にステータス scope を追加し、index でフィルタできるようにする
+
+## 要件
+
+1. `app/models/archive.rb` の Archive モデルに次の scope を追加してください。
+   - `scope :completed, -> { where(status: Status::DONE) }`
+   - `scope :pending, -> { where(status: [Status::WAITING, Status::PROCESSING]) }`
+   - 既存の `:ordered` と `:failed` scope は維持する
+
+2. `app/controllers/archives_controller.rb` の `index` アクションを以下のように変更してください。
+   - クエリパラメータ `filter` を受け付ける
+   - `filter=completed` のとき `Archive.completed` を起点に
+   - `filter=pending` のとき `Archive.pending` を起点に
+   - `filter` 未指定または上記以外のときは現状通り `Archive.ordered.with_attached_thumbnail.with_attached_video` のまま
+   - フィルタ適用後も `.ordered.with_attached_thumbnail.with_attached_video` を必ず後段でチェーンする（ordered の順序、attachment preload の最適化を維持）
+
+3. テストを追加してください。
+   - `test/models/archive_test.rb` に scope 2 件:
+     - `Archive.completed` が done 状態の archive のみを返すこと
+     - `Archive.pending` が waiting または processing 状態の archive を返し、done/failed は返さないこと
+   - `test/controllers/archives_controller_test.rb` に index フィルタ 2 件:
+     - `get archives_url, params: { filter: "completed" }` で 200 OK かつ assigns(:archives) もしくは response.body 内容が done のみであること
+     - `get archives_url, params: { filter: "pending" }` で 200 OK
+   - 新規追加するテストでは外部ネットワークに依存せず、Archive を直接 `Archive.create!(original_url: ..., status: ...)` で作って検証してください。
+
+## 動作確認
+
+最後に次のコマンドで全テストがパスすることを確認してください:
+
+```
+./docker_compose run --rm web bin/rails test
+```
+
+注意:
+- 既存のテストの一部はネットワーク依存で失敗します。それは元からなので、新規追加したテストが全て pass していれば OK です（その旨 plan に記載）
+- 既存コードへの変更は最小限にすること

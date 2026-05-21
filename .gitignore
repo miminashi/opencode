@@ -31,3 +31,8 @@ UPCOMING_CHANGELOG.md
 logs/
 *.bun-build
 tsconfig.tsbuildinfo
+
+# Bench raw artifacts (commit only scripts/summary, exclude per-trial outputs)
+report/attachment/**/bench/trials/
+report/attachment/**/bench/observe/
+report/attachment/**/bench/__pycache__/

@@ -1,0 +1,54 @@
+あなたはこの Rails 8.1 プロジェクト（ytdlor、PostgreSQL）の開発者です。以下を実装してください。
+
+# タスク: Tag モデルを新規追加し、Archive と関連付けする
+
+## 要件
+
+1. マイグレーション 2 本を追加してください（rails generate ではなく手書きで `db/migrate/` 配下に作成、現在時刻ベースのタイムスタンプを使用）。
+   - `tags` テーブル: `name` (string, null: false, unique index), timestamps
+   - `archives_tags` 中間テーブル: `archive_id` (bigint), `tag_id` (bigint), 両方向に index、`[archive_id, tag_id]` の複合 unique index、外部キー制約
+
+2. `app/models/tag.rb` を新規作成してください。
+   - `has_many :archives_tags, dependent: :destroy`
+   - `has_many :archives, through: :archives_tags`
+   - `validates :name, presence: true, uniqueness: true`
+
+3. `app/models/archive.rb` に次を追加してください。
+   - `has_many :archives_tags, dependent: :destroy`
+   - `has_many :tags, through: :archives_tags`
+   - 既存のメソッド・バリデーション・scope は壊さないこと
+
+4. `app/models/archives_tag.rb` を新規作成（join モデル）してください。
+   - `belongs_to :archive`
+   - `belongs_to :tag`
+
+5. `app/controllers/tags_controller.rb` を作成し、`index` と `show` アクションを実装してください。
+   - `index`: `@tags = Tag.order(:name)`
+   - `show`: `@tag = Tag.find(params[:id])`、`@archives = @tag.archives.order(id: :desc)`
+
+6. `config/routes.rb` に `resources :tags, only: [:index, :show]` を追加してください。
+
+7. ビューを最小構成で作成してください。
+   - `app/views/tags/index.html.erb`: tags を ul/li で表示、各 tag は `link_to tag.name, tag` でリンク
+   - `app/views/tags/show.html.erb`: tag 名を h1 で表示、関連 archive を ul で表示
+
+8. テストを追加してください。
+   - `test/models/tag_test.rb`: 3 ケース以上
+     - name が空だと invalid
+     - 同名 tag は重複作成できない
+     - Archive に複数の tag を関連付けでき、`archive.tags` で取得できる
+   - `test/controllers/tags_controller_test.rb`: index/show を 1 件ずつ（200 OK 確認）
+
+## 動作確認
+
+最後に次のコマンドを順に実行し、テストが pass することを確認してください:
+
+```
+./docker_compose run --rm web bin/rails db:migrate RAILS_ENV=test
+./docker_compose run --rm web bin/rails test test/models/tag_test.rb test/controllers/tags_controller_test.rb
+```
+
+注意:
+- 既存のネットワーク依存テストは失敗してかまわない（その旨 plan に記載）
+- 新規追加した Tag 関連のテストが全 pass していれば OK
+- 大幅なリファクタや無関係な変更は加えないこと

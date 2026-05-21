@@ -1,0 +1,55 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "t120h-p100": {
+      "name": "T120H P100",
+      "options": {
+        "baseURL": "http://10.1.4.14:8000/v1",
+        "apiKey": "aaaaa"
+      },
+      "models": {
+        "unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M": {
+          "name": "Qwen3.5 122B A10B Q4_K_M",
+          "tool_call": true,
+          "reasoning": true,
+          "attachment": false,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "unsloth/Qwen3.6-27B-GGUF:UD-Q4_K_XL": {
+          "name": "Qwen3.6 27B UD-Q4_K_XL",
+          "tool_call": true,
+          "reasoning": true,
+          "attachment": false,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL": {
+          "name": "Qwen3.6 35B-A3B UD-Q4_K_XL",
+          "tool_call": true,
+          "reasoning": true,
+          "attachment": false,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "unsloth/Qwen3.6-27B-MTP-GGUF:UD-Q4_K_XL": {
+          "name": "Qwen3.6 27B-MTP UD-Q4_K_XL",
+          "tool_call": true,
+          "reasoning": true,
+          "attachment": false,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q4_K_XL": {
+          "name": "Qwen3.6 35B-A3B-MTP UD-Q4_K_XL",
+          "tool_call": true,
+          "reasoning": true,
+          "attachment": false,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        }
+      }
+    }
+  },
+  "model": "t120h-p100/unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M"
+}

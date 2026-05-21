@@ -1,0 +1,31 @@
+あなたはこの Rails 8.1 プロジェクト（ytdlor）の開発者です。以下を実装してください。
+
+# タスク: Archive モデルに URL フォーマットバリデーションを追加
+
+## 要件
+
+1. `app/models/archive.rb` の Archive モデルに `original_url` のフォーマット検証を追加してください。
+   - http:// または https:// で始まる URL のみを valid とする
+   - 検証は `URI.parse` を使い、結果が `URI::HTTP` か `URI::HTTPS` の kind_of? であることをチェックする
+   - `URI::InvalidURIError` を rescue して invalid 扱いとする
+   - 既存の `validates(:original_url, presence: true)` は維持する
+   - 既存の Status 関連のバリデーションも壊さない
+
+2. `test/models/archive_test.rb` に次の 3 ケースをそれぞれ独立した test ブロックとして追加してください。
+   - 有効な https URL（例: "https://example.com/video"）で valid であること
+   - 不正な文字列（例: "not-a-url"）で invalid かつ `errors[:original_url]` が空でないこと
+   - "ftp://example.com" のような http/https 以外のスキームで invalid であること
+   - 既存のテストはネットワーク依存があるので壊さないでください
+
+## 動作確認
+
+最後に必ず次のコマンドで、Archive モデルのテストが全件パスすることを確認してください:
+
+```
+./docker_compose run --rm web bin/rails test test/models/archive_test.rb
+```
+
+注意:
+- `./docker_compose` はプロジェクトルートにあるラッパースクリプトです
+- 既存のテストがネットワーク必要で失敗するなら、それは元から失敗しているものなので、新規追加した3テストが pass していれば OK です（その旨 plan に記載）
+- 既存のコードを大幅に書き換えないこと。最小限の変更で実装する

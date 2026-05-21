@@ -214,14 +214,14 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
    - レスポンスが返れば起動済み。タイムアウト・接続エラーの場合は未起動
 
 3. **llama-server が未起動なら `llama-server` スキルで起動**
-   - 既定モデルは `unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M`（fit モード）
+   - 既定モデルは `unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL`（131072 ctx、通常起動）
    - `start.sh` → `wait-ready.sh` の順に実行する（詳細は `llama-server` skill を参照）
    - **注意**: 既に他者が使用中の llama-server を勝手に停止・再起動しないこと
 
 ### サーバ・モデル選択
 
 - 既定サーバ: `t120h-p100`（10.1.4.14）— P100 を最優先（`gpu-server` skill 方針）
-- 既定モデル: `unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M`（fit モード）— 現行 opencode 設定値
+- 既定モデル: `unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL`（131072 ctx）— 現行 opencode 設定値（ベンチ判定 2026-05-21）
 - ロックが必要な操作の前に `gpu-server` skill の `lock.sh` を取得すること
 
 ## ワークツリー運用ルール

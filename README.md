@@ -59,6 +59,28 @@ bun run typecheck           # 型チェック（任意。後述の既知エラ�
 > [!NOTE]
 > `bun run typecheck` には現状 15 件の pre-existing エラーが残っています（`OscCopier` 型不整合 9 件、`src/tool/truncate-effect.ts` のモジュール解決 5 件、`test/session/prompt.test.ts` の Layer 型 1 件）。これらは `bun run build --single` のバイナリ生成や実行には影響しません。修正対応中。
 
+### LLM サーバの起動
+
+このフォークは OpenAI 互換 API を提供するローカル llama-server を前提に動作確認している。`llama-server` スキルの `llama-up.sh` を実行すると、GPU サーバ電源 ON → SSH 疎通待ち → llama.cpp ビルド → llama-server 起動 → ヘルスチェックまでを 1 コマンドで行える（既に起動済みなら冪等にスキップして即終了する）。
+
+```bash
+/home/ubuntu/.claude/plugins/cache/claude-plugins-official/llama-server/1.0.0/skills/llama-server/scripts/llama-up.sh
+```
+
+引数を省略すると以下の既定構成で起動する（API エンドポイント: `http://10.1.4.14:8000`）。
+
+- GPU サーバ: `t120h-p100`
+- モデル: `unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL`
+- 起動モード: 通常（全レイヤー GPU、ctx=131072）
+
+別構成で起動する場合は `llama-up.sh [server] [hf-model] [mode] [fit-ctx]` の順で指定する。停止には対になる `llama-down.sh` を使う。個別ステップ（`power.sh` / `start.sh` / `wait-ready.sh` 等）の詳細は `llama-server` / `gpu-server` スキルの SKILL.md を参照。
+
+> [!NOTE]
+> 初回または llama.cpp 更新後はビルドフェーズに 120 秒以上かかることがある。`llama-up.sh` は完了時に Discord 通知を送る。
+
+> [!WARNING]
+> 既に他者が使用中の llama-server を勝手に停止・再起動しないこと。共有 GPU サーバでロック取得が必要な運用の場合は、`gpu-server` スキルの `lock.sh` / `lock-status.sh` / `unlock.sh` を参照。
+
 ### このフォークでの変更点
 
 upstream からの fork 後に適用したバグ修正・改善の一覧。

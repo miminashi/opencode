@@ -1,0 +1,7 @@
+label=repro1
+result=MODIFIED
+rc=143
+pre_hash=08bc1cb93d03b22d1e5790233285711b8edb134cd2323f9572510dfb1dcd60f7
+post_hash=cb3c96006e226e9030d2d8be9df6f07e5bbe2d7001c11c55aff9044a4f6ffcdf
+pre_size=8754
+post_size=8768

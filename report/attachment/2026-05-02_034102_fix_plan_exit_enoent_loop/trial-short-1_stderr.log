@@ -1,0 +1,7 @@
+ENOENT: no such file or directory, open '/home/ubuntu/projects/ytdlor/.opencode/plans/1777664596018-shiny-squid.md'
+    path: "/home/ubuntu/projects/ytdlor/.opencode/plans/1777664596018-shiny-squid.md",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+

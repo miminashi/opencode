@@ -1,0 +1,17 @@
+label=trial-short-1
+prompt=今すぐ plan_exit を呼んでください。プランファイルは作成不要です。
+rc=0
+elapsed_seconds=239
+plan_exit_calls=0
+0
+plan_exit_enoent_errors=0
+0
+reminder_fires=0
+0
+plan_exists_true=0
+0
+plan_exists_false=0
+0
+step_starts=3
+---reminder_log_lines---
+

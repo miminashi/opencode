@@ -1,0 +1,19 @@
+label=trial-4
+result=MODIFIED
+rc=0
+elapsed_seconds=768
+pre_hash=08bc1cb93d03b22d1e5790233285711b8edb134cd2323f9572510dfb1dcd60f7
+post_hash=cb3c96006e226e9030d2d8be9df6f07e5bbe2d7001c11c55aff9044a4f6ffcdf
+pre_size=8754
+post_size=8768
+plan_exit_calls=0
+0
+reminder_fires=2
+plan_exists_true=0
+0
+plan_exists_false=0
+0
+step_starts=9
+---reminder_log_lines---
+INFO  2026-05-01T19:38:55 +2ms service=session.prompt sessionID=ses_21afb7120ffeVIXf1XIKukFZ3R attempt=1 planExists=true plan_exit reminder
+INFO  2026-05-01T19:42:03 +2ms service=session.prompt sessionID=ses_21afb7120ffeVIXf1XIKukFZ3R attempt=2 planExists=true plan_exit reminder

@@ -1,0 +1,35 @@
+# plan_exit reminder log excerpts (from ~/.local/share/opencode/log/)
+
+## Phase B (v1 fix) - reminder fires
+
+post-fix-1: 1 reminder
+INFO  2026-04-30T23:23:25 +1ms service=session.prompt sessionID=ses_21f547eb5ffemD8s7j4UwrwDgE attempt=1 plan_exit reminder
+
+post-fix-2: 1 reminder
+INFO  2026-04-30T23:37:01 +2ms service=session.prompt sessionID=ses_21f449168ffeDPZY9isOWtW6ll attempt=1 plan_exit reminder
+
+post-fix-4: 1 reminder
+INFO  2026-05-01T00:15:25 +1ms service=session.prompt sessionID=ses_21f26a53affeT8T0QQFWO6gFTj attempt=1 plan_exit reminder
+
+(post-fix-3: stalled in step 4 reasoning, no step_finish, no reminder)
+
+## Phase C (v2 fix) - reminder fires twice (MAX reached) per trial
+
+post-fix-v2-2: 2 reminders
+INFO  2026-05-01T00:44:44 +1ms service=session.prompt sessionID=ses_21f06842cffeH5b5vaofd1iI89 attempt=1 plan_exit reminder
+INFO  2026-05-01T00:47:35 +2ms service=session.prompt sessionID=ses_21f06842cffeH5b5vaofd1iI89 attempt=2 plan_exit reminder
+
+post-fix-v2-4: 2 reminders
+INFO  2026-05-01T01:11:14 +1ms service=session.prompt sessionID=ses_21eeed616ffeYZsBy9DN192hLN attempt=1 plan_exit reminder
+INFO  2026-05-01T01:14:16 +2ms service=session.prompt sessionID=ses_21eeed616ffeYZsBy9DN192hLN attempt=2 plan_exit reminder
+
+post-fix-v2-5: 2 reminders
+INFO  2026-05-01T01:22:42 +2ms service=session.prompt sessionID=ses_21ee48ac1ffeMYiQoHq8WuVKJl attempt=1 plan_exit reminder
+INFO  2026-05-01T01:25:08 +2ms service=session.prompt sessionID=ses_21ee48ac1ffeMYiQoHq8WuVKJl attempt=2 plan_exit reminder
+
+(post-fix-v2-1, v2-3: stalled, no reminder)
+
+# Aggregate
+- Phase A (pre-fix): 0/5 trials had reminder fire
+- Phase B (v1): 3/4 trials had reminder fire
+- Phase C (v2): 3/5 trials had reminder fire (with 2 reminders each)

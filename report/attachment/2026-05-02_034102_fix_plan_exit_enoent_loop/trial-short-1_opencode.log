@@ -1,0 +1,356 @@
+INFO  2026-05-01T19:43:14 +933ms service=default version=0.0.0-worktree-fix-plan-subagent-readonly-202605011839 args=["run","--agent","plan","今すぐ plan_exit を呼んでください。プランファイルは作成不要です。","--format","json"] process_role=main run_id=60434a9f-f736-4e29-b874-0e2a2b9e3f68 opencode
+INFO  2026-05-01T19:43:14 +6ms service=default directory=/home/ubuntu/projects/ytdlor creating instance
+INFO  2026-05-01T19:43:14 +11ms service=project directory=/home/ubuntu/projects/ytdlor fromDirectory
+INFO  2026-05-01T19:43:15 +87ms service=db path=/home/ubuntu/.local/share/opencode/opencode-worktree-fix-plan-subagent-readonly.db opening database
+INFO  2026-05-01T19:43:15 +185ms service=db count=14 mode=bundled applying migrations
+INFO  2026-05-01T19:43:15 +105ms service=file init
+INFO  2026-05-01T19:43:15 +120ms service=default directory=/home/ubuntu/projects/ytdlor bootstrapping
+INFO  2026-05-01T19:43:15 +20ms service=config path=/home/ubuntu/.config/opencode/config.json loading
+INFO  2026-05-01T19:43:15 +1ms service=config path=/home/ubuntu/.config/opencode/opencode.json loading
+INFO  2026-05-01T19:43:15 +0ms service=config path=/home/ubuntu/.config/opencode/opencode.jsonc loading
+INFO  2026-05-01T19:43:15 +2ms service=config path=/home/ubuntu/projects/ytdlor/opencode.json loading
+INFO  2026-05-01T19:43:15 +48ms service=config path=/home/ubuntu/projects/ytdlor/.opencode/opencode.json loading
+INFO  2026-05-01T19:43:15 +292ms service=config path=/home/ubuntu/projects/ytdlor/.opencode/opencode.jsonc loading
+INFO  2026-05-01T19:43:15 +20ms service=config path=/home/ubuntu/.opencode/opencode.json loading
+INFO  2026-05-01T19:43:15 +4ms service=config path=/home/ubuntu/.opencode/opencode.jsonc loading
+INFO  2026-05-01T19:43:15 +35ms service=plugin name=_F loading internal plugin
+INFO  2026-05-01T19:43:15 +0ms service=plugin name=ZF loading internal plugin
+INFO  2026-05-01T19:43:15 +1ms service=plugin name=Rh loading internal plugin
+INFO  2026-05-01T19:43:15 +0ms service=plugin name=n5 loading internal plugin
+INFO  2026-05-01T19:43:15 +1ms service=plugin name=uh loading internal plugin
+INFO  2026-05-01T19:43:15 +0ms service=plugin name=kh loading internal plugin
+INFO  2026-05-01T19:43:15 +1ms service=bus type=* subscribing
+INFO  2026-05-01T19:43:15 +4ms service=bus type=command.executed subscribing
+INFO  2026-05-01T19:43:15 +32ms service=lsp all LSPs are disabled
+INFO  2026-05-01T19:43:15 +2ms service=bus type=session.updated subscribing
+INFO  2026-05-01T19:43:15 +0ms service=bus type=message.updated subscribing
+INFO  2026-05-01T19:43:15 +0ms service=bus type=message.part.updated subscribing
+INFO  2026-05-01T19:43:15 +0ms service=bus type=session.diff subscribing
+INFO  2026-05-01T19:43:15 +0ms service=bus type=session.deleted subscribing
+INFO  2026-05-01T19:43:15 +2ms service=format all formatters are disabled
+INFO  2026-05-01T19:43:15 +0ms service=format init
+INFO  2026-05-01T19:43:15 +6ms service=file.watcher directory=/home/ubuntu/projects/ytdlor init
+INFO  2026-05-01T19:43:15 +3ms service=file.watcher directory=/home/ubuntu/projects/ytdlor platform=linux backend=inotify watcher backend
+INFO  2026-05-01T19:43:16 +114ms service=server method=POST path=/session request
+INFO  2026-05-01T19:43:16 +0ms service=server status=started method=POST path=/session request
+INFO  2026-05-01T19:43:16 +11ms service=session id=ses_21aeee7ceffetUBRLkjfp1yTuT slug=shiny-squid version=0.0.0-worktree-fix-plan-subagent-readonly-202605011839 projectID=5028a873cbb094a0a0cf5bb2c3baafd04a708d0b directory=/home/ubuntu/projects/ytdlor path= title=New session - 2026-05-01T19:43:16.018Z permission=[{"permission":"question","pattern":"*","action":"deny"},{"permission":"plan_enter","pattern":"*","action":"deny"},{"permission":"plan_exit","pattern":"*","action":"deny"}] time={"created":1777664596018,"updated":1777664596018} created
+INFO  2026-05-01T19:43:16 +6ms service=bus type=session.created publishing
+INFO  2026-05-01T19:43:16 +1ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:43:16 +2ms service=server status=completed duration=20 method=POST path=/session request
+INFO  2026-05-01T19:43:16 +1ms service=server method=GET path=/config request
+INFO  2026-05-01T19:43:16 +0ms service=server status=started method=GET path=/config request
+INFO  2026-05-01T19:43:16 +1ms service=server status=completed duration=1 method=GET path=/config request
+INFO  2026-05-01T19:43:16 +4ms service=server method=GET path=/event request
+INFO  2026-05-01T19:43:16 +0ms service=server status=started method=GET path=/event request
+INFO  2026-05-01T19:43:16 +0ms service=server method=POST path=/session/ses_21aeee7ceffetUBRLkjfp1yTuT/message request
+INFO  2026-05-01T19:43:16 +0ms service=server status=started method=POST path=/session/ses_21aeee7ceffetUBRLkjfp1yTuT/message request
+INFO  2026-05-01T19:43:16 +3ms service=server event connected
+INFO  2026-05-01T19:43:16 +4ms service=bus type=* subscribing
+INFO  2026-05-01T19:43:16 +28ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:43:16 +3ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:43:16 +5ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:43:16 +5ms service=server status=completed duration=48 method=GET path=/event request
+INFO  2026-05-01T19:43:16 +3ms service=server status=completed duration=51 method=POST path=/session/ses_21aeee7ceffetUBRLkjfp1yTuT/message request
+INFO  2026-05-01T19:43:16 +38ms service=bus type=session.status publishing
+INFO  2026-05-01T19:43:16 +1ms service=session.prompt session.id=ses_21aeee7ceffetUBRLkjfp1yTuT step=0 loop
+INFO  2026-05-01T19:43:16 +10ms service=provider status=started state
+INFO  2026-05-01T19:43:16 +136ms service=provider init
+WARN  2026-05-01T19:43:16 +263ms service=config dir=/home/ubuntu/.config/opencode error=Cause([Fail(NpmInstallFailedError (cause: @opencode-ai/plugin: No matching version found for @opencode-ai/plugin@0.0.0-worktree-fix-plan-subagent-readonly-202605011839.))]) background dependency install failed
+INFO  2026-05-01T19:43:16 +6ms service=provider providerID=t120h-p100 found
+INFO  2026-05-01T19:43:16 +0ms service=provider providerID=opencode found
+INFO  2026-05-01T19:43:16 +0ms service=provider status=completed duration=405 state
+INFO  2026-05-01T19:43:16 +7ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:43:16 +31ms service=llm providerID=t120h-p100 modelID=unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M session.id=ses_21aeee7ceffetUBRLkjfp1yTuT small=true agent=title mode=primary stream
+INFO  2026-05-01T19:43:16 +2ms service=provider status=started providerID=t120h-p100 getSDK
+INFO  2026-05-01T19:43:16 +0ms service=provider providerID=t120h-p100 pkg=@ai-sdk/openai-compatible using bundled provider
+INFO  2026-05-01T19:43:16 +11ms service=provider status=completed duration=11 providerID=t120h-p100 getSDK
+WARN  2026-05-01T19:43:16 +262ms service=config dir=/home/ubuntu/projects/ytdlor/.opencode error=Cause([Fail(NpmInstallFailedError (cause: @opencode-ai/plugin: No matching version found for @opencode-ai/plugin@0.0.0-worktree-fix-plan-subagent-readonly-202605011839.))]) background dependency install failed
+INFO  2026-05-01T19:43:16 +11ms service=vcs branch=main default_branch=main initialized
+INFO  2026-05-01T19:43:16 +0ms service=bus type=file.watcher.updated subscribing
+WARN  2026-05-01T19:43:17 +260ms service=config dir=/home/ubuntu/.opencode error=Cause([Fail(NpmInstallFailedError (cause: @opencode-ai/plugin: No matching version found for @opencode-ai/plugin@0.0.0-worktree-fix-plan-subagent-readonly-202605011839.))]) background dependency install failed
+INFO  2026-05-01T19:43:17 +54ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:43:17 +6ms service=session.prompt status=started resolveTools
+INFO  2026-05-01T19:43:17 +11ms service=bash-tool shell=/bin/bash bash tool using shell
+INFO  2026-05-01T19:43:17 +10ms service=tool.registry status=started invalid
+INFO  2026-05-01T19:43:17 +1ms service=tool.registry status=completed duration=1 invalid
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started question
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 question
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started bash
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 bash
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started read
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 read
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started glob
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 glob
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started grep
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 grep
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started edit
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 edit
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started write
+INFO  2026-05-01T19:43:17 +1ms service=tool.registry status=completed duration=1 write
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started task
+INFO  2026-05-01T19:43:17 +1ms service=permission permission=task pattern=explore ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +1ms service=permission permission=task pattern=general ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=2 task
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started webfetch
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 webfetch
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started todowrite
+INFO  2026-05-01T19:43:17 +1ms service=tool.registry status=completed duration=1 todowrite
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=started skill
+INFO  2026-05-01T19:43:17 +2ms service=tool.registry status=started plan_exit
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=0 plan_exit
+INFO  2026-05-01T19:43:17 +7ms service=skill count=2 init
+INFO  2026-05-01T19:43:17 +0ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +1ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +0ms service=tool.registry status=completed duration=10 skill
+INFO  2026-05-01T19:43:17 +12ms service=session.prompt status=completed duration=48 resolveTools
+INFO  2026-05-01T19:43:17 +1ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +0ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:43:17 +5ms service=session.processor session.id=ses_21aeee7ceffetUBRLkjfp1yTuT messageID=msg_de5111a3f002gmPAZv0BgWV2xl process
+INFO  2026-05-01T19:43:17 +2ms service=llm providerID=t120h-p100 modelID=unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M session.id=ses_21aeee7ceffetUBRLkjfp1yTuT small=false agent=plan mode=primary stream
+INFO  2026-05-01T19:43:17 +9ms service=bus type=session.status publishing
+INFO  2026-05-01T19:43:17 +11ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:43:17 +37ms service=bus type=session.diff publishing
+INFO  2026-05-01T19:43:17 +2ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:43:57 +39833ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:44:16 +19844ms service=snapshot prune=7.days cleanup
+INFO  2026-05-01T19:45:27 +70386ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:27 +5ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:27 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +299ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +315ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:27 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:28 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:28 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:28 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:45:28 +642ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:28 +2ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:30 +1929ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:30 +84ms service=permission permission=bash pattern=plan_exit ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"question","pattern":"*","action":"deny"},{"permission":"plan_enter","pattern":"*","action":"deny"},{"permission":"plan_exit","pattern":"*","action":"deny"}] evaluate
+INFO  2026-05-01T19:45:30 +1ms service=permission permission=bash pattern=plan_exit action={"permission":"*","action":"allow","pattern":"*"} evaluated
+INFO  2026-05-01T19:45:30 +5ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:31 +44ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:31 +8ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:31 +121ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:45:31 +2ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:45:31 +2ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:45:31 +81ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:45:31 +1ms service=bus type=session.status publishing
+INFO  2026-05-01T19:45:31 +1ms service=session.prompt session.id=ses_21aeee7ceffetUBRLkjfp1yTuT step=1 loop
+INFO  2026-05-01T19:45:31 +22ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:45:31 +21ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:45:31 +2ms service=bus type=session.diff publishing
+INFO  2026-05-01T19:45:31 +21ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:45:31 +100ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:45:31 +1ms service=session.prompt status=started resolveTools
+INFO  2026-05-01T19:45:31 +1ms service=tool.registry status=started invalid
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 invalid
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started question
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 question
+INFO  2026-05-01T19:45:31 +1ms service=tool.registry status=started bash
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 bash
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started read
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 read
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started glob
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 glob
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started grep
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 grep
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started edit
+INFO  2026-05-01T19:45:31 +1ms service=tool.registry status=completed duration=1 edit
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started write
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 write
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started task
+INFO  2026-05-01T19:45:31 +1ms service=permission permission=task pattern=explore ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +0ms service=permission permission=task pattern=general ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=1 task
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started webfetch
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 webfetch
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started todowrite
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 todowrite
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started skill
+INFO  2026-05-01T19:45:31 +1ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +0ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=1 skill
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=started plan_exit
+INFO  2026-05-01T19:45:31 +0ms service=tool.registry status=completed duration=0 plan_exit
+INFO  2026-05-01T19:45:31 +4ms service=session.prompt status=completed duration=9 resolveTools
+INFO  2026-05-01T19:45:31 +1ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +0ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:45:31 +16ms service=session.processor session.id=ses_21aeee7ceffetUBRLkjfp1yTuT messageID=msg_de513286b0021MJP9rEqb4IFOJ process
+INFO  2026-05-01T19:45:31 +1ms service=llm providerID=t120h-p100 modelID=unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M session.id=ses_21aeee7ceffetUBRLkjfp1yTuT small=false agent=plan mode=primary stream
+INFO  2026-05-01T19:45:31 +19ms service=bus type=session.status publishing
+INFO  2026-05-01T19:47:00 +89511ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:00 +3ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:00 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:00 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:00 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:00 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +305ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +45ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +272ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:01 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +319ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:02 +2ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +4ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +311ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:02 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +317ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:03 +322ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +2246ms service=permission permission=bash pattern=echo "Exiting plan mode" ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"question","pattern":"*","action":"deny"},{"permission":"plan_enter","pattern":"*","action":"deny"},{"permission":"plan_exit","pattern":"*","action":"deny"}] evaluate
+INFO  2026-05-01T19:47:06 +1ms service=permission permission=bash pattern=echo "Exiting plan mode" action={"permission":"*","action":"allow","pattern":"*"} evaluated
+INFO  2026-05-01T19:47:06 +3ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +4ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +4ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +7ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +6ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +88ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:47:06 +2ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:06 +2ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:06 +82ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:06 +1ms service=bus type=session.status publishing
+INFO  2026-05-01T19:47:06 +0ms service=session.prompt session.id=ses_21aeee7ceffetUBRLkjfp1yTuT step=2 loop
+INFO  2026-05-01T19:47:06 +5ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:06 +82ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:47:06 +1ms service=session.prompt status=started resolveTools
+INFO  2026-05-01T19:47:06 +1ms service=tool.registry status=started invalid
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 invalid
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started question
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 question
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started bash
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 bash
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started read
+INFO  2026-05-01T19:47:06 +1ms service=tool.registry status=completed duration=1 read
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started glob
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 glob
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started grep
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 grep
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started edit
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 edit
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started write
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 write
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started task
+INFO  2026-05-01T19:47:06 +1ms service=permission permission=task pattern=explore ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +0ms service=permission permission=task pattern=general ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=1 task
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started webfetch
+INFO  2026-05-01T19:47:06 +1ms service=tool.registry status=completed duration=1 webfetch
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started todowrite
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 todowrite
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started skill
+INFO  2026-05-01T19:47:06 +0ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +0ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +1ms service=tool.registry status=completed duration=1 skill
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=started plan_exit
+INFO  2026-05-01T19:47:06 +0ms service=tool.registry status=completed duration=0 plan_exit
+INFO  2026-05-01T19:47:06 +3ms service=session.prompt status=completed duration=8 resolveTools
+INFO  2026-05-01T19:47:06 +1ms service=permission permission=skill pattern=rails-upgrade ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +0ms service=permission permission=skill pattern=test-runner ruleset=[{"permission":"*","action":"allow","pattern":"*"},{"permission":"doom_loop","action":"ask","pattern":"*"},{"permission":"external_directory","pattern":"*","action":"ask"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/rails-upgrade/*","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/projects/ytdlor/.claude/skills/test-runner/*","action":"allow"},{"permission":"question","action":"deny","pattern":"*"},{"permission":"plan_enter","action":"deny","pattern":"*"},{"permission":"plan_exit","action":"deny","pattern":"*"},{"permission":"read","pattern":"*","action":"allow"},{"permission":"read","pattern":"*.env","action":"ask"},{"permission":"read","pattern":"*.env.*","action":"ask"},{"permission":"read","pattern":"*.env.example","action":"allow"},{"permission":"question","action":"allow","pattern":"*"},{"permission":"plan_exit","action":"allow","pattern":"*"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/plans/*","action":"allow"},{"permission":"edit","pattern":"*","action":"deny"},{"permission":"edit","pattern":".opencode/plans/*.md","action":"allow"},{"permission":"edit","pattern":"../../.local/share/opencode/plans/*.md","action":"allow"},{"permission":"task","pattern":"*","action":"deny"},{"permission":"task","pattern":"explore","action":"allow"},{"permission":"external_directory","pattern":"/home/ubuntu/.local/share/opencode/tool-output/*","action":"allow"}] evaluate
+INFO  2026-05-01T19:47:06 +28ms service=session.processor session.id=ses_21aeee7ceffetUBRLkjfp1yTuT messageID=msg_de5149baa002s7Fhb7WLogKXZM process
+INFO  2026-05-01T19:47:06 +0ms service=llm providerID=t120h-p100 modelID=unsloth/Qwen3.5-122B-A10B-GGUF:Q4_K_M session.id=ses_21aeee7ceffetUBRLkjfp1yTuT small=false agent=plan mode=primary stream
+INFO  2026-05-01T19:47:06 +9ms service=bus type=session.status publishing
+INFO  2026-05-01T19:47:06 +6ms service=bus type=session.updated publishing
+INFO  2026-05-01T19:47:06 +15ms service=bus type=session.diff publishing
+INFO  2026-05-01T19:47:06 +21ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:08 +1859ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:08 +2ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +311ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +318ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:08 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +316ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +318ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:09 +3ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:09 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +313ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +317ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +2ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +318ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:10 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +317ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +1ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +0ms service=bus type=message.part.delta publishing
+INFO  2026-05-01T19:47:11 +320ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:11 +84ms service=snapshot hash=4e9ec66becd32ec8874919c95850fca6af431896 cwd=/home/ubuntu/projects/ytdlor git=/home/ubuntu/.local/share/opencode/snapshot/5028a873cbb094a0a0cf5bb2c3baafd04a708d0b/e0aaa45f5da13a22cf610a6083765474a1cbfd42 tracking
+INFO  2026-05-01T19:47:11 +1ms service=bus type=message.part.updated publishing
+INFO  2026-05-01T19:47:11 +2ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:11 +86ms service=bus type=message.updated publishing
+INFO  2026-05-01T19:47:11 +5ms service=bus type=session.status publishing
+INFO  2026-05-01T19:47:11 +0ms service=bus type=session.idle publishing

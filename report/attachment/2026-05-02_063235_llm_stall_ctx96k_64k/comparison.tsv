@@ -1,0 +1,16 @@
+ctx	trial	rc	elapsed_s	steps	plan_exit	result	tool_uses	reasoning_chunks
+131072	1	124	600+	?	0	UNCHANGED	?	?
+131072	2	124	612	?	0	UNCHANGED	?	?
+131072	3	124	641	?	0	UNCHANGED	?	?
+131072	4	0	?	9	yes	MODIFIED	multiple	?
+131072	5	124	327+	?	0	UNCHANGED	?	?
+96k	1	124	900	5	0	UNCHANGED	5 (webfetch+read+write+task+edit)	5
+96k	2	124	900	7	0	UNCHANGED	8 (3*task+2*edit+webfetch+read+write)	7
+96k	3	124	900	4	0	MODIFIED	4 (webfetch+read+edit+write)	4
+96k	4	124	901	5	0	UNCHANGED	5 (webfetch+read+edit+write+task)	5
+96k	5	124	900	4	0	UNCHANGED	5 (webfetch+read+edit+write+task)	4
+64k	1	124	900	3	0	UNCHANGED	3 (webfetch+read+write)	3
+64k	2	124	900	3	0	UNCHANGED	3 (webfetch+read+write)	3
+64k	3	124	900	3	0	UNCHANGED	3 (webfetch+read+write)	3
+64k	4	124	900	9	0	UNCHANGED	9 (5*task+webfetch+read+write+bash)	9
+64k	5	124	900	4	0	UNCHANGED	3 (webfetch+read+write)	4

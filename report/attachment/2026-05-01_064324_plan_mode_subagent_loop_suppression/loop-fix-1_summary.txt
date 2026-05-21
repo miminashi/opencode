@@ -1,0 +1,7 @@
+label=loop-fix-1
+result=UNCHANGED
+rc=0
+pre_hash=08bc1cb93d03b22d1e5790233285711b8edb134cd2323f9572510dfb1dcd60f7
+post_hash=08bc1cb93d03b22d1e5790233285711b8edb134cd2323f9572510dfb1dcd60f7
+pre_size=8754
+post_size=8754

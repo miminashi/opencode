@@ -1,0 +1,31 @@
+diff --git a/packages/opencode/src/session/prompt.ts b/packages/opencode/src/session/prompt.ts
+index 8ad9b3219..56ebfa7c2 100644
+--- a/packages/opencode/src/session/prompt.ts
++++ b/packages/opencode/src/session/prompt.ts
+@@ -244,7 +244,7 @@ export const layer = Layer.effect(
+               messageID: userMessage.info.id,
+               sessionID: userMessage.info.sessionID,
+               type: "text",
+-              text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
++              text: `<system-reminder>\nPlan mode still active. Read-only except plan file (${plan}). End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n\nIMPORTANT: If a subagent (\`task\`) call returns a permission-denied error, do NOT retry with a different \`subagent_type\` — every non-\`explore\` subagent is denied in plan mode. Call \`plan_exit\` instead to switch to build mode.\n</system-reminder>`,
+               synthetic: true,
+             })
+           } else {
+@@ -328,7 +328,7 @@ export const layer = Layer.effect(
+           messageID: userMessage.info.id,
+           sessionID: userMessage.info.sessionID,
+           type: "text",
+-          text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n</system-reminder>`,
++          text: `<system-reminder>\nPlan mode still active (see full instructions earlier in conversation). Read-only except plan file (${plan}). Follow the plan workflow phases. End your turn by either asking the user a question or calling plan_exit. Never create files outside the plan file.\n\nIMPORTANT: If the user's message introduces a NEW TASK that is unrelated to the current plan, overwrite the plan file with a fresh plan (do not append to or edit the old plan). If it refines or modifies the current task, edit the existing plan.\n\nIMPORTANT: If the user asks you to EXECUTE, RUN, or IMPLEMENT something (e.g. "run the tests", "execute it"), you MUST call plan_exit to switch to build mode. Do NOT say "I can't execute because I'm in read-only mode". The correct response to an execution request is to call plan_exit so the build agent can execute it.\n\nIMPORTANT: If a subagent (\`task\`) call returns a permission-denied error, do NOT retry with a different \`subagent_type\` — every non-\`explore\` subagent is denied in plan mode. Call \`plan_exit\` instead to switch to build mode.\n</system-reminder>`,
+           synthetic: true,
+         })
+         userMessage.parts.push(part)
+@@ -405,6 +405,8 @@ Synthesize the design YOURSELF based on the exploration results from Phase 1. Us
+ 
+ DO NOT launch general, build, or any other subagent type from plan mode. Those agents have edit/write permissions and will modify files, violating plan mode's read-only guarantee. The plan mode permission system will deny such calls.
+ 
++If a task call (or any other subagent invocation) is denied by the permission system, do NOT retry with a different subagent_type — every non-explore subagent is denied in plan mode by design. Instead, either complete the design yourself using the read-only tools available to you, or call plan_exit to switch to build mode where execution is allowed.
++
+ **Guidelines:**
+ - **Default**: Design the implementation directly using your own reasoning and the read-only tools available to you.
+ - **Skip agents**: For trivial tasks (typo fixes, single-line changes, simple renames), proceed directly to Phase 4.

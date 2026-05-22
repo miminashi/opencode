@@ -239,6 +239,20 @@ tmux send-keys -t default:test-runner '/home/ubuntu/projects/opencode/tmp/fork-r
    ```
    ダイアログ出現まで待機（最大 10 分、スピナー監視）。
 
+   **"Update Available" モーダル被覆時の対処**: 起動直後の capture-pane に `Update Available` / `Skip  Confirm` の文字列が混じって plan_exit dialog に被さって見える場合は、`Escape` キーで dismiss してから待機を継続する。モーダル発生は非決定論的で、初回 capture で見えなくても後続 capture で被覆する可能性があるため、dialog 待機ループ内で毎回チェックする:
+   ```
+   for i in $(seq 1 60); do
+       sleep 10
+       screen=$(tmux capture-pane -t default:opencode-test -p)
+       if echo "$screen" | grep -qE 'Update Available|Skip  Confirm'; then
+           tmux send-keys -t default:opencode-test Escape
+           sleep 2
+           screen=$(tmux capture-pane -t default:opencode-test -p)
+       fi
+       echo "$screen" | grep -q "auto-accept edits" && break
+   done
+   ```
+
 2. **B-1: Markdown 描画確認**:
    ```
    screen=$(tmux capture-pane -t default:opencode-test -p)
@@ -370,9 +384,10 @@ tmux send-keys -t default:test-runner '/home/ubuntu/projects/opencode/tmp/fork-r
 
 1. test-runner ウインドウで:
    ```
-   tmux send-keys -t default:test-runner '{binary_path} run "What is 2 plus 2? Answer with a single digit." | tee /tmp/opencode-run-reasoning.log' C-m
+   tmux send-keys -t default:test-runner '{binary_path} --dir /home/ubuntu/projects/ytdlor run "What is 2 plus 2? Answer with a single digit." | tee /tmp/opencode-run-reasoning.log' C-m
    ```
    - 注: upstream で `--prompt` フラグは廃止（positional `[message..]` のみ）
+   - 注: `--dir` 省略時は test-runner の cwd（`/home/ubuntu/projects/opencode`、opencode 自身のリポジトリ）の opencode 設定が読み込まれ、デフォルトモデル不在のため `Error: no providers found at Provider.defaultModel()` で即 abort する。ytdlor の opencode 設定を読ませるため `--dir /home/ubuntu/projects/ytdlor` を必ず付与する
 
 2. 完了待機（最大 5 分、`/tmp/opencode-run-reasoning.log` を逐次 Read で監視）:
    - ファイル末尾に "4" 単独行 / 最終答えが現れるまで待つ
@@ -437,11 +452,10 @@ tmux send-keys -t default:test-runner '/home/ubuntu/projects/opencode/tmp/fork-r
    `truncation` / `truncated` を含む箇所が複数あれば pass（retry ロジックが存在）。
 
 4. **E-3: llama-server エラーハンドリングのコード存在確認**:
-   ```
-   ls /home/ubuntu/projects/opencode/packages/opencode/src/provider/sdk/copilot/openai-compatible-error.ts
-   grep -c 'error.*string\|llama' /home/ubuntu/projects/opencode/packages/opencode/src/provider/sdk/chat/openai-compatible-chat-language-model.ts
-   ```
-   ファイルが存在し、エラーパース関連の記述が見つかれば pass。実エラー再現は skip（warn）。
+   - `packages/opencode/src/provider/error.ts` に llama.cpp 由来エラーの OVERFLOW_PATTERNS 行（`/exceeds the available context size/i, // llama.cpp server`）が存在することを Read / Grep で確認
+   - `packages/opencode/src/session/retry.ts` に llama.cpp の tool call parse error 検知（`// Detect server-side tool call parse failures (e.g. llama.cpp)` 周辺）が存在することを Read / Grep で確認
+   - 両ファイルに該当行が見つかれば pass。実エラー再現は skip（warn）。
+   - 注: 旧パス `provider/sdk/copilot/openai-compatible-error.ts` および `provider/sdk/chat/openai-compatible-chat-language-model.ts` は upstream の provider モジュール再編で削除済み（merge-upstream-19 取り込み時点）。最新パスでの再検索が必要になった場合は `Grep` ツールで `llama` をプロジェクト全体に走らせる
 
 5. **E-4: TUI 終了**:
    ```

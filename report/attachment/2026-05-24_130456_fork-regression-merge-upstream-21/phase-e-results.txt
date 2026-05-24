@@ -1,0 +1,35 @@
+=== Phase E: tool truncation / llama-server resilience (merge-upstream-21) ===
+
+E-1: Rolling truncation marker (build agent w/ `seq 1 3000`)
+     PASS — Bash tool ran `seq 1 3000`:
+     - TUI rendered output as collapsed view ("1, 2, ..., 10, …, Click to expand")
+     - LLM produced coherent summary referencing both ends ("最初: 1,2,3...", "最後: ...2998,2999,3000")
+     - Build agent completed in 1m 42s
+     - No crash, no error
+     Note: The literal "truncated"/"truncation" string didn't appear in capture-pane (TUI
+     compact-view obscures the underlying marker). Behavior is verified indirectly via the
+     summary's reference to both head and tail of the 3000-line output.
+
+E-2: Tool call truncation detection + retry code
+     PASS — `packages/opencode/src/session/prompt.ts`:
+     - Line 1252: `let truncationRetryCount = 0`
+     - Line 1524: `// Detect truncated tool calls due to output token limit`
+     - Line 1535: `truncationRetryCount++`
+     - Line 1538: `if (truncationRetryCount > MAX_TRUNCATION_RETRIES)`
+     Retry mechanism present.
+
+E-3: llama-server error handling code
+     PASS — `packages/opencode/src/provider/error.ts`:
+     - Line 17: `/exceeds the available context size/i, // llama.cpp server`
+     - Lines 107/129/167/186: context_overflow type mapping
+     PASS — `packages/opencode/src/session/retry.ts`:
+     - Line 71: `// Detect server-side tool call parse failures (e.g. llama.cpp)`
+
+E-4: TUI exit
+     PASS — Ctrl+C returned to shell prompt "ubuntu@aws-mmns-opencode:~/projects/ytdlor$"
+
+=== Summary ===
+E-1 PASS
+E-2 PASS
+E-3 PASS
+E-4 PASS

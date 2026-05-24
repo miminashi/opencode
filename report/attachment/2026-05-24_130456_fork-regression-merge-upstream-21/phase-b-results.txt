@@ -1,0 +1,43 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-21) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-21/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+B-0: Plan agent launched with prompt "Rakefile の冒頭にプロジェクトの説明コメントを追加してください"
+     "Update Available" modal appeared at iter 1, dismissed with Escape, dialog appeared at iter 7
+
+B-1: Markdown rendering
+     PASS — Plan content displayed with `#` heading, `## 作業内容`, `## 追加するコメントの内容`,
+     ```ruby fenced code block``` all visible in dialog body.
+
+B-2: Scroll (Ctrl+d × 2)
+     PASS — Before scroll: top of plan visible (# heading, ## 作業内容).
+     After scroll: code block end + ## 手順 heading visible. Scroll indicator changed `▀` → `▄`.
+     See phase-b-scroll-before.txt / phase-b-scroll-after.txt.
+
+B-3: Option 3 (No)
+     PASS — Dialog dismissed. Indicator stayed "Plan · unsloth/...".
+     No "Build " switch. No crash.
+
+B-4: Custom feedback (note: re-planning triggered a question dialog with custom slot)
+     PASS (3 sub-checks):
+     - After pressing '3' (custom-other slot), textarea placeholder "Type your own answer" rendered
+     - Typed "FORK_MARK_B4" — marker replaced placeholder in textarea (typed text visible)
+     - After Enter submit, plan_exit dialog re-appeared with all 4 options including "4. Provide feedback"
+
+     Note: Initial re-plan question came from generic question tool (3 options, no plan_exit body).
+     After custom-other submit, LLM transitioned to plan_exit dialog (the canonical fork dialog).
+     All three textarea behaviors (placeholder render / typed input / dialog re-display) validated.
+
+B-5: Option 1 (Yes, keep context)
+     PASS — Switched to "Build · unsloth/..." agent. Spinner ■■■■■⬝⬝⬝ visible.
+     Footer changed to "esc interrupt". No crash.
+
+B-6: TUI exit (Ctrl+C)
+     PASS — Shell prompt "ubuntu@aws-mmns-opencode:~/projects/ytdlor$" returned.
+
+=== Summary ===
+B-1 PASS
+B-2 PASS
+B-3 PASS
+B-4 PASS
+B-5 PASS
+B-6 PASS

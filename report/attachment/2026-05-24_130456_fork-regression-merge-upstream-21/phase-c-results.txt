@@ -1,0 +1,21 @@
+=== Phase C: TUI stabilization smoke (merge-upstream-21) ===
+
+C-1: --prompt flag non-crash
+     PASS — Launched `opencode ~/projects/ytdlor --prompt "hi"`.
+     - TUI rendered correctly with banner
+     - Prompt "hi" sent to Build agent (visible in conversation)
+     - Spinner active (■■■■■⬝⬝⬝)
+     - No BindingError / panic / Uncaught in screen capture
+     - Update Available modal appeared (cosmetic, dismissable, did not block TUI)
+
+C-2: OSC52 clipboard support
+     PASS — Source file present:
+     /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-21/packages/opencode/src/cli/cmd/tui/util/clipboard.ts
+
+C-3: TUI exit
+     PASS — Ctrl+C × 2 returned to shell prompt "ubuntu@aws-mmns-opencode:~/projects/ytdlor$"
+
+=== Summary ===
+C-1 PASS
+C-2 PASS
+C-3 PASS

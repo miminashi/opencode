@@ -31,8 +31,9 @@ plan_exit の E2E リグレッションテストを、パラメータ指定・�
 ### Step 2: 前準備
 
 1. `git -C ~/projects/ytdlor checkout Rakefile` でテスト対象ファイルをリセット
-2. tmux ウインドウ `opencode-test` が利用可能か確認（プロセスが動いていないこと）
-3. tmux ウインドウ `test-runner` を確認・作成（スクリプト実行用）
+2. **tmux セッション名検出**: `tmux display-message -p '#S'` の出力を `TMUX_SESSION` 変数として保持。出力が空・非 tmux 環境の場合は `TMUX_SESSION=default` にフォールバック。以降の tmux コマンドはすべてこの変数を使う
+3. tmux ウインドウ `opencode-test` が利用可能か確認（プロセスが動いていないこと）
+4. tmux ウインドウ `test-runner` を確認・作成（スクリプト実行用）
 
 ### Step 3: テストスクリプト生成
 
@@ -43,6 +44,7 @@ plan_exit の E2E リグレッションテストを、パラメータ指定・�
 - `WAIT_ITERATIONS`: `timeout_minutes * 6`（10秒間隔のポーリング）
 - `RESULTS_FILE`: `test-plan-exit-{label}-results.txt` のフルパス
 - `TEST_LABEL`: `label` の値
+- `TMUX_SESSION`: Step 2 で検出した値（未検出時は `default`）
 
 スクリプトの内容は既存の `test-plan-exit-regression.sh` をベースに以下を追加・変更:
 
@@ -58,7 +60,8 @@ OPENCODE_BIN="{binary_path}"
 PROJECT_DIR="/home/ubuntu/projects/ytdlor"
 PLANS_DIR="/home/ubuntu/projects/ytdlor/.opencode/plans"
 RESULTS_FILE="/home/ubuntu/projects/opencode/test-plan-exit-{label}-results.txt"
-TMUX_TARGET="default:opencode-test"
+TMUX_SESSION="{tmux_session}"
+TMUX_TARGET="${TMUX_SESSION}:opencode-test"
 TOTAL_TESTS={num_tests}
 WAIT_ITERATIONS={timeout_minutes * 6}
 
@@ -184,8 +187,8 @@ echo "Results: $RESULTS_FILE"
 ### Step 4: テスト実行
 
 1. スクリプトに実行権限を付与: `chmod +x test-plan-exit-auto.sh`
-2. tmux `test-runner` ウインドウから実行: `tmux send-keys -t default:test-runner '/home/ubuntu/projects/opencode/test-plan-exit-auto.sh' C-m`
-3. 定期的に進捗を監視: `tmux capture-pane -t default:test-runner -p` で標準出力を確認
+2. tmux `test-runner` ウインドウから実行: `tmux send-keys -t ${TMUX_SESSION}:test-runner '/home/ubuntu/projects/opencode/test-plan-exit-auto.sh' C-m`
+3. 定期的に進捗を監視: `tmux capture-pane -t ${TMUX_SESSION}:test-runner -p` で標準出力を確認
 
 ### Step 5: 結果分析
 

@@ -1,0 +1,45 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-20) ===
+
+B-0: Plan agent 起動
+  - opencode ~/projects/ytdlor --agent plan --prompt "Rakefile の冒頭にプロジェクトの説明コメントを追加してください"
+  - Dialog detected at iteration 5 (~50s)
+  - Result: PASS
+
+B-1: Markdown 描画
+  - "## 実施内容" / "## 追加するコメント" / "## 変更箇所" 表示確認
+  - Result: PASS
+
+B-2: スクロール
+  - Ctrl+d を 2 回送信 → diff で plan 内容のオフセットが変化
+  - 「Rakefile（変更前）」「Rakefile（変更後）」セクションへ移動を確認
+  - Result: PASS
+
+B-3: Option 3 (No)
+  - "3" 送信 → 30s 後も Build agent に切り替わらず Plan agent 維持
+  - "▣  Plan · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL" のスピナーが継続
+  - Result: PASS
+
+B-4: Custom feedback (Option 4)
+  - 改稿指示「計画を 3 ステップで再構成してください」送信 → dialog 再表示 (~20s)
+  - "4" 押下 → "Type your own answer" placeholder 表示確認
+  - "FORK_REGRESSION_MARK_B4" 入力 → textarea に反映確認
+  - Enter で送信 → feedback 反映後の 3 ステップ plan で dialog 再表示
+  - Result: PASS
+
+B-5: Option 1 (Yes, keep context)
+  - "1" 送信 → 30s 内に Build agent (29.2s 経過) に切り替わり、実装完了メッセージ表示
+  - "完了しました。Rakefile の冒頭にプロジェクト説明コメントを追加しました。"
+  - Crash なし
+  - Result: PASS
+
+B-6: TUI 終了
+  - C-c 1 回で shell prompt 復帰
+  - Result: PASS
+
+=== Summary ===
+- B-1 (markdown 描画): PASS
+- B-2 (スクロール): PASS
+- B-3 (option 3): PASS
+- B-4 (custom feedback): PASS
+- B-5 (option 1): PASS
+- B-6 (TUI 終了): PASS

@@ -1,0 +1,35 @@
+=== Phase E: ツール出力 truncation / llama-server 耐性 (merge-upstream-20) ===
+
+E-1: Rolling truncation 検証 (フォールバック `seq 1 3000`)
+  - opencode TUI で「bash ツールで `seq 1 3000` の出力を取得して、結果を要約してください」プロンプト送信
+  - LLM が seq 1 3000 を実行 (Build agent 1m 14s 経過)
+  - TUI 出力に "…" (省略マーカー) と "Click to expand" が表示 (rolling truncation 折り畳み機能)
+  - LLM の summary に「全出力は約14,000文字（truncation で一部省略された）」と記載 — モデルが truncation を認識
+  - grep -c -E 'Click to expand|truncation|…' = 3 (3 マーカー検出)
+  - Result: PASS
+
+E-2: Tool call truncation 検知 + retry コード存在確認
+  - grep -nE 'truncation|truncated' src/session/prompt.ts:
+    - line 1252: let truncationRetryCount = 0
+    - line 1524-1543: 切り詰めツール検出 + retry ロジック (MAX_TRUNCATION_RETRIES 制御)
+    - line 1567: コメントで truncation handled 言及
+  - Result: PASS
+
+E-3: llama-server エラーハンドリングコード存在確認
+  - src/provider/error.ts:
+    - line 17: /exceeds the available context size/i, // llama.cpp server
+    - line 25: /prompt too long; exceeded (?:max )?context length/i, // Ollama explicit overflow error
+  - src/session/retry.ts:
+    - line 71: // Detect server-side tool call parse failures (e.g. llama.cpp)
+  - 両ファイルに該当箇所が存在
+  - Result: PASS
+
+E-4: TUI 終了
+  - Ctrl+C 2 回で shell prompt 復帰
+  - Result: PASS
+
+=== Summary ===
+- E-1 (rolling truncation): PASS
+- E-2 (retry コード): PASS
+- E-3 (llama-server エラー): PASS
+- E-4 (TUI 終了): PASS

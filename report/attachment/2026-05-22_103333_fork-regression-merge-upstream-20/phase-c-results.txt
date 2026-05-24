@@ -1,0 +1,23 @@
+=== Phase C: TUI 安定化スモーク (merge-upstream-20) ===
+
+C-1: --prompt フラグ起動クラッシュ確認
+  - opencode ~/projects/ytdlor --prompt "hi"
+  - 15s 後の capture-pane: "hi" prompt 表示、"Hi! How can I help you today?" 応答、Build agent 18.5s
+  - BindingError / panic / Uncaught なし
+  - Update Available モーダルが被覆するが起動・応答自体は正常
+  - Result: PASS
+
+C-2: OSC52 シーケンス存在確認
+  - strings "$BIN" | grep -cE 'OSC.{0,4}52|tmux.*passthrough|clipboard'
+  - 54 マッチ
+  - clipboard.ts ソース: present
+  - Result: PASS
+
+C-3: TUI 終了
+  - Ctrl+C 2 回で shell prompt 復帰
+  - Result: PASS
+
+=== Summary ===
+- C-1 (--prompt 非クラッシュ): PASS
+- C-2 (OSC52 シーケンス): PASS
+- C-3 (TUI 終了): PASS

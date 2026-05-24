@@ -1,0 +1,55 @@
+=== Phase E: tool truncation / llama-server resilience (post-fix-merge-upstream-19-warns-validation) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start/End: 2026-05-22 09:00 - 09:25 JST (approx)
+
+E-1: Rolling truncation marker
+     -> Initial attempt: prompt with backticks around `seq 1 3000` was either
+        intercepted by tmux or otherwise didn't reach the TUI; reset to welcome.
+     -> Retry without backticks: "bash ツールで seq 1 3000 の出力を取得して、結果を要約してください"
+     -> Bash tool executed seq 1 3000 (3000 lines, > MAX_LINES=2000)
+     -> TUI displayed first 10 lines + "…" + "Click to expand" (UI collapse)
+     -> LLM summary: "範囲 1-3000, 3000 行, 最小値 1, 最大値 3000" — model saw enough to summarize
+     -> Rolling-truncation marker regex `truncated ...]|output was truncated` NOT found
+        in capture-pane (UI collapses the long block instead of showing the embedded marker)
+     -> Build agent reported "1m 18s" → completed cleanly
+     Result: WARN (function works at LLM/agent level, but the SKILL.md detection
+             regex does not see the marker because the TUI collapses output before
+             the regex matches. Marker likely sits in the raw tool result data.)
+
+E-2: Tool call truncation detection + retry code presence
+     -> `grep -nE 'truncation|truncated' packages/opencode/src/session/prompt.ts`
+        - 1253: let truncationRetryCount = 0
+        - 1525: // Detect truncated tool calls due to output token limit
+        - 1528: const truncatedTools = assistantParts
+        - 1535: if (truncatedTools.length > 0) {
+        - 1536:   truncationRetryCount++
+        - 1537:   log.info("truncated tool call detected", ...
+        - 1539:   if (truncationRetryCount > MAX_TRUNCATION_RETRIES) {
+        - 1540:     log.info("truncation retry limit reached", ...
+        - 1544:   const toolNames = ...
+        - 1568: // except "tool-calls" / "unknown" / "length" (truncation handled above).
+     Result: PASS (10+ truncation/retry references)
+
+E-3: llama-server error handling code presence
+     -> SKILL.md references the OLD path `packages/opencode/src/provider/sdk/copilot/openai-compatible-error.ts`
+        which no longer exists (upstream merge reorganized the provider tree).
+     -> NEW path: `packages/opencode/src/provider/error.ts`
+        - line 17: /exceeds the available context size/i, // llama.cpp server
+        - line 25: /prompt too long; exceeded (?:max )?context length/i, // Ollama
+     -> Also `provider/provider.ts` and `session/retry.ts` mention llama
+     Result: PASS at relocated path; SKILL.md path reference is stale
+
+E-4: TUI exit
+     -> Ctrl-C x2 → shell prompt returned
+     Result: PASS
+
+=== Summary ===
+Total: 4 (E-1 to E-4)
+PASS: 3 (E-2, E-3 at relocated path, E-4)
+WARN: 1 (E-1: TUI UI collapses output, regex doesn't see marker — function works at LLM level)
+FAIL: 0
+
+Notes:
+- E-1 WARN is consistent with SKILL.md's own caveat ("リポジトリ規模に依存する既知制約")
+- E-3 reveals additional SKILL.md staleness: hardcoded `provider/sdk/copilot/` path is incorrect
+  after upstream provider tree reorganization

@@ -1,0 +1,48 @@
+=== Phase D: CLI reasoning streaming (post-fix-merge-upstream-19-warns-validation) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-05-22 08:55 JST
+
+D-1: Initial attempt per SKILL.md (no --dir)
+     -> `opencode run "What is 2 plus 2? Answer with a single digit."`
+     -> Result: FAIL with UnknownError (err_54e551cf), abort within seconds
+
+D-2: Reproduce check (3 attempts total)
+     -> Attempt 1 (via tmux): UnknownError err_54e551cf
+     -> Attempt 2 (direct, same dir): UnknownError err_075ac8a4
+     -> Attempt 3 (different prompt "Hello"): UnknownError err_dd0063d5
+     -> 3/3 fail, REPRODUCIBLE not transient
+
+D-3: Root cause analysis via --print-logs --log-level DEBUG
+     -> Underlying error:
+        "error=no providers found cause=Error: no providers found
+            at <anonymous> (/$bunfs/root/chunk-q84qepz2.js:657:62835)
+            at Provider.defaultModel (/$bunfs/root/chunk-g5fsyg5d.js:1728:1981)
+            ...
+            at SessionPrompt.createUserMessage (/$bunfs/root/chunk-g5fsyg5d.js:1729:368)"
+     -> Phase D was running in /home/ubuntu/projects/opencode (opencode's own repo) where
+        no default model is configured. ytdlor has the model config.
+
+D-4: Workaround retest with --dir ~/projects/ytdlor
+     -> `opencode --dir /home/ubuntu/projects/ytdlor run "What is 2 plus 2? Answer with a single digit."`
+     -> SUCCESS! Output captured to /tmp/opencode-run-reasoning.log:
+        line 2: "> build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL"
+        line 4: "Thinking: The user is asking a simple math question."
+        line 6: "4"
+     -> Reasoning marker at line 4, answer at line 6 → reasoning before answer
+
+D-5: Conclusion
+     -> CODE-side: opencode binary works correctly when invoked with proper directory
+        - reasoning token streaming: WORKING (positional syntax fix is valid)
+        - LLM response: WORKING (returned "4")
+     -> SKILL-side: SKILL.md Phase D step missing `--dir ~/projects/ytdlor`
+        - This is a REMAINING issue in SKILL.md (not fully fixed by commit 77b30a19f)
+        - The original WARN's true cause was wrong cwd, not transient LLM contention
+     -> Result with workaround: PASS
+     -> Skill-as-shipped: FAIL (would require user to manually add --dir)
+
+Recommendation: Update SKILL.md Phase D step to include --dir ~/projects/ytdlor.
+
+=== Summary ===
+Workaround result: PASS
+As-shipped SKILL.md: would FAIL on this user's test-runner cwd
+WARN/FAIL: 0 PASS recorded after workaround; remaining SKILL.md gap noted

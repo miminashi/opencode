@@ -1,0 +1,52 @@
+=== Phase A: plan_exit basic flow (post-fix-merge-upstream-19-warns-validation) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  5月 22日 金曜日 08:13:47 JST
+
+Test 1: 08:13:47
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 110s
+  New plan files: 1
+  Latest: 1779405233668-shiny-panda.md
+
+Test 2: 08:15:58
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 50s
+  New plan files: 0
+  Latest: 1779405233668-shiny-panda.md
+
+Test 3: 08:17:06
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 81s
+  New plan files: 1
+  Latest: 1779405433424-witty-island.md
+
+Test 4: 08:18:48
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 30s
+  New plan files: 0
+  Latest: 1779405433424-witty-island.md
+
+Test 5: 08:19:36
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1779405582942-eager-meadow.md
+
+=== Summary ===
+Total: 5
+Success: 5
+Timeout: 0
+Crash: 0
+Validation triggered: 0
+End: 2026年  5月 22日 金曜日 08:21:07 JST

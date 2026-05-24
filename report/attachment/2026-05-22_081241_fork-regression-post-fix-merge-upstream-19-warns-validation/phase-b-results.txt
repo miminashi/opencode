@@ -1,0 +1,55 @@
+=== Phase B: plan_exit dialog branches (post-fix-merge-upstream-19-warns-validation) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-05-22 08:21 JST
+End:   2026-05-22 08:50 JST (approx)
+
+B-0: Plan agent launched with prompt "Rakefile の冒頭にプロジェクトの説明コメントを追加してください"
+     -> plan_exit dialog appeared (auto-accept edits visible)
+     -> Note: "Update Available" modal overlapped at first; dismissed via Esc
+     Result: PASS
+
+B-1: Markdown rendering check
+     -> grep -c '##' phase-b-before.txt = 2 (## 概要, ## 作業内容)
+     Result: PASS
+
+B-2: Scroll check (Ctrl+D x2)
+     -> before/after diff produced 15+ changed lines including new content
+        like "## 影響範囲" appearing
+     Result: PASS
+
+B-3: Option 3 (No)
+     -> Press '3', wait 30s
+     -> Capture shows "Plan · unsloth/..." (no "Build " label)
+     -> Stayed in Plan agent
+     Result: PASS
+
+B-4: Custom feedback (3-stage check)
+     -> Sent replan prompt "計画を 3 ステップで再構成してください"
+     -> Waited for new dialog (auto-accept edits)
+     Stage 1: Press '4'
+        -> "Type your own answer" placeholder visible
+        Result: PASS
+     Stage 2: Type "FORK_REGRESSION_MARK_12345"
+        -> Marker visible in textarea
+        Result: PASS
+     Stage 3: Press Enter
+        -> Dialog re-displayed (auto-accept edits visible again)
+        Result: PASS
+     B-4 Overall: PASS (3/3 stages PASS)
+
+B-5: Option 1 (Yes, keep context)
+     -> Press '1', wait 15s
+     -> Capture shows "Build · unsloth/..." (Build agent started)
+     -> No BindingError / panic in capture
+     Result: PASS
+
+B-6: TUI exit
+     -> Ctrl-C x2
+     -> Shell prompt "ubuntu@aws-mmns-opencode:~/projects/ytdlor$" visible
+     Result: PASS
+
+=== Summary ===
+Total observations: 6 (B-1, B-2, B-3, B-4, B-5, B-6)
+PASS: 6
+WARN: 0
+FAIL: 0

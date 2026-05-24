@@ -1,0 +1,29 @@
+=== Phase C: TUI stabilization smoke (post-fix-merge-upstream-19-warns-validation) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/fix-merge-upstream-19-warns/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start/End: 2026-05-22 08:50 JST (approx, ~2 min)
+
+C-1: --prompt flag launch (TUI SSE race condition fix)
+     -> Command: `opencode ~/projects/ytdlor --prompt "hi"`
+     -> Capture shows:
+        - "hi" message visible in TUI
+        - Build agent active ("Build · unsloth/...")
+        - Spinner "■⬝⬝⬝⬝⬝⬝⬝" visible
+        - NO BindingError / panic
+     Result: PASS
+
+C-2: OSC52 sequence presence in binary
+     -> `strings opencode | grep -cE 'OSC.{0,4}52|tmux.*passthrough'` = 15
+     -> Fallback: `packages/opencode/src/cli/cmd/tui/util/clipboard.ts` exists
+     Result: PASS
+
+C-3: TUI exit
+     -> Esc to dismiss "Update Available" modal
+     -> Ctrl-C x2
+     -> Shell prompt "ubuntu@aws-mmns-opencode:~/projects/ytdlor$" returned
+     Result: PASS
+
+=== Summary ===
+Total: 3
+PASS: 3
+WARN: 0
+FAIL: 0

@@ -1,0 +1,25 @@
+=== Phase C: TUI 安定化スモーク (merge-upstream-22) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-22/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Date: 2026-05-25 04:36 JST
+
+C-1: --prompt フラグ起動クラッシュ確認
+  Command: opencode /home/ubuntu/projects/ytdlor --prompt "hi"
+  Observation: TUI 起動成功、"Build · ..." ステータスバー / spinner "⬝⬝⬝⬝⬝⬝⬝⬝" 表示
+  Crash markers (BindingError/panic/Uncaught): 検出なし
+  Result: PASS
+
+C-2: OSC52 シーケンス存在確認
+  strings バイナリ | grep -cE 'OSC.{0,4}52|tmux.*passthrough': 15 件
+  ソース fallback: packages/opencode/src/cli/cmd/tui/util/clipboard.ts 存在
+  Result: PASS
+
+C-3: TUI 終了
+  Action: Ctrl+C × 2
+  Result: PASS (shell プロンプト復帰)
+
+=== Summary ===
+C-1: PASS
+C-2: PASS
+C-3: PASS
+
+総合: 3/3 PASS

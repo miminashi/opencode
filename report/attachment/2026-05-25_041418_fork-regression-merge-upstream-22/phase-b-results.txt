@@ -1,0 +1,49 @@
+=== Phase B: plan_exit dialog 分岐 (merge-upstream-22) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-22/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Date: 2026-05-25 04:24-04:35 JST
+
+B-0: plan_exit dialog 初回出現
+  Result: PASS (auto-accept edits / option 1-4 表示)
+
+B-1: Markdown 描画
+  Result: PASS (# / ## / ### ヘディング描画確認)
+
+B-2: スクロール検証
+  Action: Ctrl+d × 2
+  Result: PASS (before/after の diff で見出し位置がスクロールし、内容ブロックが切り替わった)
+
+B-3: Option 3 (No - stay in plan)
+  Action: '3' キー送信、30s 待機
+  Result: PASS (status bar が "Plan · unsloth/Qwen3.6-35B-A3B" のまま、"Build" 切替なし)
+
+B-4: Custom feedback 経路
+  Action 1: "計画を 3 ステップで再構成してください" 改稿指示送信
+  Observation: LLM が plan_exit ではなく ask_question を選択 (option が 3 個のみ "Type your own answer" 含む)
+  Workaround: Escape で dismiss → "plan_exit ツールを使って計画を確定してください" を送信 → plan_exit dialog 再表示
+  Action 2: '4' (Provide feedback) 送信
+  Substage 1: PASS (placeholder "Type your own answer" が option 4 配下に表示)
+  Action 3: "FORK_REG_MU22" 入力
+  Substage 2: PASS (typed text が option 4 配下に visible)
+  Action 4: Enter で送信
+  Substage 3: PASS (LLM が新 plan_exit を呼び、dialog 再表示)
+  Result: PASS (全 3 substage 通過、ただし LLM の plan_exit 選択は明示的指示が必要だった点を所見に記載)
+
+B-5: Option 1 (Yes - switch to build)
+  Action: '1' キー送信、15s 待機
+  Observation: status bar が "Build · unsloth/Qwen3.6-35B-A3B"、スピナー "■■■■■■⬝⬝" 表示
+  Result: PASS (Build agent 切替確認、crash なし)
+
+B-6: TUI 終了
+  Action: Ctrl+C × 2
+  Result: PASS (shell プロンプト "ubuntu@aws-mmns-opencode:~/projects/ytdlor$" に復帰)
+
+=== Summary ===
+B-0: PASS
+B-1: PASS
+B-2: PASS
+B-3: PASS
+B-4: PASS (workaround あり: LLM が ask_question を選択した際に明示指示で plan_exit を再呼出)
+B-5: PASS
+B-6: PASS
+
+総合: 全 7 サブテスト PASS

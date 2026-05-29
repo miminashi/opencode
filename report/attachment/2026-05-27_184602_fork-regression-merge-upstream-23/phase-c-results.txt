@@ -1,0 +1,30 @@
+=== Phase C: TUI 安定化スモーク (merge-upstream-23) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-23/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-05-27 19:00 JST
+
+C-1: --prompt 非クラッシュ
+  コマンド: opencode /home/ubuntu/projects/ytdlor --prompt "hi"
+  起動後 10 秒の capture-pane:
+    - BindingError / panic / Uncaught: 検出なし
+    - スピナー稼働中 (⬝⬝⬝⬝⬝⬝⬝⬝)
+    - Build agent active
+  Result: PASS
+
+C-2: OSC52 シーケンス + clipboard.ts 存在
+  strings バイナリ検索 (\x1b\]52 / OSC.{0,4}52 / tmux.*passthrough): 15 件 hit
+  clipboard.ts: EXISTS
+    packages/opencode/src/cli/cmd/tui/util/clipboard.ts
+  Result: PASS
+
+C-3: TUI 終了 (Ctrl+C × 2)
+  終了後にシェルプロンプト "ubuntu@aws-mmns-opencode:~/projects/opencode$" 復帰
+  Result: PASS
+
+End: 2026-05-27 19:01 JST
+
+=== Summary ===
+C-1: PASS
+C-2: PASS
+C-3: PASS
+
+Total: 3/3 PASS

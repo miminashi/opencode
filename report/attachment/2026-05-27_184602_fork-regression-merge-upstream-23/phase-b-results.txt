@@ -1,0 +1,58 @@
+=== Phase B: plan_exit dialog 分岐 (merge-upstream-23) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-23/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-05-27 18:55 JST
+
+B-0: plan_exit dialog 初回出現
+  プロンプト: "Rakefile の冒頭にプロジェクトの説明コメントを追加してください" (plan agent)
+  検出: iteration 4 (18:56:40) — dialog 出現確認
+  Result: PASS
+
+B-1: markdown 描画 (# / ## ヘディング)
+  ダイアログ内に確認: # Rakefile へのプロジェクト説明コメント追加計画
+                    ## 目的, ## 追加する内容, ## 変更箇所
+  Result: PASS
+
+B-2: スクロール (Ctrl+d × 2 で内容ブロック切替)
+  Before: "# Rakefile へのプロジェクト説明コメント追加計画" から始まる
+  After:  "## 追加する内容" から始まる (スクロール位置変化)
+  スクロールバーの位置も █ が下方移動を確認
+  Result: PASS
+
+B-3: option 3 (No) で plan agent 残留
+  Option 3 送信後の bottom bar: "Plan · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL T120H P100"
+  Build agent への切替なし
+  Result: PASS
+
+B-4: option 4 (Provide feedback) フロー
+  Sub-test 1: 改稿指示 "計画を 3 ステップで再構成し、plan_exit ツールを使って再提示してください"
+              → plan_exit dialog 再表示 (iteration 1, 18:58:46) — 3 ステップ構成の新計画
+              Result: PASS (ask_question フォールバック発動なし)
+  Sub-test 2: option 4 選択 → "Type your own answer" placeholder 表示確認
+              Result: PASS
+  Sub-test 3: marker "FORK_REG_MU23_MARK" 入力 → textarea に visible 確認
+              Result: PASS
+  Sub-test 4: C-m で submit → plan_exit dialog 再表示 (iteration 1, 18:59:41)
+              Result: PASS
+
+B-5: option 1 (Yes) で build agent 切替
+  Option 1 送信後 15s で bottom bar: "Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL T120H P100"
+  Plan → Build 切替確認 (実装フェーズに移行、スピナー稼働中)
+  BindingError / panic / Uncaught なし
+  Result: PASS
+
+B-6: TUI 終了 (Ctrl+C)
+  終了後にシェルプロンプト "ubuntu@aws-mmns-opencode:~/projects/opencode$" 復帰
+  Result: PASS
+
+End: 2026-05-27 19:00 JST
+
+=== Summary ===
+B-0: PASS
+B-1: PASS
+B-2: PASS
+B-3: PASS
+B-4: PASS (4 段階すべて pass。前回 merge-upstream-22 の ask_question フォールバック発動は今回は不要)
+B-5: PASS
+B-6: PASS
+
+Total: 7/7 PASS, 0 WARN, 0 FAIL

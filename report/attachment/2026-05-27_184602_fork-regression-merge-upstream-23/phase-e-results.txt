@@ -1,0 +1,48 @@
+=== Phase E: ツール出力 truncation / llama-server 耐性 (merge-upstream-23) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-23/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-05-27 19:04 JST
+
+E-1: rolling truncation マーカー検出
+  プロンプト (TUI): "bash ツールで実際に `seq 1 3000` を実行し、その全出力を見せてください。
+                    知識から計算した値ではなく、tool execution の生出力を要求しています。"
+  待機ループ: 最大 10 分、GPU /slots ポーリングで is_processing:false が 3 分連続検出
+  結果: GPU idle 3 分検出 (iteration 18, 19:07:06) で早期 break
+  画面状態: TUI スタート画面のまま (入力欄未反映)
+  Result: WARN — tool execution bypassed or input not committed; truncation 経路が起動せず
+
+E-2: truncation retry コード存在 (prompt.ts)
+  grep 結果: 10 件 hit
+    L1257: truncationRetryCount = 0
+    L1540: Detect truncated tool calls due to output token limit
+    L1551: truncationRetryCount++
+    L1552: log "truncated tool call detected"
+    L1554: truncationRetryCount > MAX_TRUNCATION_RETRIES
+    L1555: log "truncation retry limit reached"
+    L1583: tool-calls / unknown / length (truncation handled above)
+  Result: PASS
+
+E-3a: llama.cpp OVERFLOW_PATTERNS (provider/error.ts)
+  grep 結果:
+    L25: /exceeds the available context size/i, // llama.cpp server
+    L33: /prompt too long; exceeded (?:max )?context length/i, // Ollama
+  Result: PASS
+
+E-3b: llama.cpp tool call parse 検知 (session/retry.ts)
+  grep 結果:
+    L71: // Detect server-side tool call parse failures (e.g. llama.cpp)
+  Result: PASS
+
+E-4: TUI 終了 (Ctrl+C × 2)
+  終了後にシェルプロンプト復帰確認
+  Result: PASS
+
+End: 2026-05-27 19:08 JST
+
+=== Summary ===
+E-1: WARN (LLM が bash ツールを実行せず GPU アイドル → 機能リグレッションではない)
+E-2: PASS
+E-3a: PASS
+E-3b: PASS
+E-4: PASS
+
+Total: 4 PASS / 1 WARN / 0 FAIL

@@ -1,0 +1,34 @@
+================================================================
+診断テスト 1: 同一文 3 回反復 (反復抑制サンプラーに対して敵対的)
+================================================================
+
+コマンド:
+  opencode --dir /home/ubuntu/projects/ytdlor run \
+    "Output this sentence exactly three times, each on its own line, with no other text: The quick brown fox jumps over the lazy dog."
+
+出力 (Thinking 以降):
+  The quick brown fox jumps over the lazy狗.        ← 中国語「狗」(dog) が混入
+  The quick brown fox jumps over the laze dog.      ← "lazy" → "laze"
+  The quick brown fox jumps over laze dog.          ← "the" 脱落 + "lazy" → "laze"
+
+期待: 同一文を 3 回そのまま出力。
+実際: 3 回とも異なる破損。反復回避のためトークンを強制的に変えている挙動。
+
+
+================================================================
+診断テスト 2: 非反復の通常生成 (対照群)
+================================================================
+
+コマンド:
+  opencode --dir /home/ubuntu/projects/ytdlor run \
+    "In one short English sentence, describe what a Rakefile is. Do not repeat yourself."
+
+出力 (Thinking 以降):
+  A Rakefile defines executable tasks and commands for automating common
+  development workflows like building, testing, and deploying code.
+
+期待: 正しい英文 1 文。
+実際: 完全に正常。文字破損なし。
+
+結論: モデルは通常生成では正常。破損は「同じ文字列を繰り返し出力する必要があるとき」
+にのみ発生する。反復抑制サンプラー (DRY + presence-penalty) が原因と強く示唆される。

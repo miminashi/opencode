@@ -1,0 +1,22 @@
+=== Phase E: tool output truncation / llama-server 耐性 (merge-upstream-24) ===
+
+E-1: rolling truncation マーカー — PASS
+     build エージェントに `seq 1 3000` (3000 行 > MAX_LINES=2000) を bash 実行させた。
+     モデルの reasoning:
+       "The output was truncated and saved to a file... it says '...output truncated...'
+        and then shows from 1002 onwards. The full output is saved to
+        /home/ubuntu/.local/share/opencode/tool-output/tool_e7237609c001....."
+     TUI には "Click to expand" / "…" のトランケート表示。rolling truncation が動作 (iter 6 検出)。
+
+E-2: tool call truncation 検知 + retry コード存在 — PASS (静的)
+     prompt.ts L1257 `truncationRetryCount`, L1540 "Detect truncated tool calls due to
+     output token limit", L1552 log "truncated tool call detected", L1554 MAX_TRUNCATION_RETRIES。
+
+E-3: llama-server エラーハンドリングコード存在 — PASS (静的)
+     provider/error.ts L33 `/exceeds the available context size/i, // llama.cpp server`
+     retry.ts L71 `// Detect server-side tool call parse failures (e.g. llama.cpp)`
+
+E-4: TUI 終了 — PASS
+     C-c × 2 でシェル復帰。
+
+=== Summary: E-1〜E-4 全 PASS ===

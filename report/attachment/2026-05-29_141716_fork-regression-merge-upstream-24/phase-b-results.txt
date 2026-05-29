@@ -1,0 +1,33 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-24) ===
+
+B-0: plan agent 起動 → plan_exit dialog 出現 (約 80s, iter 8)。
+     plan path クリーン: .opencode/plans/1780031869076-gentle-engine.md (破損なし)
+
+B-1: markdown 描画 — PASS
+     "## 作業内容", "## 追加するコメントの例", ```ruby コードブロックが描画。
+
+B-2: スクロール — PASS
+     Ctrl+d × 2 で表示が計画上部 → 下部 (コードブロック/GitHub 行) へ移動。
+     スクロールバーも降下。before/after で内容が変化。
+
+B-3: option 3 (No) — PASS
+     '3' 選択後、status bar は "Plan · ..." のまま。Build へ切替わらず。
+     (モデルは No 後に plan_exit を再呼出する挙動)
+
+B-4: custom feedback — PASS
+     再計画プロンプト送信 → モデルが計画を 3 ステップに再構成 → dialog 再出現。
+     '4' (Provide feedback) 選択 → "Type your own answer" placeholder 表示 (PASS)。
+     marker "FORK_REGRESSION_MARK_24" 入力 → textarea に反映 (PASS)。
+     C-m 送信 → フィードバックが
+       "The user wants you to refine the plan with the following feedback:
+        FORK_REGRESSION_MARK_24
+        Revise the plan file at .opencode/plans/...md and call plan_exit again."
+     として正しく注入され、dialog 再出現 (context 12,184→12,245 tokens)。
+
+B-5: option 1 (Yes) — PASS
+     '1' 選択 → status bar が "Build · ..." に切替、スピナー稼働、クラッシュなし。
+
+B-6: TUI 終了 — PASS
+     C-c × 2 でシェルプロンプトに復帰。
+
+=== Summary: B-1〜B-6 全 PASS ===

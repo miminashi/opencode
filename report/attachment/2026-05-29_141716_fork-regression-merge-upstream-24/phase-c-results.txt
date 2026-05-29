@@ -1,0 +1,16 @@
+=== Phase C: TUI 安定化スモーク (merge-upstream-24) ===
+
+C-1: --prompt フラグ起動クラッシュ確認 — PASS
+     `opencode ~/projects/ytdlor --prompt "hi"` 起動。
+     プロンプト "hi" 表示、Build エージェント active、スピナー稼働。
+     BindingError/panic/Uncaught なし (SSE race condition 回避が健全)。
+     ※ Update Available v1.15.12 モーダルが被覆 (periodic, 無害)。Escape で dismiss。
+
+C-2: OSC52 シーケンス存在確認 — PASS
+     strings バイナリで OSC52 関連一致 17 件 (>=1)。
+     clipboard.ts ソース存在も確認。
+
+C-3: TUI 終了 — PASS
+     Escape (モーダル) + C-c × 2 でシェルプロンプト復帰。
+
+=== Summary: C-1〜C-3 全 PASS ===

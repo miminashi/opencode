@@ -1,0 +1,24 @@
+=== Phase A: plan_exit basic flow (merge-upstream-24) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-24/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  5月 29日 金曜日 09:48:53 JST
+
+Test 1: 09:48:53
+  Result: TIMEOUT
+  Elapsed: 602s
+  New plan files: 0
+  Latest: 1779875742237-clever-planet.md
+
+Test 2: 09:59:01
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 0
+  Latest: 1779875742237-clever-planet.md
+
+Test 3: 10:09:08
+  Validation: TRIGGERED
+  (interrupted by operator — runaway test stopped after diagnosis)
+
+Note: Test 1/2 はそれぞれ full 10 分 (600s) の待機ループを使い切って TIMEOUT。
+前回 merge-upstream-23 の Phase A は 1 テストあたり 60-80s で SUCCESS だったため、
+今回の挙動は明確な異常。原因は LLM 出力のパス文字列破損 (本体レポート参照)。

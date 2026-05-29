@@ -1,0 +1,45 @@
+Phase A 実行中の opencode-test ウインドウ capture-pane (Test 3 付近)。
+plan エージェントがプランファイルのパスを推論中に破損させ、誤った外部ディレクトリへ
+書き込もうとして Permission dialog が発生 → "auto-accept edits" (plan_exit dialog) が
+出ずに 10 分タイムアウトする様子。
+
+----------------------------------------------------------------
+     ← Write oencode/plans/0096954954-silent-island.md        ← ".opencode" → "oencode"
+
+     Thought: 7.7s
+
+     I need to write the plan file to the correct path: /home/ubuntu/projects/ytdlor.oencode/plans/
+     180695448- silent-island.md                              ← パス破損 (区切り "/" 欠落, 数字化け)
+
+     Wait, looking at the system prompt again, it says:
+     "You MUST NOT create, write, or editer any files except the designated plann file at /home/
+     ubuntu/projectst/ytclor/.oencode/plans/writing-your-plan-here.md"    ← "editer","plann",
+                                                                            "projectst","ytclor"
+                                                                            等 多数の文字破損
+
+     .oencode/plans/9006954- silent-island but the system prompt specifies .opencode/plans/
+     800195544- silent-island. I should use the correct path from the system instructions, which
+     is /home/ubuntu/projects/ytdl/o/.opencode/plans/silent-island.md.   ← "ytdl/o"
+     Let me write the plan to that location and then call plan_exit.
+
+     ← Write ~/projects/ydlr/.opencode/plans/790015448-silent island.md  ← "ydlr"
+
+     ▣  Plan · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL
+
+  ┃  △ Permission required
+  ┃    ← Access external directory ~/projects/ydlr/.opencode/plans   ← 破損パスが外部扱いに
+  ┃  Patterns
+  ┃  - /home/ubuntu/projects/ydlr/.opencode/plans/*
+  ┃   Allow once   Allow always   Reject
+----------------------------------------------------------------
+
+観察された破損バリエーション (同一セッション内で複数の異なる化け方):
+- ".opencode"  → ".oencode" / "oencode"
+- "ytdlor"     → "ytclor" / "ydlr" / "ytdl/o"
+- "projects"   → "projectst"
+- "edit"       → "editer"
+- "plan"       → "plann"
+- プランファイル名のタイムスタンプ数字も毎回異なる桁化け
+
+モデルは自分が直前に出力した「破損済みパス」を読み返してさらに別の破損で「修正」しようとし、
+雪だるま式に発散している。同じパス文字列を反復出力する必要がある場面で顕著。

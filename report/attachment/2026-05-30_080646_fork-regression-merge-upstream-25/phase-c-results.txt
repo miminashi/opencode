@@ -1,0 +1,12 @@
+=== Phase C: TUI 安定化スモーク (merge-upstream-25) ===
+
+C-1: --prompt フラグ起動クラッシュ確認
+  PASS — TUI 起動、prompt "hi" 表示、status "Build ·"、BindingError/panic なし
+  （Update Available モーダルが overlay したが Escape で dismiss、機能には無関係）
+
+C-2: OSC52 シーケンス存在確認
+  PASS — strings で OSC52 パターン 15 件検出
+  clipboard.ts ソースも存在確認
+
+C-3: TUI 終了
+  PASS — C-c x2 で TUI 終了、shell プロンプト復帰

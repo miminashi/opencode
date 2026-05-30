@@ -1,0 +1,21 @@
+task	pattern	trial	gem	build	diff_files	diff_ins	test_pass	functional	score	correct	idiom	complete	testq
+search	selfplan	search-selfplan-r1	-	13m2s	6	83	yes	yes	5	5	4	5	5
+search	selfplan	search-selfplan-r2	-	~3m45s	5	52	yes	yes	3	4	3	3	3
+search	selfplan	search-selfplan-r3	-	~5m50s	6	102	yes	yes	5	5	5	5	5
+search	selfplan	search-selfplan-r4	-	~5m25s	6	94	yes	yes	4	5	4	5	4
+search	selfplan	search-selfplan-r5	-	~7m	6	61	yes	yes	3	4	3	3	3
+search	givenplan	search-givenplan-r1	-	5m32s	5	46	yes	yes	4	5	5	5	3
+search	givenplan	search-givenplan-r2	-	~4m18s	5	49	yes	yes	5	5	5	5	5
+search	givenplan	search-givenplan-r3	-	~3m45s	5	60	yes	yes	5	5	5	5	4
+search	givenplan	search-givenplan-r4	-	~3m29s	5	50	yes	yes	4	5	5	5	3
+search	givenplan	search-givenplan-r5	-	~8m45s	7	67	yes	yes	5	5	5	5	5
+page	selfplan	page-selfplan-r1	-	5m48s	4	21	yes	yes	5	5	5	5	3
+page	selfplan	page-selfplan-r2	pagy	~5m50s	6	52	yes	NO	2	1	3	2	3
+page	selfplan	page-selfplan-r3	kaminari	~6m15s	5	68	yes	yes	5	5	5	5	3
+page	selfplan	page-selfplan-r4	pagy	~13m	4	29	yes	NO	2	1	2	2	3
+page	selfplan	page-selfplan-r5	kaminari	~5m	5	61	yes	yes	5	5	5	5	3
+page	givenplan	page-givenplan-r1	-	4m5s	4	19	yes	yes	5	5	5	5	5
+page	givenplan	page-givenplan-r2	kaminari	~7m30s	4	21	yes	yes	5	5	5	5	5
+page	givenplan	page-givenplan-r3	kaminari	~8m45s	4	17	yes	yes	5	5	4	5	5
+page	givenplan	page-givenplan-r4	kaminari	~27m (docker再ビルド・反復で長時間)	4	19	yes	yes	5	5	5	5	5
+page	givenplan	page-givenplan-r5	kaminari	~3m20s	4	18	yes	yes	5	5	4	5	5

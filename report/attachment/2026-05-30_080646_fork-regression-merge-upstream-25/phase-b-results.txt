@@ -1,0 +1,29 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-25) ===
+
+B-0: Plan agent 起動 → plan_exit dialog 出現（約50s, iter 5）
+
+B-1: Markdown 描画
+  PASS — ダイアログに markdown ヘッダー (# / ##) と ```ruby code block が表示
+  plan: .opencode/plans/1780097123505-neon-cabin.md
+
+B-2: スクロール検証
+  WARN — Ctrl+d x2 で before/after に差分なし（plan が viewport に収まる short plan）
+
+B-3: Option 3 (No) 経路
+  PASS — option 3 後も Plan agent に留まり、Build に切り替わらず（status "Plan ·"）
+  agent はその後自発的に plan を再生成し plan_exit を再呼出
+
+B-4: Custom feedback 経路
+  PASS (3段階すべて成功):
+    - placeholder: option 4 配下に "Type your own answer" 表示
+    - typed text: "FORK_REGRESSION_MARK_25" が textarea に反映
+    - dialog 再表示: Enter 送信後 10s 以内に plan_exit dialog 再出現
+  さらに B-5 のログで feedback marker がモデルに正しく渡っていることを確認
+  （"The user wants you to refine the plan with the following feedback: FORK_REGRESSION_MARK_25"）
+  また "計画を 3 ステップで再構成" 指示通り plan が 3 ステップ構造に再構成された
+
+B-5: Option 1 (Yes) 経路
+  PASS — option 1 後にステータスが "Build ·" に切替、crash なし、Build agent 起動
+
+B-6: TUI 終了
+  PASS — C-c で TUI 終了、shell プロンプト復帰

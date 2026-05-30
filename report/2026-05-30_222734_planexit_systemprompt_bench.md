@@ -148,7 +148,7 @@ fork の挙動を測る検証（ベンチ・リグレッション）は **instal
 
 ## 再現方法
 
-ハーネス一式は `/home/ubuntu/projects/opencode/tmp/feat-bench/`:
+ハーネス一式は `/home/ubuntu/projects/opencode/tmp/feat-bench/`（`tmp/` は gitignore のため未コミット）。**スナップショットを本レポートの `attachment/.../harness/`（スクリプト・`prompts/`・`AGENTS.bench.md`・DB 解析ヘルパ）と `attachment/.../results/`（条件別 planexit JSON・`clean_base_shas.tsv`）に保存した**（bins/xdg/logs は巨大・再生成可のため除外）。主要スクリプト:
 
 - `setup_clean.sh`: 20 worktree をクリーン setup（`b61242f` + `AGENTS.bench.md`）に再構築 → `clean_base_shas.tsv`
 - `reset_to_setup.sh <trial>`: 1 worktree をクリーン setup へリセット

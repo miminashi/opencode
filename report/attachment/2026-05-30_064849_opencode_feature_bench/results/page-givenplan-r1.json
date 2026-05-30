@@ -1,0 +1,12 @@
+{
+  "trial": "page-givenplan-r1", "task": "page", "pattern": "givenplan",
+  "base_sha": "cc132be83ae25de0ef8eccf453ab67185f3bf454",
+  "transition": "tab_to_build (plan_exit 自発せず)",
+  "plan_time_min": 1.78, "build_time": "4m5s",
+  "opencode_self_test": "33 tests pass",
+  "diff_files": 4, "diff_insertions": 19, "diff_deletions": 1,
+  "diff_summary": "Gemfile kaminari(+3), Gemfile.lock(+13), controller .page.per(20)(+1-1), index paginate(+2)",
+  "indep_test": "33 runs, 67 assertions, 0 failures, 0 errors, 0 skips",
+  "browser": {"page1_articles": 20, "pagination_nav": true, "page_links": 3, "page2_articles": 5, "ok": true},
+  "status": "done"
+}

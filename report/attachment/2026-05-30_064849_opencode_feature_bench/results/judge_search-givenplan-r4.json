@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r4","score":4,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":3},"reason":"コア実装は他試行と同一で正確、browser.ok=trueで12件一致。モデルテストは部分一致・空・case-insensitiveを網羅し良好だが、controllerテスト2件はassert_responseとh1のみで実際の絞り込み結果を検証していないためtrivial寄り。"}

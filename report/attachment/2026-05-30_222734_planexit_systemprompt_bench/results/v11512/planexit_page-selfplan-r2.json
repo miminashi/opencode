@@ -1,0 +1,15 @@
+{
+  "trial": "page-selfplan-r2",
+  "cond": "v11512",
+  "outcome": "stall",
+  "self_exit": false,
+  "synthetic": false,
+  "build_reached": false,
+  "reminders": 0,
+  "plan_exit_state": null,
+  "plan_exit_error": null,
+  "plan_exit_failed_nofile": 0,
+  "plan_file_written": false,
+  "build_msg": false,
+  "main_session": "ses_18708fd7fffeRFyvbMDdiFn677"
+}

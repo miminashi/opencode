@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r5","score":5,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":5},"reason":"実装は正確でRailsらしく、browser.ok=trueで12件一致。rails-controller-testingを導入しassigns(:archives)で実際のフィルタ結果を直接検証、モデルテストもnil・case-insensitive含む4ケースを網羅し最も実効的。ただしgem追加でdiffが7ファイル・build 8m45sと重め。"}

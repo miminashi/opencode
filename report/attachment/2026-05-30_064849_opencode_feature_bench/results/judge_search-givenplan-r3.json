@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r3","score":5,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":4},"reason":"実装は正確でRailsらしく、browser.ok=trueで検索12件も期待通り。controllerテストの絞り込みケースに本文一致のbody assertionを加えており、モデルテストもcase-insensitive・blankを網羅。ただしcontrollerの非一致テストはassert_responseのみでやや弱い。"}

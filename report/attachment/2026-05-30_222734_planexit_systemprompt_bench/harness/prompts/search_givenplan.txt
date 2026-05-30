@@ -1,0 +1,31 @@
+ytdlor に動画の検索機能を追加してください。
+
+要件:
+- 動画一覧（Archive の index ページ）に検索機能を追加する。
+- タイトル（Archive#title）に対する部分一致で検索できること。
+- 検索 UI を index ページの適切な場所に配置する。
+- テストも実装し、実行して動作を確認する。
+
+以下の実装プランに従って実装してください:
+
+1. モデル app/models/archive.rb
+   - タイトル部分一致用の scope を追加する:
+       scope :search_by_title, ->(q) { where("title ILIKE ?", "%#{q}%") if q.present? }
+
+2. コントローラ app/controllers/archives_controller.rb の index アクション
+   - 検索クエリを params[:q] から受け取り、scope を適用する:
+       @q = params[:q]
+       @archives = Archive.ordered.search_by_title(@q).with_attached_thumbnail.with_attached_video
+
+3. ビュー app/views/archives/index.html.erb
+   - ヘッダ（div.header）の直下に検索フォームを追加する。GET で archives_path に送信する:
+       <%= form_with url: archives_path, method: :get, data: { turbo_frame: "_top" } do |f| %>
+         <%= f.text_field :q, value: @q, placeholder: "タイトルで検索" %>
+         <%= f.submit "検索" %>
+       <% end %>
+
+4. テスト
+   - test/models/archive_test.rb に search_by_title scope のテストを追加する（部分一致でヒットする / ヒットしないケース）。
+   - test/controllers/archives_controller_test.rb に index へ q パラメータを付けたとき結果が絞り込まれるテストを追加する。
+
+実装後、テストを実行して動作を確認してください。

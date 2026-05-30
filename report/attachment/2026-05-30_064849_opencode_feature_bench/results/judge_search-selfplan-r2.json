@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r2","score":3,"categories":{"correctness":4,"idiomaticity":3,"completeness":3,"test_quality":3},"reason":"scope は適切で form_with+submit_tag も妥当、ブラウザ実機も ok=true。ただし Postgres で大文字小文字を区別する LIKE を使っており要件の堅牢性に欠ける。テストは3件のみでモデルテストなし、空クエリ・非一致を response :success だけで確認する弱いアサーションが目立つ。"}

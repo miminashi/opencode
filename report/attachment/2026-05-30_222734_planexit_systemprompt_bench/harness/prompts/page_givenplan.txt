@@ -1,0 +1,28 @@
+ytdlor にページネーション機能を追加してください。
+
+要件:
+- 動画一覧（Archive の index ページ）にページネーションを追加する。
+- 1 ページあたり 20 件表示する。
+- ページネーション UI を一覧の下部に配置する。
+- 既存のテストが壊れていないことを確認する。
+
+以下の実装プランに従って実装してください:
+
+1. ページネーション gem の追加
+   - Gemfile に kaminari を追加する:
+       gem "kaminari"
+   - bundle install はホストでは実行できない。Docker 内で解決する。
+     ./docker_compose build test でイメージを再ビルドすると bundle install が走る。
+
+2. コントローラ app/controllers/archives_controller.rb の index アクション
+   - kaminari の page / per を適用する:
+       @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+
+3. ビュー app/views/archives/index.html.erb
+   - 一覧（render @archives）の下部にページネーション UI を追加する:
+       <%= paginate @archives %>
+
+4. 確認
+   - ./docker_compose build test でイメージを再ビルドし、
+     ./docker_compose --profile test run --rm test rails test
+     で既存のテストが壊れていないことを確認する。

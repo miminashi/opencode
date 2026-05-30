@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r5","score":3,"categories":{"correctness":4,"idiomaticity":3,"completeness":3,"test_quality":3},"reason":"by_title scope とコントローラ側の present? ガードで機能し、ヘッダ内に検索 UI を配置、ブラウザ実機も ok=true。ただし Postgres で case-sensitive な LIKE を使用し、scope 自体に blank ガードがない。テストは2件+2件と少なく、case-insensitive や空クエリのアサーションを欠く。"}

@@ -1,0 +1,22 @@
+{
+  "trial": "search-selfplan-r1",
+  "task": "search",
+  "pattern": "selfplan",
+  "base_sha": "04b7780e7d51e57866c009de3817710c63e85ff1",
+  "transition": "tab_to_build (plan_exit 自発せず)",
+  "plan_time_min": 4.5,
+  "build_time": "13m2s",
+  "opencode_self_test": "40 tests, 0 failures/0 errors (web-service方式)",
+  "diff_files": 6,
+  "diff_insertions": 83,
+  "diff_summary": "model Archive.search(ILIKE), controller params[:q], index search form, search.css(+17), controller test(+28), model test(+29)",
+  "indep_test": "40 runs, 88 assertions, 0 failures, 0 errors, 0 skips",
+  "browser": {
+    "index_articles": 25,
+    "search_ruby_count": 12,
+    "all_titles_contain_ruby": true,
+    "search_input": "input[name=q]",
+    "ok": true
+  },
+  "status": "done"
+}

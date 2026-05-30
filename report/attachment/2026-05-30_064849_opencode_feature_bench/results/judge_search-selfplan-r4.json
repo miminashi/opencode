@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r4","score":4,"categories":{"correctness":5,"idiomaticity":4,"completeness":5,"test_quality":4},"reason":"ILIKE の scope、クリアボタンや @query 保持など UI 配慮も良く、ブラウザ実機 ok=true。scope が blank 時 nil を返すが Rails が all にフォールバックするため安全。テストはコントローラ4件+モデル2件で case-insensitive を検証するが、scope の blank クエリ挙動を直接テストしていない点がやや弱い。"}

@@ -141,7 +141,7 @@ opencode（Qwen3.6-35B）は **pagy の API を正しく扱えていない**（v
 
 ## 再現方法
 
-ハーネス一式は `/home/ubuntu/projects/opencode/tmp/feat-bench/` に保存:
+ハーネス一式は `/home/ubuntu/projects/opencode/tmp/feat-bench/`（`tmp/` は gitignore のため未コミット）。**現行版の harness スナップショットは [2026-05-30 plan_exit ベンチ](./2026-05-30_222734_planexit_systemprompt_bench.md) の `attachment/.../harness/` に保存**（両ベンチ共有ツール）。本ベンチの各試行の客観結果・差分・採点は本レポートの `attachment/2026-05-30_064849_opencode_feature_bench/results/`（`*.diff`/`*.stat`/`*.json`/`judge_*.json`）に保存した。
 
 - `create_worktrees.sh` / `apply_setup.sh`: 20 worktree 作成 + 機能開発用 AGENTS.md の setup commit
 - `prompts/{search,page}_{selfplan,givenplan}.txt`: opencode へのプロンプト（givenplan は claude の詳細プラン入り）
@@ -151,7 +151,7 @@ opencode（Qwen3.6-35B）は **pagy の API を正しく扱えていない**（v
 - `aggregate.py`: 集計（results.tsv 生成）
 - `results/<trial>.{json,diff,stat}` + `judge_<trial>.json`: 各試行の客観結果・差分・採点
 
-任意試行のコードは `git -C /home/ubuntu/projects/ytdlor checkout bench-feat-<task>-<pattern>-r<n>` で取り出せる。
+> ⚠ **訂正（2026-05-31）**: 当初「任意試行のコードは `git -C /home/ubuntu/projects/ytdlor checkout bench-feat-<task>-<pattern>-r<n>` で取り出せる」と記載したが、その後の plan_exit ベンチ準備で各 worktree を `git reset --hard b61242f`（+クリーン setup）したため、**これらのブランチからは前回実装を取り出せなくなった**。前回実装は本レポートの `attachment/2026-05-30_064849_opencode_feature_bench/results/*.diff`（setup commit からの差分）として保存してある。
 
 ## 参照レポート
 

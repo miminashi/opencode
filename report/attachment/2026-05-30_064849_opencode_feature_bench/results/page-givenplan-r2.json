@@ -1,0 +1,1 @@
+{"trial":"page-givenplan-r2","task":"page","pattern":"givenplan","transition":"tab_to_build","build_time":"~7m30s","gem_choice":"kaminari","diff_files":4,"diff_insertions":21,"diff_deletions":1,"indep_test":"33 runs, 67 assertions, 0 failures, 0 errors, 0 skips","browser":{"page1_articles":20,"pagination_nav":true,"page2_articles":5,"ok":true},"status":"done"}

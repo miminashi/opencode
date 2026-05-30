@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r2","score":5,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":5},"reason":"コア実装は他試行と同一で正確かつRailsらしく、browser.ok=trueで12件一致。controllerテストはresponse.bodyに一致タイトルを含み非一致を含まないことを検証し、モデルテストはcase-insensitive含む4ケースを網羅していて実効性が高い。"}

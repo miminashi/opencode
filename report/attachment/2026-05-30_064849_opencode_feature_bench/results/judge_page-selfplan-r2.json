@@ -1,0 +1,1 @@
+{"trial":"page-selfplan-r2","score":2,"categories":{"correctness":1,"idiomaticity":3,"completeness":2,"test_quality":3},"reason":"pagy を選択し Pagy::Backend は include したが Pagy::Frontend を未 include のため pagy_nav が NoMethodError で実機クラッシュ（ok=false, page1=0）。テストは1件のため pages>1 分岐を踏まずすり抜けたが本番では動かず、correctness を大きく減点。コントローラ実装と CSS 自体は妥当。"}

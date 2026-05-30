@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r5","task":"search","pattern":"givenplan","transition":"tab_to_build","build_time":"~8m45s","diff_files":7,"diff_insertions":67,"diff_deletions":2,"indep_test":"39 runs, 84 assertions, 0 failures, 0 errors, 0 skips","browser":{"search_ruby_count":12,"all_titles_contain_ruby":true,"search_input":true,"ok":true},"status":"done"}

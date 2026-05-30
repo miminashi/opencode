@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r4","task":"search","pattern":"selfplan","transition":"tab_to_build","build_time":"~5m25s","diff_files":6,"diff_insertions":94,"diff_deletions":1,"indep_test":"40 runs, 91 assertions, 0 failures, 0 errors, 0 skips","browser":{"search_ruby_count":12,"all_titles_contain_ruby":true,"search_input":true,"ok":true},"status":"done"}

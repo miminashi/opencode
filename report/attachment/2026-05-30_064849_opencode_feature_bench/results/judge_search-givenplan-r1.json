@@ -1,0 +1,1 @@
+{"trial":"search-givenplan-r1","score":4,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":3},"reason":"モデルscope・controller・GET検索フォームともにRailsらしく実装され、browser.ok=trueで検索12件も期待通り。モデルテストは件数・包含・blank判定を検証し実効的だが、controllerテスト2件はassert_responseとh1見出しのみで実際の絞り込みを検証しておらずtrivial。"}

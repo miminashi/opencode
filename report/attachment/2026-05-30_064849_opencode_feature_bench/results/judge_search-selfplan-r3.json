@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r3","score":5,"categories":{"correctness":5,"idiomaticity":5,"completeness":5,"test_quality":5},"reason":"ILIKE の scope を present? ガード付きで実装し、form_with・submit_tag も Rails 的。ブラウザ実機 ok=true。コントローラ4件+モデル5件のテストで count・includes・case-insensitive・partial-match を網羅し非常に実効的。最も完成度が高い。"}

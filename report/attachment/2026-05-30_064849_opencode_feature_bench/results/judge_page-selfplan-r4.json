@@ -1,0 +1,1 @@
+{"trial":"page-selfplan-r4","score":2,"categories":{"correctness":1,"idiomaticity":2,"completeness":2,"test_quality":3},"reason":"pagy を選択したが Pagy::Offset を直接生成し @pagy.page_url を誤用、NoMethodError (undefined method params for nil) で実機クラッシュ（ok=false, page1=0）。さらに pagy_nav を使わず手書きの link_to ループを組んでおり pagy の標準的な使い方から外れる。テストはすり抜けたが本番で動かないため低評価。"}

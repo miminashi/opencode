@@ -1,0 +1,1 @@
+{"trial":"search-selfplan-r1","score":5,"categories":{"correctness":5,"idiomaticity":4,"completeness":5,"test_quality":5},"reason":"ILIKE による大文字小文字非依存の部分一致を正しく実装し、ブラウザ実機も ok=true。コントローラ/モデル両方に count・includes/not_includes・case-insensitive を検証する実効的なテストを多数備える。検索ロジックを scope ではなく self.search クラスメソッドにした点だけわずかに非 Rails 的だが総合的に最良。"}

@@ -1,0 +1,15 @@
+{
+  "trial": "search-selfplan-r1",
+  "cond": "A",
+  "outcome": "self_exit_autonomous",
+  "self_exit": true,
+  "synthetic": false,
+  "build_reached": true,
+  "reminders": 0,
+  "plan_exit_state": "error",
+  "plan_exit_error": "The user dismissed this question",
+  "plan_exit_failed_nofile": 0,
+  "plan_file_written": true,
+  "build_msg": false,
+  "main_session": "ses_187f2411fffeij5s9RZKhU9OL1"
+}

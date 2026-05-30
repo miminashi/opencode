@@ -1,0 +1,1 @@
+{"trial":"page-selfplan-r5","task":"page","pattern":"selfplan","transition":"tab_to_build (plan質問をEscapeで閉じてから実装)","build_time":"~5m","gem_choice":"kaminari","diff_files":5,"diff_insertions":61,"diff_deletions":1,"indep_test":"33 runs, 67 assertions, 0 failures, 0 errors, 0 skips","browser":{"page1_articles":20,"pagination_nav":true,"page2_articles":5,"ok":true},"status":"done"}

@@ -1,0 +1,36 @@
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}

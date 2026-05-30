@@ -98,7 +98,7 @@
 
 - `/home/ubuntu/projects/ytdlor` への読み取りは許可（確認不要）
 - ytdlor に対する一般的な操作（ファイル編集、テスト実行、マイグレーション、コード生成等）は、opencode TUI に指示して実行する
-  - opencode-test ウインドウで opencode を起動し、プロンプトに操作内容を入力する
+  - claude を実行している tmux ウインドウの右に開いた opencode ペインで opencode を起動し、プロンプトに操作内容を入力する（ペインの作成・検出手順は opencode-operation skill の「tmux ペイン管理」を参照）
 - 以下の場合は直接操作してよい:
   - コードの閲覧・調査（Read/Grep/Glob）
   - git 読み取り操作（status, log, diff, show 等）— **`git -C /home/ubuntu/projects/ytdlor` を必ず使う**（`cd && git` やパイプは禁止。上記「複合コマンド・特殊構文の禁止」参照）
@@ -190,13 +190,33 @@ plan mode を使用してまとまった作業を行った場合は、完了時�
 - **注意**: `--cwd` は `run` サブコマンドの後に置くこと（`bun --cwd /path run ...` は動作しない）
 - **注意**: `bunx --cwd` は動作しない。`bun run --cwd /path typecheck` を使うこと
 
+## opencode バイナリの選択（fork vs upstream）
+
+**fork の挙動を検証・ベンチする際は、対象バイナリを必ず確認すること**（取り違えると upstream を測ってしまう）:
+
+- `~/.opencode/bin/opencode` は **upstream の npm 版**（現状 1.15.12, `@opencode-ai/plugin` 由来）で、**fork 独自機能を含まない**（plan_exit 強制機構 `forcePlanExit`/synthetic safeguard、fork の plan モードプロンプト等）。
+- fork の挙動を測るときは、必ず **`bun build --single` の成果物**を使う:
+  - メインリポジトリ: `/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode`
+  - ワークツリー: `<worktree>/packages/opencode/dist/opencode-linux-x64/bin/opencode`
+- **取り違え検知**: 起動前に `--version` を確認する。**fork ビルド = `0.0.0-<branch>-<timestamp>`**（タグ無しのため）、**upstream = `1.15.12`** 等のクリーンな版番号。
+- 実例（2026-05-30）: 機能追加ベンチが `~/.opencode/bin/opencode`（upstream 1.15.12）で実行され「plan_exit が自発されない」と誤観測した。fork の dev ビルドでは 100% 自発する。一方リグレッションスキルは dist ビルドを使っており正しかった。詳細は `report/2026-05-30_222734_planexit_systemprompt_bench.md`。
+
+## plan モードの2系統（混同しない）
+
+plan モードには挙動の異なる2系統がある:
+
+- **legacy パス**（`OPENCODE_EXPERIMENTAL_PLAN_MODE` 未設定 = 既定）: `reminders.ts` の `planEnteringSuffix` を使う。通常起動・ベンチはこちら。
+- **実験パス**（`OPENCODE_EXPERIMENTAL_PLAN_MODE=1`）: `plan-mode.txt` を使う。`plan-exit-regression` スキルはこちらで検証する。
+
+両者はプロンプトが別物なので、一方の結果でもう一方の挙動を保証しない。検証時はどちらの経路かを明示すること。
+
 ## 実行確認ルール
 
 1. **コードを修正した場合は、必ず実行して動作を確認すること**
-2. **実行確認には `opencode-test` という名前の tmux ウインドウを使用する**
-   - ウインドウが存在しない場合は作成する
-   - 例: `tmux new-window -t default -n opencode-test` で作成
-   - コマンド実行: `tmux send-keys -t default:opencode-test 'command' C-m` で実行
+2. **実行確認には、claude を実行している tmux ウインドウの右に開いた opencode ペインを使用する**（専用ウインドウは作らない。詳細は opencode-operation skill の「tmux ペイン管理」を参照）
+   - claude ペイン id を取得: `tmux display-message -p '#{pane_id}'`（例 `%38`）
+   - 右にペインを作成（既存の title=opencode-test ペインがあれば再利用）: `tmux split-window -h -d -t %38 -P -F '#{pane_id}'`（例 `%99`）→ `tmux select-pane -t %99 -T opencode-test`
+   - コマンド実行: 取得した実 pane id をリテラルで指定 — `tmux send-keys -t %99 'command' C-m`（`%PANE` 表記はプレースホルダ。そのまま実行しない）
 
 ## LLM サーバー前提条件
 

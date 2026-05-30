@@ -22,18 +22,24 @@ plan_exit の E2E リグレッションテストを、パラメータ指定・�
 | `timeout_minutes` | no | 10 | 各テストのタイムアウト（分） |
 | `label` | no | "regression" | テストラベル（結果ファイル名・レポートに使用） |
 
+> **注意（fork vs upstream バイナリ）— 重要**: `binary_path` には必ず **fork のビルド**を指定する（`bun build --single` の dist: `…/packages/opencode/dist/opencode-linux-x64/bin/opencode` またはワークツリーの dist）。`~/.opencode/bin/opencode` は **upstream の npm 版**（現 1.15.12, `@opencode-ai/plugin` 由来）で **fork 独自の plan_exit 機構（`forcePlanExit`/synthetic safeguard 等）を含まない**ため、これを渡すと fork ではなく upstream を検証してしまう。起動前に `--version` で判別（fork=`0.0.0-<branch>-*` / upstream=`1.15.12`）。結果ファイルの `Binary:` 行で実際の対象を確認できる（過去の本スキル実行は dist ビルドを使用していた）。
+>
+> **注意（plan モード経路）**: 本スキルは `OPENCODE_EXPERIMENTAL_PLAN_MODE=1` を付けて起動する＝**実験パス**（`plan-mode.txt` を注入, `reminders.ts:40` の else 側）。一方ベンチ・通常起動は env var 未設定＝**legacy パス**（`planEnteringSuffix` を注入）。両者は別プロンプトなので、本スキルの結果は実験パスの挙動であり legacy パスの挙動を保証しない（逆も同様）。検証対象がどちらの経路かを明示すること。
+
 ## 実行手順
 
 ### Step 1: パラメータ確認
 
-引数が不足している場合はユーザーに確認する。特に `binary_path` は必須。
+引数が不足している場合はユーザーに確認する。特に `binary_path` は必須（**fork のビルドを指定**。上記「注意」参照）。
 
 ### Step 2: 前準備
 
 1. `git -C ~/projects/ytdlor checkout Rakefile` でテスト対象ファイルをリセット
-2. **tmux セッション名検出**: `tmux display-message -p '#S'` の出力を `TMUX_SESSION` 変数として保持。出力が空・非 tmux 環境の場合は `TMUX_SESSION=default` にフォールバック。以降の tmux コマンドはすべてこの変数を使う
-3. tmux ウインドウ `opencode-test` が利用可能か確認（プロセスが動いていないこと）
-4. tmux ウインドウ `test-runner` を確認・作成（スクリプト実行用）
+2. **opencode ペインのセットアップ**（詳細は [opencode-operation skill](../opencode-operation/SKILL.md) の「tmux ペイン管理」を参照。opencode は claude ウインドウの右ペインで動かし、専用ウインドウは作らない）:
+   - `tmux display-message -p '#{pane_id}'` で claude ペイン id を取得（例 `%38`）。失敗（非 tmux 環境）ならエラーを報告して中断
+   - `tmux list-panes -F '#{pane_id} #{pane_title}'` で title=opencode-test を探し、あれば再利用。無ければ `tmux split-window -h -d -t %38 -P -F '#{pane_id}'`（例 `%99`）→ `tmux select-pane -t %99 -T opencode-test`
+   - 以降この pane id を `%PANE` と表記する。**`%PANE` はプレースホルダであり、tmux コマンドには実 pane id（例 `%99`）をリテラルで埋め込む**
+   - `tmux capture-pane -t %PANE -p | tail -3` でプロセスが残っていないこと（`ubuntu@` プロンプトのみ）を確認
 
 ### Step 3: テストスクリプト生成
 
@@ -44,7 +50,7 @@ plan_exit の E2E リグレッションテストを、パラメータ指定・�
 - `WAIT_ITERATIONS`: `timeout_minutes * 6`（10秒間隔のポーリング）
 - `RESULTS_FILE`: `test-plan-exit-{label}-results.txt` のフルパス
 - `TEST_LABEL`: `label` の値
-- `TMUX_SESSION`: Step 2 で検出した値（未検出時は `default`）
+- `{opencode_pane}`: Step 2 で取得した opencode ペインの実 pane id（例 `%99`）
 
 スクリプトの内容は既存の `test-plan-exit-regression.sh` をベースに以下を追加・変更:
 
@@ -60,8 +66,7 @@ OPENCODE_BIN="{binary_path}"
 PROJECT_DIR="/home/ubuntu/projects/ytdlor"
 PLANS_DIR="/home/ubuntu/projects/ytdlor/.opencode/plans"
 RESULTS_FILE="/home/ubuntu/projects/opencode/test-plan-exit-{label}-results.txt"
-TMUX_SESSION="{tmux_session}"
-TMUX_TARGET="${TMUX_SESSION}:opencode-test"
+TMUX_TARGET="{opencode_pane}"
 TOTAL_TESTS={num_tests}
 WAIT_ITERATIONS={timeout_minutes * 6}
 
@@ -187,8 +192,8 @@ echo "Results: $RESULTS_FILE"
 ### Step 4: テスト実行
 
 1. スクリプトに実行権限を付与: `chmod +x test-plan-exit-auto.sh`
-2. tmux `test-runner` ウインドウから実行: `tmux send-keys -t ${TMUX_SESSION}:test-runner '/home/ubuntu/projects/opencode/test-plan-exit-auto.sh' C-m`
-3. 定期的に進捗を監視: `tmux capture-pane -t ${TMUX_SESSION}:test-runner -p` で標準出力を確認
+2. 専用 tmux ウインドウは使わず、**Bash ツールの `run_in_background: true`** でドライバを起動: `bash /home/ubuntu/projects/opencode/test-plan-exit-auto.sh`（スクリプトが opencode ペインを駆動する）
+3. 定期的に進捗を監視: 結果ファイル `test-plan-exit-{label}-results.txt` を Read で確認（stdout はバックグラウンドタスクの出力ファイルにも出る）。**スクリプト実行中は claude 自身が opencode ペインへ送信しない**
 
 ### Step 5: 結果分析
 

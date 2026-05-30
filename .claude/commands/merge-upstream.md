@@ -68,6 +68,8 @@ git -C .claude/worktrees/merge-upstream-N commit -m "fix: <修正内容>"
 ./packages/opencode/dist/opencode-linux-x64/bin/opencode --version
 ```
 
+> **重要（fork vs upstream バイナリ）**: 動作確認・リグレッションは必ず**このマージ後ワークツリーの dist ビルド**（上記パス）で行う。`~/.opencode/bin/opencode` は **upstream の npm 版**（現 1.15.12, `@opencode-ai/plugin` 由来）で fork のマージ結果を反映しないため使わない。`--version` が **`0.0.0-<branch>-*`** なら fork ビルド、`1.15.12` 等のクリーン版番号なら upstream（取り違え）。`binary_path` には必ず dist のパスを渡す。
+
 ### 5.1. fork-regression-test skill によるリグレッションテスト (推奨)
 
 fork 独自機能のリグレッション検出のため `fork-regression-test` skill を呼び出す:
@@ -86,7 +88,7 @@ skill が生成するレポート (`report/{ts}_fork-regression-{label}.md`) の
 
 hotfix 等で時間がない場合のみ、5.1 の代わりに以下を許可する (要レポート明記):
 
-- tmux `opencode-test` ウインドウで `~/projects/ytdlor` にて opencode を起動
+- claude ウインドウの右に開いた opencode ペイン（title=opencode-test）で `~/projects/ytdlor` にて opencode を起動（ペイン作成手順は opencode-operation skill の「tmux ペイン管理」を参照）
 - TUI が正常に表示されること
 - 1 プロンプト送信してセッションが作成・LLM 応答受信できること
 - クラッシュしないこと

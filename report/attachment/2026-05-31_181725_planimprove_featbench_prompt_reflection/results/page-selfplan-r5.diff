@@ -1,0 +1,150 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..d3b0647 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -69,6 +69,8 @@ group :development do
+   gem "annotate"
+ end
+ 
++gem "pagy"
++
+ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5a2f5c5 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,10 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (43.4.4)
++      json
++      uri
++      yaml
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -276,6 +280,7 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
++    yaml (0.4.0)
+     zeitwerk (2.7.5)
+ 
+ PLATFORMS
+@@ -291,6 +296,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..93233ba
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,34 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  gap: 4px;
++  margin-top: var(--space-m);
++  padding-bottom: var(--space-m);
++}
++
++.pagination a,
++.pagination .current {
++  display: inline-block;
++  padding: 6px 12px;
++  border: 1px solid #ddd;
++  border-radius: 4px;
++  text-decoration: none;
++  color: #333;
++  background-color: #fff;
++}
++
++.pagination a:hover {
++  background-color: #f0f0f0;
++}
++
++.pagination .current {
++  background-color: #333;
++  color: #fff;
++  border-color: #333;
++}
++
++.pagination .disabled {
++  color: #ccc;
++  pointer-events: none;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..8d8d9c0 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,8 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy = Pagy::Offset.new(count: Archive.ordered.count, limit: 20, page: params[:page], request: request)
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.offset(@pagy.offset).limit(@pagy.limit)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/_pagination.html.erb b/app/views/archives/_pagination.html.erb
+new file mode 100644
+index 0000000..4d218f9
+--- /dev/null
++++ b/app/views/archives/_pagination.html.erb
+@@ -0,0 +1,5 @@
++<nav class="pagination">
++  <% if @pagy.last > 1 %>
++    <%= @pagy.series_nav %>
++  <% end %>
++</nav>
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..91e0863 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= render "pagination", pagy: @pagy %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..a76c385 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,25 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with pagination" do
++    get archives_url
++    assert_response :success
++    assert_includes response.body, 'pagination'
++  end
++
++  test "should get index page 2" do
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/video#{i}", status: Archive::Status::WAITING)
++    end
++    get archives_url, params: { page: 2 }
++    assert_response :success
++  end
++
++  test "should get index with non-existent page" do
++    get archives_url, params: { page: 999 }
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

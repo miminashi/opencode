@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope＋strip。search-form/css を備え、コントローラ3＋モデル4テストで case-insensitive を明示検証。実機 12 件絞込。"
+}

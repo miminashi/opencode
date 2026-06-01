@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r5",
+  "score": 3,
+  "categories": {
+    "correctness": 3,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 3
+  },
+  "reason": "pagy 43.4.4 採用。Pagy::Offset で 20件 limit は機能しクラッシュ無しだが、view の @pagy.series_nav が機能せずページリンクが描画されない（2ページ目へ遷移不可、functional NO）。25件→page2 テストを追加したが assert_response :success のみで nav 欠落を捕捉できず。要件『UIを下部に配置』未達。"
+}

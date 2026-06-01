@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope。コントローラ3＋モデル5テストで case-insensitive(ruby/RUBY/RuBy)・whitespace・nil・blank・no-match を網羅。検索 selfplan 最良級。実機 12 件絞込。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "gem 無しの手書き limit/offset（PER_PAGE=20・total_pages・prev/next・番号リンク・件数情報・css）。25件作成→page 2 で .pagination__link--current text='2' を検証する境界データテストを追加し、実機も 20件/2ページ目5件で完全動作。selfplan ページの最良。手書きゆえ僅かに非定型だが正確で堅実。"
+}

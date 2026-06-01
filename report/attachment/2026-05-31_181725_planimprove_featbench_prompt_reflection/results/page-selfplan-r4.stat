@@ -1,0 +1,11 @@
+ app/assets/stylesheets/pagination.css        | 58 ++++++++++++++++++++++++++++
+ app/controllers/archives_controller.rb       |  8 +++-
+ app/views/archives/_pagination.html.erb      | 31 +++++++++++++++
+ app/views/archives/index.html.erb            |  2 +
+ test/controllers/archives_controller_test.rb | 21 ++++++++++
+ 5 files changed, 119 insertions(+), 1 deletion(-)
+58	0	app/assets/stylesheets/pagination.css
+7	1	app/controllers/archives_controller.rb
+31	0	app/views/archives/_pagination.html.erb
+2	0	app/views/archives/index.html.erb
+21	0	test/controllers/archives_controller_test.rb

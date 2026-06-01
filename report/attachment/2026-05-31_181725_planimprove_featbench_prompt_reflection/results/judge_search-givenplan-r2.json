@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り ILIKE scope で正確・定型。テスト4ブロックで標準的。実機 12 件絞込。"
+}

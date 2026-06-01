@@ -1,0 +1,163 @@
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..bf48b3c
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,58 @@
++.pagination {
++  margin-top: var(--space-xl);
++  margin-bottom: var(--space-xl);
++  text-align: center;
++}
++
++.pagination__info {
++  display: block;
++  margin-bottom: var(--space-s);
++  color: var(--color-text-muted);
++  font-size: var(--font-size-s);
++}
++
++.pagination__links {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  gap: var(--space-xxs);
++  flex-wrap: wrap;
++}
++
++.pagination__link {
++  display: inline-block;
++  padding: var(--space-xxs) var(--space-xs);
++  border-radius: var(--border-radius);
++  color: var(--color-primary);
++  font-size: var(--font-size-s);
++  text-decoration: none;
++  transition: background-color 150ms, color 150ms;
++}
++
++.pagination__link:hover,
++.pagination__link:focus {
++  background-color: var(--color-light);
++  color: var(--color-primary-rotate);
++}
++
++.pagination__link--current {
++  display: inline-block;
++  padding: var(--space-xxs) var(--space-xs);
++  border-radius: var(--border-radius);
++  background-color: var(--color-primary);
++  color: var(--color-white);
++  font-weight: bold;
++  font-size: var(--font-size-s);
++}
++
++.pagination__link--disabled {
++  color: var(--color-text-muted);
++  cursor: default;
++  opacity: 0.5;
++}
++
++.pagination__link--disabled:hover,
++.pagination__link--disabled:focus {
++  background-color: transparent;
++  color: var(--color-text-muted);
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..950290a 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,13 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    per_page = 20
++    page = (params[:page] || 1).to_i
++    archives_scope = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @total_count = archives_scope.count
++    @archives = archives_scope.offset((page - 1) * per_page).limit(per_page)
++    @page = page
++    @per_page = per_page
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/_pagination.html.erb b/app/views/archives/_pagination.html.erb
+new file mode 100644
+index 0000000..96221d7
+--- /dev/null
++++ b/app/views/archives/_pagination.html.erb
+@@ -0,0 +1,31 @@
++<% if @total_count > 0 %>
++  <% total_pages = (@total_count.to_f / @per_page).ceil %>
++  <nav class="pagination" role="navigation" aria-label="ページネーション">
++    <span class="pagination__info">
++      <%= "全 #{@total_count}件中 %d-%d件を表示" % [((@page - 1) * @per_page + 1), [@page * @per_page, @total_count].min] %>
++      （<%= total_pages %>ページ）
++    </span>
++
++    <div class="pagination__links">
++      <% if @page > 1 %>
++        <%= link_to "<< 前へ", archives_path(page: @page - 1), class: "pagination__link pagination__link--prev" %>
++      <% else %>
++        <span class="pagination__link pagination__link--prev pagination__link--disabled"> << 前へ </span>
++      <% end %>
++
++      <% (1..total_pages).each do |p| %>
++        <% if p == @page %>
++          <span class="pagination__link pagination__link--current"><%= p %></span>
++        <% else %>
++          <%= link_to p, archives_path(page: p), class: "pagination__link" %>
++        <% end %>
++      <% end %>
++
++      <% if @page < total_pages %>
++        <%= link_to "次へ >>", archives_path(page: @page + 1), class: "pagination__link pagination__link--next" %>
++      <% else %>
++        <span class="pagination__link pagination__link--next pagination__link--disabled"> 次へ >> </span>
++      <% end %>
++    </div>
++  </nav>
++<% end %>
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..11511ef 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= render 'pagination' %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..ff96511 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,27 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with pagination" do
++    get archives_url
++    assert_response :success
++    assert_select ".pagination"
++  end
++
++  test "should get index page 2" do
++    25.times do
++      Archive.create!(original_url: "https://example.com/video_#{SecureRandom.hex(4)}")
++    end
++    get archives_url, params: { page: 2 }
++    assert_response :success
++    assert_select ".pagination__link--current", text: "2"
++  end
++
++  test "should render pagination info with total count" do
++    get archives_url
++    assert_response :success
++    assert_select ".pagination__info"
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

@@ -1,0 +1,38 @@
+{
+  "trial": "page-selfplan-r1",
+  "task": "page",
+  "pattern": "selfplan",
+  "transition": "self_exit",
+  "plan_sec": 148,
+  "build_sec": 440,
+  "build_time": "7m20s",
+  "appup_rc": "1",
+  "indep_test": "33 runs, 67 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 6,
+  "diff_insertions": 18,
+  "gem_choice": "pagy 8.6.3",
+  "browser": {
+    "mode": "page",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 0,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "page1",
+        "articles": 0
+      }
+    ],
+    "notes": [
+      "ページネーションリンクが見つからない"
+    ],
+    "firstPageCount": 0,
+    "paginationNavFound": false,
+    "pageLinkCount": 0,
+    "ok": false
+  },
+  "functional": false,
+  "functional_note": "firstPage=0 nav=False secondPage=None"
+}

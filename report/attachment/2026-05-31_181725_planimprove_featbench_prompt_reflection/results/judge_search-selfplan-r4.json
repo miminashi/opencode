@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "LIKE で case-sensitive。css・クリアリンク・コントローラ4テストを備えるが case-insensitive 検証なし・モデルテスト無し。実機 12 件絞込（大文字一致のため成功）。"
+}

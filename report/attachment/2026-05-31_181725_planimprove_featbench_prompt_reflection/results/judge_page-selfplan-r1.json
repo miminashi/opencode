@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 2,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "pagy 8.6.3 採用。Pagy::Backend は include したが Pagy::Frontend を include せず、view の pagy_nav(@pagy) が未定義 → 実データ(25件→2ページ)で index が HTTP 500 クラッシュ（functional NO）。`@pagy.pages>1` の比較自体は正しく前回の整数反復バグ(`for in @pagy.pages`)は回避したが、required mixin(Frontend) の漏れで故障。新規テスト無しですり抜け（rails test 0 failures）。"
+}

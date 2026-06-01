@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "LIKE のため PostgreSQL で case-sensitive（小文字検索で漏れる）。form_with＋match/no-match/empty の3テストだが case-insensitive 検証なし。実機は 'Ruby' がシード大文字と一致するため 12 件絞込（小文字では漏れる）。"
+}

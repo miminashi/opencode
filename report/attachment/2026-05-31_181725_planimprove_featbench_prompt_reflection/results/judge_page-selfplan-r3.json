@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 2,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "pagy 7.0.11 採用。r1 同様 Pagy::Frontend 未 include で pagy_nav が未定義 → index が HTTP 500 クラッシュ（functional NO）。`@pagy.pages>1` 比較は正しいが mixin 漏れ。新規テスト無し。"
+}

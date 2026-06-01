@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "ILIKE scope＋検索フォーム＋クリアリンク。case-insensitive('beta'→'Beta')・no-match・empty を含むコントローラ2テスト。モデルテストは無いが実装は正しく、実機 Ruby 検索で 12 件に絞込。"
+}

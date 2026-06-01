@@ -1,0 +1,81 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..af9cf3f 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -27,6 +27,9 @@ gem "stimulus-rails"
+ # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+ gem "jbuilder"
+ 
++# Pagination
++gem "pagy", "~> 8.0"
++
+ # Use Redis adapter to run Action Cable in production
+ gem "redis", "~> 4.0"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..8eb2a88 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,7 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (8.6.3)
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -291,6 +292,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy (~> 8.0)
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 09705d1..98ccf6f 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -1,2 +1,3 @@
+ class ApplicationController < ActionController::Base
++  include Pagy::Backend
+ end
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..4d29659 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy, @archives = pagy(Archive.ordered.with_attached_thumbnail.with_attached_video)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..791bc3a 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,10 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagy.pages > 1 %>
++    <nav class="pagination">
++      <%= pagy_nav(@pagy) %>
++    </nav>
++  <% end %>
+ </main>
+diff --git a/config/initializers/pagy.rb b/config/initializers/pagy.rb
+new file mode 100644
+index 0000000..bbef184
+--- /dev/null
++++ b/config/initializers/pagy.rb
+@@ -0,0 +1,5 @@
++require "pagy"
++
++# Pagy 設定
++# デフォルト: 1ページあたり20件
++Pagy::DEFAULT[:limit] = 20

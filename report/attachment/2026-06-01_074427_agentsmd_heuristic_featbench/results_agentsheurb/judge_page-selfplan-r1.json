@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "kaminari `.page.per(20)`＋paginate。**(B) 境界テストが強く作動**: 『25件作成→1ページ目ちょうど20件(assert_select article 20)→2ページ目ちょうど5件』の正確な件数アサーション付きテストを追加。実機完全動作。selfplan ページ最良級。"
+}

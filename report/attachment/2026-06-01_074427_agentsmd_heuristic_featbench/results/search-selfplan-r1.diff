@@ -1,0 +1,109 @@
+diff --git a/app/assets/stylesheets/search.css b/app/assets/stylesheets/search.css
+new file mode 100644
+index 0000000..8d98bce
+--- /dev/null
++++ b/app/assets/stylesheets/search.css
+@@ -0,0 +1,21 @@
++.search-form {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--space-xs);
++  align-items: center;
++  margin-bottom: var(--space-l);
++}
++
++.search-form__input {
++  flex: 1;
++  min-width: 20rem;
++}
++
++.search-form__actions {
++  display: flex;
++  gap: var(--space-xs);
++}
++
++.search-input {
++  width: 100%;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..b1810f9 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -5,6 +5,9 @@ class ArchivesController < ApplicationController
+   # GET /archives or /archives.json
+   def index
+     @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    if params[:q].present?
++      @archives = @archives.where('title ILIKE ?', "%#{params[:q]}%")
++    end
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..457d48d 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -11,6 +11,18 @@
+ 
+   <%= turbo_frame_tag(Archive.new) %>
+ 
++  <%= form_with url: archives_path, method: :get, local: true, class: "search-form" do %>
++    <div class="search-form__input">
++      <%= text_field_tag :q, params[:q], placeholder: "タイトルで検索", class: "search-input form__input" %>
++    </div>
++    <div class="search-form__actions">
++      <%= submit_tag "検索", class: "btn btn--primary" %>
++      <% if params[:q].present? %>
++        <%= link_to "クリア", archives_path, class: "btn btn--light" %>
++      <% end %>
++    </div>
++  <% end %>
++
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..ec924b2 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,40 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should search archives by title" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "検索テスト動画")
++    get archives_url, params: { q: "検索" }
++    assert_response :success
++    assert_select "article", count: 1
++  end
++
++  test "should return empty when no match" do
++    get archives_url, params: { q: "存在しないタイトル" }
++    assert_response :success
++    assert_select "article", count: 0
++  end
++
++  test "should search case-insensitively" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "大文字小文字テスト")
++    get archives_url, params: { q: "大文字" }
++    assert_response :success
++    assert_select "article", count: 1
++  end
++
++  test "should show all archives when no search query" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "テスト動画A")
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "テスト動画B")
++    count_before = Archive.count
++    get archives_url
++    assert_response :success
++    assert_select "article", count: count_before
++  end
++
++  test "should return empty when search query is blank" do
++    get archives_url, params: { q: "" }
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

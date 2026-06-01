@@ -1,0 +1,3261 @@
+=== RUN_ALL_E2E_HEUR START 03:53:07  BIN=/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode  VERSION=0.0.0-dev-202605302005 ===
+
+################## [1/20] TRIAL search-selfplan-r1 (task=search) START 03:53:08 ##################
+reset search-selfplan-r1 -> d9000071b32514a8434b03e2e47dbb59739bf346
+[03:53:09] DRIVE_PLAN_TO_BUILD START search-selfplan-r1 COND=agentsheur
+[03:53:09] preflight: shell ready (i=1)
+[03:57:07] self_exit dialog -> Enter(Yes)
+[03:57:10] phase1 transition=self_exit
+[04:03:39] BUILD idle @380s
+[04:03:43] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [1/20] search-selfplan-r1 transition=self_exit -> evaluate 04:03:43 ---
+########## EVALUATE search-selfplan-r1 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 645B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 4/6] WORKDIR /opt/app
+#7 CACHED
+
+#8 [base 5/6] COPY Gemfile /opt/app
+#8 CACHED
+
+#9 [base 6/6] COPY Gemfile.lock /opt/app
+#9 CACHED
+
+#10 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 38 tests in a single process (parallelization threshold is 50)
+Run options: --seed 46823
+
+# Running:
+
+......................................
+
+Finished in 45.152139s, 0.8416 runs/s, 1.6832 assertions/s.
+38 runs, 76 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-selfplan-r1 ##########
+################## [1/20] TRIAL search-selfplan-r1 DONE 04:05:23 ##################
+
+################## [2/20] TRIAL search-selfplan-r2 (task=search) START 04:05:23 ##################
+reset search-selfplan-r2 -> d9000071b32514a8434b03e2e47dbb59739bf346
+[04:05:23] DRIVE_PLAN_TO_BUILD START search-selfplan-r2 COND=agentsheur
+[04:05:23] preflight: shell ready (i=1)
+[04:10:37] self_exit dialog -> Enter(Yes)
+[04:10:40] phase1 transition=self_exit
+[04:16:49] BUILD idle @360s
+[04:16:53] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [2/20] search-selfplan-r2 transition=self_exit -> evaluate 04:16:53 ---
+########## EVALUATE search-selfplan-r2 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 645B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.2s
+
+#7 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#7 CACHED
+
+#8 [base 4/6] WORKDIR /opt/app
+#8 CACHED
+
+#9 [base 5/6] COPY Gemfile /opt/app
+#9 CACHED
+
+#10 [base 6/6] COPY Gemfile.lock /opt/app
+#10 CACHED
+
+#11 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 37 tests in a single process (parallelization threshold is 50)
+Run options: --seed 4151
+
+# Running:
+
+.....................................
+
+Finished in 45.838021s, 0.8072 runs/s, 1.5926 assertions/s.
+37 runs, 73 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "form input[type=\"text\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-selfplan-r2 ##########
+################## [2/20] TRIAL search-selfplan-r2 DONE 04:18:38 ##################
+
+################## [3/20] TRIAL search-selfplan-r3 (task=search) START 04:18:38 ##################
+reset search-selfplan-r3 -> d9000071b32514a8434b03e2e47dbb59739bf346
+[04:18:38] DRIVE_PLAN_TO_BUILD START search-selfplan-r3 COND=agentsheur
+[04:18:38] preflight: shell ready (i=1)
+[04:23:22] self_exit dialog -> Enter(Yes)
+[04:23:25] phase1 transition=self_exit
+[04:32:14] BUILD idle @520s
+[04:32:18] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [3/20] search-selfplan-r3 transition=self_exit -> evaluate 04:32:18 ---
+########## EVALUATE search-selfplan-r3 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 645B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.4s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 42 tests in a single process (parallelization threshold is 50)
+Run options: --seed 2252
+
+# Running:
+
+..........................................
+
+Finished in 45.303631s, 0.9271 runs/s, 1.8542 assertions/s.
+42 runs, 84 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-selfplan-r3 ##########
+################## [3/20] TRIAL search-selfplan-r3 DONE 04:34:02 ##################
+
+################## [4/20] TRIAL search-selfplan-r4 (task=search) START 04:34:02 ##################
+reset search-selfplan-r4 -> d9000071b32514a8434b03e2e47dbb59739bf346
+[04:34:02] DRIVE_PLAN_TO_BUILD START search-selfplan-r4 COND=agentsheur
+[04:34:03] preflight: shell ready (i=1)
+[04:38:46] self_exit dialog -> Enter(Yes)
+[04:38:49] phase1 transition=self_exit
+[04:48:38] BUILD idle @580s
+[04:48:42] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [4/20] search-selfplan-r4 transition=self_exit -> evaluate 04:48:42 ---
+########## EVALUATE search-selfplan-r4 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 645B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.4s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.6s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.3s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.5s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 39 tests in a single process (parallelization threshold is 50)
+Run options: --seed 23174
+
+# Running:
+
+.......................................
+
+Finished in 47.215015s, 0.8260 runs/s, 1.6944 assertions/s.
+39 runs, 80 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-selfplan-r4 ##########
+################## [4/20] TRIAL search-selfplan-r4 DONE 04:50:38 ##################
+
+################## [5/20] TRIAL search-selfplan-r5 (task=search) START 04:50:38 ##################
+reset search-selfplan-r5 -> 45e31811b548fce87f592e2ebead2b89f5686046
+[04:50:39] DRIVE_PLAN_TO_BUILD START search-selfplan-r5 COND=agentsheur
+[04:50:39] preflight: shell ready (i=1)
+[04:55:07] self_exit dialog -> Enter(Yes)
+[04:55:10] phase1 transition=self_exit
+[04:59:19] BUILD idle @240s
+[04:59:23] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [5/20] search-selfplan-r5 transition=self_exit -> evaluate 04:59:23 ---
+########## EVALUATE search-selfplan-r5 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 645B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 5/6] COPY Gemfile /opt/app
+#7 CACHED
+
+#8 [base 6/6] COPY Gemfile.lock /opt/app
+#8 CACHED
+
+#9 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#10 CACHED
+
+#11 [base 4/6] WORKDIR /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 54457
+
+# Running:
+
+.................................
+
+Finished in 44.934418s, 0.7344 runs/s, 1.4911 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    }
+  ],
+  "notes": [
+    "検索入力が見つからない"
+  ],
+  "searchInputFound": false,
+  "ok": false
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-selfplan-r5 ##########
+################## [5/20] TRIAL search-selfplan-r5 DONE 05:01:03 ##################
+
+################## [6/20] TRIAL search-givenplan-r1 (task=search) START 05:01:03 ##################
+reset search-givenplan-r1 -> 45e31811b548fce87f592e2ebead2b89f5686046
+[05:01:03] DRIVE_PLAN_TO_BUILD START search-givenplan-r1 COND=agentsheur
+[05:01:03] preflight: shell ready (i=1)
+[05:02:46] self_exit dialog -> Enter(Yes)
+[05:02:49] phase1 transition=self_exit
+[05:08:37] BUILD idle @340s
+[05:08:41] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [6/20] search-givenplan-r1 transition=self_exit -> evaluate 05:08:41 ---
+########## EVALUATE search-givenplan-r1 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 647B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.2s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 37 tests in a single process (parallelization threshold is 50)
+Run options: --seed 30815
+
+# Running:
+
+.....................................
+
+Finished in 43.304758s, 0.8544 runs/s, 1.7550 assertions/s.
+37 runs, 76 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-givenplan-r1 ##########
+################## [6/20] TRIAL search-givenplan-r1 DONE 05:10:23 ##################
+
+################## [7/20] TRIAL search-givenplan-r2 (task=search) START 05:10:23 ##################
+reset search-givenplan-r2 -> 45e31811b548fce87f592e2ebead2b89f5686046
+[05:10:23] DRIVE_PLAN_TO_BUILD START search-givenplan-r2 COND=agentsheur
+[05:10:23] preflight: shell ready (i=1)
+[05:12:36] self_exit dialog -> Enter(Yes)
+[05:12:39] phase1 transition=self_exit
+[05:17:07] BUILD idle @260s
+[05:17:11] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [7/20] search-givenplan-r2 transition=self_exit -> evaluate 05:17:11 ---
+########## EVALUATE search-givenplan-r2 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 647B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.2s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 36 tests in a single process (parallelization threshold is 50)
+Run options: --seed 43672
+
+# Running:
+
+....................................
+
+Finished in 46.555002s, 0.7733 runs/s, 1.6969 assertions/s.
+36 runs, 79 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-givenplan-r2 ##########
+################## [7/20] TRIAL search-givenplan-r2 DONE 05:18:54 ##################
+
+################## [8/20] TRIAL search-givenplan-r3 (task=search) START 05:18:54 ##################
+reset search-givenplan-r3 -> 45e31811b548fce87f592e2ebead2b89f5686046
+[05:18:54] DRIVE_PLAN_TO_BUILD START search-givenplan-r3 COND=agentsheur
+[05:18:54] preflight: shell ready (i=1)
+[05:21:07] self_exit dialog -> Enter(Yes)
+[05:21:10] phase1 transition=self_exit
+[05:26:58] BUILD idle @340s
+[05:27:02] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [8/20] search-givenplan-r3 transition=self_exit -> evaluate 05:27:02 ---
+########## EVALUATE search-givenplan-r3 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 647B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.2s
+
+#7 [base 5/6] COPY Gemfile /opt/app
+#7 CACHED
+
+#8 [base 6/6] COPY Gemfile.lock /opt/app
+#8 CACHED
+
+#9 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#10 CACHED
+
+#11 [base 4/6] WORKDIR /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 39 tests in a single process (parallelization threshold is 50)
+Run options: --seed 1634
+
+# Running:
+
+.......................................
+
+Finished in 45.529636s, 0.8566 runs/s, 1.8450 assertions/s.
+39 runs, 84 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-givenplan-r3 ##########
+################## [8/20] TRIAL search-givenplan-r3 DONE 05:28:46 ##################
+
+################## [9/20] TRIAL search-givenplan-r4 (task=search) START 05:28:46 ##################
+reset search-givenplan-r4 -> 45e31811b548fce87f592e2ebead2b89f5686046
+[05:28:46] DRIVE_PLAN_TO_BUILD START search-givenplan-r4 COND=agentsheur
+[05:28:46] preflight: shell ready (i=1)
+[05:31:29] self_exit dialog -> Enter(Yes)
+[05:31:32] phase1 transition=self_exit
+[05:37:40] BUILD idle @360s
+[05:37:44] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [9/20] search-givenplan-r4 transition=self_exit -> evaluate 05:37:44 ---
+########## EVALUATE search-givenplan-r4 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 647B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.2s
+
+#7 [base 6/6] COPY Gemfile.lock /opt/app
+#7 CACHED
+
+#8 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#9 CACHED
+
+#10 [base 4/6] WORKDIR /opt/app
+#10 CACHED
+
+#11 [base 5/6] COPY Gemfile /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.2s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 39 tests in a single process (parallelization threshold is 50)
+Run options: --seed 28856
+
+# Running:
+
+.......................................
+
+Finished in 43.664820s, 0.8932 runs/s, 1.9008 assertions/s.
+39 runs, 83 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-givenplan-r4 ##########
+################## [9/20] TRIAL search-givenplan-r4 DONE 05:39:24 ##################
+
+################## [10/20] TRIAL search-givenplan-r5 (task=search) START 05:39:24 ##################
+reset search-givenplan-r5 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[05:39:24] DRIVE_PLAN_TO_BUILD START search-givenplan-r5 COND=agentsheur
+[05:39:24] preflight: shell ready (i=1)
+[05:41:07] self_exit dialog -> Enter(Yes)
+[05:41:10] phase1 transition=self_exit
+[05:45:38] BUILD idle @260s
+[05:45:42] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [10/20] search-givenplan-r5 transition=self_exit -> evaluate 05:45:42 ---
+########## EVALUATE search-givenplan-r5 (mode=search) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 647B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 4/6] WORKDIR /opt/app
+#7 CACHED
+
+#8 [base 5/6] COPY Gemfile /opt/app
+#8 CACHED
+
+#9 [base 6/6] COPY Gemfile.lock /opt/app
+#9 CACHED
+
+#10 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:bd2caca1652e8331e6b74bd4d6dc18e7c7465c7e8770d272d9b297f896e15e6f 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 38 tests in a single process (parallelization threshold is 50)
+Run options: --seed 44273
+
+# Running:
+
+......................................
+
+Finished in 43.317636s, 0.8772 runs/s, 1.9161 assertions/s.
+38 runs, 83 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (search) =====
+{
+  "mode": "search",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "search_ruby",
+      "articles": 12,
+      "screenshot": "03_search_results.png"
+    }
+  ],
+  "notes": [],
+  "searchInputFound": true,
+  "searchSelector": "input[name=\"q\"]",
+  "searchRubyCount": 12,
+  "sampleTitles": [
+    "Ruby Tutorial 12",
+    "Ruby Tutorial 11",
+    "Ruby Tutorial 10",
+    "Ruby Tutorial 09",
+    "Ruby Tutorial 08",
+    "Ruby Tutorial 07",
+    "Ruby Tutorial 06",
+    "Ruby Tutorial 05",
+    "Ruby Tutorial 04",
+    "Ruby Tutorial 03",
+    "Ruby Tutorial 02",
+    "Ruby Tutorial 01"
+  ],
+  "allTitlesContainRuby": true,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE search-givenplan-r5 ##########
+################## [10/20] TRIAL search-givenplan-r5 DONE 05:47:23 ##################
+
+################## [11/20] TRIAL page-selfplan-r1 (task=page) START 05:47:23 ##################
+reset page-selfplan-r1 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[05:47:24] DRIVE_PLAN_TO_BUILD START page-selfplan-r1 COND=agentsheur
+[05:47:24] preflight: shell ready (i=1)
+[05:53:08] self_exit dialog -> Enter(Yes)
+[05:53:11] phase1 transition=self_exit
+[06:01:59] BUILD idle @520s
+[06:02:03] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [11/20] page-selfplan-r1 transition=self_exit -> evaluate 06:02:03 ---
+########## EVALUATE page-selfplan-r1 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 641B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.27kB done
+#6 DONE 0.3s
+
+#7 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#7 CACHED
+
+#8 [base 4/6] WORKDIR /opt/app
+#8 CACHED
+
+#9 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 DONE 1.2s
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 3.959 Successfully installed bundler-4.0.12
+#12 3.959 1 gem installed
+#12 4.384 Bundler 4.0.12 is running, but your lockfile was generated with 2.5.17. Installing Bundler 2.5.17 and restarting using that version.
+#12 6.584 Fetching gem metadata from https://rubygems.org/.
+#12 6.674 Fetching bundler 2.5.17
+#12 6.920 Installing bundler 2.5.17
+#12 9.799 Fetching gem metadata from https://rubygems.org/.........
+#12 14.95 Fetching rake 13.3.1
+#12 15.17 Installing rake 13.3.1
+#12 15.21 Fetching base64 0.3.0
+#12 15.23 Fetching logger 1.7.0
+#12 15.23 Fetching crass 1.0.6
+#12 15.23 Fetching marcel 1.1.0
+#12 15.23 Fetching mini_mime 1.1.5
+#12 15.23 Fetching bigdecimal 4.1.1
+#12 15.23 Fetching concurrent-ruby 1.3.6
+#12 15.23 Fetching connection_pool 3.0.2
+#12 15.23 Fetching drb 2.2.3
+#12 15.23 Fetching json 2.19.3
+#12 15.23 Fetching prism 1.9.0
+#12 15.23 Fetching securerandom 0.4.1
+#12 15.23 Fetching uri 1.1.1
+#12 15.23 Fetching builder 3.3.0
+#12 15.23 Fetching erubi 1.13.1
+#12 15.23 Fetching rack 3.2.6
+#12 15.23 Fetching useragent 0.16.11
+#12 15.23 Fetching prettyprint 0.2.0
+#12 15.23 Fetching erb 6.0.2
+#12 15.23 Fetching date 3.5.1
+#12 15.23 Fetching stringio 3.2.0
+#12 15.23 Fetching tsort 0.2.0
+#12 15.23 Fetching io-console 0.8.2
+#12 15.23 Fetching thor 1.5.0
+#12 15.23 Fetching zeitwerk 2.7.5
+#12 15.23 Fetching nio4r 2.7.5
+#12 15.23 Fetching websocket-extensions 0.1.5
+#12 15.23 Fetching timeout 0.6.1
+#12 15.23 Fetching msgpack 1.7.2
+#12 15.23 Fetching racc 1.8.1
+#12 15.23 Fetching public_suffix 6.0.1
+#12 15.24 Fetching bindex 0.8.1
+#12 15.27 Installing base64 0.3.0
+#12 15.30 Installing prettyprint 0.2.0
+#12 15.32 Installing connection_pool 3.0.2
+#12 15.33 Installing io-console 0.8.2 with native extensions
+#12 15.33 Installing securerandom 0.4.1
+#12 15.35 Installing racc 1.8.1 with native extensions
+#12 15.37 Installing erubi 1.13.1
+#12 15.39 Installing builder 3.3.0
+#12 15.40 Installing uri 1.1.1
+#12 15.42 Installing useragent 0.16.11
+#12 15.43 Installing json 2.19.3 with native extensions
+#12 15.52 Installing tsort 0.2.0
+#12 15.62 Installing bigdecimal 4.1.1 with native extensions
+#12 15.62 Installing erb 6.0.2 with native extensions
+#12 15.65 Fetching regexp_parser 2.9.2
+#12 15.70 Installing stringio 3.2.0 with native extensions
+#12 15.76 Installing timeout 0.6.1
+#12 15.78 Fetching webrick 1.9.2
+#12 15.82 Installing websocket-extensions 0.1.5
+#12 15.87 Installing drb 2.2.3
+#12 15.91 Fetching ffi 1.17.0 (x86_64-linux-gnu)
+#12 15.92 Installing zeitwerk 2.7.5
+#12 15.97 Installing crass 1.0.6
+#12 16.02 Fetching raabro 1.4.0
+#12 16.05 Fetching mini_magick 4.13.2
+#12 16.07 Installing bindex 0.8.1 with native extensions
+#12 16.08 Installing logger 1.7.0
+#12 16.09 Installing date 3.5.1 with native extensions
+#12 16.10 Installing rack 3.2.6
+#12 16.11 Installing thor 1.5.0
+#12 16.12 Installing msgpack 1.7.2 with native extensions
+#12 16.12 Installing mini_mime 1.1.5
+#12 16.12 Installing raabro 1.4.0
+#12 16.13 Installing regexp_parser 2.9.2
+#12 16.13 Installing marcel 1.1.0
+#12 16.16 Installing public_suffix 6.0.1
+#12 16.20 Fetching pagy 8.6.3
+#12 16.20 Installing mini_magick 4.13.2
+#12 16.21 Installing webrick 1.9.2
+#12 16.22 Fetching pg 1.5.7
+#12 16.26 Fetching redis 4.8.1
+#12 16.27 Installing nio4r 2.7.5 with native extensions
+#12 16.32 Fetching pp 0.6.3
+#12 16.38 Fetching websocket-driver 0.8.0
+#12 16.45 Installing pp 0.6.3
+#12 16.47 Installing websocket-driver 0.8.0 with native extensions
+#12 16.48 Fetching net-protocol 0.2.2
+#12 16.49 Installing pagy 8.6.3
+#12 16.57 Installing net-protocol 0.2.2
+#12 16.59 Installing redis 4.8.1
+#12 16.63 Installing concurrent-ruby 1.3.6
+#12 16.64 Installing pg 1.5.7 with native extensions
+#12 16.68 Installing prism 1.9.0 with native extensions
+#12 16.69 Installing ffi 1.17.0 (x86_64-linux-gnu)
+#12 16.83 Fetching addressable 2.8.7
+#12 16.96 Fetching net-smtp 0.5.1
+#12 17.00 Installing net-smtp 0.5.1
+#12 17.00 Installing addressable 2.8.7
+#12 17.47 Fetching rackup 2.3.1
+#12 17.50 Fetching rack-session 2.1.1
+#12 17.50 Fetching rack-test 2.2.0
+#12 17.54 Installing rack-session 2.1.1
+#12 17.55 Installing rackup 2.3.1
+#12 17.56 Installing rack-test 2.2.0
+#12 18.09 Fetching i18n 1.14.8
+#12 18.09 Fetching sprockets 4.2.1
+#12 18.09 Fetching tzinfo 2.0.6
+#12 18.09 Fetching ferrum 0.15
+#12 18.14 Installing i18n 1.14.8
+#12 18.18 Installing ferrum 0.15
+#12 18.18 Installing tzinfo 2.0.6
+#12 18.20 Installing sprockets 4.2.1
+#12 18.28 Fetching nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 18.38 Fetching ruby-vips 2.2.2
+#12 18.47 Installing ruby-vips 2.2.2
+#12 19.00 Fetching et-orbi 1.2.11
+#12 19.03 Installing et-orbi 1.2.11
+#12 19.07 Fetching fugit 1.11.1
+#12 19.10 Installing fugit 1.11.1
+#12 19.12 Fetching image_processing 1.13.0
+#12 19.14 Installing image_processing 1.13.0
+#12 19.32 Installing nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 19.56 Fetching loofah 2.25.1
+#12 19.56 Fetching xpath 3.2.0
+#12 19.58 Installing xpath 3.2.0
+#12 19.58 Installing loofah 2.25.1
+#12 19.61 Fetching capybara 3.40.0
+#12 19.62 Fetching rails-html-sanitizer 1.7.0
+#12 19.65 Installing rails-html-sanitizer 1.7.0
+#12 19.69 Installing capybara 3.40.0
+#12 19.92 Fetching cuprite 0.15.1
+#12 19.94 Installing cuprite 0.15.1
+#12 24.95 Fetching reline 0.6.3
+#12 24.98 Installing reline 0.6.3
+#12 26.00 Fetching puma 6.4.2
+#12 26.03 Installing puma 6.4.2 with native extensions
+#12 29.89 Fetching bootsnap 1.18.4
+#12 29.92 Installing bootsnap 1.18.4 with native extensions
+#12 35.11 Fetching net-imap 0.6.3
+#12 35.11 Fetching psych 5.3.1
+#12 35.18 Installing psych 5.3.1 with native extensions
+#12 35.19 Installing net-imap 0.6.3
+#12 35.29 Fetching mail 2.9.0
+#12 35.35 Installing mail 2.9.0
+#12 39.33 Fetching rdoc 7.2.0
+#12 39.41 Installing rdoc 7.2.0
+#12 72.72 Fetching minitest 6.0.3
+#12 72.72 Fetching irb 1.17.0
+#12 72.99 Installing minitest 6.0.3
+#12 73.00 Installing irb 1.17.0
+#12 73.06 Fetching activesupport 8.1.3
+#12 73.12 Installing activesupport 8.1.3
+#12 73.14 Fetching debug 1.9.2
+#12 73.16 Installing debug 1.9.2 with native extensions
+#12 73.38 Fetching rails-dom-testing 2.3.0
+#12 73.38 Fetching globalid 1.3.0
+#12 73.38 Fetching activemodel 8.1.3
+#12 73.40 Installing globalid 1.3.0
+#12 73.41 Installing rails-dom-testing 2.3.0
+#12 73.43 Installing activemodel 8.1.3
+#12 73.45 Fetching activejob 8.1.3
+#12 73.46 Fetching actionview 8.1.3
+#12 73.50 Installing activejob 8.1.3
+#12 73.58 Installing actionview 8.1.3
+#12 73.67 Fetching activerecord 8.1.3
+#12 73.77 Installing activerecord 8.1.3
+#12 73.79 Fetching actionpack 8.1.3
+#12 73.79 Fetching jbuilder 2.12.0
+#12 73.83 Installing jbuilder 2.12.0
+#12 73.86 Installing actionpack 8.1.3
+#12 74.12 Fetching railties 8.1.3
+#12 74.12 Fetching actionmailer 8.1.3
+#12 74.12 Fetching actioncable 8.1.3
+#12 74.12 Fetching sprockets-rails 3.5.2
+#12 74.17 Installing sprockets-rails 3.5.2
+#12 74.18 Installing actionmailer 8.1.3
+#12 74.19 Installing actioncable 8.1.3
+#12 74.23 Installing railties 8.1.3
+#12 74.53 Fetching activestorage 8.1.3
+#12 74.54 Fetching annotate 2.6.5
+#12 74.56 Installing annotate 2.6.5
+#12 74.57 Installing activestorage 8.1.3
+#12 74.72 Fetching actionmailbox 8.1.3
+#12 74.74 Installing actionmailbox 8.1.3
+#12 74.85 Fetching importmap-rails 2.0.1
+#12 74.86 Fetching solid_queue 0.5.0
+#12 74.86 Fetching stimulus-rails 1.3.3
+#12 74.86 Fetching turbo-rails 2.0.6
+#12 74.86 Fetching web-console 4.2.1
+#12 74.86 Fetching action_text-trix 2.1.18
+#12 74.89 Installing importmap-rails 2.0.1
+#12 74.92 Installing solid_queue 0.5.0
+#12 74.93 Installing web-console 4.2.1
+#12 74.95 Installing action_text-trix 2.1.18
+#12 74.96 Installing stimulus-rails 1.3.3
+#12 74.98 Installing turbo-rails 2.0.6
+#12 75.03 Fetching actiontext 8.1.3
+#12 75.06 Installing actiontext 8.1.3
+#12 75.16 Fetching rails 8.1.3
+#12 75.18 Installing rails 8.1.3
+#12 75.49 Bundle complete! 19 Gemfile dependencies, 100 gems now installed.
+#12 75.49 Use `bundle info [gemname]` to see where a bundled gem is installed.
+#12 75.49 Post-install message from pagy:
+#12 75.49 *********************** PAGY WARNING! ***********************
+#12 75.49  The foundation, materialize, semantic and uikit CSS extras
+#12 75.49       have been discontinued and will be removed in v9
+#12 75.49        https://github.com/ddnexus/pagy/discussions/672
+#12 75.49       The javascript files have been deprecated/renamed
+#12 75.49     https://ddnexus.github.io/pagy/changelog/#deprecations
+#12 75.49 *************************************************************
+#12 75.49 Post-install message from solid_queue:
+#12 75.49 Upgrading to Solid Queue 0.4.x? There are some breaking changes about how Solid Queue is started. Check
+#12 75.49 https://github.com/rails/solid_queue/blob/main/UPGRADING.md for upgrade instructions.
+#12 DONE 77.0s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 2.9s done
+#13 writing image sha256:c2ecf88ba76075b4aca03c304155aa38d0ca0fa92bd0989e754a778743cfcfc6 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 3.5s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+HTTP not ready (last code=500)
+APPUP_RC=1
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 31871
+
+# Running:
+
+.................................
+
+Finished in 44.186439s, 0.7468 runs/s, 1.5163 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 0,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 0
+    }
+  ],
+  "notes": [
+    "ページネーションリンクが見つからない"
+  ],
+  "firstPageCount": 0,
+  "paginationNavFound": false,
+  "pageLinkCount": 0,
+  "ok": false
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r1 ##########
+################## [11/20] TRIAL page-selfplan-r1 DONE 06:06:44 ##################
+
+################## [12/20] TRIAL page-selfplan-r2 (task=page) START 06:06:44 ##################
+reset page-selfplan-r2 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[06:06:44] DRIVE_PLAN_TO_BUILD START page-selfplan-r2 COND=agentsheur
+[06:06:44] preflight: shell ready (i=1)
+[06:12:28] self_exit dialog -> Enter(Yes)
+[06:12:31] phase1 transition=self_exit
+[06:18:00] BUILD idle @320s
+[06:18:04] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [12/20] page-selfplan-r2 transition=self_exit -> evaluate 06:18:04 ---
+########## EVALUATE page-selfplan-r2 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 641B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.4s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.3s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 DONE 1.4s
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 3.309 Successfully installed bundler-4.0.12
+#12 3.309 1 gem installed
+#12 3.737 Bundler 4.0.12 is running, but your lockfile was generated with 2.5.17. Installing Bundler 2.5.17 and restarting using that version.
+#12 5.940 Fetching gem metadata from https://rubygems.org/.
+#12 6.030 Fetching bundler 2.5.17
+#12 6.280 Installing bundler 2.5.17
+#12 9.144 Fetching gem metadata from https://rubygems.org/.........
+#12 13.98 Fetching rake 13.3.1
+#12 14.21 Installing rake 13.3.1
+#12 14.25 Fetching bigdecimal 4.1.1
+#12 14.27 Fetching connection_pool 3.0.2
+#12 14.27 Fetching useragent 0.16.11
+#12 14.27 Fetching io-console 0.8.2
+#12 14.27 Fetching timeout 0.6.1
+#12 14.27 Fetching mini_mime 1.1.5
+#12 14.27 Fetching msgpack 1.7.2
+#12 14.27 Fetching base64 0.3.0
+#12 14.27 Fetching concurrent-ruby 1.3.6
+#12 14.27 Fetching drb 2.2.3
+#12 14.28 Fetching json 2.19.3
+#12 14.28 Fetching logger 1.7.0
+#12 14.28 Fetching prism 1.9.0
+#12 14.28 Fetching securerandom 0.4.1
+#12 14.28 Fetching uri 1.1.1
+#12 14.28 Fetching builder 3.3.0
+#12 14.28 Fetching erubi 1.13.1
+#12 14.28 Fetching racc 1.8.1
+#12 14.28 Fetching crass 1.0.6
+#12 14.28 Fetching rack 3.2.6
+#12 14.28 Fetching prettyprint 0.2.0
+#12 14.28 Fetching erb 6.0.2
+#12 14.28 Fetching date 3.5.1
+#12 14.28 Fetching stringio 3.2.0
+#12 14.28 Fetching tsort 0.2.0
+#12 14.28 Fetching thor 1.5.0
+#12 14.28 Fetching zeitwerk 2.7.5
+#12 14.28 Fetching nio4r 2.7.5
+#12 14.28 Fetching websocket-extensions 0.1.5
+#12 14.28 Fetching marcel 1.1.0
+#12 14.28 Fetching public_suffix 6.0.1
+#12 14.28 Fetching bindex 0.8.1
+#12 14.35 Installing connection_pool 3.0.2
+#12 14.37 Installing stringio 3.2.0 with native extensions
+#12 14.39 Installing logger 1.7.0
+#12 14.40 Installing zeitwerk 2.7.5
+#12 14.41 Installing mini_mime 1.1.5
+#12 14.41 Installing bindex 0.8.1 with native extensions
+#12 14.42 Installing base64 0.3.0
+#12 14.45 Installing drb 2.2.3
+#12 14.46 Installing uri 1.1.1
+#12 14.47 Installing builder 3.3.0
+#12 14.47 Installing erubi 1.13.1
+#12 14.48 Installing prettyprint 0.2.0
+#12 14.52 Installing crass 1.0.6
+#12 14.53 Installing bigdecimal 4.1.1 with native extensions
+#12 14.58 Installing tsort 0.2.0
+#12 14.59 Installing erb 6.0.2 with native extensions
+#12 14.64 Fetching regexp_parser 2.9.2
+#12 14.68 Installing racc 1.8.1 with native extensions
+#12 14.70 Installing timeout 0.6.1
+#12 14.70 Fetching webrick 1.9.2
+#12 14.72 Installing websocket-extensions 0.1.5
+#12 14.80 Fetching ffi 1.17.0 (x86_64-linux-gnu)
+#12 14.81 Fetching raabro 1.4.0
+#12 14.82 Installing json 2.19.3 with native extensions
+#12 14.82 Installing useragent 0.16.11
+#12 14.83 Installing marcel 1.1.0
+#12 14.90 Installing securerandom 0.4.1
+#12 14.91 Installing date 3.5.1 with native extensions
+#12 14.91 Installing thor 1.5.0
+#12 14.91 Installing io-console 0.8.2 with native extensions
+#12 14.92 Fetching mini_magick 4.13.2
+#12 14.92 Installing rack 3.2.6
+#12 14.93 Installing msgpack 1.7.2 with native extensions
+#12 14.94 Installing public_suffix 6.0.1
+#12 14.95 Installing nio4r 2.7.5 with native extensions
+#12 14.96 Fetching kaminari-core 1.2.2
+#12 14.97 Fetching pg 1.5.7
+#12 15.05 Fetching redis 4.8.1
+#12 15.05 Installing raabro 1.4.0
+#12 15.06 Fetching websocket-driver 0.8.0
+#12 15.06 Installing kaminari-core 1.2.2
+#12 15.08 Fetching pp 0.6.3
+#12 15.09 Installing mini_magick 4.13.2
+#12 15.10 Installing webrick 1.9.2
+#12 15.10 Installing regexp_parser 2.9.2
+#12 15.13 Installing websocket-driver 0.8.0 with native extensions
+#12 15.14 Installing concurrent-ruby 1.3.6
+#12 15.15 Installing redis 4.8.1
+#12 15.16 Fetching net-protocol 0.2.2
+#12 15.20 Installing pp 0.6.3
+#12 15.21 Installing pg 1.5.7 with native extensions
+#12 15.24 Installing net-protocol 0.2.2
+#12 15.47 Installing prism 1.9.0 with native extensions
+#12 15.54 Fetching net-smtp 0.5.1
+#12 15.56 Fetching addressable 2.8.7
+#12 15.62 Installing net-smtp 0.5.1
+#12 15.82 Installing addressable 2.8.7
+#12 16.06 Installing ffi 1.17.0 (x86_64-linux-gnu)
+#12 16.26 Fetching rack-session 2.1.1
+#12 16.27 Fetching rack-test 2.2.0
+#12 16.27 Fetching rackup 2.3.1
+#12 16.34 Installing rack-session 2.1.1
+#12 16.34 Installing rackup 2.3.1
+#12 16.34 Installing rack-test 2.2.0
+#12 17.12 Fetching nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 17.27 Fetching i18n 1.14.8
+#12 17.27 Fetching tzinfo 2.0.6
+#12 17.27 Fetching sprockets 4.2.1
+#12 17.27 Fetching ferrum 0.15
+#12 17.36 Installing i18n 1.14.8
+#12 17.42 Installing tzinfo 2.0.6
+#12 17.44 Installing ferrum 0.15
+#12 17.44 Installing sprockets 4.2.1
+#12 17.81 Fetching ruby-vips 2.2.2
+#12 17.82 Fetching et-orbi 1.2.11
+#12 17.85 Installing et-orbi 1.2.11
+#12 17.86 Installing ruby-vips 2.2.2
+#12 17.90 Fetching fugit 1.11.1
+#12 17.92 Installing fugit 1.11.1
+#12 18.00 Fetching image_processing 1.13.0
+#12 18.02 Installing image_processing 1.13.0
+#12 18.17 Installing nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 18.48 Fetching xpath 3.2.0
+#12 18.48 Fetching loofah 2.25.1
+#12 18.50 Installing xpath 3.2.0
+#12 18.51 Installing loofah 2.25.1
+#12 18.53 Fetching capybara 3.40.0
+#12 18.57 Fetching rails-html-sanitizer 1.7.0
+#12 18.59 Installing rails-html-sanitizer 1.7.0
+#12 18.61 Installing capybara 3.40.0
+#12 18.79 Fetching cuprite 0.15.1
+#12 18.80 Installing cuprite 0.15.1
+#12 23.77 Fetching reline 0.6.3
+#12 23.80 Installing reline 0.6.3
+#12 25.22 Fetching puma 6.4.2
+#12 25.24 Installing puma 6.4.2 with native extensions
+#12 28.99 Fetching bootsnap 1.18.4
+#12 29.02 Installing bootsnap 1.18.4 with native extensions
+#12 34.79 Fetching psych 5.3.1
+#12 34.79 Fetching net-imap 0.6.3
+#12 34.82 Installing psych 5.3.1 with native extensions
+#12 34.84 Installing net-imap 0.6.3
+#12 34.93 Fetching mail 2.9.0
+#12 34.99 Installing mail 2.9.0
+#12 39.15 Fetching rdoc 7.2.0
+#12 39.22 Installing rdoc 7.2.0
+#12 73.75 Fetching minitest 6.0.3
+#12 73.75 Fetching irb 1.17.0
+#12 74.15 Installing minitest 6.0.3
+#12 74.15 Installing irb 1.17.0
+#12 74.21 Fetching activesupport 8.1.3
+#12 74.27 Installing activesupport 8.1.3
+#12 74.27 Fetching debug 1.9.2
+#12 74.30 Installing debug 1.9.2 with native extensions
+#12 74.90 Fetching rails-dom-testing 2.3.0
+#12 74.90 Fetching globalid 1.3.0
+#12 74.90 Fetching activemodel 8.1.3
+#12 74.93 Installing globalid 1.3.0
+#12 74.94 Installing rails-dom-testing 2.3.0
+#12 74.95 Installing activemodel 8.1.3
+#12 74.97 Fetching activejob 8.1.3
+#12 74.99 Fetching actionview 8.1.3
+#12 75.00 Installing activejob 8.1.3
+#12 75.05 Installing actionview 8.1.3
+#12 75.13 Fetching activerecord 8.1.3
+#12 75.22 Installing activerecord 8.1.3
+#12 75.25 Fetching jbuilder 2.12.0
+#12 75.25 Fetching kaminari-actionview 1.2.2
+#12 75.25 Fetching actionpack 8.1.3
+#12 75.29 Installing kaminari-actionview 1.2.2
+#12 75.29 Installing jbuilder 2.12.0
+#12 75.34 Installing actionpack 8.1.3
+#12 75.62 Fetching railties 8.1.3
+#12 75.62 Fetching sprockets-rails 3.5.2
+#12 75.62 Fetching actioncable 8.1.3
+#12 75.62 Fetching actionmailer 8.1.3
+#12 75.77 Installing sprockets-rails 3.5.2
+#12 75.78 Installing actioncable 8.1.3
+#12 75.79 Installing actionmailer 8.1.3
+#12 75.87 Installing railties 8.1.3
+#12 76.10 Fetching annotate 2.6.5
+#12 76.10 Fetching activestorage 8.1.3
+#12 76.10 Fetching kaminari-activerecord 1.2.2
+#12 76.12 Installing annotate 2.6.5
+#12 76.13 Installing kaminari-activerecord 1.2.2
+#12 76.16 Installing activestorage 8.1.3
+#12 76.16 Fetching kaminari 1.2.2
+#12 76.19 Installing kaminari 1.2.2
+#12 76.33 Fetching actionmailbox 8.1.3
+#12 76.35 Installing actionmailbox 8.1.3
+#12 76.43 Fetching turbo-rails 2.0.6
+#12 76.44 Fetching action_text-trix 2.1.18
+#12 76.44 Fetching solid_queue 0.5.0
+#12 76.44 Fetching stimulus-rails 1.3.3
+#12 76.44 Fetching web-console 4.2.1
+#12 76.44 Fetching importmap-rails 2.0.1
+#12 76.50 Installing importmap-rails 2.0.1
+#12 76.51 Installing web-console 4.2.1
+#12 76.51 Installing solid_queue 0.5.0
+#12 76.52 Installing stimulus-rails 1.3.3
+#12 76.54 Installing action_text-trix 2.1.18
+#12 76.56 Installing turbo-rails 2.0.6
+#12 76.61 Fetching actiontext 8.1.3
+#12 76.64 Installing actiontext 8.1.3
+#12 76.74 Fetching rails 8.1.3
+#12 76.76 Installing rails 8.1.3
+#12 77.01 Bundle complete! 19 Gemfile dependencies, 103 gems now installed.
+#12 77.01 Use `bundle info [gemname]` to see where a bundled gem is installed.
+#12 77.01 Post-install message from solid_queue:
+#12 77.01 Upgrading to Solid Queue 0.4.x? There are some breaking changes about how Solid Queue is started. Check
+#12 77.01 https://github.com/rails/solid_queue/blob/main/UPGRADING.md for upgrade instructions.
+#12 DONE 78.9s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 2.9s done
+#13 writing image sha256:1b49bb12146e033993bbc27eedd11d82b7380b3390e862278c97598a3888ee06 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 3.5s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 22416
+
+# Running:
+
+.................................
+
+Finished in 45.381774s, 0.7272 runs/s, 1.4764 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 25,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 25
+    }
+  ],
+  "notes": [
+    "ページネーションリンクが見つからない"
+  ],
+  "firstPageCount": 25,
+  "paginationNavFound": true,
+  "pageLinkCount": 0,
+  "ok": false
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r2 ##########
+################## [12/20] TRIAL page-selfplan-r2 DONE 06:21:22 ##################
+
+################## [13/20] TRIAL page-selfplan-r3 (task=page) START 06:21:22 ##################
+reset page-selfplan-r3 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[06:21:22] DRIVE_PLAN_TO_BUILD START page-selfplan-r3 COND=agentsheur
+[06:21:22] preflight: shell ready (i=1)
+[06:23:35] self_exit dialog -> Enter(Yes)
+[06:23:38] phase1 transition=self_exit
+[06:28:07] BUILD idle @260s
+[06:28:11] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [13/20] page-selfplan-r3 transition=self_exit -> evaluate 06:28:11 ---
+########## EVALUATE page-selfplan-r3 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 641B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.3s
+
+#7 [base 6/6] COPY Gemfile.lock /opt/app
+#7 CACHED
+
+#8 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#9 CACHED
+
+#10 [base 4/6] WORKDIR /opt/app
+#10 CACHED
+
+#11 [base 5/6] COPY Gemfile /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:b51434e7c7cadaaa32020a2a6bfa51a647ba0b0ca19413c9be1879fb1b5ea7d3 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.3s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 20519
+
+# Running:
+
+.................................
+
+Finished in 44.658712s, 0.7389 runs/s, 1.5003 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r3 ##########
+################## [13/20] TRIAL page-selfplan-r3 DONE 06:29:57 ##################
+
+################## [14/20] TRIAL page-selfplan-r4 (task=page) START 06:29:57 ##################
+reset page-selfplan-r4 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[06:29:57] DRIVE_PLAN_TO_BUILD START page-selfplan-r4 COND=agentsheur
+[06:29:57] preflight: shell ready (i=1)
+[06:32:40] DB SELF_EXIT(no dialog yet) wait
+[06:32:55] self_exit dialog -> Enter(Yes)
+[06:32:58] phase1 transition=self_exit
+[06:38:26] BUILD idle @320s
+[06:38:30] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [14/20] page-selfplan-r4 transition=self_exit -> evaluate 06:38:30 ---
+########## EVALUATE page-selfplan-r4 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 641B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 5/6] COPY Gemfile /opt/app
+#7 CACHED
+
+#8 [base 6/6] COPY Gemfile.lock /opt/app
+#8 CACHED
+
+#9 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#10 CACHED
+
+#11 [base 4/6] WORKDIR /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.2s done
+#13 DONE 0.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 45865
+
+# Running:
+
+.................................
+
+Finished in 43.877282s, 0.7521 runs/s, 1.5270 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r4 ##########
+################## [14/20] TRIAL page-selfplan-r4 DONE 06:40:14 ##################
+
+################## [15/20] TRIAL page-selfplan-r5 (task=page) START 06:40:14 ##################
+reset page-selfplan-r5 -> c96bfe97db75c41bb7898f8bf5e26256b371fb05
+[06:40:14] DRIVE_PLAN_TO_BUILD START page-selfplan-r5 COND=agentsheur
+[06:40:14] preflight: shell ready (i=1)
+[06:42:42] self_exit dialog -> Enter(Yes)
+[06:42:45] phase1 transition=self_exit
+[06:47:13] BUILD idle @260s
+[06:47:17] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [15/20] page-selfplan-r5 transition=self_exit -> evaluate 06:47:17 ---
+########## EVALUATE page-selfplan-r5 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 641B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.3s
+
+#7 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#7 CACHED
+
+#8 [base 4/6] WORKDIR /opt/app
+#8 CACHED
+
+#9 [base 5/6] COPY Gemfile /opt/app
+#9 CACHED
+
+#10 [base 6/6] COPY Gemfile.lock /opt/app
+#10 CACHED
+
+#11 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:b51434e7c7cadaaa32020a2a6bfa51a647ba0b0ca19413c9be1879fb1b5ea7d3 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 36943
+
+# Running:
+
+.................................
+
+Finished in 45.571723s, 0.7241 runs/s, 1.4702 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r5 ##########
+################## [15/20] TRIAL page-selfplan-r5 DONE 06:49:04 ##################
+
+################## [16/20] TRIAL page-givenplan-r1 (task=page) START 06:49:04 ##################
+reset page-givenplan-r1 -> 74ff000e3fa21417170a07735644fd768d0690f6
+[06:49:04] DRIVE_PLAN_TO_BUILD START page-givenplan-r1 COND=agentsheur
+[06:49:04] preflight: shell ready (i=1)
+[06:51:02] DB SELF_EXIT(no dialog yet) wait
+[06:51:17] self_exit dialog -> Enter(Yes)
+[06:51:20] phase1 transition=self_exit
+[06:55:29] BUILD idle @240s
+[06:55:33] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [16/20] page-givenplan-r1 transition=self_exit -> evaluate 06:55:33 ---
+########## EVALUATE page-givenplan-r1 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 643B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.4s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.6s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2 0.2s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.5s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 46330
+
+# Running:
+
+.................................
+
+Finished in 45.753917s, 0.7212 runs/s, 1.4644 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-givenplan-r1 ##########
+################## [16/20] TRIAL page-givenplan-r1 DONE 06:57:23 ##################
+
+################## [17/20] TRIAL page-givenplan-r2 (task=page) START 06:57:23 ##################
+reset page-givenplan-r2 -> 74ff000e3fa21417170a07735644fd768d0690f6
+[06:57:23] DRIVE_PLAN_TO_BUILD START page-givenplan-r2 COND=agentsheur
+[06:57:23] preflight: shell ready (i=1)
+[06:59:36] self_exit dialog -> Enter(Yes)
+[06:59:39] phase1 transition=self_exit
+[07:03:27] BUILD idle @220s
+[07:03:31] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [17/20] page-givenplan-r2 transition=self_exit -> evaluate 07:03:31 ---
+########## EVALUATE page-givenplan-r2 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 643B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.2s
+
+#7 [base 5/6] COPY Gemfile /opt/app
+#7 CACHED
+
+#8 [base 6/6] COPY Gemfile.lock /opt/app
+#8 CACHED
+
+#9 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#10 CACHED
+
+#11 [base 4/6] WORKDIR /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 34787
+
+# Running:
+
+.................................
+
+Finished in 45.263525s, 0.7291 runs/s, 1.4802 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-givenplan-r2 ##########
+################## [17/20] TRIAL page-givenplan-r2 DONE 07:05:21 ##################
+
+################## [18/20] TRIAL page-givenplan-r3 (task=page) START 07:05:21 ##################
+reset page-givenplan-r3 -> 74ff000e3fa21417170a07735644fd768d0690f6
+[07:05:21] DRIVE_PLAN_TO_BUILD START page-givenplan-r3 COND=agentsheur
+[07:05:21] preflight: shell ready (i=1)
+[07:07:04] self_exit dialog -> Enter(Yes)
+[07:07:07] phase1 transition=self_exit
+[07:11:35] BUILD idle @260s
+[07:11:39] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [18/20] page-givenplan-r3 transition=self_exit -> evaluate 07:11:39 ---
+########## EVALUATE page-givenplan-r3 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 643B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.2s
+
+#7 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#7 CACHED
+
+#8 [base 4/6] WORKDIR /opt/app
+#8 CACHED
+
+#9 [base 5/6] COPY Gemfile /opt/app
+#9 CACHED
+
+#10 [base 6/6] COPY Gemfile.lock /opt/app
+#10 CACHED
+
+#11 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2
+#13 writing image sha256:07650ad357b6971e02b6be8a7705c08594d0ba6bf9b270f7965a4e781eac3cf2 0.3s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 0.5s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 10896
+
+# Running:
+
+.................................
+
+Finished in 46.161731s, 0.7149 runs/s, 1.4514 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-givenplan-r3 ##########
+################## [18/20] TRIAL page-givenplan-r3 DONE 07:13:29 ##################
+
+################## [19/20] TRIAL page-givenplan-r4 (task=page) START 07:13:29 ##################
+reset page-givenplan-r4 -> 74ff000e3fa21417170a07735644fd768d0690f6
+[07:13:30] DRIVE_PLAN_TO_BUILD START page-givenplan-r4 COND=agentsheur
+[07:13:30] preflight: shell ready (i=1)
+[07:15:43] self_exit dialog -> Enter(Yes)
+[07:15:46] phase1 transition=self_exit
+[07:25:34] BUILD idle @580s
+[07:25:38] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [19/20] page-givenplan-r4 transition=self_exit -> evaluate 07:25:38 ---
+########## EVALUATE page-givenplan-r4 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 643B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 6/6] COPY Gemfile.lock /opt/app
+#7 CACHED
+
+#8 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#9 CACHED
+
+#10 [base 4/6] WORKDIR /opt/app
+#10 CACHED
+
+#11 [base 5/6] COPY Gemfile /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:b04233d10bc34bf539bcf5f3c5e5dd7fd91cb3cd0e8cf3813ef61b876e1fd4fc
+#13 writing image sha256:b04233d10bc34bf539bcf5f3c5e5dd7fd91cb3cd0e8cf3813ef61b876e1fd4fc 0.2s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.2s done
+#13 DONE 0.7s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 6970
+
+# Running:
+
+.................................
+
+Finished in 45.991177s, 0.7175 runs/s, 1.4568 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-givenplan-r4 ##########
+################## [19/20] TRIAL page-givenplan-r4 DONE 07:27:29 ##################
+
+################## [20/20] TRIAL page-givenplan-r5 (task=page) START 07:27:29 ##################
+reset page-givenplan-r5 -> 74ff000e3fa21417170a07735644fd768d0690f6
+[07:27:29] DRIVE_PLAN_TO_BUILD START page-givenplan-r5 COND=agentsheur
+[07:27:29] preflight: shell ready (i=1)
+[07:29:27] self_exit dialog -> Enter(Yes)
+[07:29:30] phase1 transition=self_exit
+[07:38:19] BUILD idle @520s
+[07:38:23] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [20/20] page-givenplan-r5 transition=self_exit -> evaluate 07:38:23 ---
+########## EVALUATE page-givenplan-r5 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 643B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.3s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61B done
+#6 DONE 0.3s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 CACHED
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:00a6efbec00e281bbd80a3aedd04f94c345946bea8f0d5960a9dab84f647c700 0.1s done
+#13 naming to docker.io/library/ytdlor-featbench:latest
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.2s done
+#13 DONE 0.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 33 tests in a single process (parallelization threshold is 50)
+Run options: --seed 3986
+
+# Running:
+
+.................................
+
+Finished in 44.419881s, 0.7429 runs/s, 1.5083 assertions/s.
+33 runs, 67 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+===== app down =====
+ Volume ytdlor-featbench_postgres  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-givenplan-r5 ##########
+################## [20/20] TRIAL page-givenplan-r5 DONE 07:40:11 ##################
+=== RUN_ALL_E2E_HEUR DONE 07:40:11 ===
+--- transitions ---
+search-selfplan-r1	self_exit
+search-selfplan-r2	self_exit
+search-selfplan-r3	self_exit
+search-selfplan-r4	self_exit
+search-selfplan-r5	self_exit
+search-givenplan-r1	self_exit
+search-givenplan-r2	self_exit
+search-givenplan-r3	self_exit
+search-givenplan-r4	self_exit
+search-givenplan-r5	self_exit
+page-selfplan-r1	self_exit
+page-selfplan-r2	self_exit
+page-selfplan-r3	self_exit
+page-selfplan-r4	self_exit
+page-selfplan-r5	self_exit
+page-givenplan-r1	self_exit
+page-givenplan-r2	self_exit
+page-givenplan-r3	self_exit
+page-givenplan-r4	self_exit
+page-givenplan-r5	self_exit

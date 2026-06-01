@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari。`.per(20)` ではなく initializer `config.default_per_page = 20`（kaminari 既定値設定）で 20 件/ページを実現（正当な別解）。`assert_equal 2, total_pages`・2ページ目テスト付き。実機完全動作。"
+}

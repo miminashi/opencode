@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 2,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "pagy 8.6.3 採用（ヒューリスティック下でも 1/5 が pagy を選択）。Pagy::Frontend 未 include で pagy_nav が未定義 → 実機(25件→2ページ)で index が HTTP 500 クラッシュ（APPUP_RC=1, firstPage=0, functional NO）。新規テスト無しですり抜け（rails test 0 failures）。ベースラインの pagy 故障パターンが再発。"
+}

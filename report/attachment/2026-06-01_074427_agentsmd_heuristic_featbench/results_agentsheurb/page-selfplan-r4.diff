@@ -1,0 +1,215 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..046b1af 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# Pagination
++gem "kaminari"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5041e48 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -291,6 +303,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>
+diff --git a/test/fixtures/archives.yml b/test/fixtures/archives.yml
+index 645b22b..9a551ea 100644
+--- a/test/fixtures/archives.yml
++++ b/test/fixtures/archives.yml
+@@ -29,3 +29,123 @@ processing_archive:
+   title: Processing Video
+   original_url: https://vimeo.com/1192937
+   status: processing
++
++waiting_archive_2:
++  title: Waiting Video 2
++  original_url: https://vimeo.com/1084538
++  status: waiting
++
++done_archive_2:
++  title: Done Video 2
++  original_url: https://vimeo.com/1132938
++  status: done
++
++failed_archive_2:
++  title: Failed Video 2
++  original_url: https://vimeo.com/1182938
++  status: failed
++
++processing_archive_2:
++  title: Processing Video 2
++  original_url: https://vimeo.com/1192938
++  status: processing
++
++waiting_archive_3:
++  title: Waiting Video 3
++  original_url: https://vimeo.com/1084539
++  status: waiting
++
++done_archive_3:
++  title: Done Video 3
++  original_url: https://vimeo.com/1132939
++  status: done
++
++failed_archive_3:
++  title: Failed Video 3
++  original_url: https://vimeo.com/1182939
++  status: failed
++
++processing_archive_3:
++  title: Processing Video 3
++  original_url: https://vimeo.com/1192939
++  status: processing
++
++waiting_archive_4:
++  title: Waiting Video 4
++  original_url: https://vimeo.com/1084540
++  status: waiting
++
++done_archive_4:
++  title: Done Video 4
++  original_url: https://vimeo.com/1132940
++  status: done
++
++failed_archive_4:
++  title: Failed Video 4
++  original_url: https://vimeo.com/1182940
++  status: failed
++
++processing_archive_4:
++  title: Processing Video 4
++  original_url: https://vimeo.com/1192940
++  status: processing
++
++waiting_archive_5:
++  title: Waiting Video 5
++  original_url: https://vimeo.com/1084541
++  status: waiting
++
++done_archive_5:
++  title: Done Video 5
++  original_url: https://vimeo.com/1132941
++  status: done
++
++failed_archive_5:
++  title: Failed Video 5
++  original_url: https://vimeo.com/1182941
++  status: failed
++
++processing_archive_5:
++  title: Processing Video 5
++  original_url: https://vimeo.com/1192941
++  status: processing
++
++waiting_archive_6:
++  title: Waiting Video 6
++  original_url: https://vimeo.com/1084542
++  status: waiting
++
++done_archive_6:
++  title: Done Video 6
++  original_url: https://vimeo.com/1132942
++  status: done
++
++failed_archive_6:
++  title: Failed Video 6
++  original_url: https://vimeo.com/1182942
++  status: failed
++
++processing_archive_6:
++  title: Processing Video 6
++  original_url: https://vimeo.com/1192942
++  status: processing
++
++waiting_archive_7:
++  title: Waiting Video 7
++  original_url: https://vimeo.com/1084543
++  status: waiting
++
++done_archive_7:
++  title: Done Video 7
++  original_url: https://vimeo.com/1132943
++  status: done
++
++failed_archive_7:
++  title: Failed Video 7
++  original_url: https://vimeo.com/1182943
++  status: failed
++
++processing_archive_7:
++  title: Processing Video 7
++  original_url: https://vimeo.com/1192943
++  status: processing
+diff --git a/test/models/archive_test.rb b/test/models/archive_test.rb
+index 677ed49..0287731 100644
+--- a/test/models/archive_test.rb
++++ b/test/models/archive_test.rb
+@@ -105,10 +105,10 @@ class ArchiveTest < ActiveSupport::TestCase
+   end
+ 
+   test "failed scope returns only failed archives" do
+-    # fixtures/archives.yml has failed_archive fixture
++    # fixtures/archives.yml has multiple failed_archive fixtures
+     failed_archives = Archive.failed
+-    assert_equal 1, failed_archives.count
+-    assert_equal archives(:failed_archive).id, failed_archives.first.id
++    assert failed_archives.all? { |a| a.status == Archive::Status::FAILED }
++    assert_includes failed_archives.map(&:id), archives(:failed_archive).id
+   end
+ 
+   test "before_save callback sets default title" do

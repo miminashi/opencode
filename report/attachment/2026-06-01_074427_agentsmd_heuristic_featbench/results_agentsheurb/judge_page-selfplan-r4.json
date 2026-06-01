@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 3
+  },
+  "reason": "kaminari `.page.per(20)`＋paginate。実機完全動作（20件/2ページ目5件/nav）。ただし新規テストは追加せず（(B) のテスト指示は 5 試行中この 1 件のみ未反映）。"
+}

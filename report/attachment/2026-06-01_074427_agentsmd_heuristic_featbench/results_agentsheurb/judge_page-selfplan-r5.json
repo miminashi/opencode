@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari `.page.per(20)`＋paginate。境界テスト2ブロック付き。実機完全動作。build 1240s と突出（依存解決の反復）。"
+}

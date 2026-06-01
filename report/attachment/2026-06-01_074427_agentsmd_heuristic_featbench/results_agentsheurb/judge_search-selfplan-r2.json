@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope。テスト10ブロックで case/no-match/empty/whitespace 等を網羅。実機 12 件絞込。"
+}

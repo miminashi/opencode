@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 3,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 4,
+    "completeness": 2,
+    "test_quality": 3
+  },
+  "reason": "kaminari 採用（ヒューリスティックは gem 選定を定番へ誘導）。しかしコントローラが `.page(params[:page])` のみで `.per(20)` 欠落 → kaminari 既定の 25 件/ページが効き 1 ページに全 25 件表示（firstPage=25, secondPage=None, functional NO）。要件『1ページ20件』未達。gem は正しく選べたが実装でスペック詳細を取りこぼした新種の故障。"
+}

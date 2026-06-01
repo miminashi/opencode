@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "kaminari `.page.per(20)`＋paginate。25件超データ・per_page・2ページ目を検証するテスト4ブロック。実機完全動作。agentsheur で `.per(20)` を落とした r2 が、(B) 下では per(20)＋境界テスト付きで完動。"
+}

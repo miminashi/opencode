@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 1,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "アノマリ: build エージェントは検索 scope/コントローラ/ビュー/テスト4件の実装成功を UI 上で報告（33 runs パス）したが、worktree は setup コミットのままクリーン＝実装が一切永続化されず（空 diff）。実機で検索入力が見つからず functional NO。ローカル 35B が自身の変更を git 操作等で巻き戻した疑い。検索は本介入（ライブラリ選定）の対象外タスクのため、ヒューリスティック起因ではない単発の build 出力アノマリ。"
+}

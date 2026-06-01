@@ -1,0 +1,77 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..6dcd867 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -5,6 +5,7 @@ class ArchivesController < ApplicationController
+   # GET /archives or /archives.json
+   def index
+     @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = @archives.search_by_title(params[:search])
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..58b39ec 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search_by_title, ->(query) { where('title ILIKE ?', "%#{query}%") if query.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..471eef8 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -11,6 +11,16 @@
+ 
+   <%= turbo_frame_tag(Archive.new) %>
+ 
++  <div class="form__group">
++    <%= form_tag archives_path, method: :get, class: "search-form" do %>
++      <%= text_field_tag :search, params[:search], placeholder: "タイトルで検索...", class: "form__input" %>
++      <%= submit_tag("検索", class: "btn btn--primary") %>
++      <% if params[:search].present? %>
++        <%= link_to "クリア", archives_path, class: "btn btn--secondary" %>
++      <% end %>
++    <% end %>
++  </div>
++
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..8c8c79c 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,27 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with search parameter" do
++    get archives_url, params: { search: "Video" }
++    assert_response :success
++  end
++
++  test "should filter archives by title - matching" do
++    get archives_url, params: { search: "Waiting" }
++    assert_response :success
++    assert_select ".article__title", text: /Waiting/i
++  end
++
++  test "should filter archives by title - non-matching" do
++    get archives_url, params: { search: "zzzzz_nonexistent" }
++    assert_response :success
++  end
++
++  test "should return all archives when search is empty" do
++    get archives_url, params: { search: "" }
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

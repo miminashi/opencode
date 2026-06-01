@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り kaminari `.page.per(20)`＋paginate。実機完全動作（20件/5件/nav）。"
+}

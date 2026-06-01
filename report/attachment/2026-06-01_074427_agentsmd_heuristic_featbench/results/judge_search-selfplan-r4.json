@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope＋クリアリンク。テスト7ブロック。実機 12 件絞込。case-insensitive 正実装。"
+}

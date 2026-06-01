@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope＋検索フォーム。テスト5ブロックで match/no-match/empty 等を検証。実機 Ruby 検索で 25→12 件に絞込・全件 Ruby タイトル。case-insensitive を idiomatic に実装。"
+}

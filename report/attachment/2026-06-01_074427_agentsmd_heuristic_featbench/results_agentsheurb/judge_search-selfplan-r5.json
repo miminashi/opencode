@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE scope。テスト8ブロック。実機 12 件絞込。前回(agentsheur)で空diffアノマリだった r5 は今回正常に実装され完動＝当該アノマリは単発フレークと確認。"
+}

@@ -1,9 +1,9 @@
 import path from "path"
-import { Effect, Schema } from "effect"
+import { SessionLegacy } from "@opencode-ai/core/session/legacy"
+import { Effect, Option, Schema } from "effect"
 import * as Tool from "./tool"
 import { Question } from "../question"
 import { Session } from "@/session/session"
-import { MessageV2 } from "../session/message-v2"
 import { Provider } from "@/provider/provider"
 import { SessionCompaction } from "../session/compaction"
 import { Permission } from "../permission"
@@ -12,12 +12,14 @@ import BUILD_SWITCH from "../session/prompt/build-switch.txt"
 import { type SessionID, MessageID, PartID } from "../session/schema"
 import EXIT_DESCRIPTION from "./plan-exit.txt"
 
-function getLastModel(sessionID: SessionID) {
-  for (const item of MessageV2.stream(sessionID)) {
-    if (item.info.role === "user" && item.info.model) return item.info.model
-  }
-  return undefined
-}
+const getLastModel = (session: Session.Interface, sessionID: SessionID) =>
+  Effect.gen(function* () {
+    const match = yield* session
+      .findMessage(sessionID, (m) => m.info.role === "user" && !!m.info.model)
+      .pipe(Effect.orDie)
+    if (Option.isSome(match) && match.value.info.role === "user") return match.value.info.model
+    return undefined
+  })
 
 export const Parameters = Schema.Struct({})
 
@@ -48,9 +50,9 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
       )
     }
 
-    const model = getLastModel(sessionID) ?? (yield* provider.defaultModel())
+    const model = (yield* getLastModel(session, sessionID)) ?? (yield* provider.defaultModel())
 
-    const msg: MessageV2.User = {
+    const msg: SessionLegacy.User = {
       id: MessageID.ascending(),
       sessionID,
       role: "user",
@@ -66,7 +68,7 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
       type: "text",
       text: `The plan at ${plan} has been approved (synthetic plan_exit by safeguard), you can now edit files. Execute the plan`,
       synthetic: true,
-    } satisfies MessageV2.TextPart)
+    } satisfies SessionLegacy.TextPart)
   })
 
 export const PlanExitTool = Tool.define(
@@ -125,7 +127,7 @@ export const PlanExitTool = Tool.define(
           if (answer === autoAcceptLabel) {
             yield* permission.approve([{ permission: "edit", pattern: "*", action: "allow" }])
 
-            const model = getLastModel(ctx.sessionID) ?? (yield* provider.defaultModel())
+            const model = (yield* getLastModel(session, ctx.sessionID)) ?? (yield* provider.defaultModel())
             const buildSwitchText =
               BUILD_SWITCH +
               "\n\n" +
@@ -140,7 +142,7 @@ export const PlanExitTool = Tool.define(
               overflow: false,
             })
 
-            const continueMsg: MessageV2.User = {
+            const continueMsg: SessionLegacy.User = {
               id: MessageID.ascending(),
               sessionID: ctx.sessionID,
               role: "user",
@@ -156,7 +158,7 @@ export const PlanExitTool = Tool.define(
               type: "text",
               text: buildSwitchText,
               synthetic: true,
-            } satisfies MessageV2.TextPart)
+            } satisfies SessionLegacy.TextPart)
 
             return {
               title: "Switching to build agent (clearing context, auto-accept edits)",
@@ -177,7 +179,7 @@ export const PlanExitTool = Tool.define(
           const model =
             lastUser?.info.role === "user" && lastUser.info.model ? lastUser.info.model : yield* provider.defaultModel()
 
-          const msg: MessageV2.User = {
+          const msg: SessionLegacy.User = {
             id: MessageID.ascending(),
             sessionID: ctx.sessionID,
             role: "user",
@@ -193,7 +195,7 @@ export const PlanExitTool = Tool.define(
             type: "text",
             text: `The plan at ${plan} has been approved, you can now edit files. Execute the plan`,
             synthetic: true,
-          } satisfies MessageV2.TextPart)
+          } satisfies SessionLegacy.TextPart)
 
           return {
             title: "Switching to build agent",

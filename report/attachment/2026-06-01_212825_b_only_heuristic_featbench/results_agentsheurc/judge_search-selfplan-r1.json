@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE+blank安全 scope、ctrl/model/system 計12テスト・大小文字無視まで網羅。functional YES。"
+}

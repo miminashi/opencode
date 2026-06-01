@@ -1,0 +1,13 @@
+ Gemfile                                      |   6 ++
+ Gemfile.lock                                 |  18 +++++
+ app/controllers/archives_controller.rb       |   2 +-
+ app/views/archives/index.html.erb            |   2 +
+ test/controllers/archives_controller_test.rb |  19 +++++
+ test/fixtures/archives.yml                   | 100 +++++++++++++++++++++++++++
+ 6 files changed, 146 insertions(+), 1 deletion(-)
+6	0	Gemfile
+18	0	Gemfile.lock
+1	1	app/controllers/archives_controller.rb
+2	0	app/views/archives/index.html.erb
+19	0	test/controllers/archives_controller_test.rb
+100	0	test/fixtures/archives.yml

@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "kaminari .per(20)+paginate。境界テスト3件(assigns20件/page2<20/nav)追加。functional YES。"
+}

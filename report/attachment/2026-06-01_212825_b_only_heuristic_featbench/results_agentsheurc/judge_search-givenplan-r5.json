@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r5",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "ILIKE scope、テスト3件と薄め。functional YES。"
+}

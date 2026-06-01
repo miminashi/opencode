@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 3,
+    "completeness": 3,
+    "test_quality": 4
+  },
+  "reason": "pagy(Pagy::Offset)。fixtures33件+system テスト(21/25件・次へ click)と最も手厚い境界テストだが、series_nav 描画失敗(pageLinkCount=0)で functional NO。テストはパスし実機バグを見逃し。"
+}

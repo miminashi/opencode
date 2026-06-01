@@ -1,0 +1,69 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..046b1af 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# Pagination
++gem "kaminari"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5041e48 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -291,6 +303,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>

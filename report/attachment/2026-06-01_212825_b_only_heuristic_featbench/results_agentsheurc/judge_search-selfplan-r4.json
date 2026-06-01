@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "ILIKE scope、テスト6件。functional YES。網羅は r1/r3 より薄め。"
+}

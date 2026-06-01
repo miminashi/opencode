@@ -1,0 +1,120 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..ae8ee83 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# Pagination
++gem "pagy"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5a2f5c5 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,10 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (43.4.4)
++      json
++      uri
++      yaml
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -276,6 +280,7 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
++    yaml (0.4.0)
+     zeitwerk (2.7.5)
+ 
+ PLATFORMS
+@@ -291,6 +296,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 09705d1..82c2e42 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -1,2 +1,3 @@
+ class ApplicationController < ActionController::Base
++  include Pagy::Method
+ end
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..056ad80 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy, @archives = pagy(:offset, Archive.ordered.with_attached_thumbnail.with_attached_video, limit: 20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..67f8e66 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,10 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagy.last > 1 %>
++    <nav class="pagination">
++      <%= @pagy.series_nav %>
++    </nav>
++  <% end %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..5ffb3d6 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -15,6 +15,34 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_response :success
+   end
+ 
++  test "should paginate with 20 items per page" do
++    # Create 25 archives to test pagination (more than one page)
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/test#{i}", title: "Paginated Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++
++    # Check that the response contains pagy variables
++    assert_select "nav.pagination"
++  end
++
++  test "should show second page when there are more than 20 records" do
++    # Create 25 archives to ensure we have at least 2 pages
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/paginate#{i}", title: "Pagination Test #{i}")
++    end
++
++    # First page
++    get archives_url, params: { page: "1" }
++    assert_response :success
++
++    # Second page
++    get archives_url, params: { page: "2" }
++    assert_response :success
++  end
++
+   test "should get new" do
+     get new_archive_url
+     assert_response :success

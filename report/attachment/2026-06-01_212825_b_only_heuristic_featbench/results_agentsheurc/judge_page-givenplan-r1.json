@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r1",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 3,
+    "test_quality": 2
+  },
+  "reason": "kaminari .per(20)+paginate。与プラン準拠の最小実装、境界テスト追加なし。functional YES。"
+}

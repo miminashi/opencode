@@ -1,0 +1,128 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..e28a8bb 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -69,6 +69,8 @@ group :development do
+   gem "annotate"
+ end
+ 
++gem "kaminari"
++
+ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5041e48 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -291,6 +303,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..d2d49c6 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,8 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <div class="pagination">
++    <%= paginate @archives %>
++  </div>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..49f18dd 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,53 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should paginate archives with more than 20 items" do
++    # Create 25 archives to test pagination (more than 20 per page)
++    25.times do |i|
++      archive = Archive.new(original_url: "https://example.com/video/#{i}")
++      archive.save!
++    end
++
++    get archives_url
++    assert_response :success
++
++    # First page should contain first 20 items (IDs 26-45 minus the setup archive)
++    # Verify pagination is present
++    assert_includes response.body, "rel=\"next\""
++    assert_includes response.body, "class=\"page current\""
++  end
++
++  test "should show second page when page param is specified" do
++    # Create 25 archives
++    25.times do |i|
++      archive = Archive.new(original_url: "https://example.com/paginated/#{i}")
++      archive.save!
++    end
++
++    get archives_url, params: { page: "2" }
++    assert_response :success
++
++    # Second page should exist with prev link and current page indicator showing 2
++    assert_includes response.body, "rel=\"prev\""
++    assert_includes response.body, "class=\"page current\""
++    assert_match %r{<span class="page current">\s*2\s*</span>}, response.body
++  end
++
++  test "should not show pagination when all items fit on one page" do
++    # Clear existing archives and create only 5 (less than 20)
++    Archive.delete_all
++    5.times do |i|
++      archive = Archive.new(original_url: "https://example.com/less/#{i}")
++      archive.save!
++    end
++
++    get archives_url
++    assert_response :success
++
++    # No pagination links should be present
++    assert_not_includes response.body, "class=\"page current\""
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

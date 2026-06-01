@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 3,
+    "completeness": 2,
+    "test_quality": 3
+  },
+  "reason": "pagy。1ページ20件は正しいが series_nav のリンク描画失敗(pageLinkCount=0)で functional NO。(B)で25件+page2境界テストを追加するも assert_response レベルでナビバグ見逃し。"
+}

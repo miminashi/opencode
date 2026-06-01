@@ -1,0 +1,211 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..dda1e6b 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,12 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @q = params[:q]
++    if @q.present?
++      @archives = Archive.search(@q).ordered.with_attached_thumbnail.with_attached_video
++    else
++      @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    end
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..2e2c96c 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(title_query) { where("title ILIKE ?", "%#{title_query}%") if title_query.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..cce9a92 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -9,6 +9,20 @@
+                 class: "btn btn--primary") %>
+   </div>
+ 
++  <div class="form">
++    <%= form_with url: archives_path, method: :get, local: true do |f| %>
++      <div class="form__group">
++        <%= f.text_field :q, value: @q, placeholder: "タイトルで検索", class: "form__input" %>
++      </div>
++      <div class="form__group--action">
++        <%= f.submit "検索", class: "btn btn--primary" %>
++        <% if @q.present? %>
++          <%= link_to "クリア", archives_path, class: "btn btn--secondary" %>
++        <% end %>
++      </div>
++    <% end %>
++  </div>
++
+   <%= turbo_frame_tag(Archive.new) %>
+ 
+   <%= turbo_frame_tag("archives") do %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..3fd53c8 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,33 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with search query" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門チュートリアル")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Railsチュートリアル")
++    Archive.create!(original_url: "https://vimeo.com/1234567", title: "Python入門")
++
++    get archives_url, params: { q: "チュートリアル" }
++    assert_response :success
++
++    assert_select "h1"
++  end
++
++  test "should get index with search query returning no results" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Railsチュートリアル")
++
++    get archives_url, params: { q: "Python" }
++    assert_response :success
++  end
++
++  test "should get index without search query returns all archives" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Railsチュートリアル")
++
++    get archives_url
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/models/archive_test.rb b/test/models/archive_test.rb
+index 677ed49..faea58a 100644
+--- a/test/models/archive_test.rb
++++ b/test/models/archive_test.rb
+@@ -142,4 +142,57 @@ test "default_title increments for duplicate titles" do
+     assert_equal "processing", Archive::Status::PROCESSING
+     assert_equal "failed", Archive::Status::FAILED
+   end
++
++  test "search scope returns archives matching title (partial match)" do
++    archive1 = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門チュートリアル")
++    archive2 = Archive.create!(original_url: "https://vimeo.com/1132937", title: "Railsチュートリアル")
++    archive3 = Archive.create!(original_url: "https://vimeo.com/1234567", title: "Python入門")
++
++    results = Archive.search("チュートリアル")
++    assert_equal 2, results.count
++    assert_includes results.map(&:id), archive1.id
++    assert_includes results.map(&:id), archive2.id
++    assert_not results.map(&:id).include?(archive3.id)
++  end
++
++  test "search scope is case-insensitive" do
++    archive = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門")
++
++    results_upper = Archive.search("RUBY")
++    assert_equal 1, results_upper.count
++
++    results_lower = Archive.search("ruby")
++    assert_equal 1, results_lower.count
++
++    results_mixed = Archive.search("RuBy")
++    assert_equal 1, results_mixed.count
++  end
++
++  test "search scope returns empty when no match" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Railsチュートリアル")
++
++    results = Archive.search("Python")
++    assert_equal 0, results.count
++  end
++
++  test "search scope returns all records when query is blank" do
++    count_before = Archive.count
++
++    results_empty = Archive.search("")
++    assert_equal count_before, results_empty.count
++
++    results_nil = Archive.search(nil)
++    assert_equal count_before, results_nil.count
++  end
++
++  test "search scope can chain with ordered scope" do
++    archive1 = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby入門")
++    sleep 0.1
++    archive2 = Archive.create!(original_url: "https://vimeo.com/1132937", title: "Rubyチュートリアル")
++
++    results = Archive.search("Ruby").ordered
++    assert_equal 2, results.count
++    assert_equal archive2.id, results.first.id
++  end
+ end
+diff --git a/test/system/archives_test.rb b/test/system/archives_test.rb
+index 9751efc..217cace 100644
+--- a/test/system/archives_test.rb
++++ b/test/system/archives_test.rb
+@@ -38,4 +38,51 @@ class ArchivesTest < ApplicationSystemTestCase
+     assert_selector "h1", text: "保存したビデオ"
+     assert_text "test_10s.mov"
+   end
++
++  test "タイトルで検索できる" do
++    perform_enqueued_jobs do
++      Archive.create(:original_url => VIDEO_1, title: "Ruby入門チュートリアル")
++      Archive.create(:original_url => VIDEO_2, title: "Railsチュートリアル解説")
++    end
++
++    visit archives_path
++
++    fill_in "q", with: "Ruby"
++    click_on "検索"
++
++    assert_text "Ruby入門チュートリアル"
++    assert_no_text "Railsチュートリアル解説"
++  end
++
++  test "検索結果が空の場合" do
++    perform_enqueued_jobs do
++      Archive.create(:original_url => VIDEO_1, title: "Ruby入門")
++      Archive.create(:original_url => VIDEO_2, title: "Railsチュートリアル")
++    end
++
++    visit archives_path
++
++    fill_in "q", with: "Python"
++    click_on "検索"
++
++    assert_selector "h1", text: "保存したビデオ"
++  end
++
++  test "検索クリアできる" do
++    perform_enqueued_jobs do
++      Archive.create(:original_url => VIDEO_1, title: "Ruby入門")
++      Archive.create(:original_url => VIDEO_2, title: "Railsチュートリアル")
++    end
++
++    visit archives_path
++
++    fill_in "q", with: "Ruby"
++    click_on "検索"
++
++    assert_text "Ruby入門"
++
++    click_on "クリア"
++
++    assert_selector "h1", text: "保存したビデオ"
++  end
+ end

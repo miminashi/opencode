@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 3
+  },
+  "reason": "pagy(:offset) limit:20。functional YES(page2=5件)。integration テスト1件と浅め、pagy ナビは動作。"
+}

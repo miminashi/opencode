@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE+blank安全 scope、model5/ctrl3/system3 テスト・部分一致/大小文字/空クエリ網羅。functional YES。"
+}

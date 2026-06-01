@@ -1,0 +1,26 @@
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 2,
+  "secondPageCount": 5,
+  "ok": true
+}

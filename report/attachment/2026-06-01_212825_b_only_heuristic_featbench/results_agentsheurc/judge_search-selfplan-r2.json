@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 3,
+  "categories": {
+    "correctness": 3,
+    "idiomaticity": 3,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "LIKE(Postgres で大小文字依存)を使用。functional YES だが case-sensitive バグ。テスト9件も case-insensitive を検証せず見逃し。"
+}

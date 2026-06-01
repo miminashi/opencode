@@ -1,0 +1,201 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..c915291 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -73,4 +73,5 @@ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+   gem "cuprite"
++  gem "rails-controller-testing"
+ end
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..2fe0a1c 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -208,6 +208,10 @@ GEM
+       activesupport (= 8.1.3)
+       bundler (>= 1.15.0)
+       railties (= 8.1.3)
++    rails-controller-testing (1.0.5)
++      actionpack (>= 5.0.1.rc1)
++      actionview (>= 5.0.1.rc1)
++      activesupport (>= 5.0.1.rc1)
+     rails-dom-testing (2.3.0)
+       activesupport (>= 5.0.0)
+       minitest
+@@ -294,6 +298,7 @@ DEPENDENCIES
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
++  rails-controller-testing
+   redis (~> 4.0)
+   solid_queue
+   sprockets-rails
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..f942b37 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -5,6 +5,7 @@ class ArchivesController < ApplicationController
+   # GET /archives or /archives.json
+   def index
+     @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = @archives.search(params[:q]) if params[:q].present?
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..4c3311b 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(title) { where("title LIKE ?", "%#{title}%") if title.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..9bcd8f5 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -11,6 +11,20 @@
+ 
+   <%= turbo_frame_tag(Archive.new) %>
+ 
++  <div class="search">
++    <%= form_with url: archives_path, method: :get, local: true, class: "search-form" do |f| %>
++      <%= text_field_tag :q, params[:q], placeholder: "タイトルで検索", class: "search-input" %>
++      <%= submit_tag "検索", class: "btn" %>
++      <% if params[:q].present? %>
++        <%= link_to "クリア", archives_path, class: "btn" %>
++      <% end %>
++    <% end %>
++  </div>
++
++  <%= turbo_frame_tag("archives") do %>
++    <%= render @archives %>
++  <% end %>
++
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..8ea6fc4 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,37 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with search parameter" do
++    get archives_url, params: { q: "Ruby" }
++    assert_response :success
++    assert_select ".search-input"
++  end
++
++  test "index with search returns matching archives only" do
++    get archives_url, params: { q: "Ruby" }
++    assert_response :success
++    matching = assigns(:archives)
++    assert_equal 3, matching.count
++    matching.each do |archive|
++      assert_match /Ruby/, archive.title
++    end
++  end
++
++  test "index with search returns no results when no match" do
++    get archives_url, params: { q: "非存在タイトル" }
++    assert_response :success
++    matching = assigns(:archives)
++    assert_equal 0, matching.count
++  end
++
++  test "index without search returns all archives" do
++    get archives_url
++    assert_response :success
++    expected_count = Archive.count
++    actual_count = assigns(:archives).count
++    assert_equal expected_count, actual_count
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/fixtures/archives.yml b/test/fixtures/archives.yml
+index 645b22b..6c606b1 100644
+--- a/test/fixtures/archives.yml
++++ b/test/fixtures/archives.yml
+@@ -29,3 +29,28 @@ processing_archive:
+   title: Processing Video
+   original_url: https://vimeo.com/1192937
+   status: processing
++
++ruby_tutorial_video:
++  title: Ruby 入門講座
++  original_url: https://vimeo.com/1292937
++  status: done
++
++rails_tutorial_video:
++  title: Rails で Web アプリ作成
++  original_url: https://vimeo.com/1292938
++  status: done
++
++ruby_on_rails_video:
++  title: Ruby on Rails 完全ガイド
++  original_url: https://vimeo.com/1292939
++  status: done
++
++python_video:
++  title: Python 基礎
++  original_url: https://vimeo.com/1292940
++  status: done
++
++ruby_test_video:
++  title: Ruby テスト手法
++  original_url: https://vimeo.com/1292941
++  status: waiting
+diff --git a/test/models/archive_test.rb b/test/models/archive_test.rb
+index 677ed49..32672cd 100644
+--- a/test/models/archive_test.rb
++++ b/test/models/archive_test.rb
+@@ -142,4 +142,39 @@ test "default_title increments for duplicate titles" do
+     assert_equal "processing", Archive::Status::PROCESSING
+     assert_equal "failed", Archive::Status::FAILED
+   end
++
++  test "search scope with matching title" do
++    results = Archive.search("Ruby")
++    assert_equal 3, results.count
++    assert_includes results.pluck(:title), "Ruby 入門講座"
++    assert_includes results.pluck(:title), "Ruby on Rails 完全ガイド"
++    assert_includes results.pluck(:title), "Ruby テスト手法"
++  end
++
++  test "search scope with partial title match" do
++    results = Archive.search("Rails")
++    assert_equal 2, results.count
++    assert_includes results.pluck(:title), "Rails で Web アプリ作成"
++    assert_includes results.pluck(:title), "Ruby on Rails 完全ガイド"
++  end
++
++  test "search scope with no matching title" do
++    results = Archive.search("非存在タイトル")
++    assert_equal 0, results.count
++  end
++
++  test "search scope with empty string returns all" do
++    results = Archive.search("")
++    assert_equal Archive.count, results.count
++  end
++
++  test "search scope can be chained with other scopes" do
++    ruby_archives = Archive.search("Ruby")
++    assert_equal 3, ruby_archives.count
++    results = ruby_archives.ordered
++    assert_equal 3, results.count
++    first_id = results.first.id
++    second_id = results.second.id
++    assert first_id > second_id, "Results should be ordered by id descending"
++  end
+ end

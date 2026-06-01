@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "ILIKE+blank安全 scope、テスト5件。functional YES。与プラン準拠。"
+}

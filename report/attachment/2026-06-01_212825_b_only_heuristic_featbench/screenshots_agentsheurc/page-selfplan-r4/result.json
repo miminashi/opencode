@@ -1,0 +1,22 @@
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    }
+  ],
+  "notes": [
+    "ページネーションリンクが見つからない"
+  ],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 0,
+  "ok": false
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "scope で実装し search.css も追加。LIKE のため case-sensitive。コントローラ3・モデル4テストで match/blank/nil/no-match を網羅するが case-insensitive 検証なし、クリアボタン無し。実機 12 件絞込（ok）。"
+}

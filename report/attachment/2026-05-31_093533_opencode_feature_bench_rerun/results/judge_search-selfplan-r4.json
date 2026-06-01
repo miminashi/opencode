@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 3,
+    "test_quality": 3
+  },
+  "reason": "scope＋`if query.present?` ガード（blank→all）で実装、f.text_field フォーム。LIKE で case-sensitive、css 無し・モデルテスト無し（コントローラ3件のみ）と完成度がやや低い。実機 12 件絞込（ok）。"
+}

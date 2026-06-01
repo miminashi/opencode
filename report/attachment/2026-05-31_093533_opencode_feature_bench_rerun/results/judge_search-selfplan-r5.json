@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "ILIKE＋strip で case-insensitive、search-bar/クリアリンク/css を完備し by_title scope も明快。case-insensitive を含むテスト6件。sanitize_sql_like 不使用のみ軽微。実機 12 件絞込。"
+}

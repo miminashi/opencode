@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 3,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "部分一致検索を self.search クラスメソッドで実装し、検索フォーム＋クリアリンク、コントローラ3・モデル5の手厚いテストを備える。ただし PostgreSQL で case-sensitive な LIKE を使用（小文字検索で漏れる）、scope でなくクラスメソッドにした点がやや非 Rails 的。実機は Ruby 検索で 12 件に正しく絞込（ok）。"
+}

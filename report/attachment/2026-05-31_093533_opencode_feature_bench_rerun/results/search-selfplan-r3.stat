@@ -1,0 +1,13 @@
+ app/assets/stylesheets/search.css            | 13 +++++++++++
+ app/controllers/archives_controller.rb       |  2 +-
+ app/models/archive.rb                        |  1 +
+ app/views/archives/index.html.erb            |  5 ++++
+ test/controllers/archives_controller_test.rb | 26 +++++++++++++++++++++
+ test/models/archive_test.rb                  | 34 ++++++++++++++++++++++++++++
+ 6 files changed, 80 insertions(+), 1 deletion(-)
+13	0	app/assets/stylesheets/search.css
+1	1	app/controllers/archives_controller.rb
+1	0	app/models/archive.rb
+5	0	app/views/archives/index.html.erb
+26	0	test/controllers/archives_controller_test.rb
+34	0	test/models/archive_test.rb

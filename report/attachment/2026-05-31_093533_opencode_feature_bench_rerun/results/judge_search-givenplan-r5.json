@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "与プラン通り。assert_select で article 件数を検証するコントローラ2・case-insensitive 含むモデル4テスト。実機 12 件絞込。"
+}

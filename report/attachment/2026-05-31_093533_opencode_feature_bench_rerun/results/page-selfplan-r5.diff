@@ -1,0 +1,117 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..a3bea85 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -51,6 +51,9 @@ gem "image_processing", "~> 1.2"
+ # for background jobs
+ gem "solid_queue"
+ 
++# for pagination
++gem "pagy"
++
+ group :development, :test do
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5a2f5c5 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,10 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (43.4.4)
++      json
++      uri
++      yaml
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -276,6 +280,7 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
++    yaml (0.4.0)
+     zeitwerk (2.7.5)
+ 
+ PLATFORMS
+@@ -291,6 +296,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..a0a2733
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,37 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  padding: var(--space-m) 0;
++  gap: var(--space-xs);
++}
++
++.pagination .page {
++  display: inline-block;
++  padding: var(--space-xxs) var(--space-s);
++  border-radius: var(--border-radius);
++  text-decoration: none;
++  color: var(--color-dark);
++  font-weight: bold;
++  border: 1px solid var(--color-light);
++}
++
++.pagination .page:hover {
++  background-color: var(--color-light);
++}
++
++.pagination .page.current {
++  background-color: var(--color-primary);
++  color: var(--color-white);
++  border-color: var(--color-primary);
++}
++
++.pagination .page.prev,
++.pagination .page.next {
++  font-weight: bold;
++}
++
++.pagination .page.disabled {
++  opacity: 0.4;
++  pointer-events: none;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..a7d84cf 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,8 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy = Pagy::Offset.new(count: Archive.count, limit: 20, page: params[:page])
++    @archives = @pagy.records(Archive.ordered.with_attached_thumbnail.with_attached_video)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..7adc7fe 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,10 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if defined?(pagy_nav) %>
++    <nav class="pagination">
++      <%= pagy_nav(@pagy) %>
++    </nav>
++  <% end %>
+ </main>

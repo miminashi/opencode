@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 3
+  },
+  "reason": "与プラン通りの ILIKE scope 実装で正確・定型。ただし追加テストが最小（コントローラ1・モデル2、case-insensitive 未検証）。実機 12 件絞込。"
+}

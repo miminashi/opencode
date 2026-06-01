@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 2,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "pagy 採用。view で `for page in @pagy.pages` としたが pages は総ページ数(Integer)で、正は @pagy.series。実データ(25件→2ページ)で @pagy.pages>1 が真となり Integer 反復で NoMethodError → index が HTTP 500 クラッシュ。テストは1件のため pages>1 分岐に未到達ですり抜け（rails test は 0 failures）。Playwright/HTTP チェックで実機クラッシュを捕捉（functional NO）。"
+}

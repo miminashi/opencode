@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "ILIKE＋ActiveRecord::Base.sanitize_sql_like で大文字小文字非依存かつ特殊文字エスケープを両立。scope/form_with/クリアリンクと、特殊文字・case-insensitive を含む計9テスト。検索 selfplan の最良試行。実機 12 件絞込。"
+}

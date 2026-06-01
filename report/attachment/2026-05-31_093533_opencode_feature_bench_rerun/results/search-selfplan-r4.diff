@@ -1,0 +1,74 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e0d13d1 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.search(params[:q]).ordered.with_attached_thumbnail.with_attached_video
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..5e4b3b7 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(query) { where('title LIKE ?', "%#{query}%") if query.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5cf522f 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -9,6 +9,13 @@
+                 class: "btn btn--primary") %>
+   </div>
+ 
++  <%= form_with url: archives_path, method: :get, local: true, class: "search-form" do |f| %>
++    <div class="search-field">
++      <%= f.text_field :q, value: params[:q], placeholder: "タイトルで検索", class: "search-input" %>
++      <%= f.submit "検索", class: "btn btn--primary search-btn" %>
++    </div>
++  <% end %>
++
+   <%= turbo_frame_tag(Archive.new) %>
+ 
+   <%= turbo_frame_tag("archives") do %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..c8c5016 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -15,6 +15,26 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_response :success
+   end
+ 
++  test "should search archives by title" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "テスト動画タイトル")
++    Archive.create!(original_url: "https://vimeo.com/9999999", title: "別の動画")
++    get archives_url, params: { q: "テスト" }
++    assert_response :success
++    assert_includes response.body, "テスト動画タイトル"
++  end
++
++  test "should return all archives when search query is empty" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "空クエリテスト")
++    get archives_url, params: { q: "" }
++    assert_response :success
++  end
++
++  test "should return no results when no match" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "マッチしないタイトル")
++    get archives_url, params: { q: "zzz存在しない文字列zzz" }
++    assert_response :success
++  end
++
+   test "should get new" do
+     get new_archive_url
+     assert_response :success

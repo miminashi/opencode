@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r5",
+  "score": 3,
+  "categories": {
+    "correctness": 3,
+    "idiomaticity": 2,
+    "completeness": 2,
+    "test_quality": 3
+  },
+  "reason": "pagy 43.x の Pagy::Offset で 20件 limit は正しく機能（クラッシュ無し）。しかし view が `if defined?(pagy_nav)` でガードし Pagy::Frontend 未 include のため pagy_nav が未定義 → nav ブロックが丸ごと描画されず、ページネーション UI が一切出ない（2ページ目へ遷移不可）。要件『UIを下部に配置』未達（functional NO）。defined? ガードが欠陥を黙殺する anti-pattern。"
+}

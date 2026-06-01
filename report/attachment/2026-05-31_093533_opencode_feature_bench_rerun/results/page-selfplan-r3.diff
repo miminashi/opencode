@@ -1,0 +1,96 @@
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..0c0a5c8
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,33 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  gap: var(--space-xs);
++  margin-top: var(--space-xl);
++  padding-bottom: var(--space-xl);
++}
++
++.pagination__link {
++  display: inline-block;
++  padding: var(--space-xxs) var(--space-s);
++  border-radius: var(--border-radius);
++  color: var(--color-text-body);
++  font-size: var(--font-size-m);
++  transition: background-color 200ms, color 200ms;
++}
++
++.pagination__link:hover {
++  background-color: var(--color-light);
++  color: var(--color-primary);
++}
++
++.pagination__link--current {
++  background-color: var(--color-primary);
++  color: var(--color-white);
++  font-weight: bold;
++}
++
++.pagination__link--current:hover {
++  background-color: var(--color-primary-rotate);
++  color: var(--color-white);
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..3ad9bcb 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -2,9 +2,19 @@ class ArchivesController < ApplicationController
+   #before_action :set_archive, only: %i[ show edit update destroy ]
+   before_action :set_archive, only: %i[ show edit ]
+ 
++  PER_PAGE = 20
++
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    page = (params[:page] || 1).to_i
++    offset = (page - 1) * PER_PAGE
++
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.limit(PER_PAGE).offset(offset)
++    @total_count = Archive.count
++    @current_page = page
++    @total_pages = (@total_count.to_f / PER_PAGE).ceil
++    @has_previous = page > 1
++    @has_next = page < @total_pages
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/_pagination.html.erb b/app/views/archives/_pagination.html.erb
+new file mode 100644
+index 0000000..2e402b8
+--- /dev/null
++++ b/app/views/archives/_pagination.html.erb
+@@ -0,0 +1,15 @@
++<% if @total_count > 0 %>
++  <nav class="pagination">
++    <% if @has_previous %>
++      <%= link_to "前へ", archives_path(page: @current_page - 1), class: "pagination__link pagination__link--prev" %>
++    <% end %>
++
++    <% (1..@total_pages).each do |page_num| %>
++      <%= link_to page_num, archives_path(page: page_num), class: ("pagination__link pagination__link--current" if page_num == @current_page) %>
++    <% end %>
++
++    <% if @has_next %>
++      <%= link_to "次へ", archives_path(page: @current_page + 1), class: "pagination__link pagination__link--next" %>
++    <% end %>
++  </nav>
++<% end %>
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..a322d29 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= render "pagination" %>
+ </main>

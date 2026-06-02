@@ -1,0 +1,15 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-26) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-26/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+B-0: Plan agent launched, plan_exit dialog appeared after ~70s
+B-1: markdown rendering -> PASS (## 目的 / ## 内容 / ## 変更箇所 + code block displayed)
+B-2: scroll (Ctrl+d x2) -> WARN (short plan fits viewport, no scroll diff)
+B-3: option 3 (No) -> PASS (dialog dismissed, stayed in Plan agent, no Build switch)
+B-4: custom feedback (option 4) -> PASS
+     - "Type your own answer" placeholder shown after pressing 4
+     - typed marker "FORK_REGRESSION_MARK_26" reflected in textarea (placeholder replaced)
+     - dialog re-displayed after submitting feedback (C-m)
+B-5: option 1 (Yes, keep context) -> PASS (switched to Build agent, no crash)
+B-6: TUI exit -> PASS (returned to shell after single C-c)
+
+Summary: B-1/B-3/B-4/B-5/B-6 PASS, B-2 WARN. No fail.

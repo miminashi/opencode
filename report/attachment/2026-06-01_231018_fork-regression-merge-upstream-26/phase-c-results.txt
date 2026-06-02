@@ -1,0 +1,4 @@
+=== Phase C: TUI stabilization smoke (merge-upstream-26) ===
+C-1: --prompt startup, no crash -> PASS (no BindingError/panic, spinner visible processing "hi")
+C-2: OSC52 sequence -> PASS (strings match count: 15; clipboard.ts source EXISTS)
+C-3: TUI exit -> PASS (returned to shell)

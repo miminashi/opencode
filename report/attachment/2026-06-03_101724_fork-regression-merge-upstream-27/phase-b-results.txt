@@ -1,0 +1,24 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-27) ===
+
+B-0: plan agent launched, plan_exit dialog appeared (DIALOG)
+
+B-1 markdown rendering: PASS
+  - Dialog showed "## タスク" and "## 計画" headers rendered as markdown
+  - 4-option layout present (1 Yes / 2 Yes clear context & auto-accept / 3 No / 4 Provide feedback)
+
+B-2 scroll: WARN
+  - Ctrl+d x2 produced NO_DIFF — plan fit within viewport (short plan), scroll not exercised
+
+B-3 option 3 (No): PASS
+  - Stayed with plan agent, no Build switch, no crash
+
+B-4 custom feedback: PASS
+  - option 4 selected -> "Type your own answer" placeholder rendered (PASS)
+  - typed marker FORKREGMARK4242 visible in textarea (PASS)
+  - feedback submitted -> plan_exit dialog re-appeared (DIALOG) (PASS)
+
+B-5 option 1 (Yes, keep context): PASS
+  - Switched to Build agent, no crash
+
+B-6 TUI exit: PASS
+  - C-c returned to shell prompt

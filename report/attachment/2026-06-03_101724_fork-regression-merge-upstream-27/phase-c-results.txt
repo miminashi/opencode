@@ -1,0 +1,11 @@
+=== Phase C: TUI stability smoke (merge-upstream-27) ===
+
+C-1 --prompt launch (SSE race): PASS
+  - no BindingError/panic, spinner/prompt visible
+
+C-2 OSC52 sequence: PASS
+  - strings | grep OSC52/passthrough -> 15 matches
+  - clipboard.ts source present
+
+C-3 TUI exit: PASS
+  - returned to shell prompt

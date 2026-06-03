@@ -1,0 +1,174 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..a3bea85 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -51,6 +51,9 @@ gem "image_processing", "~> 1.2"
+ # for background jobs
+ gem "solid_queue"
+ 
++# for pagination
++gem "pagy"
++
+ group :development, :test do
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5a2f5c5 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,10 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (43.4.4)
++      json
++      uri
++      yaml
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -276,6 +280,7 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
++    yaml (0.4.0)
+     zeitwerk (2.7.5)
+ 
+ PLATFORMS
+@@ -291,6 +296,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..8cd82f4
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,54 @@
++.pagination {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: var(--space-xs);
++  margin-top: var(--space-l);
++  padding-bottom: var(--space-l);
++  flex-wrap: wrap;
++}
++
++.pagination__link {
++  display: inline-block;
++  padding: var(--space-xs) var(--space-s);
++  text-decoration: none;
++  color: var(--color-primary);
++  border: 1px solid var(--color-border);
++  border-radius: var(--radius-m);
++  font-size: 0.875rem;
++  transition: background-color 0.2s, color 0.2s;
++}
++
++.pagination__link:hover {
++  background-color: var(--color-primary);
++  color: white;
++}
++
++.pagination .page {
++  display: inline-block;
++  padding: var(--space-xs) var(--space-s);
++  text-decoration: none;
++  border: 1px solid var(--color-border);
++  border-radius: var(--radius-m);
++  font-size: 0.875rem;
++  color: var(--color-text);
++  transition: background-color 0.2s, color 0.2s;
++}
++
++.pagination .page:hover {
++  background-color: var(--color-primary);
++  color: white;
++}
++
++.pagination .page.current {
++  background-color: var(--color-primary);
++  color: white;
++  border-color: var(--color-primary);
++  font-weight: bold;
++}
++
++.pagination .gap {
++  padding: var(--space-xs) var(--space-s);
++  color: var(--color-text-secondary);
++  user-select: none;
++}
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 09705d1..82c2e42 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -1,2 +1,3 @@
+ class ApplicationController < ActionController::Base
++  include Pagy::Method
+ end
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..056ad80 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy, @archives = pagy(:offset, Archive.ordered.with_attached_thumbnail.with_attached_video, limit: 20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..70b8400 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,12 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagy.last > 1 %>
++    <nav class="pagination">
++      <%= link_to "« 最初", {page: 1}, class: "pagination__link", data: {turbo: true} %>
++      <%== @pagy.series_nav %>
++      <%= link_to "最後 »", {page: @pagy.last}, class: "pagination__link", data: {turbo: true} %>
++    </nav>
++  <% end %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..bc882c9 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,26 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should paginate archives on index" do
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{1000000 + i}", title: "Paginated Video #{i}")
++    end
++    get archives_url, params: { page: "2" }
++    assert_response :success
++    assert_select "h2", text: /Paginated Video/
++  end
++
++  test "should render pagination nav on index with multiple pages" do
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{2000000 + i}", title: "Nav Video #{i}")
++    end
++    get archives_url
++    assert_response :success
++    assert_select "nav.pagination"
++    assert_match %r{href.*page=1}, response.body
++    assert_match %r{href.*page=2}, response.body
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

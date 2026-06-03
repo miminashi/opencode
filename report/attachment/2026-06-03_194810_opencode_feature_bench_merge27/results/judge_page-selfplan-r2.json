@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari の page(params[:page]).per(20)＋paginate @archives＋pagination.css。簡潔で定型。実機 1ページ20件・2ページ目5件・nav 表示で完全動作・functional YES。"
+}

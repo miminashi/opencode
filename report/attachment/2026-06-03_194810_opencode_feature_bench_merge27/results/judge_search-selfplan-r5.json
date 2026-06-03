@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で ILIKE（正）。form_tag :search、コントローラ5テスト（case-insensitive 含む）＋モデル5テスト（match/no-match/blank・nil/case-insensitive/ordered chaining の6挙動を5メソッドで網羅）＋teardown で最も網羅的。rails test 43 runs（base 33+10）で裏付け。実機12件絞込・functional YES。"
+}

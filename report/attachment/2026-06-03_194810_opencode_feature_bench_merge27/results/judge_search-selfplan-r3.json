@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で LIKE（case-sensitive）。form_with＋fixtures 3件追加＋コントローラ4＋モデル4＋システム3テストで最も手厚いテスト。実機12件絞込・functional YES。システムテストに無関係な assert_no_text のタイポあるが無害。LIKE のため小文字検索は漏れる。"
+}

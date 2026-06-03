@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 3,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "pagy v43 を使うも view で <%= @pagy.series_nav %> と**エスケープ出力**したためページリンクが HTML 文字列化し非クリック（pageLinkCount 0）。1ページ20件絞込・nav 要素描画は成功するが2ページ目へ遷移不可・functional NO。rails test は通過（ページネーション専用テスト無し）、Playwright が捕捉。Pagy::Offset.new＋@pagy.records の class API はやや非定型。"
+}

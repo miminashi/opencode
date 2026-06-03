@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り kaminari 実装。ただし bundle install が Gemfile.lock 全体を更新（多数の gem バージョン・BUNDLED WITH・ruby 行が変化）しノイズが大きい。コードは page/per(20)＋paginate で正。実機完全動作・functional YES。lockfile churn のため idiom 4。"
+}

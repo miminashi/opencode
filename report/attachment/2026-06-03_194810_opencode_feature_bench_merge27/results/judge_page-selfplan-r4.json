@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "pagy v43 を**正しく実装**: include Pagy::Method、pagy(:offset, collection, limit:20)、view で <%== @pagy.series_nav %>（raw 出力）＋最初/最後 link_to＋@pagy.last>1 ガード。コントローラ2テスト（paginate/nav href 確認）。実機完全動作（20/5/nav）・functional YES。pagy はやや非定型のため idiom 4。"
+}

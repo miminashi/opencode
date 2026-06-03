@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "self.search クラスメソッド（scope より僅かに非定型）＋LIKE（PostgreSQL で case-sensitive、小文字検索で漏れる）。form_with :search、コントローラ3テスト（search/blank/no-match）。実機12件絞込・functional YES。"
+}

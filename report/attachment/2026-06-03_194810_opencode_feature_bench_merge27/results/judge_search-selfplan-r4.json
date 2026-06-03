@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 5,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "scope :by_title で LIKE（case-sensitive）。@search_q＋form_with local:false(turbo)＋クリアリンク、search.css、コントローラ3テスト。**merge26 で幻覚により diff0 だった r4 が今回は実装到達・実機12件絞込 functional YES**。LIKE で小文字検索は漏れる。"
+}

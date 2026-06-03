@@ -1,0 +1,303 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..9b43f0d 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# for pagination
++gem "kaminari"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..2c9438d 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -1,7 +1,7 @@
+ GEM
+   remote: https://rubygems.org/
+   specs:
+-    action_text-trix (2.1.18)
++    action_text-trix (2.1.19)
+       railties
+     actioncable (8.1.3)
+       actionpack (= 8.1.3)
+@@ -75,15 +75,15 @@ GEM
+       securerandom (>= 0.3)
+       tzinfo (~> 2.0, >= 2.0.5)
+       uri (>= 0.13.1)
+-    addressable (2.8.7)
+-      public_suffix (>= 2.0.2, < 7.0)
++    addressable (2.9.0)
++      public_suffix (>= 2.0.2, < 8.0)
+     annotate (2.6.5)
+       activerecord (>= 2.3.0)
+       rake (>= 0.8.7)
+     base64 (0.3.0)
+-    bigdecimal (4.1.1)
++    bigdecimal (4.1.2)
+     bindex (0.8.1)
+-    bootsnap (1.18.4)
++    bootsnap (1.24.5)
+       msgpack (~> 1.2)
+     builder (3.3.0)
+     capybara (3.40.0)
+@@ -98,49 +98,61 @@ GEM
+     concurrent-ruby (1.3.6)
+     connection_pool (3.0.2)
+     crass (1.0.6)
+-    cuprite (0.15.1)
++    cuprite (0.17)
+       capybara (~> 3.0)
+-      ferrum (~> 0.15.0)
++      ferrum (~> 0.17.0)
+     date (3.5.1)
+-    debug (1.9.2)
++    debug (1.11.1)
+       irb (~> 1.10)
+       reline (>= 0.3.8)
+     drb (2.2.3)
+-    erb (6.0.2)
++    erb (6.0.4)
+     erubi (1.13.1)
+-    et-orbi (1.2.11)
++    et-orbi (1.4.0)
+       tzinfo
+-    ferrum (0.15)
++    ferrum (0.17.2)
+       addressable (~> 2.5)
++      base64 (~> 0.2)
+       concurrent-ruby (~> 1.1)
+       webrick (~> 1.7)
+       websocket-driver (~> 0.7)
+-    ffi (1.17.0-x86_64-darwin)
+-    ffi (1.17.0-x86_64-linux-gnu)
+-    fugit (1.11.1)
+-      et-orbi (~> 1, >= 1.2.11)
++    ffi (1.17.4-x86_64-linux-gnu)
++    fugit (1.12.2)
++      et-orbi (~> 1.4)
+       raabro (~> 1.4)
+     globalid (1.3.0)
+       activesupport (>= 6.1)
+     i18n (1.14.8)
+       concurrent-ruby (~> 1.0)
+-    image_processing (1.13.0)
+-      mini_magick (>= 4.9.5, < 5)
++    image_processing (1.14.0)
++      mini_magick (>= 4.9.5, < 6)
+       ruby-vips (>= 2.0.17, < 3)
+-    importmap-rails (2.0.1)
++    importmap-rails (2.2.3)
+       actionpack (>= 6.0.0)
+       activesupport (>= 6.0.0)
+       railties (>= 6.0.0)
+     io-console (0.8.2)
+-    irb (1.17.0)
++    irb (1.18.0)
+       pp (>= 0.6.0)
+       prism (>= 1.3.0)
+       rdoc (>= 4.0.0)
+       reline (>= 0.4.2)
+-    jbuilder (2.12.0)
+-      actionview (>= 5.0.0)
+-      activesupport (>= 5.0.0)
+-    json (2.19.3)
++    jbuilder (2.15.1)
++      actionview (>= 7.0.0)
++      activesupport (>= 7.0.0)
++    json (2.19.8)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -151,15 +163,16 @@ GEM
+       net-imap
+       net-pop
+       net-smtp
+-    marcel (1.1.0)
+-    matrix (0.4.2)
+-    mini_magick (4.13.2)
++    marcel (1.2.1)
++    matrix (0.4.3)
++    mini_magick (5.3.1)
++      logger
+     mini_mime (1.1.5)
+-    minitest (6.0.3)
++    minitest (6.0.6)
+       drb (~> 2.0)
+       prism (~> 1.5)
+-    msgpack (1.7.2)
+-    net-imap (0.6.3)
++    msgpack (1.8.1)
++    net-imap (0.6.4)
+       date
+       net-protocol
+     net-pop (0.1.2)
+@@ -169,25 +182,23 @@ GEM
+     net-smtp (0.5.1)
+       net-protocol
+     nio4r (2.7.5)
+-    nokogiri (1.19.2-x86_64-darwin)
++    nokogiri (1.19.3-x86_64-linux-gnu)
+       racc (~> 1.4)
+-    nokogiri (1.19.2-x86_64-linux-gnu)
+-      racc (~> 1.4)
+-    pg (1.5.7)
++    pg (1.6.3-x86_64-linux)
+     pp (0.6.3)
+       prettyprint
+     prettyprint (0.2.0)
+     prism (1.9.0)
+-    psych (5.3.1)
++    psych (5.4.0)
+       date
+       stringio
+-    public_suffix (6.0.1)
+-    puma (6.4.2)
++    public_suffix (7.0.5)
++    puma (6.6.1)
+       nio4r (~> 2.0)
+     raabro (1.4.0)
+     racc (1.8.1)
+     rack (3.2.6)
+-    rack-session (2.1.1)
++    rack-session (2.1.2)
+       base64 (>= 0.1.0)
+       rack (>= 3.0.0)
+     rack-test (2.2.0)
+@@ -224,51 +235,51 @@ GEM
+       thor (~> 1.0, >= 1.2.2)
+       tsort (>= 0.2)
+       zeitwerk (~> 2.6)
+-    rake (13.3.1)
++    rake (13.4.2)
+     rdoc (7.2.0)
+       erb
+       psych (>= 4.0.0)
+       tsort
+     redis (4.8.1)
+-    regexp_parser (2.9.2)
++    regexp_parser (2.12.0)
+     reline (0.6.3)
+       io-console (~> 0.5)
+-    ruby-vips (2.2.2)
++    ruby-vips (2.3.0)
+       ffi (~> 1.12)
+       logger
+     securerandom (0.4.1)
+-    solid_queue (0.5.0)
++    solid_queue (1.4.0)
+       activejob (>= 7.1)
+       activerecord (>= 7.1)
+       concurrent-ruby (>= 1.3.1)
+-      fugit (~> 1.11.0)
++      fugit (~> 1.11)
+       railties (>= 7.1)
+-    sprockets (4.2.1)
++      thor (>= 1.3.1)
++    sprockets (4.2.2)
+       concurrent-ruby (~> 1.0)
++      logger
+       rack (>= 2.2.4, < 4)
+     sprockets-rails (3.5.2)
+       actionpack (>= 6.1)
+       activesupport (>= 6.1)
+       sprockets (>= 3.0.0)
+-    stimulus-rails (1.3.3)
++    stimulus-rails (1.3.4)
+       railties (>= 6.0.0)
+     stringio (3.2.0)
+     thor (1.5.0)
+     timeout (0.6.1)
+     tsort (0.2.0)
+-    turbo-rails (2.0.6)
+-      actionpack (>= 6.0.0)
+-      activejob (>= 6.0.0)
+-      railties (>= 6.0.0)
++    turbo-rails (2.0.23)
++      actionpack (>= 7.1.0)
++      railties (>= 7.1.0)
+     tzinfo (2.0.6)
+       concurrent-ruby (~> 1.0)
+     uri (1.1.1)
+     useragent (0.16.11)
+-    web-console (4.2.1)
+-      actionview (>= 6.0.0)
+-      activemodel (>= 6.0.0)
++    web-console (4.3.0)
++      actionview (>= 8.0.0)
+       bindex (>= 0.4.0)
+-      railties (>= 6.0.0)
++      railties (>= 8.0.0)
+     webrick (1.9.2)
+     websocket-driver (0.8.0)
+       base64
+@@ -276,10 +287,9 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
+-    zeitwerk (2.7.5)
++    zeitwerk (2.8.2)
+ 
+ PLATFORMS
+-  x86_64-darwin-21
+   x86_64-linux
+ 
+ DEPENDENCIES
+@@ -291,6 +301,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+@@ -303,7 +314,7 @@ DEPENDENCIES
+   web-console
+ 
+ RUBY VERSION
+-   ruby 3.2.4p170
++  ruby 3.2.4
+ 
+ BUNDLED WITH
+-   2.5.17
++  4.0.12
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>

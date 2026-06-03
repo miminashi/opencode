@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "与プラン通り ILIKE。コントローラ1（i フラグで case-insensitive 確認）＋モデル3テスト。test 行頭に軽微なインデントずれあるが無害。実機12件絞込・functional YES。"
+}

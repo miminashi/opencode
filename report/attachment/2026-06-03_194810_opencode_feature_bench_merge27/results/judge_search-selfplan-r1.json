@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "scope :search で ILIKE＋blank ガード（正しい case-insensitive）。form_with :q＋クリアリンク、search.css、コントローラ4テスト（search/filter/partial/empty）。実機12件絞込・functional YES。良質な検索 selfplan。"
+}

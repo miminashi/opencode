@@ -1,0 +1,21 @@
+task	pattern	trial	transition	gem	build	diff_files	diff_ins	test_pass	functional	score	correct	idiom	complete	testq
+search	selfplan	search-selfplan-r1	self_exit	-	8m20s	5	63	yes	yes	5	5	5	5	4
+search	selfplan	search-selfplan-r2	self_exit	-	4m20s	4	37	yes	yes	4	4	4	4	4
+search	selfplan	search-selfplan-r3	self_exit	-	11m20s	7	109	yes	yes	5	4	4	5	5
+search	selfplan	search-selfplan-r4	self_exit	-	5m40s	5	56	yes	yes	4	4	5	4	4
+search	selfplan	search-selfplan-r5	self_exit	-	9m20s	5	104	yes	yes	5	5	5	5	5
+search	givenplan	search-givenplan-r1	self_exit	-	6m0s	5	30	yes	yes	5	5	5	5	4
+search	givenplan	search-givenplan-r2	self_exit	-	6m40s	5	36	yes	yes	5	5	5	5	5
+search	givenplan	search-givenplan-r3	self_exit	-	6m0s	5	41	yes	yes	5	5	5	5	5
+search	givenplan	search-givenplan-r4	self_exit	-	6m0s	5	37	yes	yes	5	5	5	5	5
+search	givenplan	search-givenplan-r5	self_exit	-	6m0s	5	45	yes	yes	5	5	5	5	5
+page	selfplan	page-selfplan-r1	self_exit	-	3m40s	0	0	yes	NO	1	1	1	1	1
+page	selfplan	page-selfplan-r2	self_exit	kaminari	23m40s	5	75	yes	yes	5	5	5	5	4
+page	selfplan	page-selfplan-r3	self_exit	pagy 43.4.4	16m0s	5	56	yes	NO	2	2	3	2	2
+page	selfplan	page-selfplan-r4	self_exit	pagy 43.4.4	17m20s	7	93	yes	yes	5	5	4	5	5
+page	selfplan	page-selfplan-r5	self_exit	kaminari	4m0s	4	19	yes	yes	5	5	5	5	4
+page	givenplan	page-givenplan-r1	self_exit	kaminari	4m0s	4	18	yes	yes	5	5	5	5	4
+page	givenplan	page-givenplan-r2	self_exit	kaminari	16m40s	4	73	yes	yes	5	5	4	5	4
+page	givenplan	page-givenplan-r3	self_exit	kaminari	4m20s	4	17	yes	yes	5	5	5	5	4
+page	givenplan	page-givenplan-r4	self_exit	kaminari	5m20s	4	17	yes	yes	5	5	5	5	4
+page	givenplan	page-givenplan-r5	self_exit	kaminari	4m0s	4	17	yes	yes	5	5	5	5	4

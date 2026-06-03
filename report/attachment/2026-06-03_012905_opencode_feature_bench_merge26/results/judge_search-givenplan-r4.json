@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "与プラン通り ILIKE。コントローラ1（no-match 含む2段）＋モデル3（SecureRandom で一意化し堅牢）。実機 12 件絞込・functional YES。"
+}

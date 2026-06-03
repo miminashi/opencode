@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り ILIKE。コントローラ1＋モデル3（match/no-match/blank）。実機 12 件絞込・functional YES。"
+}

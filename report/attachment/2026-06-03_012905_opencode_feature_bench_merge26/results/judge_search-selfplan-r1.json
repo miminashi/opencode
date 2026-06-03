@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "scope :search で title LIKE 部分一致。LIKE のため PostgreSQL で case-sensitive（小文字検索で漏れる）。form_with＋search.css、コントローラ3テスト（match/empty/no-match）。実機は 'Ruby'(大文字)一致で 12 件絞込・functional YES。テストに assert_response 重複の軽微なタイポ。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 4,
+    "idiomaticity": 4,
+    "completeness": 4,
+    "test_quality": 4
+  },
+  "reason": "self.search_by_title クラスメソッド（scope より僅かに非定型）で LIKE。case-sensitive。form_with、コントローラ4テスト（partial 含む）。実機 12 件絞込・functional YES。LIKE で小文字検索は漏れる。"
+}

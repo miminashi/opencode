@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari 実装＋pagination.css＋<nav class='pagination'> ラッパ。CSS が丁寧。実機完全動作（20/5/nav）・functional YES。"
+}

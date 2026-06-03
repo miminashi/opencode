@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "pagy 8.6.3、include Pagy::Backend のみ。pagy_nav を使わず @pagy.prev/next/page/pages で手動 nav（@pagy.pages>1 ガード）＝Frontend 不要で安全に実装。実機完全動作・functional YES。pagy 手動 nav はやや非定型のため idiom 4。"
+}

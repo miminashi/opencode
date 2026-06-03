@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "pagy 8.6.3 を**正しく実装**: ApplicationController に include Pagy::Backend＋helper Pagy::Frontend、pagy(items:20)、view で pagy_nav(@pagy)＋css。baseline で頻発した Frontend include 漏れを回避。defined?(@pagy) ガードはやや冗長だが無害。実機完全動作・functional YES。pagy はやや非定型のため idiom 4。"
+}

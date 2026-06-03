@@ -1,0 +1,91 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..0a0ccd7 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -54,6 +54,9 @@ gem "solid_queue"
+ group :development, :test do
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+   gem "debug", platforms: %i[ mri mingw x64_mingw ]
++
++  # Pagination
++  gem "pagy", "~> 8.0"
+ end
+ 
+ group :development do
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..8eb2a88 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,7 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (8.6.3)
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -291,6 +292,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy (~> 8.0)
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..b23f9db
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,13 @@
++.pagination {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: var(--space-s);
++  margin-top: var(--space-l);
++  padding-bottom: var(--space-l);
++}
++
++.pagination-info {
++  color: var(--color-text-light);
++  font-size: 0.875rem;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..c9fb4ef 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -1,10 +1,11 @@
+ class ArchivesController < ApplicationController
++  include Pagy::Backend
+   #before_action :set_archive, only: %i[ show edit update destroy ]
+   before_action :set_archive, only: %i[ show edit ]
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy, @archives = pagy(Archive.ordered.with_attached_thumbnail.with_attached_video, items: 20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..3c354c6 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,16 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagy.pages > 1 %>
++    <nav class="pagination">
++      <% if @pagy.prev %>
++        <%= link_to "« 前へ", archives_path(page: @pagy.prev), class: "btn btn--secondary" %>
++      <% end %>
++      <span class="pagination-info"><%= @pagy.page %> / <%= @pagy.pages %></span>
++      <% if @pagy.next %>
++        <%= link_to "次へ »", archives_path(page: @pagy.next), class: "btn btn--secondary" %>
++      <% end %>
++    </nav>
++  <% end %>
+ </main>

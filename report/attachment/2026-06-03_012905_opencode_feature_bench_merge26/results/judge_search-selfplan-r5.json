@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で ILIKE（正）。blank 時 where('1=1') はやや非定型だが機能する。form_with。コントローラ2＋**モデル6（case-insensitive/nil/empty/no-match/chaining）＋システム2（検索・クリア）**で最も手厚い。実機 12 件絞込・functional YES。"
+}

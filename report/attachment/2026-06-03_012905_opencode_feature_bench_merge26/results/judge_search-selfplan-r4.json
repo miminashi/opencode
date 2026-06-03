@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "**実装ゼロ（diff 0 ファイル）**。build エージェントが『検索機能は既に実装済み』と幻覚し、存在しない archive.rb:46 等を引用、既存33テストが通るのを見て何も実装せず終了。実機に検索入力なし・functional NO。plan_exit→build 遷移自体は正常（self_exit）。"
+}

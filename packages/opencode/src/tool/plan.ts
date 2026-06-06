@@ -1,5 +1,5 @@
 import path from "path"
-import { SessionLegacy } from "@opencode-ai/core/session/legacy"
+import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { Effect, Option, Schema } from "effect"
 import * as Tool from "./tool"
 import { Question } from "../question"
@@ -52,7 +52,7 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
 
     const model = (yield* getLastModel(session, sessionID)) ?? (yield* provider.defaultModel())
 
-    const msg: SessionLegacy.User = {
+    const msg: SessionV1.User = {
       id: MessageID.ascending(),
       sessionID,
       role: "user",
@@ -68,7 +68,7 @@ export const commitPlanExitSynthetic = (sessionID: SessionID) =>
       type: "text",
       text: `The plan at ${plan} has been approved (synthetic plan_exit by safeguard), you can now edit files. Execute the plan`,
       synthetic: true,
-    } satisfies SessionLegacy.TextPart)
+    } satisfies SessionV1.TextPart)
   })
 
 export const PlanExitTool = Tool.define(
@@ -142,7 +142,7 @@ export const PlanExitTool = Tool.define(
               overflow: false,
             })
 
-            const continueMsg: SessionLegacy.User = {
+            const continueMsg: SessionV1.User = {
               id: MessageID.ascending(),
               sessionID: ctx.sessionID,
               role: "user",
@@ -158,7 +158,7 @@ export const PlanExitTool = Tool.define(
               type: "text",
               text: buildSwitchText,
               synthetic: true,
-            } satisfies SessionLegacy.TextPart)
+            } satisfies SessionV1.TextPart)
 
             return {
               title: "Switching to build agent (clearing context, auto-accept edits)",
@@ -179,7 +179,7 @@ export const PlanExitTool = Tool.define(
           const model =
             lastUser?.info.role === "user" && lastUser.info.model ? lastUser.info.model : yield* provider.defaultModel()
 
-          const msg: SessionLegacy.User = {
+          const msg: SessionV1.User = {
             id: MessageID.ascending(),
             sessionID: ctx.sessionID,
             role: "user",
@@ -195,7 +195,7 @@ export const PlanExitTool = Tool.define(
             type: "text",
             text: `The plan at ${plan} has been approved, you can now edit files. Execute the plan`,
             synthetic: true,
-          } satisfies SessionLegacy.TextPart)
+          } satisfies SessionV1.TextPart)
 
           return {
             title: "Switching to build agent",

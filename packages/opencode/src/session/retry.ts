@@ -1,5 +1,5 @@
 import type { NamedError } from "@opencode-ai/core/util/error"
-import { SessionLegacy } from "@opencode-ai/core/session/legacy"
+import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { Cause, Clock, Duration, Effect, Schedule } from "effect"
 import { iife } from "@/util/iife"
 import { isRecord } from "@/util/record"
@@ -31,7 +31,7 @@ function cap(ms: number) {
   return Math.min(ms, RETRY_MAX_DELAY)
 }
 
-export function delay(attempt: number, error?: SessionLegacy.APIError) {
+export function delay(attempt: number, error?: SessionV1.APIError) {
   if (error) {
     const headers = error.data.responseHeaders
     if (headers) {
@@ -66,8 +66,8 @@ export function delay(attempt: number, error?: SessionLegacy.APIError) {
 
 export function retryable(error: Err, provider: string) {
   // context overflow errors should not be retried
-  if (SessionLegacy.ContextOverflowError.isInstance(error)) return undefined
-  if (SessionLegacy.APIError.isInstance(error)) {
+  if (SessionV1.ContextOverflowError.isInstance(error)) return undefined
+  if (SessionV1.APIError.isInstance(error)) {
     // Detect server-side tool call parse failures (e.g. llama.cpp)
     if (/failed to parse input/i.test(error.data.message)) {
       return { message: "Tool call parse error, retrying" }
@@ -187,7 +187,7 @@ export function policy(opts: {
       const retry = retryable(error, opts.provider)
       if (!retry) return Cause.done(meta.attempt)
       return Effect.gen(function* () {
-        const wait = delay(meta.attempt, SessionLegacy.APIError.isInstance(error) ? error : undefined)
+        const wait = delay(meta.attempt, SessionV1.APIError.isInstance(error) ? error : undefined)
         const now = yield* Clock.currentTimeMillis
         yield* opts.set({
           attempt: meta.attempt,

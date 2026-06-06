@@ -1,5 +1,5 @@
 import path from "path"
-import { SessionLegacy } from "@opencode-ai/core/session/legacy"
+import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { Effect } from "effect"
 import { Agent } from "@/agent/agent"
 import { FSUtil } from "@opencode-ai/core/fs-util"
@@ -28,7 +28,7 @@ const planEnteringSuffix = (plan: string, exists: boolean) =>
   `Do not stop your turn without either asking the user a question or calling plan_exit.\n`
 
 export const apply = Effect.fn("SessionReminders.apply")(function* (input: {
-  messages: SessionLegacy.WithParts[]
+  messages: SessionV1.WithParts[]
   agent: Agent.Info
   session: Session.Info
 }) {

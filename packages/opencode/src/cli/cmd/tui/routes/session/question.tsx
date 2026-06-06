@@ -12,7 +12,7 @@ import { Flag } from "@opencode-ai/core/flag/flag"
 
 const QUESTION_MODE = "question"
 
-export function QuestionPrompt(props: { request: QuestionRequest }) {
+export function QuestionPrompt(props: { request: QuestionRequest; directory?: string }) {
   const sdk = useSDK()
   const { theme, syntax } = useTheme()
   const renderer = useRenderer()
@@ -65,6 +65,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
     const answers = questions().map((_, i) => store.answers[i] ?? [])
     void sdk.client.question.reply({
       requestID: props.request.id,
+      directory: props.directory,
       answers,
     })
   }
@@ -72,6 +73,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
   function reject() {
     void sdk.client.question.reject({
       requestID: props.request.id,
+      directory: props.directory,
     })
   }
 
@@ -87,6 +89,7 @@ export function QuestionPrompt(props: { request: QuestionRequest }) {
     if (single()) {
       void sdk.client.question.reply({
         requestID: props.request.id,
+        directory: props.directory,
         answers: [[answer]],
       })
       return

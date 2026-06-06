@@ -1048,7 +1048,7 @@ export const layer = Layer.effect(
             // finishReason and the loop would simply restart the step
             // without any recovery action.
             if (stallDetected && !ctx.assistantMessage.error) {
-              ctx.assistantMessage.error = new SessionLegacy.StallTimeoutError({
+              ctx.assistantMessage.error = new SessionV1.StallTimeoutError({
                 message: "LLM stream stalled (no chunks within threshold)",
                 thresholdMs: stallThresholdMs,
               }).toObject()
@@ -1073,7 +1073,7 @@ export const layer = Layer.effect(
                 aborted = true
                 if (!ctx.assistantMessage.error) {
                   if (stallDetected) {
-                    ctx.assistantMessage.error = new SessionLegacy.StallTimeoutError({
+                    ctx.assistantMessage.error = new SessionV1.StallTimeoutError({
                       message: "LLM stream stalled (no chunks within threshold)",
                       thresholdMs: stallThresholdMs,
                     }).toObject()

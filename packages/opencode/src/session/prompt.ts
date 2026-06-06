@@ -1518,10 +1518,10 @@ export const layer = Layer.effect(
               )
               const truncatedTools = assistantParts
                 .filter(
-                  (p): p is SessionLegacy.ToolPart =>
+                  (p): p is SessionV1.ToolPart =>
                     p.type === "tool" && p.tool === "invalid" && p.state.status === "completed",
                 )
-                .map((p) => (p.state as SessionLegacy.ToolStateCompleted).input?.tool ?? "unknown")
+                .map((p) => (p.state as SessionV1.ToolStateCompleted).input?.tool ?? "unknown")
 
               if (truncatedTools.length > 0) {
                 truncationRetryCount++

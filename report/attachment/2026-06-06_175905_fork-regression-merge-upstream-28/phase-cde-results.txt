@@ -1,0 +1,18 @@
+=== Phase C/D/E (merge-upstream-28) ===
+Start: 2026年  6月  6日 土曜日 18:12:27 JST
+
+--- C-1: --prompt non-crash ---
+C-1: PASS (spinner/prompt visible, no crash)
+C-1: TUI exited to shell
+
+--- D: reasoning streaming ---
+D: run process finished (iter 4)
+D: reasoning_line=1 answer_line=1
+D: WARN (reasoning/answer ordering unclear)
+
+--- E-1: rolling truncation ---
+E-1: PASS (truncation marker detected)
+E-1: TUI exited to shell
+
+=== Summary ===
+End: 2026年  6月  6日 土曜日 18:15:04 JST

@@ -1,0 +1,20 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-28) ===
+Start: 2026年  6月  6日 土曜日 18:09:15 JST
+
+B-0: launching plan agent 18:09:15
+  dialog detected (iter 8)
+B-0: PASS (dialog 1 shown)
+B-1: WARN (no markdown headings detected)
+B-2: PASS (scroll changed viewport)
+B-3: PASS (stayed in Plan after No)
+B-4: sending feedback 18:11:12
+  dialog detected (iter 2)
+B-4a: PASS (textarea placeholder rendered)
+B-4b: PASS (typed text visible in textarea)
+  dialog detected (iter 1)
+B-4c: PASS (dialog 3 re-shown after feedback)
+B-5: PASS (switched to Build after Yes)
+B-6: PASS (TUI exited to shell)
+
+=== Summary ===
+End: 2026年  6月  6日 土曜日 18:12:05 JST

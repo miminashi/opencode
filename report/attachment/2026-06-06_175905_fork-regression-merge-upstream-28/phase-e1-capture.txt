@@ -1,0 +1,25 @@
+     Thought: 2.4s
+
+     The output was truncated. The full output is saved to a file. Let me read it
+     from the beginning to show the complete output. But 3000 lines is too long to
+     display entirely. Let me check what the user actually wants - they said
+     "                      " (show all output).
+
+     The output was truncated due to length limits. The full output is saved at
+     the path shown. Let me read it from the beginning.
+
+                                         3000
+
+
+     → Read ~/.local/share/opencode/tool-output/tool_e9c365b6a001X20nmJifGB089u [
+       limit=10]
+
+     ▣  Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL
+
+  ┃
+  ┃
+  ┃                                                                                    ~/projects/ytdlor:main
+  ┃  Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL T120H P100
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀    • OpenCode 0.0.0-merge-upstream-28-
+   ⬝⬝⬝⬝⬝⬝⬝⬝  esc interrupt                             21.2K (16%)  ctrl+p commands    202606060853
+

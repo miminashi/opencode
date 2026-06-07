@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 3,
+    "completeness": 2,
+    "test_quality": 3
+  },
+  "reason": "pagy 43.4.4（gem 無指定で最新系に解決）。Pagy::Offset.new＋@pagy.records＋view で <%= @pagy.series_nav %> と**エスケープ出力**したためページリンクが HTML 文字列化し非クリック（firstPageCount=20 で絞込は成功するが pageLinkCount=0・2ページ目到達不可）・functional NO。コントローラ2＋integration2テストを書いたが assigns/assert_select ベースでエスケープバグを捕捉できず通過。Playwright が捕捉。merge27 page-r3 と同型。Pagy::Offset class API は非定型。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search_by_title で ILIKE、コントローラで @archives.search_by_title(params[:q]) if present? ガード。form_with :q＋search.css、コントローラ3＋モデル5テスト。実機12件絞込・functional YES。ILIKE で case-insensitive 正。"
+}

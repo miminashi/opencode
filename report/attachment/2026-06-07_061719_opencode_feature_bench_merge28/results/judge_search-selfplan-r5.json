@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で ILIKE＋present? ガード。form_tag :q＋クリアリンク＋autocomplete=off、コントローラ4＋モデル4テスト。実機12件絞込・functional YES。クリアリンク付きで最も親切な UX。"
+}

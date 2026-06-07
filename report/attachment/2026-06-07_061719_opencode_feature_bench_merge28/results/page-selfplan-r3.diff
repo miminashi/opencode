@@ -1,0 +1,217 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..0b02f10 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -51,6 +51,9 @@ gem "image_processing", "~> 1.2"
+ # for background jobs
+ gem "solid_queue"
+ 
++# for pagination
++gem "will_paginate", "~> 3.3"
++
+ group :development, :test do
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+@@ -73,4 +76,5 @@ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+   gem "cuprite"
++  gem "rails-controller-testing"
+ end
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..4c11ff6 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -208,6 +208,10 @@ GEM
+       activesupport (= 8.1.3)
+       bundler (>= 1.15.0)
+       railties (= 8.1.3)
++    rails-controller-testing (1.0.5)
++      actionpack (>= 5.0.1.rc1)
++      actionview (>= 5.0.1.rc1)
++      activesupport (>= 5.0.1.rc1)
+     rails-dom-testing (2.3.0)
+       activesupport (>= 5.0.0)
+       minitest
+@@ -274,6 +278,7 @@ GEM
+       base64
+       websocket-extensions (>= 0.1.0)
+     websocket-extensions (0.1.5)
++    will_paginate (3.3.1)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
+     zeitwerk (2.7.5)
+@@ -294,6 +299,7 @@ DEPENDENCIES
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
++  rails-controller-testing
+   redis (~> 4.0)
+   solid_queue
+   sprockets-rails
+@@ -301,6 +307,7 @@ DEPENDENCIES
+   turbo-rails
+   tzinfo-data
+   web-console
++  will_paginate (~> 3.3)
+ 
+ RUBY VERSION
+    ruby 3.2.4p170
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..4b6efd7
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,20 @@
++.pagination {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 12px;
++  margin-top: 24px;
++  padding: 16px 0;
++}
++
++.pagination .btn {
++  min-width: 60px;
++  text-align: center;
++}
++
++.pagination-info {
++  font-size: 14px;
++  color: #666;
++  min-width: 120px;
++  text-align: center;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..599337b 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,21 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    per_page = 20
++    page = (params[:page] || 1).to_i
++    total_count = Archive.ordered.with_attached_thumbnail.with_attached_video.count
++    total_pages = (total_count.to_f / per_page).ceil
++    offset = (page - 1) * per_page
++
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.offset(offset).limit(per_page)
++    @pagination = {
++      current_page: page,
++      total_pages: total_pages,
++      total_entries: total_count,
++      per_page: per_page,
++      prev_page: page > 1 ? page - 1 : nil,
++      next_page: page < total_pages ? page + 1 : nil
++    }
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..90331c3 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,18 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagination && @pagination[:total_pages] > 1 %>
++    <div class="pagination">
++      <% if @pagination[:prev_page] %>
++        <%= link_to("前へ", archives_path(page: @pagination[:prev_page]), data: {turbo_frame: "archives"}, class: "btn btn--secondary") %>
++      <% end %>
++      <span class="pagination-info">
++        <%= @pagination[:current_page] %> / <%= @pagination[:total_pages] %> ページ
++      </span>
++      <% if @pagination[:next_page] %>
++        <%= link_to("次へ", archives_path(page: @pagination[:next_page]), data: {turbo_frame: "archives"}, class: "btn btn--secondary") %>
++      <% end %>
++    </div>
++  <% end %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..3d9f1e5 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,42 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should paginate index results" do
++    # Create archives to ensure pagination kicks in (more than 20)
++    initial_count = Archive.count
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/video_#{i}")
++    end
++    expected_total = initial_count + 25
++    get archives_url
++    assert_response :success
++    assert_not_nil assigns(:archives)
++    assert_not_nil assigns(:pagination)
++    assert_equal expected_total, assigns(:pagination)[:total_entries]
++    assert_equal 2, assigns(:pagination)[:total_pages]
++  end
++
++  test "should show page 2 when page param is set" do
++    # Create 25 archives so page 2 has items
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/paged_video_#{i}")
++    end
++    get archives_url, params: { page: 2 }
++    assert_response :success
++    assert_not_nil assigns(:archives)
++    assert_equal 2, assigns(:pagination)[:current_page]
++    assert_equal 20, assigns(:pagination)[:per_page]
++  end
++
++  test "should show first page by default" do
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/default_page_video_#{i}")
++    end
++    get archives_url
++    assert_response :success
++    assert_equal 1, assigns(:pagination)[:current_page]
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/system/archives_test.rb b/test/system/archives_test.rb
+index 9751efc..09392ad 100644
+--- a/test/system/archives_test.rb
++++ b/test/system/archives_test.rb
+@@ -38,4 +38,30 @@ class ArchivesTest < ApplicationSystemTestCase
+     assert_selector "h1", text: "保存したビデオ"
+     assert_text "test_10s.mov"
+   end
++
++  test "ページネーションが表示される" do
++    # Create enough archives to trigger pagination (more than 20)
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/pagination_test_#{i}")
++    end
++
++    visit archives_path
++
++    assert_selector ".pagination"
++    assert_text /1 \/ \d+ ページ/
++  end
++
++  test "ページネーションで次へをクリック" do
++    25.times do |i|
++      Archive.create!(original_url: "https://example.com/next_page_video_#{i}")
++    end
++
++    visit archives_path
++
++    assert_selector ".pagination"
++    click_on "次へ"
++
++    # Turbo frame should update the content
++    assert_selector ".pagination"
++  end
+ end

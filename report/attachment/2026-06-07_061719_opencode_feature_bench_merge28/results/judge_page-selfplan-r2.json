@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 4,
+    "test_quality": 2
+  },
+  "reason": "will_paginate（当環境で 3.3.1 に解決）の .paginate(page:, per_page:20)＋view で will_paginate @archives＋pagination.css。簡潔・定型で実機完全動作（20/5/nav）・functional YES。ただしページネーション用テストを新規追加せず（33 runs のまま）test_q 低。**今回 selfplan で will_paginate 採用が2件（r2/r3）出現**（merge26/27 は kaminari/pagy のみ）。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 1,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "**実装ゼロ（diff 0 ファイル）**。build エージェントが『検索機能は既に完全に実装されており、テストも通過しています。追加の実装は不要です』と幻覚し、既存8テスト（実際は検索無関係）通過を根拠に何も実装せず終了。実機に検索 UI 無し（searchInputFound=false, 25件全表示）・functional NO。plan_exit→build 遷移自体は正常（self_exit）。merge26 search-r4 / merge27 page-r1 と同型の確率的故障モード。"
+}

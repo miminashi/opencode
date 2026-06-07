@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 2,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "pagy 8.6.3（gem \"pagy\", \"~> 8.0\"）。ApplicationController に include Pagy::Backend のみで **Pagy::Frontend を helper include せず**、view の pagy_nav(@pagy) が未定義ヘルパとなり **index が HTTP 500**（firstPageCount=0・APPUP_RC=1）・functional NO。pagination.css は用意済みだが描画前にクラッシュ。ページネーション用テスト無し（33 runs）で rails test はすり抜け。baseline で既出の『Pagy::Frontend include 漏れ』故障モード。"
+}

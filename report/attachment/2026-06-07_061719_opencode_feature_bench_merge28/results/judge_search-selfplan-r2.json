@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で ILIKE＋blank ガード（query.blank? ? all : where ILIKE、正しい case-insensitive）。form_with :search＋form.css、コントローラ3＋モデル5テスト（match/blank/case-insensitive/no-match/ordered chaining）。実機12件絞込・functional YES。良質。"
+}

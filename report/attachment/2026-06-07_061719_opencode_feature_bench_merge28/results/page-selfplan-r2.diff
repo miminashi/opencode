@@ -1,0 +1,107 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..0cb5395 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# for pagination
++gem "will_paginate", "~> 3.3"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..648971d 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -274,6 +274,7 @@ GEM
+       base64
+       websocket-extensions (>= 0.1.0)
+     websocket-extensions (0.1.5)
++    will_paginate (3.3.1)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
+     zeitwerk (2.7.5)
+@@ -301,6 +302,7 @@ DEPENDENCIES
+   turbo-rails
+   tzinfo-data
+   web-console
++  will_paginate (~> 3.3)
+ 
+ RUBY VERSION
+    ruby 3.2.4p170
+diff --git a/app/assets/stylesheets/application.css b/app/assets/stylesheets/application.css
+index a46ee49..e488e7e 100644
+--- a/app/assets/stylesheets/application.css
++++ b/app/assets/stylesheets/application.css
+@@ -11,6 +11,7 @@
+  * It is generally better to create a new file per style scope.
+  *
+  *= require reset.css
++ *= require pagination.css
+  *= require_tree .
+  *= require_self
+  */
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..1c2c95a
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,31 @@
++.will_paginate {
++  margin: 20px 0;
++  text-align: center;
++}
++
++.will_paginate ul.pagination {
++  list-style: none;
++  padding: 0;
++  display: inline-flex;
++  gap: 4px;
++}
++
++.will_paginate li a,
++.will_paginate li span {
++  display: inline-block;
++  padding: 8px 12px;
++  border: 1px solid #ddd;
++  border-radius: 4px;
++  text-decoration: none;
++  color: #0066cc;
++}
++
++.will_paginate li a:hover {
++  background-color: #f5f5f5;
++}
++
++.will_paginate li.current span {
++  background-color: #0066cc;
++  color: #fff;
++  border-color: #0066cc;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..27218fd 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.paginate(page: params[:page], per_page: 20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..1546199 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= will_paginate @archives %>
+ </main>

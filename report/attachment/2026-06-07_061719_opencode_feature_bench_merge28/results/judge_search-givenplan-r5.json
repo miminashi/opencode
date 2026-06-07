@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "与プラン通り ILIKE＋@q＋form_with。テスト6件で最も手厚い。実機12件絞込・functional YES。与プランは ILIKE＋@q＋form_with に完全収束（全5試行一致）。"
+}

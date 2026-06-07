@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 1,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "**実装ゼロ（diff 0 ファイル）**。r1 と同じ『実装済み』幻覚故障。実機に検索 UI 無し（searchInputFound=false, 25件全表示）・functional NO。self_exit 遷移は正常。今回 selfplan で実装ゼロ幻覚が2件（r1/r3）発生。"
+}

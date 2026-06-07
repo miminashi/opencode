@@ -1,0 +1,238 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..07bd78e 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -51,6 +51,9 @@ gem "image_processing", "~> 1.2"
+ # for background jobs
+ gem "solid_queue"
+ 
++# for pagination
++gem "pagy"
++
+ group :development, :test do
+   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+@@ -73,4 +76,7 @@ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+   gem "cuprite"
++
++  # Extracted from Rails core
++  gem "rails-controller-testing"
+ end
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..6a97ea6 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,10 @@ GEM
+       racc (~> 1.4)
+     nokogiri (1.19.2-x86_64-linux-gnu)
+       racc (~> 1.4)
++    pagy (43.4.4)
++      json
++      uri
++      yaml
+     pg (1.5.7)
+     pp (0.6.3)
+       prettyprint
+@@ -208,6 +212,10 @@ GEM
+       activesupport (= 8.1.3)
+       bundler (>= 1.15.0)
+       railties (= 8.1.3)
++    rails-controller-testing (1.0.5)
++      actionpack (>= 5.0.1.rc1)
++      actionview (>= 5.0.1.rc1)
++      activesupport (>= 5.0.1.rc1)
+     rails-dom-testing (2.3.0)
+       activesupport (>= 5.0.0)
+       minitest
+@@ -276,6 +284,7 @@ GEM
+     websocket-extensions (0.1.5)
+     xpath (3.2.0)
+       nokogiri (~> 1.8)
++    yaml (0.4.0)
+     zeitwerk (2.7.5)
+ 
+ PLATFORMS
+@@ -291,9 +300,11 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  pagy
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
++  rails-controller-testing
+   redis (~> 4.0)
+   solid_queue
+   sprockets-rails
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..5fc78df
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,61 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  padding: var(--space-m) 0;
++  gap: var(--space-xxs);
++}
++
++.pagination .pagy {
++  display: flex;
++  flex-wrap: wrap;
++  justify-content: center;
++  align-items: center;
++  gap: var(--space-xxs);
++  list-style: none;
++  margin: 0;
++  padding: 0;
++}
++
++.pagination .pagy a,
++.pagination .pagy span {
++  display: inline-block;
++  padding: var(--space-xxs) var(--space-xs);
++  border: 1px solid #ddd;
++  border-radius: 4px;
++  text-decoration: none;
++  color: #333;
++  font-size: 0.875rem;
++  line-height: 1.5;
++  min-width: 2rem;
++  text-align: center;
++  box-sizing: border-box;
++}
++
++.pagination .pagy a:hover {
++  background-color: #f0f0f0;
++  border-color: #ccc;
++}
++
++.pagination .pagy .current {
++  background-color: #333;
++  border-color: #333;
++  color: #fff;
++  font-weight: bold;
++}
++
++.pagination .pagy .current:hover {
++  background-color: #333;
++  color: #fff;
++}
++
++.pagination .pagy .disabled {
++  color: #ccc;
++  pointer-events: none;
++}
++
++.pagination .pagy .separator {
++  border: none;
++  color: #999;
++  padding: var(--space-xxs) var(--space-xs);
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..07d525f 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,8 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @pagy = Pagy::Offset.new(page: params[:page], limit: 20, count: Archive.count, request: request)
++    @archives = @pagy.records(Archive.ordered.with_attached_thumbnail.with_attached_video)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..b1aec61 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,10 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @pagy.pages > 1 %>
++    <nav class="pagination">
++      <%= @pagy.series_nav %>
++    </nav>
++  <% end %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..0b15745 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -15,6 +15,38 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_response :success
+   end
+ 
++  test "should paginate archives with 20 items per page" do
++    25.times do
++      Archive.create!(original_url: "https://vimeo.com/1084537", title: "Pagination Test Video")
++    end
++
++    get archives_url
++    assert_response :success
++
++    pagy = assigns(:pagy)
++    archives = assigns(:archives)
++
++    assert_equal 20, archives.size
++    assert_equal 2, pagy.pages
++    assert_equal 1, pagy.page
++  end
++
++  test "should show second page when page param is set" do
++    Archive.delete_all
++    25.times do
++      Archive.create!(original_url: "https://vimeo.com/1084537", title: "Pagination Test Video")
++    end
++
++    get archives_url, params: { page: "2" }
++    assert_response :success
++
++    archives = assigns(:archives)
++    pagy = assigns(:pagy)
++
++    assert_equal 5, archives.size
++    assert_equal 2, pagy.page
++  end
++
+   test "should get new" do
+     get new_archive_url
+     assert_response :success
+diff --git a/test/integration/archive_creation_flow_test.rb b/test/integration/archive_creation_flow_test.rb
+index fab2640..e9c5c2b 100644
+--- a/test/integration/archive_creation_flow_test.rb
++++ b/test/integration/archive_creation_flow_test.rb
+@@ -29,6 +29,26 @@ class ArchiveCreationFlowTest < ActionDispatch::IntegrationTest
+     assert_select "h2", "Video 2"
+   end
+ 
++  test "should display pagination when more than 20 archives exist" do
++    22.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/1084537", title: "Pagination Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_select "nav.pagination"
++  end
++
++  test "should not display pagination when 20 or fewer archives exist" do
++    10.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/1084537", title: "Pagination Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_select "nav.pagination", count: 0
++  end
++
+   test "should display archive details on show page" do
+     archive = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Test Video")
+ 

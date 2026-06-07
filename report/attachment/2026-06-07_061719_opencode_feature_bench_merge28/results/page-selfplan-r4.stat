@@ -1,0 +1,13 @@
+ Gemfile                                   |  3 +++
+ Gemfile.lock                              |  4 +++-
+ app/assets/stylesheets/pagy.css           | 39 +++++++++++++++++++++++++++++++
+ app/controllers/application_controller.rb |  1 +
+ app/controllers/archives_controller.rb    |  2 +-
+ app/views/archives/index.html.erb         |  6 +++++
+ 6 files changed, 53 insertions(+), 2 deletions(-)
+3	0	Gemfile
+3	1	Gemfile.lock
+39	0	app/assets/stylesheets/pagy.css
+1	0	app/controllers/application_controller.rb
+1	1	app/controllers/archives_controller.rb
+6	0	app/views/archives/index.html.erb

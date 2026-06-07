@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "will_paginate の .paginate＋will_paginate ヘルパ。rails-controller-testing を追加しコントローラテスト3件（+3 runs）。実機完全動作（20/5/nav）・functional YES。will_paginate を正しく実装・テストも追加で良質。"
+}

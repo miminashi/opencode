@@ -157,7 +157,9 @@ it.instance("plan agent denies the general subagent by default", () =>
     expect(plan).toBeDefined()
     expect(Permission.evaluate("task", "general", plan!.permission).action).toBe("deny")
     expect(Permission.evaluate("task", "explore", plan!.permission).action).toBe("allow")
-    expect(Permission.evaluate("task", "custom", plan!.permission).action).toBe("allow")
+    // fork policy is explore-only (`task: { "*": "deny", explore: "allow" }`), stricter than
+    // upstream's general-deny default — custom subagents are denied too.
+    expect(Permission.evaluate("task", "custom", plan!.permission).action).toBe("deny")
   }),
 )
 

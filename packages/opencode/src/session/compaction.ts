@@ -159,12 +159,12 @@ function discoverStateFiles(directory: string) {
           const basename = path.basename(file)
           sections.push(`\n<state_file path="${basename}">\n${content}\n</state_file>`)
         } catch (e) {
-          log.warn("failed to read state file", { file, error: e })
+          console.warn("failed to read state file", { file, error: e })
         }
       }
       return sections.length > 2 ? [sections.join("\n")] : []
     } catch (e) {
-      log.warn("failed to discover state files", { error: e })
+      console.warn("failed to discover state files", { error: e })
       return []
     }
   })

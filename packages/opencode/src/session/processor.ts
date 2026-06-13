@@ -141,7 +141,6 @@ export const layer = Layer.effect(
         const parsed = raw ? parseInt(raw, 10) : Number.NaN
         return Number.isFinite(parsed) && parsed > 0 ? parsed : 120_000
       })()
-      const slog = log.clone().tag("session.id", input.sessionID).tag("messageID", input.assistantMessage.id)
 
       const parse = (e: unknown) =>
         MessageV2.fromError(e, {
@@ -1024,10 +1023,6 @@ export const layer = Layer.effect(
                 if (!watchdogActive) return
                 if (Date.now() - lastChunkTs > stallThresholdMs) {
                   stallDetected = true
-                  slog.warn("stall detected", {
-                    thresholdMs: stallThresholdMs,
-                    idleMs: Date.now() - lastChunkTs,
-                  })
                   watchdogCtrl.abort(new DOMException("Stall timeout", "AbortError"))
                 }
               }, checkIntervalMs)
@@ -1054,6 +1049,7 @@ export const layer = Layer.effect(
             // finishReason and the loop would simply restart the step
             // without any recovery action.
             if (stallDetected && !ctx.assistantMessage.error) {
+              yield* Effect.logWarning("stall detected", { thresholdMs: stallThresholdMs })
               ctx.assistantMessage.error = new SessionV1.StallTimeoutError({
                 message: "LLM stream stalled (no chunks within threshold)",
                 thresholdMs: stallThresholdMs,

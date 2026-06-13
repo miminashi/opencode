@@ -1383,7 +1383,7 @@ export const layer = Layer.effect(
             ) {
               stallRecoveryUsed = true
               const stalledThreshold = handle.message.error.data.thresholdMs
-              log.info("stall recovery", { sessionID, thresholdMs: stalledThreshold })
+              yield* Effect.logInfo("stall recovery", { sessionID, thresholdMs: stalledThreshold })
 
               handle.message.error = undefined
               yield* sessions.updateMessage(handle.message)
@@ -1454,10 +1454,10 @@ export const layer = Layer.effect(
 
               if (truncatedTools.length > 0) {
                 truncationRetryCount++
-                log.info("truncated tool call detected", { sessionID, attempt: truncationRetryCount })
+                yield* Effect.logInfo("truncated tool call detected", { sessionID, attempt: truncationRetryCount })
 
                 if (truncationRetryCount > MAX_TRUNCATION_RETRIES) {
-                  log.info("truncation retry limit reached", { sessionID })
+                  yield* Effect.logInfo("truncation retry limit reached", { sessionID })
                   return "break" as const
                 }
 
@@ -1513,7 +1513,7 @@ export const layer = Layer.effect(
                 const planExists = !!reminderPlanContent
 
                 if (planExists) forcePlanExitNext = true
-                log.info("plan_exit reminder", {
+                yield* Effect.logInfo("plan_exit reminder", {
                   sessionID,
                   attempt: planExitReminderCount,
                   planExists,
@@ -1580,7 +1580,7 @@ export const layer = Layer.effect(
                   const PLAN_EXIT_KEYWORDS = /plan[_\s-]?exit|exit[\s_-]+plan[\s_-]+mode|switch[\s_-]+to[\s_-]+build/i
 
                   if (PLAN_EXIT_KEYWORDS.test(tailText)) {
-                    log.info("synthetic plan_exit emission", { sessionID })
+                    yield* Effect.logInfo("synthetic plan_exit emission", { sessionID })
                     syntheticPlanExitDone = true
                     yield* commitPlanExitSynthetic(sessionID).pipe(
                       Effect.provideService(Session.Service, sessions),

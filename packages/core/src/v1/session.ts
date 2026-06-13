@@ -56,6 +56,9 @@ export const StallTimeoutError = NamedError.create("StallTimeoutError", {
   message: Schema.String,
   thresholdMs: Schema.Number,
 })
+export const ContentFilterError = NamedError.create("ContentFilterError", {
+  message: Schema.String,
+})
 
 export class OutputFormatText extends Schema.Class<OutputFormatText>("OutputFormatText")({
   type: Schema.Literal("text"),
@@ -395,6 +398,7 @@ const AssistantErrorSchema = Schema.Union([
   StructuredOutputError.EffectSchema,
   ContextOverflowError.EffectSchema,
   StallTimeoutError.EffectSchema,
+  ContentFilterError.EffectSchema,
   APIError.EffectSchema,
 ]).annotate({ discriminator: "name" })
 type AssistantError = Schema.Schema.Type<typeof AssistantErrorSchema>

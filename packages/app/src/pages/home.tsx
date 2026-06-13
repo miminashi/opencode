@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/solid-query"
 import { Button } from "@opencode-ai/ui/button"
 import { Logo } from "@opencode-ai/ui/logo"
 import { Spinner } from "@opencode-ai/ui/spinner"
+import { ScrollView } from "@opencode-ai/ui/scroll-view"
 import { ProjectAvatar } from "@opencode-ai/ui/v2/project-avatar-v2"
 import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
 import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
@@ -18,7 +19,7 @@ import { Icon } from "@opencode-ai/ui/icon"
 import { usePlatform } from "@/context/platform"
 import { DateTime } from "luxon"
 import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { DialogSelectDirectory } from "@/components/dialog-select-directory"
+import { useDirectoryPicker } from "@/components/directory-picker"
 import { DialogSelectServer, useServerManagementController } from "@/components/dialog-select-server"
 import { DialogServerV2 } from "@/components/settings-v2/dialog-server-v2"
 import { ServerConnection, useServer } from "@/context/server"
@@ -53,7 +54,7 @@ const HOME_ROW_LAYOUT =
 const HOME_ROW_BASE = `${HOME_ROW_LAYOUT} border-0`
 const HOME_ROW = `${HOME_ROW_BASE} [font-weight:530] text-v2-text-text-muted hover:bg-v2-overlay-simple-overlay-hover focus-visible:bg-v2-overlay-simple-overlay-hover`
 const HOME_PROJECT_NAV_LABEL = "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap"
-const HOME_PROJECT_NAV_ROW = `${HOME_ROW_LAYOUT} h-7 gap-2 px-1.5 [font-weight:440] text-v2-text-text-muted hover:bg-v2-background-bg-layer-01 hover:text-v2-text-text-base hover:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)] data-[selected]:bg-v2-background-bg-layer-02 data-[selected]:text-v2-text-text-base data-[selected]:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)] data-[selected]:hover:bg-v2-background-bg-layer-02 focus-visible:bg-v2-background-bg-layer-01 focus-visible:text-v2-text-text-base focus-visible:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)]`
+const HOME_PROJECT_NAV_ROW = `${HOME_ROW_LAYOUT} h-7 gap-2 px-1.5 [font-weight:440] text-v2-text-text-muted hover:bg-v2-background-bg-layer-01 hover:text-v2-text-text-base hover:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)] data-[selected]:bg-v2-background-bg-layer-03 data-[selected]:text-v2-text-text-base data-[selected]:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)] data-[selected]:hover:bg-v2-background-bg-layer-03 focus-visible:bg-v2-background-bg-layer-01 focus-visible:text-v2-text-text-base focus-visible:[box-shadow:inset_0_0_0_0.5px_var(--v2-border-border-muted)]`
 const HOME_SECTION_LABEL = "text-v2-text-text-muted [font-weight:440]"
 
 type HomeSessionRecord = {
@@ -125,6 +126,7 @@ function HomeDesign() {
   const sync = useServerSync()
   const layout = useLayout()
   const platform = usePlatform()
+  const pickDirectory = useDirectoryPicker()
   const dialog = useDialog()
   const navigate = useNavigate()
   const server = useServer()
@@ -314,26 +316,19 @@ function HomeDesign() {
     navigateOnServer(conn, `/${base64Encode(session.directory)}/session/${session.id}`)
   }
 
-  async function chooseProject(conn: ServerConnection.Any) {
+  function chooseProject(conn: ServerConnection.Any) {
     function resolve(result: string | string[] | null) {
       addProjects(conn, homeProjectDirectories(result))
     }
 
     const server = global.createServerCtx(conn)
 
-    if (platform.openDirectoryPickerDialog && server.isLocal) {
-      const result = await platform.openDirectoryPickerDialog?.({
-        title: language.t("command.project.open"),
-        multiple: true,
-      })
-      resolve(result)
-      return
-    }
-
-    dialog.show(
-      () => <DialogSelectDirectory multiple={true} onSelect={resolve} server={conn} />,
-      () => resolve(null),
-    )
+    pickDirectory({
+      server: conn,
+      title: language.t("command.project.open"),
+      multiple: true,
+      onSelect: resolve,
+    })
   }
 
   function openSettings() {
@@ -390,7 +385,7 @@ function HomeDesign() {
             onClose={closeSearch}
             onSelect={selectSearchSession}
           />
-          <div class="mt-3 min-h-0 flex-1 overflow-y-auto">
+          <ScrollView class="mt-3 min-h-0 flex-1">
             <div class="pt-3 flex flex-col gap-6">
               <Show
                 when={!sessionLoad.isLoading}
@@ -432,7 +427,7 @@ function HomeDesign() {
                 </Show>
               </Show>
             </div>
-          </div>
+          </ScrollView>
         </section>
       </div>
     </div>
@@ -890,7 +885,7 @@ function HomeSessionSearch(props: {
         <label
           class="relative z-20 flex h-9 w-full items-center gap-2 rounded-[6px] py-1 pl-3 pr-2 text-v2-icon-icon-muted transition-[background-color,box-shadow] duration-[120ms] ease-in-out"
           classList={{
-            "bg-v2-background-bg-deep focus-within:bg-v2-background-bg-base focus-within:shadow-[0_0_0_0.5px_var(--v2-border-border-focus),var(--v2-elevation-raised)]":
+            "bg-v2-background-bg-layer-03 focus-within:bg-v2-background-bg-layer-03 focus-within:shadow-[0_0_0_0.5px_var(--v2-border-border-focus),var(--v2-elevation-raised)]":
               !props.open,
             "bg-transparent shadow-[0_0_0_0.5px_var(--v2-border-border-focus)]": props.open,
           }}
@@ -1101,6 +1096,7 @@ function groupSessions(records: HomeSessionRecord[], language: ReturnType<typeof
 function LegacyHome() {
   const sync = useServerSync()
   const platform = usePlatform()
+  const pickDirectory = useDirectoryPicker()
   const dialog = useDialog()
   const navigate = useNavigate()
   const global = useGlobal()
@@ -1128,7 +1124,7 @@ function LegacyHome() {
     navigate(`/${base64Encode(directory)}`)
   }
 
-  async function chooseProject() {
+  function chooseProject() {
     const s = server.current
     if (!s) return
 
@@ -1142,18 +1138,12 @@ function LegacyHome() {
       }
     }
 
-    if (platform.openDirectoryPickerDialog && server.isLocal()) {
-      const result = await platform.openDirectoryPickerDialog?.({
-        title: language.t("command.project.open"),
-        multiple: true,
-      })
-      resolve(result)
-    } else {
-      dialog.show(
-        () => <DialogSelectDirectory multiple={true} onSelect={resolve} server={s} />,
-        () => resolve(null),
-      )
-    }
+    pickDirectory({
+      server: s,
+      title: language.t("command.project.open"),
+      multiple: true,
+      onSelect: resolve,
+    })
   }
 
   return (

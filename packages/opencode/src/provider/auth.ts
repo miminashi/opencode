@@ -76,7 +76,7 @@ export class OauthCodeMissing extends Schema.TaggedErrorClass<OauthCodeMissing>(
 export class OauthCallbackFailed extends Schema.TaggedErrorClass<OauthCallbackFailed>()(
   "ProviderAuthOauthCallbackFailed",
   {
-    cause: Schema.optional(Schema.Defect),
+    cause: Schema.optional(Schema.Defect()),
   },
 ) {
   static isInstance(input: unknown): input is OauthCallbackFailed {
@@ -87,7 +87,7 @@ export class OauthCallbackFailed extends Schema.TaggedErrorClass<OauthCallbackFa
 export class OauthAuthorizeFailed extends Schema.TaggedErrorClass<OauthAuthorizeFailed>()(
   "ProviderAuthOauthAuthorizeFailed",
   {
-    cause: Schema.optional(Schema.Defect),
+    cause: Schema.optional(Schema.Defect()),
   },
 ) {
   static isInstance(input: unknown): input is OauthAuthorizeFailed {

@@ -1023,7 +1023,7 @@ export async function runMini(input: MiniCommandInput) {
     dir: input.directory,
     port: undefined,
     variant: undefined,
-    thinking: undefined,
+    thinking: true,
     mini: true,
     replay: input.replay ?? true,
     "replay-limit": input.replayLimit,

@@ -444,6 +444,8 @@ export const node = LayerNode.make({
     Truncate.node,
     RuntimeFlags.node,
     Database.node,
+    Permission.node,
+    SessionCompaction.node,
   ],
 })
 

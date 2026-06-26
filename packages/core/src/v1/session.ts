@@ -1,39 +1,52 @@
 export * as SessionV1 from "./session"
 
-import { Effect, Schema, Types } from "effect"
-import { EventV2 } from "../event"
-import { PermissionV1 } from "./permission"
-import { ProjectV2 } from "../project"
-import { ProviderV2 } from "../provider"
-import { ModelV2 } from "../model"
-import { optionalOmitUndefined, withStatics } from "../schema"
-import { Identifier } from "../util/identifier"
+import { Schema } from "effect"
 import { NonNegativeInt } from "../schema"
 import { NamedError } from "../util/error"
-import { SessionSchema } from "../session/schema"
-import { WorkspaceV2 } from "../workspace"
 
-const Timestamp = Schema.Finite.check(Schema.isGreaterThanOrEqualTo(0))
-
-export const MessageID = Schema.String.check(Schema.isStartsWith("msg")).pipe(
-  Schema.brand("MessageID"),
-  withStatics((schema) => ({ ascending: (id?: string) => schema.make(id ?? "msg_" + Identifier.ascending()) })),
-)
-export type MessageID = typeof MessageID.Type
-
-export const PartID = Schema.String.check(Schema.isStartsWith("prt")).pipe(
-  Schema.brand("PartID"),
-  withStatics((schema) => ({ ascending: (id?: string) => schema.make(id ?? "prt_" + Identifier.ascending()) })),
-)
-export type PartID = typeof PartID.Type
+export {
+  AgentPart,
+  AgentPartInput,
+  Assistant,
+  CompactionPart,
+  Event,
+  FilePart,
+  FilePartInput,
+  FilePartSource,
+  FileSource,
+  Format,
+  Info,
+  MessageID,
+  OutputFormatJsonSchema,
+  OutputFormatText,
+  Part,
+  PartID,
+  PatchPart,
+  Range,
+  ReasoningPart,
+  ResourceSource,
+  RetryPart,
+  SessionInfo,
+  SnapshotPart,
+  StepFinishPart,
+  StepStartPart,
+  SubtaskPart,
+  SubtaskPartInput,
+  SymbolSource,
+  TextPart,
+  TextPartInput,
+  ToolPart,
+  ToolState,
+  ToolStateCompleted,
+  ToolStateError,
+  ToolStatePending,
+  ToolStateRunning,
+  User,
+  WithParts,
+} from "@opencode-ai/schema/session-v1"
 
 export const OutputLengthError = NamedError.create("MessageOutputLengthError", {})
-
-export const AuthError = NamedError.create("ProviderAuthError", {
-  providerID: Schema.String,
-  message: Schema.String,
-})
-
+export const AuthError = NamedError.create("ProviderAuthError", { providerID: Schema.String, message: Schema.String })
 export const AbortedError = NamedError.create("MessageAbortedError", { message: Schema.String })
 export const StructuredOutputError = NamedError.create("StructuredOutputError", {
   message: Schema.String,

@@ -116,6 +116,23 @@ export function permissionInfo(request: PermissionRequest): PermissionInfo {
     }
   }
 
+  if (request.permission === "protected_branch") {
+    const meta = dict(request.metadata)
+    const branch = text(meta.branch) || pats[0] || "unknown"
+    const repositoryDir = text(meta.repositoryDir) || ""
+    const filepath = text(meta.filepath) || ""
+    const guidance = text(meta.guidance)
+    const guidanceLines = guidance ? guidance.split("\n") : []
+    return {
+      icon: "△",
+      title: `Edit on protected branch ${branch}${repositoryDir ? ` at ${toolPath(repositoryDir, { home: true })}` : ""}`,
+      lines: [
+        ...(filepath ? [`Target: ${toolPath(filepath, { home: true })}`] : []),
+        ...guidanceLines,
+      ],
+    }
+  }
+
   return {
     icon: "⚙",
     title: `Call tool ${request.permission}`,

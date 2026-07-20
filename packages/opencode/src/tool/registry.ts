@@ -18,6 +18,7 @@ import { InvalidTool } from "./invalid"
 import { SkillTool } from "./skill"
 import * as Tool from "./tool"
 import { Config } from "@/config/config"
+import { Git } from "@/git"
 import { type ToolContext as PluginToolContext, type ToolDefinition } from "@opencode-ai/plugin"
 import type { JSONSchema7, JSONSchema7Definition } from "@ai-sdk/provider"
 import { Schema } from "effect"
@@ -447,6 +448,7 @@ export const node = LayerNode.make({
     Permission.node,
     SessionCompaction.node,
     Ripgrep.node,
+    Git.node,
   ],
 })
 

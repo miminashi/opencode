@@ -369,6 +369,27 @@ export function PermissionPrompt(props: { request: PermissionRequest; directory?
               }
             }
 
+            if (permission === "protected_branch") {
+              const meta = props.request.metadata ?? {}
+              const branch = typeof meta["branch"] === "string" ? meta["branch"] : (props.request.patterns?.[0] ?? "")
+              const repositoryDir = typeof meta["repositoryDir"] === "string" ? meta["repositoryDir"] : ""
+              const filepath = typeof meta["filepath"] === "string" ? meta["filepath"] : ""
+              const guidance = typeof meta["guidance"] === "string" ? meta["guidance"] : ""
+              const guidanceLines = guidance ? guidance.split("\n") : []
+              return {
+                icon: "△",
+                title: `Edit on protected branch ${branch}${repositoryDir ? ` at ${pathFormatter.format(repositoryDir)}` : ""}`,
+                body: (
+                  <box paddingLeft={1} gap={0} flexDirection="column">
+                    <Show when={filepath}>
+                      <text fg={theme.textMuted}>{"Target: " + pathFormatter.format(filepath)}</text>
+                    </Show>
+                    <For each={guidanceLines}>{(line) => <text fg={theme.text}>{line}</text>}</For>
+                  </box>
+                ),
+              }
+            }
+
             return {
               icon: "⚙",
               title: `Call tool ${permission}`,

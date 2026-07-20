@@ -9,6 +9,7 @@ import { FSUtil } from "@opencode-ai/core/fs-util"
 import { EventV2Bridge } from "../../src/event-v2-bridge"
 import { Format } from "../../src/format"
 import { Truncate } from "@/tool/truncate"
+import { Git } from "@/git"
 import { Tool } from "@/tool/tool"
 import { Agent } from "../../src/agent/agent"
 import { SessionID, MessageID } from "../../src/session/schema"
@@ -41,6 +42,7 @@ const it = testEffect(
       CrossSpawnSpawner.node,
       Truncate.node,
       Agent.node,
+      Git.node,
     ]),
   ),
 )

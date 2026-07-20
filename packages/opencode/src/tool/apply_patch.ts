@@ -7,6 +7,9 @@ import { InstanceState } from "@/effect/instance-state"
 import { Patch } from "../patch"
 import { createTwoFilesPatch, diffLines } from "diff"
 import { assertExternalDirectoryEffect } from "./external-directory"
+import { makeProtectedBranchGuard } from "./protected-branch"
+import { Config } from "@/config/config"
+import { Git } from "@/git"
 import { trimDiff } from "./edit"
 import { LSP } from "@/lsp/lsp"
 import { FSUtil } from "@opencode-ai/core/fs-util"
@@ -26,6 +29,9 @@ export const ApplyPatchTool = Tool.define(
     const afs = yield* FSUtil.Service
     const format = yield* Format.Service
     const events = yield* EventV2Bridge.Service
+    const git = yield* Git.Service
+    const configOpt = yield* Effect.serviceOption(Config.Service)
+    const assertProtectedBranch = makeProtectedBranchGuard(git, configOpt)
 
     const run = Effect.fn("ApplyPatchTool.execute")(function* (
       params: Schema.Schema.Type<typeof Parameters>,
@@ -71,6 +77,7 @@ export const ApplyPatchTool = Tool.define(
 
       for (const hunk of hunks) {
         const filePath = path.resolve(instance.directory, hunk.path)
+        yield* assertProtectedBranch(ctx, filePath)
         yield* assertExternalDirectoryEffect(ctx, filePath)
 
         switch (hunk.type) {
@@ -140,6 +147,7 @@ export const ApplyPatchTool = Tool.define(
             }
 
             const movePath = hunk.move_path ? path.resolve(instance.directory, hunk.move_path) : undefined
+            yield* assertProtectedBranch(ctx, movePath)
             yield* assertExternalDirectoryEffect(ctx, movePath)
 
             fileChanges.push({

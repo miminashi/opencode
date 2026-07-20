@@ -1,6 +1,6 @@
 import { Schema } from "effect"
 import * as path from "path"
-import { Effect } from "effect"
+import { Effect, Option } from "effect"
 import * as Tool from "./tool"
 import { LSP } from "@/lsp/lsp"
 import { createTwoFilesPatch } from "diff"
@@ -13,6 +13,9 @@ import { FSUtil } from "@opencode-ai/core/fs-util"
 import { InstanceState } from "@/effect/instance-state"
 import { trimDiff } from "./edit"
 import { assertExternalDirectoryEffect } from "./external-directory"
+import { makeProtectedBranchGuard } from "./protected-branch"
+import { Config } from "@/config/config"
+import { Git } from "@/git"
 import * as Bom from "@/util/bom"
 
 const MAX_PROJECT_DIAGNOSTICS_FILES = 5
@@ -31,6 +34,9 @@ export const WriteTool = Tool.define(
     const fs = yield* FSUtil.Service
     const events = yield* EventV2Bridge.Service
     const format = yield* Format.Service
+    const git = yield* Git.Service
+    const configOpt = yield* Effect.serviceOption(Config.Service)
+    const assertProtectedBranch = makeProtectedBranchGuard(git, configOpt)
 
     return {
       description: DESCRIPTION,
@@ -41,6 +47,7 @@ export const WriteTool = Tool.define(
           const filepath = path.isAbsolute(params.filePath)
             ? params.filePath
             : path.join(instance.directory, params.filePath)
+          yield* assertProtectedBranch(ctx, filepath)
           yield* assertExternalDirectoryEffect(ctx, filepath)
 
           const exists = yield* fs.existsSafe(filepath)

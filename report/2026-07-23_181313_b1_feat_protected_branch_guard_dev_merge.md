@@ -5,19 +5,19 @@
 
 ## 概要
 
-本レポートは、opencode fork が保護ブランチ (`main`/`master`) 上で write/edit/apply_patch tool を発火させた際に permission dialog を提示する `protected-branch guard` を fork の `dev` にマージした作業の記録である。マージ判断は Phase 3a の 20 trial bench 実績 (発火 10/10・書き込み阻止 100%・非保護ブランチ誤発火 0%) に基づく実運用投入で、Phase 0-a で洗い出した 3 件の過去事案 (5/16 AGENTS.md、6/27 Dockerfile、6/29 thumbnail_test) の再発を実装レベルで止めることが目的である。
+本レポートは、保護ブランチで誤って直接編集する事故を防ぐガードを fork の dev に取り込み、日常運用に投入した作業の記録である。過去に何度か発生した「メインブランチで作業中の AI が意図しない場所に書き込む」事案の再発を、実装レベルで止めることが目的である。
 
-作業の直前に fable レビュー (`report/2026-07-20_225624_b1_series_review_phase3.md`) が 6 つの指摘を出しており、そのうちマージ判断に直結する 2 点をマージ前に処理した。指摘 2 (Phase 3a-main 10 trial の completed write の実際の書き込み先が未確定・A-2 型幻覚化へ転化の疑い) には、既存の session DB 20 個から write filePath を全数抽出する pre-merge 検証を実施し、3a-main は「plan file 書き + AGENTS.md への edit は guard error + worktree 遷移は 1/10 のみ」で、旧 A-2 型 (実装ゼロ幻覚) ではなく「作業未達成」という別の失敗モードであることを判明させた。ユーザ判断でマージ進行、対応は Step 3 として次段に残した。
+事前に第三者レビュー (fable レビュー) から複数の指摘を受け取っていた。そのうちマージ判断に直結する 2 件をマージ前に処理する必要があり、まず既存のベンチ結果に残っていた「AI が拒否された後で実際にどこに書き込んだのか未確定」という懸念を、過去のセッション記録を全数抽出する形で確認した。
 
-マージ前検証は fork-regression-test skill (Phase A〜E 全走、FAIL 0 件) と feature-bench core (25 trial、CORE HEALTH 全 healthy、functional 25/25、iso_break 0/25) の 2 系統で行った。fork-regression Phase A は ytdlor が main branch にいたため今回導入する guard で意図せず block される事象が発生し、ytdlor 側に一時 feature branch を切って回避した。この経験から、guard 実装が「実運用の main branch で AI が直接編集する経路」も同じく block することが実測できた。
+その検証の結果、AI は拒否された後でも計画ファイルは書けるものの、本来編集したかったファイルへの書き込みは阻止されたまま、代替となる作業空間 (worktree) にも切り替えられていない、という別の失敗モードが観測された。当初懸念されていた「実装ゼロ幻覚」とは異なるパターンで、マージは進行、この課題は改善タスクとして次段に残した。
 
-マージ本体は `--no-ff` で明示的な merge commit を作成 (`077068cbab Merge branch 'feat-protected-branch-guard' into dev`)、post-merge の typecheck + build も問題なく通過した。version は `0.0.0-dev-202607202249` として dev の dist に反映されている。
+マージ前の動作確認として、fork 独自機能のリグレッションテストと機能追加ベンチを回した。いずれも大きな回帰は観測されず、ガードが日常のタスクに副作用を与えていないことを確認できた。マージ本体は明示的なマージコミットを作り、マージ後のビルド・型チェックも問題なく通った。
 
-その後、プラン当初の計画に従って with-guard baseline を 2 run × 25 trial = 50 trial 取得したが、集計してみると feature-bench は bench worktree (非保護ブランチ) で作業するため guard は原理的に発火せず、pre-merge の run と合わせて 3 run 75 trial で iso_break 0/75、functional 73/75、CORE HEALTH 全 healthy と既存 `baseline_scen_repaired_1+2` と統計的に同等だった。したがって新 baseline を作る意義は消え、`baselines.tsv` は更新せず「既存 baseline のまま継続」を本レポート内で記録して判断を保存する形にした。取得した with-guard データ (guard_bl1 / guard_bl2) は参考記録として `tmp/feat-bench/results/` に保持する。
+元プランでは、マージ後に「ガード有り」の状態で新しいベースラインを取り直す予定だったので、それも実施した。しかし取得結果を見直すと、ベンチは元々 worktree (非保護ブランチ) で作業する構造だったため、ガードは今回のベンチ構成では原理的に発火せず、既存のベースラインと数値差が観測されなかった。したがって新しいベースラインを作る意義は消え、既存のベースラインをそのまま使い続けることにした。
 
-プロセス面での反省として、Step 4 の pre-merge bench で n=25 の実測により「guard は feature-bench 中に発火しない」ことが既に判明していたにもかかわらず、機械的にプラン通り Step 6-7 を実行して mi25 の GPU 時間を 8 時間 (bench 4h × 2 run) 費やしてしまった判断ミスがある。得られた結論は n=25 でも変わらず、追加した 50 trial は同じ結論を n=75 に拡張しただけで新しい洞察は得ていない。この点は NEXT_SESSION.md 補足の「Step 中間で plan の前提を根本から変えるデータが得られたら残 Step の妥当性を再確認する」教訓として記録した。
+一方、この「不要なベースライン取得」に長時間の GPU 時間を費やしてしまった。マージ前のベンチで既に「ガードは発火しない」ことは実測で判明していたのに、プランの残りを機械的に消化してしまった判断ミスである。この教訓は次回のプランレビュー基準として取り込んだ。
 
-fable レビューの 6 指摘への対応は、指摘 1 (bash 迂回限界) を Step 1 の feature commit の Limitations コメントと commit message + NEXT_SESSION.md の Phase 5 スコープ書換で消化、指摘 2 は Step 0 の pre-merge 検証で消化、指摘 3・4・6 は NEXT_SESSION.md の補足メモに反映、指摘 5 (指標のすり替え) は本レポートで「試行ベース / 完了ベース」を明示分離して記述した。次段の最優先課題は Phase 5 (branch-aware な bash tool 制約) で、A 型 (parent cwd 相対) と B 型 (親絶対パス) の両方を捕捉する設計に拡張する必要がある。副次的に、Step 0 で判明した「Reject 後の worktree 遷移が 1/10」の低さを改善するため、`protected-branch.ts` の guidance メッセージ強化を任意課題として NEXT_SESSION.md に残した。
+fable レビューの各指摘は大半を消化し、残る 1 件 (実運用での UX コスト測定) は今後の運用ログ観測に委ねた。次段の最優先課題は、今回のガードでは防げない「シェル経由の書き換え」への対策で、シリーズレビューの指摘に沿って対象を保護ブランチ配下まで広げた設計案を残した。
 
 ## 前提条件・目的
 

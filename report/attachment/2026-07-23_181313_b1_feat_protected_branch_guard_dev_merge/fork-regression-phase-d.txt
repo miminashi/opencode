@@ -1,0 +1,10 @@
+=== Phase D: CLI reasoning streaming (guard-premrg) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/feat-protected-branch-guard/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026年  7月 21日 火曜日 00:42:03 JST
+
+  answer detected at iter=8
+  reasoning_line=1
+  answer_line=2
+  D PASS: reasoning marker before answer
+
+End: 2026年  7月 21日 火曜日 00:43:23 JST

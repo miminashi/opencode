@@ -1,0 +1,25 @@
+=== Phase B: plan_exit dialog branches (guard-premrg) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/feat-protected-branch-guard/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026年  7月 21日 火曜日 00:36:20 JST
+
+Cooldown 30s...
+--- B-0: Plan agent 起動 ---
+  [B-0] PASS: plan_exit dialog detected (iter=7)
+--- B-1: Markdown 描画 ---
+  B-1 WARN: no markdown headings detected
+--- B-2: スクロール ---
+  B-2 WARN: viewport unchanged (short plan?)
+--- B-3: Option 3 (No) ---
+  B-3 PASS: stayed in Plan
+--- B-4: Custom feedback ---
+  [B-4-first] PASS: plan_exit dialog detected (iter=3)
+  B-4-placeholder PASS: textarea rendered
+  B-4-marker PASS: typed text visible
+  [B-4-redialog] PASS: plan_exit dialog detected (iter=3)
+  B-4-redialog PASS: dialog re-appeared
+--- B-5: Option 1 (Yes) ---
+  B-5 PASS: switched to Build
+--- B-6: TUI 終了 ---
+  B-6 PASS: TUI exited to shell
+
+End: 2026年  7月 21日 火曜日 00:39:57 JST

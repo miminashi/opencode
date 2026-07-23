@@ -1,0 +1,52 @@
+=== Phase A: plan_exit basic flow (guard-premrg) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/feat-protected-branch-guard/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  7月 21日 火曜日 00:26:54 JST
+
+Test 1: 00:26:54
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 40s
+  New plan files: 1
+  Latest: 1784560763947-sunny-tiger.md
+
+Test 2: 00:27:52
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 60s
+  New plan files: 1
+  Latest: 1784561280703-happy-star.md
+
+Test 3: 00:29:13
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1784561362972-brave-star.md
+
+Test 4: 00:30:45
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1784561453599-swift-tiger.md
+
+Test 5: 00:32:16
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1784561545009-jolly-cactus.md
+
+=== Summary ===
+Total: 5
+Success: 5
+Timeout: 0
+Crash: 0
+Validation triggered: 0
+End: 2026年  7月 21日 火曜日 00:33:47 JST

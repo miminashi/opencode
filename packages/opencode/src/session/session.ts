@@ -329,11 +329,31 @@ export const Event = {
   Error: SessionV1.Event.Error,
 }
 
-export function plan(input: { slug: string; time: { created: number } }, instance: InstanceContext) {
-  const base = instance.project.vcs
-    ? path.join(instance.worktree, ".opencode", "plans")
-    : path.join(Global.Path.data, "plans")
-  return path.join(base, [input.time.created, input.slug].join("-") + ".md")
+// 計画文書は常にグローバル（Global.Path.data/plans）に置く。
+//
+// 以前は vcs のあるプロジェクトだけ `<worktree>/.opencode/plans` に書いていた。
+// グローバルへ一本化する理由は 2 つ:
+//
+// 1. 成果物ツリーを手続き文書で汚さない。計画文書が `git status` に出ると、
+//    コミットするかどうかの判断が毎回発生する。
+// 2. 外部 verifier（Phase 6 の judge）の判断対象から外す。「計画文書の作成を
+//    通すべきか」は judge の判定が最も揺れていたカテゴリで、雛形を変えるたびに
+//    結果が振れていた（report/2026-08-03_132554_phase6_ctx_step3.md）。
+//    成果物ツリーの外に出れば、そもそも判定の対象にならない。
+//
+// グローバル側は plan agent の permission が既に許可している
+// （agent/agent.ts の external_directory `<data>/plans/*` と edit `<data>/plans/*.md`）。
+//
+// ⚠ 「worktree 内で permission のパターン不一致により deny され、行き場を失った
+//    LLM が親リポジトリへ書きに行っていた」という説明を一度書いたが、これは誤り。
+//    tool 引数を時系列で追うと LLM は最初から親の絶対パスを指定しており、
+//    permission はそれを正しく止めていた（corpus B の 34 件は全て
+//    tool_status = error = 阻止された記録）。この変更は permission の不具合の
+//    修正ではない。
+//
+// instance は呼び出し元のシグネチャ互換のために残している。
+export function plan(input: { slug: string; time: { created: number } }, _instance: InstanceContext) {
+  return path.join(Global.Path.data, "plans", [input.time.created, input.slug].join("-") + ".md")
 }
 
 // ENOENT のみを空文字に倒し、その他のエラー（EACCES, EISDIR 等）は die として

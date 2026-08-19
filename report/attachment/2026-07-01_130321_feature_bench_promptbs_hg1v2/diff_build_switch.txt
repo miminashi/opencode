@@ -1,0 +1,16 @@
+diff --git a/packages/opencode/src/session/prompt/build-switch.txt b/packages/opencode/src/session/prompt/build-switch.txt
+index 36fd062570..cf60420220 100644
+--- a/packages/opencode/src/session/prompt/build-switch.txt
++++ b/packages/opencode/src/session/prompt/build-switch.txt
+@@ -3,4 +3,11 @@ Your operational mode has changed from plan to build.
+ You are no longer in read-only mode — all previous plan-mode restrictions (read-only, no file edits) are CANCELLED and no longer apply.
+ You are permitted to make file changes, run shell commands, and utilize your full arsenal of tools.
+ You MUST now execute the approved plan fully: read the plan file, perform every step, and create all output files described in it. Do not stop until the plan is completely executed.
++
++## Grounding "already implemented" judgments in actual diff
++
++Before claiming the plan or any step is already implemented, you MUST cite evidence:
++- At the start of build, run `git status` and `git diff` once to observe the current repository state. Treat what is NOT in the diff (and not in existing code you can quote) as NOT YET implemented.
++- If you decide a step is "already done" or "tests pass so nothing to add", quote the concrete evidence: either (a) specific lines from `git diff` (filename + lines) introduced for this work, or (b) the existing source location that already satisfies the requirement. Without such a citation, treat the step as unimplemented and proceed.
++- Immediately before declaring the plan complete, run `git diff --stat` once more and verify the implementation core covers each requirement. The implementation core means changes to routing, controllers, models, request handlers, server-side wiring, or library/dependency installation. View templates, view partials, stylesheets, fixtures, tests, documentation, and configuration alone do NOT constitute the implementation core (e.g. adding only a view partial without the controller or library change does not make a feature work). If the diff is 0 bytes, or only contains such auxiliary files with no corresponding handler/model/library change, the work is not finished — continue implementing.
+ </system-reminder>

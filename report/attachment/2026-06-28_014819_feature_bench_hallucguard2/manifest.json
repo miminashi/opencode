@@ -1,0 +1,65 @@
+{
+  "run_id": "hallucguard2",
+  "mode": "ablation",
+  "date_jst": "2026-06-28 01:48",
+  "trials": "30",
+  "set": "full",
+  "bench_spec_version": "x_hallucguard2",
+  "bench_spec_file": "/home/ubuntu/projects/opencode/tmp/feat-bench/specs/x_hallucguard2.md",
+  "bench_spec_sha256": "5b0e224d",
+  "scenario_fingerprint": [
+    {
+      "scenario_id": "search-selfplan",
+      "scenario_version": "1",
+      "prompt_sha": "4a307edf"
+    },
+    {
+      "scenario_id": "search-givenplan",
+      "scenario_version": "1",
+      "prompt_sha": "ee883147"
+    },
+    {
+      "scenario_id": "page-selfplan",
+      "scenario_version": "1",
+      "prompt_sha": "a7dc5182"
+    },
+    {
+      "scenario_id": "page-givenplan",
+      "scenario_version": "1",
+      "prompt_sha": "303ac003"
+    },
+    {
+      "scenario_id": "disk-selfplan",
+      "scenario_version": "1",
+      "prompt_sha": "ab528537"
+    },
+    {
+      "scenario_id": "disk-givenplan",
+      "scenario_version": "1",
+      "prompt_sha": "fcab49f0"
+    }
+  ],
+  "grader_version": "3",
+  "judge_rubric_version": "1",
+  "opencode_version": "0.0.0-dev-202606260306",
+  "opencode_bin_path": "/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode",
+  "llama_cpp_commit": "0843245cb",
+  "model": "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL",
+  "sampler_params": "temp=0.6 top-p=0.95 top-k=20 min-p=0 presence-penalty=1.0 dry-multiplier=0",
+  "results": {
+    "total": 30,
+    "functional": "19/30",
+    "functional_by_pattern": {
+      "selfplan": "4/15",
+      "givenplan": "15/15"
+    },
+    "test_pass": "29/30",
+    "transition_self_exit": "29/30",
+    "page_gem": {
+      "kaminari": 7,
+      "-": 3
+    },
+    "score_mean": 3.53
+  },
+  "report_path": "report/2026-06-28_014819_feature_bench_hallucguard2.md"
+}

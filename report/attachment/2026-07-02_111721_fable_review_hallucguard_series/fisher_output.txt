@@ -1,0 +1,7 @@
+p = 0.3498  |  m32 vs hg1: core selfplan 実装ゼロ機械定義 5/10 -> 2/10 (「60%削減」)
+p = 0.3698  |  m32 vs hg1: core selfplan 真の幻覚合計 6/10 -> 3/10 (「50%削減」)
+p = 0.1698  |  m32 vs hg4: core selfplan 真の幻覚合計 6/10 -> 2/10 (「-67% 最良」)
+p = 0.3698  |  baseline_scen_v2 vs promptbs_hg1: page-selfplan hallu_zero 6/10 -> 3/10 (「半減」)
+p = 1.0000  |  promptbs_hg1 vs hg1v2: page-selfplan hallu_zero 3/10 -> 2/10 (「さらに減」)
+p = 0.1667  |  m32 vs hg1: search-selfplan 実装ゼロ 3/5 -> 0/5 (「完全消失」)
+p = 0.1698  |  m32 vs hg4: selfplan functional 4/10 -> 8/10 (「最高」)

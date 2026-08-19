@@ -1,0 +1,70 @@
+# probe 実行出力の写し (2026-07-02 JST)
+
+## fable_review_db_probe3.py — 故障/対照試行の親リポジトリ (main repo) アクセス集計
+
+== promptbs_hg1v2/search-selfplan-r1 (対照: score5): main-repo パスを含む tool 呼び出し 0 件
+== promptbs_hg1v2/page-selfplan-r5 (対照: score5): main-repo パスを含む tool 呼び出し 0 件
+== promptbs_hg1v2/search-givenplan-r1 (対照: givenplan score5): main-repo パスを含む tool 呼び出し 0 件
+== m32/search-selfplan-r2 (実装ゼロ): main-repo パスを含む tool 呼び出し 11 件
+   read [completed]: 10
+   edit [completed]: 1
+   例 edit[completed]: {"filePath": "/home/ubuntu/projects/ytdlor/app/assets/stylesheets/form.css", ...}
+== promptbs_hg1v2/search-selfplan-r2 (実装ゼロ): main-repo パスを含む tool 呼び出し 7 件
+   read [completed]: 7
+== promptbs_hg1v2/page-selfplan-r3 (partial-only+tab_fallback): main-repo パスを含む tool 呼び出し 23 件
+   read [completed]: 8
+   write [error]: 6
+   bash [error]: 4
+   glob [completed]: 2
+   edit [error]: 2
+   bash [completed]: 1
+   例 bash[error]: {"command": "grep -A 5 \"kaminari\" /home/ubuntu/projects/ytdlor/Gemfile.lock 2>/dev/null || echo \"NOT FOUND IN Gemfile.lock\""}
+   例 write[error]: {"content": "# ページネーション機能の動作確認\n\n## 現状\n\nページネーション機能は既に実装済み:\n\n- `Gemfile:55` — `gem \"kaminari\"` が追加済み\n- `app/controllers/archives_controller.rb:7` — `.page(params[:page]).per(20)` ...}
+
+## fable_review_db_probe6.py — m32/page-selfplan-r4 全 tool 呼び出し時系列
+
+[   4] read [completed] /home/ubuntu/projects/ytdlor
+[   5] glob [completed] pattern=app/models/archive* path=
+[   6] glob [completed] pattern=app/controllers/*archive* path=
+[  10] read [completed] /home/ubuntu/projects/ytdlor/app/models/archive.rb
+[  11] read [completed] /home/ubuntu/projects/ytdlor/app/controllers/archives_controller.rb
+[  12] read [completed] /home/ubuntu/projects/ytdlor/Gemfile
+[  16] glob [completed] pattern=app/views/archives/* path=
+[  20] read [completed] /home/ubuntu/projects/ytdlor/app/views/archives/index.html.erb
+[  21] glob [completed] pattern=test/**/*archive* path=
+[  25] read [completed] /home/ubuntu/projects/ytdlor/test/controllers/archives_controller_test.rb
+[  26] read [completed] /home/ubuntu/projects/ytdlor/test/fixtures/archives.yml
+[  27] glob [completed] pattern=config/initializers/*kaminari* path=
+[  31] glob [completed] pattern=config/initializers/* path=
+[  35] bash [completed] git log --oneline -20
+[  39] bash [completed] git show --stat 0857d14
+[  43] glob [completed] pattern=test-results/* path=
+[  47] bash [error] grep -A2 "kaminari" /home/ubuntu/projects/ytdlor/Gemfile.lock
+[  52] write [completed] /home/ubuntu/projects/ytdlor/.claude/worktrees/bench-feat-page-selfplan-r4/.opencode/plans/1782476922383-curious-pixel.md
+[  56] plan_exit [completed] {}
+[  61] write [completed] /home/ubuntu/projects/ytdlor/config/initializers/kaminari_config.rb   ← 親リポジトリへの書き込み
+[  65] skill [completed] {"name": "test-runner"}
+[  69] bash [completed] ./docker_compose run --rm -e RAILS_ENV=test web bin/rails db:test:prepare
+[  73] bash [completed] ./docker_compose build web
+[  77] bash [completed] ./docker_compose run --rm -e RAILS_ENV=test web bin/rails db:test:prepare
+[  81] bash [completed] ./docker_compose run --rm -e RAILS_ENV=test web bin/rails test test/controllers/archives_controller_test.rb
+[  86] bash [completed] ./docker_compose run --rm -e RAILS_ENV=test web bin/rails test
+→ worktree に kaminari view 7 ファイルを作る操作はセッションに存在しない。
+
+## その他の実測
+
+- partial-only diff 8 件 (m32/hg1/hg2/hg1_rerun/hg3/hg4 の r4 + promptbs_hg1/hg1v2 の r3) の md5:
+  全件 95614bab417e84d5a56ecc598ae85607 (5011 bytes、kaminari gem 同梱 view テンプレートの逐語コピー)
+- 現行世代 worktree の clean setup コミット tree: 6 グループ全て 09326b364f9572cc27b61eefb0aa050146a918e5
+- hg4 世代 (rerun_hallucguard4/clean_base_shas.tsv の 8 SHA) の tree: 全て 6f34b5e47725b7e7b726ed26c8a9c8791eb265a1
+- fb157faf (hg4 レポートが「r2 base commit」として引用) の実体: rerun_hallucguard1_rerun/clean_base_shas.tsv:2
+  = hg1_rerun run の search-selfplan-r2 setup コミット (hg4 run の r2 は c01ded7c)
+- メインリポジトリ git status --short: M Gemfile / archives_controller.rb / archive.rb / index.html.erb /
+  helpers / tests、?? app/views/kaminari/ / disk-usage.css / kaminari_config.rb / archives_helper_test.rb
+  (mtime 6/21〜6/29 = シリーズ走行期間中に更新)
+- Gemfile:55 = gem "kaminari" (54 行目コメント "# for pagination")、archives_controller.rb:7 =
+  .search(params[:search])....page(params[:page]).per(20) — hg1v2 r3 の plan 引用と完全一致
+- promptbs_hg1 disk-selfplan-r1 の .stat: app/services/disk_usage_service.rb 57 行 + helper 11 行 +
+  view 10 行 + tests 86 行 (functional true / impl_body_files 0 / partial_only true = 偽陽性)
+- git reset --hard はステージ済み新規ファイルをディスクから削除する (scratchpad 実験で確認) →
+  collect の git add -A + 次 run setup の reset --hard + clean -fdx により run 間のファイル残留は否定

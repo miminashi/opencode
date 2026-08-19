@@ -1,0 +1,20 @@
+diff --git a/packages/opencode/src/session/reminders.ts b/packages/opencode/src/session/reminders.ts
+index 5e32874251..a3bcb5485d 100644
+--- a/packages/opencode/src/session/reminders.ts
++++ b/packages/opencode/src/session/reminders.ts
+@@ -23,6 +23,15 @@ const planEnteringSuffix = (plan: string, exists: boolean) =>
+   ` This is the only file you are allowed to edit.\n\n` +
+   `## Execution-Only Requests\n\n` +
+   `If the user's request is purely about EXECUTING something (running tests, running commands, deploying, etc.) rather than designing or implementing new code, write a minimal plan and immediately call plan_exit to switch to build mode. Do NOT refuse with "I'm in read-only mode".\n\n` +
++  `## Worktree for Protected Branches\n\n` +
++  `Before writing any files, check whether the current working directory is on a protected branch (main / master / production). ` +
++  `If it is, create a work worktree first instead of editing the protected branch directly.\n\n` +
++  `Example:\n\n` +
++  `\`\`\`\n` +
++  `git worktree add -b work-<task_name> ../work-<task_name> HEAD\n` +
++  `cd ../work-<task_name>\n` +
++  `\`\`\`\n\n` +
++  `If the current directory is already on a work branch or a worktree, you may proceed with edits directly.\n\n` +
+   `## Completing the Plan\n\n` +
+   `When you have finished writing the plan and clarified any questions with the user, you MUST present the final plan to the user by outputting the complete plan content as text in the conversation, then call the plan_exit tool to signal that planning is complete. ` +
+   `Do not stop your turn without either asking the user a question or calling plan_exit.\n`

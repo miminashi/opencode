@@ -1,0 +1,16 @@
+=== Phase E: tool truncation / llama-server 耐性 (guard-premrg) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/feat-protected-branch-guard/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026年  7月 21日 火曜日 00:44:34 JST
+
+--- E-1: rolling truncation (seq 1 3000) ---
+  E-1 WARN: GPU idle for 3 min, tool execution likely bypassed (iter=18)
+  E-1 WARN: truncation marker not detected within 10 min
+--- E-2: tool call truncation retry code ---
+  E-2 PASS: session/prompt.ts truncation refs=10
+--- E-3: llama-server error handling code ---
+  (E-3 overflow found in packages/llm/src/provider-error.ts)
+  E-3 PASS: both overflow pattern and retry logic present
+--- E-4: TUI 終了 ---
+  E-4 PASS: TUI exited to shell
+
+End: 2026年  7月 21日 火曜日 00:47:48 JST

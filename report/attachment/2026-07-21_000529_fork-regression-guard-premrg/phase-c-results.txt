@@ -1,0 +1,12 @@
+=== Phase C: TUI 安定化スモーク (guard-premrg) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/feat-protected-branch-guard/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026年  7月 21日 火曜日 00:40:56 JST
+
+--- C-1: --prompt 起動 ---
+  C-1 PASS: spinner/prompt visible
+--- C-2: OSC52 シーケンス ---
+  C-2 PASS: OSC52 markers=18
+--- C-3: TUI 終了 ---
+  C-3 PASS: TUI exited to shell
+
+End: 2026年  7月 21日 火曜日 00:41:16 JST

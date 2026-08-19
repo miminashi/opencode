@@ -1,0 +1,10 @@
+  ✓ north_appr_r4_c0_rep1: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_c0_rep2: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_c0_rep3: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_c2_rep1: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_c2_rep2: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_c2_rep3: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_s1_rep1: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_s1_rep2: 再開可（本走 sample・raw 78 件）
+  ✓ north_appr_r4_s1_rep3: 再開可（本走 sample・raw 78 件）
+✓ r4 出力ディレクトリ検査 通過（新規 0 / 再開可 9）

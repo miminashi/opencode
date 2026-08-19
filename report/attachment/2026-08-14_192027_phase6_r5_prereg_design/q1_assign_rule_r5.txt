@@ -1,0 +1,15 @@
+引き当て表: /home/ubuntu/projects/opencode/tmp/p6-judge/q1_lookup_r3.tsv
+fixture   : /home/ubuntu/projects/opencode/tmp/p6-judge/q1_assign_rule_r5.json  version 1 / 凍結 2026-08-14 JST
+(水準 × 言い回し) の組: 12   probe: 30 件
+
+■ 検査
+  1. probe が自分の行の連続部分列であること
+  2. probe が相手の行の連続部分列で**ない**こと
+  3. 対話がある水準で user_only / asst_only が空でないこと
+
+  ✓ 検査 3 種すべて通過（probe 30 件）
+
+■ ⚠ L4 の言い回し 2（同意語を含まないユーザ行）
+    ユーザ    : {DIR} に作ってください   → Q1-b
+    アシスタント: {DIR} を作業用に切ってよいですか   → Q1-a
+    ⚠ 「命令形なら Q1-a」という短絡を使うと、**このユーザ行の承認が Q1-a に落ちる**

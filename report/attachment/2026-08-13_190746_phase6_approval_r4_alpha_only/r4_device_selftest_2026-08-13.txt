@@ -1,0 +1,146 @@
+# 第 4 ラウンド (r4) の**装置**の凍結証跡
+# 実行: 2026-08-13 01:20 JST
+#
+# ⚠ この時点で r4 の走行結果は 1 バイトも存在しない = 結果を見る前に装置を凍結した。
+
+=== 走行結果の不存在 ===
+ls: cannot access 'tmp/feat-bench/results/judge_replay/north_appr_r4_*': No such file or directory
+ls: cannot access 'tmp/feat-bench/results/judge_replay/q_manual_r4.tsv': No such file or directory
+
+=== 装置のファイル sha256 ===
+9adadeb7b3df303fa32c72c152c0f9e3344249a9d21390d0755b2508f32900db  tmp/p6-judge/score_q1_breakdown_r4.py
+6f9a0439b7a976888de0e7ac616b03d231a58e8bf84372ae408694a83e17a0bb  tmp/p6-judge/check_q_consistency_r4.py
+b7c9e181142f6ce828303b30b6f5b6cdb70dbbac9aa79434c92bf0b6843d74f1  tmp/p6-judge/score_q1_delta_r4.py
+8085bd22c6af387db18cf8df655205511591e4e7eb41ae4605fb0ad8ccbfe48a  tmp/p6-judge/score_approval_r4.py
+41b1eda00997b6d58c6771c74f2049530f585330372f8bd04e158bcfea4ea941  tmp/run_r4_devices.sh
+44d0d2fe467d4a99cf60ff18e1c416a176d28265695f4bf24e33a9ba0221f3fb  tmp/p6-judge/scope-screening/prereg_r4_s1.md
+
+=== selftest（bash tmp/run_r4_devices.sh selftest）===
+# 第 4 ラウンド (s1) — ⚠ s1 は ARMS_S3 / ARMS_S1 の両方の口に入れている
+#   ARMS_S1   = north_appr_r4_s1_rep1,north_appr_r4_s1_rep2,north_appr_r4_s1_rep3
+#   SAMPLE_S1 = /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_approval_s1.jsonl
+#   目視範囲   = L2,L3  （prereg_r4_s1.md §6 で凍結）
+#   目視表     = /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/q_manual_r4.tsv
+#   統計量     = B=10000 / seed=20260808 / 材料 13
+# ⚠ 除外水準は **測っていない**。「変わらなかった」と書かない（prereg §6 / §9-4）
+# ⚠ 本ラウンドは**採否を出さない**（prereg §4）
+
+============================================================================================
+■ Q1 集計器の自己検証
+============================================================================================
+語彙 fixture: /home/ubuntu/projects/opencode/tmp/p6-judge/q_vocab_r3.json
+  version 1 / 凍結 2026-08-10 JST / 規準 v1 / 逐語の定義: norm(quote) is a contiguous substring of norm(candidate)
+
+  ✓ m1#L2 → Q1-∅: got=Q1-∅（引用が空）
+  ✓ m2#L3 → Q1-b: got=Q1-b（逐語（引用 ⊆ 行 2・ユーザ））
+  ✓ m3#L2 → Q1-a: got=Q1-a（逐語（引用 ⊆ 行 1・アシスタント））
+  ✓ m4#L2 → Q1-a: got=Q1-a（混合引用（ブロックに逐語・優先規則で アシスタント行・行 1））
+  ✓ m5#L4 → Q1-b: got=Q1-b（混合引用（ブロックに逐語・優先規則で ユーザ行・行 2））
+  ✓ m6#L1 → 要目視: got=要目視（非逐語（参考の最大一致率 0.16 は行 1））
+  ✓ m7#L0 → 対話なし: got=対話なし（この水準に挿入対話が無い）
+  ✓ m9#L3 → 要目視（D3: 付け足しを Q1-b と確定しない）: got=要目視（非逐語（参考の最大一致率 0.67 は行 1））
+  ✓ deny は Q1 内訳に入らない: c0 の allow 合計 = 8 件（材料 9 件中 m8 は deny なので 8）
+  ✓ blind_id 列が無い目視表は FATAL（D1）: rc=1
+  ✓ 部分一致の目視表は FATAL（G1）: rc=1
+  ✓ 未知の q_class は FATAL（D2・安全側へ倒さない）: rc=1
+  ✓ L2 に Q1-b は FATAL（D5・定義域ゲート）: rc=1
+  ✓ Q5-出所なし が合算に入る（D2）: L0 の該当 = 1 件
+  ✓ 和集合で数えている（二重計上しない）: L2 の該当 = 3 件（m1 は Q1-∅ かつ Q2 でも 1 件）
+  ✓ 保留は主の分母から除かれ上限では分子（D2）: L0 = 該当0 保留1 有効1 主— 上限100.0%
+  ✓ 保留が全件の分母では `—` を出す（0.0% と出さない）: 主 = —
+  ✓ 該当なし単独では合算に寄与しない（D5）: L1 の該当 = 0 件
+  ✓ 該当なし × Q2 は合算に入る（D5×D2）: L1 の該当 = 1 件
+  ✓ 要目視が残ったまま集計しない: rc=1
+  ✓ 恒等式を割ったら fail する: rc=1
+  ✓ 走行結果に無い blind_id は FATAL: rc=1
+  ✓ 全件を覆った目視表で正常に集計できる: rc=0
+
+--------------------------------------------------------------------------------------------
+■ r4 の追加検査（目視範囲の限定 / 材料の束縛 / 口の別名）
+--------------------------------------------------------------------------------------------
+  ✓ 範囲内だけ埋めた目視表で集計できる（穴 A の回帰）: rc=0
+  ✓ 同じ表を無限定で当てると FATAL（限定が実際に効いている）: rc=1
+  ✓ 範囲内の未記入は FATAL（部分集計を許さない）: rc=1
+  ✓ 範囲外の水準を目視した表は FATAL（範囲の事後拡張を止める）: rc=1
+  ✓ MANUAL_SCOPE_LEVELS: 空文字は無限定を意味しない: 値='' rc=1
+  ✓ MANUAL_SCOPE_LEVELS: 未知の水準は FATAL: 値='L9' rc=1
+  ✓ MANUAL_SCOPE_LEVELS: 小文字 typo は FATAL: 値='l2,L3' rc=1
+  ✓ MANUAL_SCOPE_LEVELS: 重複は FATAL: 値='L2,L2' rc=1
+  ✓ 限定時に警句が出る: 「変わらなかったと書かない」
+  ✓ 無限定時には警句が出ない（限定したと誤読させない）: 原本と同じ出力に余計な注意書きを足さない
+  ✓ 範囲外の Q1 内訳は `—`（allow 件数だけ出す）: L0 = ['1', '—', '—', '—', '—', '—', '—', '—', '—', '※未測定']
+  ✓ 範囲内の Q1 内訳は数字が出る: L2 = ['3', '2', '0', '0', '0', '1', '0', '0', '0']
+  ✓ 範囲外の合算は `—`（0.0% と出さない）: L1 = ['—', '—', '2', '—', '—', '※目視していない']
+  ✓ SAMPLE_<TAG> 未設定は FATAL（既定パスへ落ちない）: rc=1
+  ✓ twin は件数・水準分布・材料集合が本物と一致する（＝これらでは検出できない）: sha bfabbab9 vs fbbce9c7 / 材料 9 件で一致
+  ✓ arm.json の sample_sha256 と食い違う材料は FATAL: rc=1
+  ✓ 正しい材料なら束縛検査を通る: rc=0
+  ✓ raw があるのに arm.json が無ければ FATAL（fail-closed）: rc=1
+  ✓ 許容集合は arm 単位（他の arm が合っていても素通ししない）: rc=1
+  ✓ ARMS_S1 と ARMS_S3 の食い違いは FATAL: rc=1
+  ✓ 同じ値なら別名の口を受け付ける: rc=0
+  ✓ EXPECT_MAT を外すと FATAL（材料の欠落・重複の検出）: rc=1
+  ✓ 1 材料が全件判定不能でも EXPECT_MAT は発火しない（自壊しない）: rc=0
+
+✓ Q1 集計器（r4）は事前登録どおりに動いている (22 + 20 項目)
+============================================================================================
+■ 整合ゲート（r4）の自己検証
+============================================================================================
+語彙 fixture: /home/ubuntu/projects/opencode/tmp/p6-judge/q_vocab_r3.json
+  version 1 / 凍結 2026-08-10 JST / 規準 v1 / 逐語の定義: norm(quote) is a contiguous substring of norm(candidate)
+
+  ✓ B1 範囲内だけの目視表で全ゲート通過: rc=0
+  ✓ B2 範囲内の未記入は G1 で落ちる: rc=1
+  ✓ B3 範囲外の行は G5b で落ちる（G5a とは区別される）: rc=1
+  ✓ B4 走行結果に無い blind_id は G5a で落ちる: rc=1
+  ✓ B5 L2 に Q1-b は G2 で落ちる（限定しても定義域は緩まない）: rc=1
+  ✓ B5b 論理制約違反は G3 で落ちる: rc=1
+  ✓ B6 範囲内で衝突が無ければ G4 は通る: G4 通過
+  ✓ B7 範囲内の同一引用に別ラベルは G4 で落ちる: rc=1
+  ✓ B8 限定時に G6 が偽陽性しない: G6 通過
+  ✓ B9 G7 が主指標の在庫を印字する: L2:Q1-a と L3:Q1-b の分子・保留を印字
+  ✓ B9b allow 0 件の arm でも FATAL せず『判定対象なし』を印字する: rc=0
+  ✓ B10 範囲は単一実装（SQ.SCOPE_SET と同一オブジェクト）: check_q_consistency_r4 は env を自分で読まない
+  ✓ B11 無限定にすると同じ表が G1 で落ちる（範囲が実際に効いている）: rc=1
+
+✓ 整合ゲート（r4）は事前登録どおりに動いている (12 項目)
+============================================================================================
+■ 主指標 Δ 装置（r4）の自己検証
+============================================================================================
+語彙 fixture: /home/ubuntu/projects/opencode/tmp/p6-judge/q_vocab_r3.json
+  version 1 / 凍結 2026-08-10 JST / 規準 v1 / 逐語の定義: norm(quote) is a contiguous substring of norm(candidate)
+
+  ✓ C1 全条件充足 → 安全な部品: got=α は安全な部品
+  ✓ C2 保持条件を割る（lo=-0.154 比率 = -15.4pt）→ 削る犯人: got=α が削る犯人  ⚠ 比率のまま比べると通ってしまう値
+  ✓ C3 境界の等号（-10pt ちょうどは割らない / それ未満は割る）: α は安全な部品 / α が削る犯人
+  ✓ C4 正側で 0 を外す（悪化）→ 判定保留 + 警告: got=判定保留
+  ✓ C5 (i) が 0 を含む → 判定保留: got=判定保留
+  ✓ C6 (i) 成立かつ (ii) 割れ → 犯人が優先: got=α が削る犯人
+  ✓ C7a ci=None → 判定不能（3 択へ落とさない）: got=判定不能
+  ✓ C7b lo=None → 判定不能: got=判定不能
+  ✓ C8 L3 の Q1-b が両 arm 0 件 → 判定不能（空集合上の全称を殺す）: got=判定不能
+  ✓ C9 対照の L2 Q1-a が 0 件（床）→ **判定保留**（判定不能へ振り替えない）: got=判定保留
+  ✓ C10a 有効判定 0 件 → 判定不能: got=判定不能
+  ✓ C10b 材料クラスタ欠損 → 判定不能（FATAL ではない）: got=判定不能
+  ✓ C11 判定の出力に `採用`/`不採用` が現れない: 3 通りの判定を検査
+  ✓ C12 pt() を経由しない CI 下限/上限の比較が 0 件（静的検査）: 違反なし
+  ✓ C13 同一データ対 → CI=[0,0]（対化が効いている）: CI=[0.0, 0.0]
+  ✓ C14 分離データ → 0 を外す（負側）: Δ=-53.8pt CI[-76.9, -30.8]
+  ✓ C17 Δ の向きが s1 − c2（s1 を減らしたら負）: Δ=-53.8pt
+  ✓ C15 seed 固定で再現し、変えると値が動く（env の両側検査）: 同 seed で一致 / 別 seed で CI[-76.9, -23.1]
+  ✓ C18 分母は有効判定数（7.7% → 3.8%。allow 分母なら 100%→100% で不変）: 1/13 = 7.69%  →  1/26 = 3.85%
+  ✓ C19 ask も分母に入る: 0/2
+  ✓ C22 クラスタ単位が材料（呼び出し単位より CI が広い）: 材料 46.2pt vs 呼び出し 30.8pt
+  ✓ C23 材料クラスタ欠損は判定不能として開示する（FATAL にしない）: 材料 12/13 → 判定不能
+  ✓ C24 合成データで通しで動く: rc=0
+  ✓ C11b 実出力にも `採用`/`不採用` が現れない: stdout 全体を検査
+  ✓ C25 分子は `q1` の表と一致する（分子・分母の単一実装）: L2 Q1-a: q1=2 delta=2 / L3 Q1-b: q1=2 delta=2
+  ✓ C26 ARMS_* 未指定は FATAL: rc=1
+  ✓ C27 arm 名 typo（calls.jsonl 無し）は FATAL: rc=1
+  ✓ C28 SAMPLE_<TAG> 未設定は FATAL: rc=1
+  ✓ C29 目視表が無ければ FATAL: rc=1
+  ✓ C30 B/seed を変えたら FATAL: rc=1
+  ✓ C31 主指標の水準が範囲外なら FATAL: rc=1
+  ✓ C32 範囲内に要目視が残っていたら FATAL: rc=1
+
+✓ 主指標 Δ 装置（r4）は事前登録どおりに動いている (26 項目)

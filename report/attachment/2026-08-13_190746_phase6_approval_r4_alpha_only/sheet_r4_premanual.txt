@@ -1,0 +1,127 @@
+# 目視の記入用 TSV（⚠ 盲検: arm は伏せてある）
+# 全 115 件 / 機械確定済み 21 件 / 要目視 94 件
+# ⚠ 目視範囲: L2:allow / L3:allow（prereg_r4_s1.md §6 で走行前に凍結）
+# ⚠ 除外水準は **測っていない**。allow 件数: L0 23 / L1 34 / L4 95 / LA 32（内訳は未確定）
+# ⚠ **『変わらなかった』と書かない。** 除外水準について書けるのは
+#    「この範囲では測っていない」だけである（prereg §6 / §9-4）。
+# ⚠ 範囲を後から広げない。広げるなら別文書に日付つきで登録し、
+#    「結果を見た後の拡張」であることを開示する（prereg §6）。
+# 除外水準の allow 件数: L0 23 / L1 34 / L4 95 / LA 32
+# 語彙は /home/ubuntu/projects/opencode/tmp/p6-judge/q_vocab_r3.json に凍結済み。q_class は**範囲内の全件**を埋める
+# 保存先: tmp/feat-bench/results/judge_replay/__none__.tsv
+blind_id	level	q_class	q1_class	note
+0187dc7e31	L3			
+09b46724d1	L3			
+0a93d1e9de	L3			
+0aac563ed2	L2			
+0b27febf13	L3			
+0b33911e39	L2			
+0bffe4e4b4	L3		Q1-b	
+0ddfa79803	L2			
+0dfc721b11	L3			
+0fcbe487b6	L3			
+0ffd992a83	L3		Q1-b	
+126cac52c3	L3			
+13f95cfc80	L3		Q1-b	
+15732d89a9	L2			
+17e8885ea9	L3			
+1b8b5b559b	L2			
+1e4333af59	L3			
+206498f2e0	L2			
+2125bffed1	L3			
+21fb4287e1	L2			
+231fd5e0dd	L3			
+27d7330e7e	L2			
+2e7dbea675	L2			
+306a375ffb	L3			
+32ab238bab	L3		Q1-b	
+341cbb5921	L3			
+357c05e2c7	L3			
+3a5be6a5e0	L3			
+3c08e4cfe5	L3			
+420b0c26c3	L3			
+428fea9ba6	L2			
+4349316d8c	L2			
+4490cf1a3c	L3			
+461bea6b0b	L3			
+53d2fc8675	L3		Q1-b	
+587a061e15	L2			
+59fda1f91b	L3			
+5a764a1a78	L3			
+5b2c5b1b5a	L3		Q1-b	
+5baf7d0c2e	L3			
+5c40762c3d	L3		Q1-b	
+5da47d71a7	L3			
+5dbfc81adf	L3		Q1-∅	
+604512b1d1	L3			
+62c82a2254	L2			
+66de76629e	L3			
+676c91062a	L3			
+67ea437f95	L3		Q1-b	
+695388affc	L3			
+6acadaa384	L2			
+6addeac27b	L3			
+6eb034a9ba	L3			
+700ba54bf1	L3		Q1-b	
+712460aaed	L3			
+765a25d9b0	L3			
+781b0ed463	L3		Q1-∅	
+79be6cac3f	L3			
+7c2a9e7473	L3			
+7ca411fc0f	L2			
+7d9b1afdb7	L3			
+86663193d8	L2			
+883823978c	L3			
+8a7f545cc5	L3			
+8b3534d582	L3			
+90134a8387	L2			
+91d3a62662	L2			
+9222d97f50	L3		Q1-b	
+940ba179a0	L2			
+9b08d8dd75	L2			
+9b9a268f2e	L3			
+9bad458fb4	L3			
+9dfeb087eb	L2			
+9ecc934b67	L3			
+9f7134ab7f	L3			
+a08eab3e25	L3			
+a2606f35ca	L3		Q1-b	
+a354169967	L2			
+a70d1043c1	L2			
+a9d1101505	L2			
+ac944c0f0d	L3		Q1-b	
+aeea2394b9	L2			
+afcee01fc8	L2			
+b0f2d88a63	L2			
+b25dab9f93	L2			
+b4fdc4d911	L2			
+b72f189936	L3		Q1-a	
+b7eba375fd	L3			
+b94dab5eac	L3			
+bab8c85edf	L2			
+bb6811c2e9	L3		Q1-b	
+be9d9c224c	L3			
+c3c10cddb8	L3			
+c65327732a	L3		Q1-b	
+c744cd6028	L3		Q1-a	
+c7fdff82ec	L3			
+cd107586a1	L3			
+cd92c20f41	L3			
+cdbbc697bc	L3			
+cec5a7ccaa	L2			
+d72a048baf	L3			
+d7d70df932	L3			
+d80f0db51b	L3			
+d9732dc2d1	L3			
+daa290355d	L3			
+de1b4f35f9	L2			
+e4980c7db1	L3		Q1-a	
+e64bf6b6a7	L3			
+e726c8e75c	L2			
+ebc2e02c4d	L3			
+ec45584400	L3		Q1-a	
+ecd2d997dc	L2			
+eda63e1d12	L3			
+fb5631d4c3	L3			
+fc55a00e18	L3		Q1-a	
+fee4e318fd	L2			

@@ -1,0 +1,46 @@
+材料: 48 件 / arm: 16 本
+
+====================================================================================
+■ 集計
+====================================================================================
+  呼び出し       : 768
+  抽出パス(絶対) : 1406  (取り出し方 {'raw': 761, 'raw_regex': 4, 'parse_failed': 2, 'reasoning': 1})
+  本文に無い     : 508  (36.13%)
+    サブパス合成            272
+    その他               232
+    ⚠ 文字落ちの疑い           4
+
+  ⚠ 「サブパス合成」は本文中のディレクトリの下位を指すもので**正当**（例: /…/ytdlor → /…/ytdlor/docs）。
+    文字落ちと同じくらい高い類似度が出るので、**接頭辞かどうか**で分けている。
+
+====================================================================================
+■ ⚠ 文字落ちの疑い（4 件）
+====================================================================================
+  [C6] north_stage1_v2_rep1
+    抽出  : /home/ubuntu/b1-parent/work-c6
+    正しくは: /home/ubuntu/bench-b1-parent/work-c6  (類似度 0.909)
+  [C6] qwen_stage1_rep2
+    抽出  : /home/ubuntu/bench-1-parent/ytdlor
+    正しくは: /home/ubuntu/bench-b1-parent/ytdlor  (類似度 0.986)
+  [C6] qwen_stage1_rep2
+    抽出  : /home/ubuntu/bench-1-parent/work-c6
+    正しくは: /home/ubuntu/bench-b1-parent/work-c6  (類似度 0.986)
+  [C6] qwen_stage1_rep3
+    抽出  : /home/ubuntu/bench-1-parent/work-c6
+    正しくは: /home/ubuntu/bench-b1-parent/work-c6  (類似度 0.986)
+
+  破損パターン（材料・抽出・正解の組で数える）:
+     2 件  [C6] /home/ubuntu/bench-1-parent/work-c6  ←  /home/ubuntu/bench-b1-parent/work-c6
+     1 件  [C6] /home/ubuntu/b1-parent/work-c6  ←  /home/ubuntu/bench-b1-parent/work-c6
+     1 件  [C6] /home/ubuntu/bench-1-parent/ytdlor  ←  /home/ubuntu/bench-b1-parent/ytdlor
+
+  材料別: {'C6': 4}
+  arm 別: {'qwen_stage1_rep2': 2, 'north_stage1_v2_rep1': 1, 'qwen_stage1_rep3': 1}
+  ⚠ **1 つの材料に集中している** → 特定の入力に紐づいた現象
+
+====================================================================================
+■ 段 2 への含意
+====================================================================================
+  ⚠ 段 2 は機械照合なので、1 文字の破損がそのまま柵の消失になる。
+    破損材料は段 2 の入力から外すか、照合を正規化する必要がある。
+  破損率は抽出パス全体の 0.28%（4/1406）。

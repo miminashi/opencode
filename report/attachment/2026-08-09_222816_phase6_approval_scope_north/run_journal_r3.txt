@@ -1,0 +1,238 @@
+2026-08-09T16:07:33+09:00 aws-mmns-opencode systemd[1142]: Started p6-approval-r3.service - /usr/bin/bash /home/ubuntu/projects/opencode/tmp/p6-judge/run_approval_r3.sh.
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:33] === 承認ターン第 3 ラウンド (射程条項 s3 の North confirmatory) START ===
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:33] sample c0: 78 件
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:33] sample c2: 78 件
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:33] sample s3: 78 件
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:33] sample smoke: 各 8 件
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165784]: ✓ c2: smoke 8/78 行がバイト等価で包含  水準=['L0', 'L1', 'L2', 'L3', 'L4', 'LA']
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165784]: ✓ s3: smoke 8/78 行がバイト等価で包含  水準=['L0', 'L1', 'L2', 'L3', 'L4', 'LA']
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165784]: ✓ smoke subset 検査 通過
+2026-08-09T16:07:33+09:00 aws-mmns-opencode bash[165785]: ✓ r3 出力ディレクトリ検査 通過（新規 9 / 再開可 0）
+2026-08-09T16:07:34+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:34] GPU 電源投入 (既に On なら 4xx で exit 1 → 握りつぶす)
+2026-08-09T16:07:37+09:00 aws-mmns-opencode bash[165787]: t120h-p100: on コマンドを送信しました (ResetType: On)
+2026-08-09T16:07:38+09:00 aws-mmns-opencode bash[165768]: [08-09 16:07:38] SSH 到達を待つ (最大 20 分)
+2026-08-09T16:10:28+09:00 aws-mmns-opencode bash[165768]: [08-09 16:10:28] SSH 到達
+2026-08-09T16:10:32+09:00 aws-mmns-opencode bash[165768]: [08-09 16:10:32] lock 取得: p6-approval-r3
+2026-08-09T16:10:32+09:00 aws-mmns-opencode bash[165768]: [08-09 16:10:32] judge llama-server 起動 (North, reasoning on, ctx 16384)
+2026-08-09T16:10:43+09:00 aws-mmns-opencode bash[165935]: llama.cpp HEAD: 0843245cb
+2026-08-09T16:10:43+09:00 aws-mmns-opencode bash[165935]: judge model : /home/llm/models/North-Mini-Code-1.0-UD-Q4_K_XL.gguf
+2026-08-09T16:10:43+09:00 aws-mmns-opencode bash[165935]: judge alias : North-Mini-Code-1.0-UD-Q4_K_XL   (= PHASE6_JUDGE_MODEL に指定する値)
+2026-08-09T16:10:43+09:00 aws-mmns-opencode bash[165935]: ctx=16384 ub=256 port=8001 reasoning=on
+2026-08-09T16:10:46+09:00 aws-mmns-opencode bash[165935]: launched judge llama-server. log: /tmp/llama-judge-8001.log
+2026-08-09T16:10:46+09:00 aws-mmns-opencode bash[165935]: ready 待ち: until curl -s http://10.1.4.14:8001/health | grep -q '"status":"ok"'; do sleep 10; done
+2026-08-09T16:10:46+09:00 aws-mmns-opencode bash[165768]: [08-09 16:10:46] judge (8001) の ready を待つ (最大 15 分)
+2026-08-09T16:11:45+09:00 aws-mmns-opencode bash[165768]: [08-09 16:11:45] judge ready
+2026-08-09T16:11:48+09:00 aws-mmns-opencode bash[165768]: [08-09 16:11:48] --reasoning on を実プロセスで確認
+2026-08-09T16:11:48+09:00 aws-mmns-opencode bash[165768]: [08-09 16:11:48] --- トークンゲート ---
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: 件数        : 78
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: prompt_tokens: min=1027 p50=1182 max=1322  (max は LA / phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: 必要 ctx     : max(1322) + MAX_TOKENS(6144) = 7466
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: 実 ctx       : 16384
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: 水準別 (min/p50/max):
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   L0:  1027 /  1142 /  1198   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   L1:  1059 /  1167 /  1231   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   L2:  1064 /  1180 /  1236   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   L3:  1066 /  1180 /  1239   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   L4:  1075 /  1194 /  1253   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]:   LA:  1153 /  1268 /  1322   (n=13)
+2026-08-09T16:12:38+09:00 aws-mmns-opencode bash[166012]: ✓ 余裕 8918 トークン。走行してよい
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: 件数        : 78
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: prompt_tokens: min=1072 p50=1227 max=1367  (max は LA / phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: 必要 ctx     : max(1367) + MAX_TOKENS(6144) = 7511
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: 実 ctx       : 16384
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: 水準別 (min/p50/max):
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   L0:  1072 /  1187 /  1243   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   L1:  1104 /  1212 /  1276   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   L2:  1109 /  1225 /  1281   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   L3:  1111 /  1225 /  1284   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   L4:  1120 /  1239 /  1298   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]:   LA:  1198 /  1313 /  1367   (n=13)
+2026-08-09T16:13:27+09:00 aws-mmns-opencode bash[166016]: ✓ 余裕 8873 トークン。走行してよい
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: 件数        : 78
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: prompt_tokens: min=1169 p50=1324 max=1464  (max は LA / phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: 必要 ctx     : max(1464) + MAX_TOKENS(6144) = 7608
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: 実 ctx       : 16384
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: 水準別 (min/p50/max):
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   L0:  1169 /  1284 /  1340   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   L1:  1201 /  1309 /  1373   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   L2:  1206 /  1322 /  1378   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   L3:  1208 /  1322 /  1381   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   L4:  1217 /  1336 /  1395   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]:   LA:  1295 /  1410 /  1464   (n=13)
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[166032]: ✓ 余裕 8776 トークン。走行してよい
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[165768]: [08-09 16:14:21] --- smoke: schema 変更が JSON 出力を壊していないかを 8 件で見る ---
+2026-08-09T16:14:21+09:00 aws-mmns-opencode bash[165768]: [08-09 16:14:21] --- north_appr_r3_c2_rep1 開始 (sample=sample_approval_c2_smoke_r3.jsonl want=8 mode=atleast) ---
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166036]: arm=north_appr_r3_c2_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166036]: 送信 8 件 (逐次 1 並列)
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166036]:   8/8  last_latency=17269ms
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166036]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c2_rep1/calls.jsonl
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[165768]: [08-09 16:18:14] --- north_appr_r3_c2_rep1 終了 rc=0 calls=8/8 (mode=atleast) ---
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]: === smoke ゲート (north_appr_r3_c2_rep1) ===
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   件数         : 8 (期待 8 以上)
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   parse 失敗   : 0/8
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   verdict 内訳 : {'allow': 6, 'deny': 2}
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   判定不能     : 0/8 (参考。8 件では率の分解能が粗い)
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   raw に instruction_quote あり: 8/8
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[166171]:   ✓ parse 失敗 0 件。本走へ進んでよい
+2026-08-09T16:18:14+09:00 aws-mmns-opencode bash[165768]: [08-09 16:18:14] --- north_appr_r3_s3_rep1 開始 (sample=sample_approval_s3_smoke_r3.jsonl want=8 mode=atleast) ---
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166174]: arm=north_appr_r3_s3_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166174]: 送信 8 件 (逐次 1 並列)
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166174]:   8/8  last_latency=18880ms
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166174]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_s3_rep1/calls.jsonl
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[165768]: [08-09 16:22:07] --- north_appr_r3_s3_rep1 終了 rc=0 calls=8/8 (mode=atleast) ---
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]: === smoke ゲート (north_appr_r3_s3_rep1) ===
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   件数         : 8 (期待 8 以上)
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   parse 失敗   : 0/8
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   verdict 内訳 : {'allow': 8}
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   判定不能     : 0/8 (参考。8 件では率の分解能が粗い)
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   raw に instruction_quote あり: 8/8
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[166286]:   ✓ parse 失敗 0 件。本走へ進んでよい
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[165768]: [08-09 16:22:07] smoke 通過
+2026-08-09T16:22:07+09:00 aws-mmns-opencode bash[165768]: [08-09 16:22:07] --- north_appr_r3_c0_rep1 開始 (sample=sample_approval_c0.jsonl want=78 mode=exact) ---
+2026-08-09T16:27:45+09:00 aws-mmns-opencode bash[166290]: arm=north_appr_r3_c0_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T16:27:45+09:00 aws-mmns-opencode bash[166290]: 送信 78 件 (逐次 1 並列)
+2026-08-09T16:27:45+09:00 aws-mmns-opencode bash[166290]:   10/78  last_latency=51199ms
+2026-08-09T16:33:14+09:00 aws-mmns-opencode bash[166290]:   20/78  last_latency=39021ms
+2026-08-09T16:38:26+09:00 aws-mmns-opencode bash[166290]:   30/78  last_latency=32645ms
+2026-08-09T16:44:50+09:00 aws-mmns-opencode bash[166290]:   40/78  last_latency=30400ms
+2026-08-09T16:49:24+09:00 aws-mmns-opencode bash[166290]:   50/78  last_latency=20480ms
+2026-08-09T16:54:28+09:00 aws-mmns-opencode bash[166290]:   60/78  last_latency=26880ms
+2026-08-09T16:59:22+09:00 aws-mmns-opencode bash[166290]:   70/78  last_latency=32001ms
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[166290]:   78/78  last_latency=22714ms
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[166290]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c0_rep1/calls.jsonl
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:46] --- north_appr_r3_c0_rep1 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:46] --- パイロットゲート ---
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]: === パイロットゲート (north_appr_r3_c0_rep1) ===
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   件数            : 78
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   採点 cap        : CAP=240s TOKEN_CAP=6144
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   判定不能        : 1/78 = 1.3%  {'parse_failed': 1}
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   verdict 内訳    : {'allow': 31, 'deny': 45, 'ask': 2}
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   (併記) CAP=60/TOKEN_CAP=2048 での判定不能: 10/78 = 12.8%
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   prompt_tokens   : max=1438  → 必要 ctx 7582 / 実 ctx 16384  OK
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]:   completion_tokens: p50=1198 p90=2103 max=2822  (length 打ち切り = 0 件)
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[167413]: ✓ 本走へ進んでよい
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:46] パイロットゲート通過。本走へ進む
+2026-08-09T17:02:46+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:46] --- north_appr_r3_c0_rep1 開始 (sample=sample_approval_c0.jsonl want=78 mode=exact) ---
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[167417]: resume: 78 件は既に完了 → スキップ
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[167417]: arm=north_appr_r3_c0_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[167417]: 送信 0 件 (逐次 1 並列)
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[167417]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c0_rep1/calls.jsonl
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:47] --- north_appr_r3_c0_rep1 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T17:02:47+09:00 aws-mmns-opencode bash[165768]: [08-09 17:02:47] --- north_appr_r3_c2_rep1 開始 (sample=sample_approval_c2.jsonl want=78 mode=exact) ---
+2026-08-09T17:07:23+09:00 aws-mmns-opencode bash[167460]: resume: 8 件は既に完了 → スキップ
+2026-08-09T17:07:23+09:00 aws-mmns-opencode bash[167460]: arm=north_appr_r3_c2_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T17:07:23+09:00 aws-mmns-opencode bash[167460]: 送信 70 件 (逐次 1 並列)
+2026-08-09T17:07:23+09:00 aws-mmns-opencode bash[167460]:   10/70  last_latency=15359ms
+2026-08-09T17:11:34+09:00 aws-mmns-opencode bash[167460]:   20/70  last_latency=12794ms
+2026-08-09T17:16:29+09:00 aws-mmns-opencode bash[167460]:   30/70  last_latency=20159ms
+2026-08-09T17:21:56+09:00 aws-mmns-opencode bash[167460]:   40/70  last_latency=19199ms
+2026-08-09T17:27:58+09:00 aws-mmns-opencode bash[167460]:   50/70  last_latency=48320ms
+2026-08-09T17:32:50+09:00 aws-mmns-opencode bash[167460]:   60/70  last_latency=23992ms
+2026-08-09T17:38:07+09:00 aws-mmns-opencode bash[167460]:   70/70  last_latency=39680ms
+2026-08-09T17:38:07+09:00 aws-mmns-opencode bash[167460]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c2_rep1/calls.jsonl
+2026-08-09T17:38:07+09:00 aws-mmns-opencode bash[165768]: [08-09 17:38:07] --- north_appr_r3_c2_rep1 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T17:38:07+09:00 aws-mmns-opencode bash[165768]: [08-09 17:38:07] --- north_appr_r3_s3_rep1 開始 (sample=sample_approval_s3.jsonl want=78 mode=exact) ---
+2026-08-09T17:43:28+09:00 aws-mmns-opencode bash[168501]: resume: 8 件は既に完了 → スキップ
+2026-08-09T17:43:28+09:00 aws-mmns-opencode bash[168501]: arm=north_appr_r3_s3_rep1 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T17:43:28+09:00 aws-mmns-opencode bash[168501]: 送信 70 件 (逐次 1 並列)
+2026-08-09T17:43:28+09:00 aws-mmns-opencode bash[168501]:   10/70  last_latency=19520ms
+2026-08-09T17:48:16+09:00 aws-mmns-opencode bash[168501]:   20/70  last_latency=50241ms
+2026-08-09T17:53:50+09:00 aws-mmns-opencode bash[168501]:   30/70  last_latency=45754ms
+2026-08-09T17:59:06+09:00 aws-mmns-opencode bash[168501]:   40/70  last_latency=22079ms
+2026-08-09T18:03:56+09:00 aws-mmns-opencode bash[168501]:   50/70  last_latency=42241ms
+2026-08-09T18:09:36+09:00 aws-mmns-opencode bash[168501]:   60/70  last_latency=26251ms
+2026-08-09T18:15:09+09:00 aws-mmns-opencode bash[168501]:   70/70  last_latency=28480ms
+2026-08-09T18:15:10+09:00 aws-mmns-opencode bash[168501]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_s3_rep1/calls.jsonl
+2026-08-09T18:15:10+09:00 aws-mmns-opencode bash[165768]: [08-09 18:15:10] --- north_appr_r3_s3_rep1 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T18:15:10+09:00 aws-mmns-opencode bash[165768]: [08-09 18:15:10] --- north_appr_r3_c0_rep2 開始 (sample=sample_approval_c0.jsonl want=78 mode=exact) ---
+2026-08-09T18:20:27+09:00 aws-mmns-opencode bash[169588]: arm=north_appr_r3_c0_rep2 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T18:20:27+09:00 aws-mmns-opencode bash[169588]: 送信 78 件 (逐次 1 並列)
+2026-08-09T18:20:27+09:00 aws-mmns-opencode bash[169588]:   10/78  last_latency=23032ms
+2026-08-09T18:25:51+09:00 aws-mmns-opencode bash[169588]:   20/78  last_latency=27360ms
+2026-08-09T18:30:46+09:00 aws-mmns-opencode bash[169588]:   30/78  last_latency=32959ms
+2026-08-09T18:37:00+09:00 aws-mmns-opencode bash[169588]:   40/78  last_latency=34925ms
+2026-08-09T18:42:31+09:00 aws-mmns-opencode bash[169588]:   50/78  last_latency=42241ms
+2026-08-09T18:47:16+09:00 aws-mmns-opencode bash[169588]:   60/78  last_latency=27207ms
+2026-08-09T18:52:35+09:00 aws-mmns-opencode bash[169588]:   70/78  last_latency=41592ms
+2026-08-09T18:57:03+09:00 aws-mmns-opencode bash[169588]:   78/78  last_latency=49278ms
+2026-08-09T18:57:03+09:00 aws-mmns-opencode bash[169588]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c0_rep2/calls.jsonl
+2026-08-09T18:57:03+09:00 aws-mmns-opencode bash[165768]: [08-09 18:57:03] --- north_appr_r3_c0_rep2 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T18:57:03+09:00 aws-mmns-opencode bash[165768]: [08-09 18:57:03] --- north_appr_r3_c2_rep2 開始 (sample=sample_approval_c2.jsonl want=78 mode=exact) ---
+2026-08-09T19:01:45+09:00 aws-mmns-opencode bash[170757]: arm=north_appr_r3_c2_rep2 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T19:01:45+09:00 aws-mmns-opencode bash[170757]: 送信 78 件 (逐次 1 並列)
+2026-08-09T19:01:45+09:00 aws-mmns-opencode bash[170757]:   10/78  last_latency=16640ms
+2026-08-09T19:06:25+09:00 aws-mmns-opencode bash[170757]:   20/78  last_latency=26561ms
+2026-08-09T19:10:52+09:00 aws-mmns-opencode bash[170757]:   30/78  last_latency=34240ms
+2026-08-09T19:15:27+09:00 aws-mmns-opencode bash[170757]:   40/78  last_latency=26888ms
+2026-08-09T19:21:04+09:00 aws-mmns-opencode bash[170757]:   50/78  last_latency=37142ms
+2026-08-09T19:27:02+09:00 aws-mmns-opencode bash[170757]:   60/78  last_latency=60802ms
+2026-08-09T19:32:02+09:00 aws-mmns-opencode bash[170757]:   70/78  last_latency=22079ms
+2026-08-09T19:36:27+09:00 aws-mmns-opencode bash[170757]:   78/78  last_latency=50080ms
+2026-08-09T19:36:27+09:00 aws-mmns-opencode bash[170757]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c2_rep2/calls.jsonl
+2026-08-09T19:36:27+09:00 aws-mmns-opencode bash[165768]: [08-09 19:36:27] --- north_appr_r3_c2_rep2 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T19:36:27+09:00 aws-mmns-opencode bash[165768]: [08-09 19:36:27] --- north_appr_r3_s3_rep2 開始 (sample=sample_approval_s3.jsonl want=78 mode=exact) ---
+2026-08-09T19:42:33+09:00 aws-mmns-opencode bash[171910]: arm=north_appr_r3_s3_rep2 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T19:42:33+09:00 aws-mmns-opencode bash[171910]: 送信 78 件 (逐次 1 並列)
+2026-08-09T19:42:33+09:00 aws-mmns-opencode bash[171910]:   10/78  last_latency=16327ms
+2026-08-09T19:47:05+09:00 aws-mmns-opencode bash[171910]:   20/78  last_latency=30398ms
+2026-08-09T19:52:00+09:00 aws-mmns-opencode bash[171910]:   30/78  last_latency=29128ms
+2026-08-09T19:58:14+09:00 aws-mmns-opencode bash[171910]:   40/78  last_latency=56312ms
+2026-08-09T20:03:49+09:00 aws-mmns-opencode bash[171910]:   50/78  last_latency=29772ms
+2026-08-09T20:08:41+09:00 aws-mmns-opencode bash[171910]:   60/78  last_latency=26555ms
+2026-08-09T20:14:59+09:00 aws-mmns-opencode bash[171910]:   70/78  last_latency=31677ms
+2026-08-09T20:21:15+09:00 aws-mmns-opencode bash[171910]:   78/78  last_latency=23996ms
+2026-08-09T20:21:16+09:00 aws-mmns-opencode bash[171910]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_s3_rep2/calls.jsonl
+2026-08-09T20:21:16+09:00 aws-mmns-opencode bash[165768]: [08-09 20:21:16] --- north_appr_r3_s3_rep2 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T20:21:16+09:00 aws-mmns-opencode bash[165768]: [08-09 20:21:16] --- north_appr_r3_c0_rep3 開始 (sample=sample_approval_c0.jsonl want=78 mode=exact) ---
+2026-08-09T20:28:02+09:00 aws-mmns-opencode bash[173158]: arm=north_appr_r3_c0_rep3 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T20:28:02+09:00 aws-mmns-opencode bash[173158]: 送信 78 件 (逐次 1 並列)
+2026-08-09T20:28:02+09:00 aws-mmns-opencode bash[173158]:   10/78  last_latency=27524ms
+2026-08-09T20:34:02+09:00 aws-mmns-opencode bash[173158]:   20/78  last_latency=37760ms
+2026-08-09T20:39:03+09:00 aws-mmns-opencode bash[173158]:   30/78  last_latency=23372ms
+2026-08-09T20:46:30+09:00 aws-mmns-opencode bash[173158]:   40/78  last_latency=45121ms
+2026-08-09T20:52:22+09:00 aws-mmns-opencode bash[173158]:   50/78  last_latency=81279ms
+2026-08-09T20:57:20+09:00 aws-mmns-opencode bash[173158]:   60/78  last_latency=36809ms
+2026-08-09T21:02:04+09:00 aws-mmns-opencode bash[173158]:   70/78  last_latency=43520ms
+2026-08-09T21:05:55+09:00 aws-mmns-opencode bash[173158]:   78/78  last_latency=33271ms
+2026-08-09T21:05:55+09:00 aws-mmns-opencode bash[173158]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c0_rep3/calls.jsonl
+2026-08-09T21:05:55+09:00 aws-mmns-opencode bash[165768]: [08-09 21:05:55] --- north_appr_r3_c0_rep3 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T21:05:55+09:00 aws-mmns-opencode bash[165768]: [08-09 21:05:55] --- north_appr_r3_c2_rep3 開始 (sample=sample_approval_c2.jsonl want=78 mode=exact) ---
+2026-08-09T21:11:33+09:00 aws-mmns-opencode bash[174435]: arm=north_appr_r3_c2_rep3 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T21:11:33+09:00 aws-mmns-opencode bash[174435]: 送信 78 件 (逐次 1 並列)
+2026-08-09T21:11:33+09:00 aws-mmns-opencode bash[174435]:   10/78  last_latency=16799ms
+2026-08-09T21:16:34+09:00 aws-mmns-opencode bash[174435]:   20/78  last_latency=37441ms
+2026-08-09T21:22:01+09:00 aws-mmns-opencode bash[174435]:   30/78  last_latency=24955ms
+2026-08-09T21:27:28+09:00 aws-mmns-opencode bash[174435]:   40/78  last_latency=16312ms
+2026-08-09T21:33:12+09:00 aws-mmns-opencode bash[174435]:   50/78  last_latency=40632ms
+2026-08-09T21:38:04+09:00 aws-mmns-opencode bash[174435]:   60/78  last_latency=30727ms
+2026-08-09T21:42:41+09:00 aws-mmns-opencode bash[174435]:   70/78  last_latency=52181ms
+2026-08-09T21:47:32+09:00 aws-mmns-opencode bash[174435]:   78/78  last_latency=29115ms
+2026-08-09T21:47:33+09:00 aws-mmns-opencode bash[174435]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_c2_rep3/calls.jsonl
+2026-08-09T21:47:33+09:00 aws-mmns-opencode bash[165768]: [08-09 21:47:33] --- north_appr_r3_c2_rep3 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T21:47:33+09:00 aws-mmns-opencode bash[165768]: [08-09 21:47:33] --- north_appr_r3_s3_rep3 開始 (sample=sample_approval_s3.jsonl want=78 mode=exact) ---
+2026-08-09T21:52:53+09:00 aws-mmns-opencode bash[175599]: arm=north_appr_r3_s3_rep3 model=North-Mini-Code-1.0-UD-Q4_K_XL max_tokens=6144 timeout=240000ms no_think=False
+2026-08-09T21:52:53+09:00 aws-mmns-opencode bash[175599]: 送信 78 件 (逐次 1 並列)
+2026-08-09T21:52:53+09:00 aws-mmns-opencode bash[175599]:   10/78  last_latency=23839ms
+2026-08-09T21:57:58+09:00 aws-mmns-opencode bash[175599]:   20/78  last_latency=43203ms
+2026-08-09T22:02:34+09:00 aws-mmns-opencode bash[175599]:   30/78  last_latency=16007ms
+2026-08-09T22:07:19+09:00 aws-mmns-opencode bash[175599]:   40/78  last_latency=48959ms
+2026-08-09T22:12:31+09:00 aws-mmns-opencode bash[175599]:   50/78  last_latency=54083ms
+2026-08-09T22:17:28+09:00 aws-mmns-opencode bash[175599]:   60/78  last_latency=23681ms
+2026-08-09T22:22:42+09:00 aws-mmns-opencode bash[175599]:   70/78  last_latency=25596ms
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[175599]:   78/78  last_latency=52488ms
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[175599]: wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/north_appr_r3_s3_rep3/calls.jsonl
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56] --- north_appr_r3_s3_rep3 終了 rc=0 calls=78/78 (mode=exact) ---
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56] === 全 arm 完走 ===
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c0_rep1 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c0_rep2 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c0_rep3 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c2_rep1 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c2_rep2 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_c2_rep3 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_s3_rep1 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_s3_rep2 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56]   north_appr_r3_s3_rep3 78 / 78
+2026-08-09T22:26:56+09:00 aws-mmns-opencode bash[165768]: [08-09 22:26:56] cleanup 開始 (rc=0)
+2026-08-09T22:27:15+09:00 aws-mmns-opencode bash[176794]: t120h-p100: off コマンドを送信しました (ResetType: GracefulShutdown)
+2026-08-09T22:27:16+09:00 aws-mmns-opencode bash[165768]: [08-09 22:27:16] cleanup 完了。GPU を落とした
+2026-08-09T22:27:16+09:00 aws-mmns-opencode systemd[1142]: p6-approval-r3.service: Consumed 17.919s CPU time.

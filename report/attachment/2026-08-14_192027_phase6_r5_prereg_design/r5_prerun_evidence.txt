@@ -1,0 +1,56 @@
+== 第 5 ラウンド（A）の走行前証跡 ==
+取得時刻: 2026-08-14 19:04:43 JST
+⚠ **この出力は走行前に取ったものである。走行後に再実行して添付しない。**
+   （第 3 ラウンドで走行後の再実行を添付し、本文と食い違った）
+
+■ 走行結果の不存在（凍結が走行前である証拠）
+  ✓ `north_appr_r5_*` は 1 つも存在しない
+
+■ 材料・雛形・fixture の sha256
+  材料 c2（本走）
+    tmp/feat-bench/results/judge_replay/sample_approval_c2.jsonl
+    sha256 cd292805635a87cd0b744512fcb0406233642dcaef2fed744e6460279ae5f744  (78 行)
+  材料 a1（本走）
+    tmp/feat-bench/results/judge_replay/sample_approval_a1.jsonl
+    sha256 c9e4358c78831dc8c935f4099b51f59524d7cbbde0d0d0e3e7087f9497fa770a  (78 行)
+  材料 c2（smoke）
+    tmp/feat-bench/results/judge_replay/sample_approval_c2_smoke_r5.jsonl
+    sha256 70a97353e37c4c8ae332f6f43b55dee14e11e19b67f9a4a94a84a5ffc5dd2560  (8 行)
+  材料 a1（smoke）
+    tmp/feat-bench/results/judge_replay/sample_approval_a1_smoke_r5.jsonl
+    sha256 531bc72ec9a621cff512bcd275bccaae8a6d550701fb61b786bd6aa794495385  (8 行)
+  材料 c2（ゲート 7 の再生成）
+    tmp/feat-bench/results/judge_replay/sample_approval_c2_regen_r5.jsonl
+    sha256 cd292805635a87cd0b744512fcb0406233642dcaef2fed744e6460279ae5f744  (78 行)
+  雛形 c2
+    tmp/feat-bench/plugins/phase6-verify/prompts/structured_v3_ctxb_relax2.txt
+    sha256 5012b6ca57d622ed33ce3b65645563fd64dac1b80e983134434cd84bc6d83205  (48 行)
+  雛形 a1
+    tmp/feat-bench/plugins/phase6-verify/prompts/structured_v3_ctxb_hist1.txt
+    sha256 e3a98e277162f3d7f291d6484f40e9f0ccc30a7f1dfd037208f407dead81cd13  (48 行)
+  fixture（独立変数）
+    tmp/p6-judge/hist_diff_expected.json
+    sha256 beb525862a547bbab74169c433b4e102b0e9f60e8a688495864f0e08695ec9f2  (61 行)
+  fixture（目視の割り当て規則）
+    tmp/p6-judge/q1_assign_rule_r5.json
+    sha256 b27d0236eeef42a962dd36a1e470ffb93d11b8fe978b376e4078b58e9b40f778  (372 行)
+  fixture（分類語彙・再利用）
+    tmp/p6-judge/q_vocab_r3.json
+    sha256 a391f92ddd0e9b9b86df6b577aad6cdd498bc759b6a62a4cd7075570424ec044  (158 行)
+  引き当て表（再利用）
+    tmp/p6-judge/q1_lookup_r3.tsv
+    sha256 98252df5842d8a82dcf7aea623167307ab5162b765db4404707e04f5f4baa803  (22 行)
+
+■ 走行に使う arm 名（⚠ 前ラウンドと衝突しないこと）
+    north_appr_r5_c2_rep1
+    north_appr_r5_c2_rep2
+    north_appr_r5_c2_rep3
+    north_appr_r5_c2_rep4
+    north_appr_r5_c2_rep5
+    north_appr_r5_a1_rep1
+    north_appr_r5_a1_rep2
+    north_appr_r5_a1_rep3
+    north_appr_r5_a1_rep4
+    north_appr_r5_a1_rep5
+
+⚠ 走行前トークンゲートは llama-server が要るので、走行ラッパの中で通す。

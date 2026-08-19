@@ -1,0 +1,27 @@
+wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_approval_neut.jsonl: 103 行 / 材料 19 件
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/approval_manifest.tsv
+
+=== ゲート結果 ===
+  ゲート 1 (<DIR> が facts に literal)      : 通過
+  ゲート 2 (差分は挿入ブロックのみ)          : 通過
+  ゲート 3 (LA の prompt_sha256 一致)        : 通過
+  ゲート 4 (挿入文が本文と衝突しない)        : 通過
+  ゲート 5 (basename の部分文字列衝突)       : なし
+
+  ゲート 6 (承認先が機械解決できる)          : 主指標 N=13 / 除外 6 件
+      除外 phase2aA1/aex2-selfplan-r6/prt_f6e96c561001B4cyUc4aOAufID
+            理由: 関係が不明のみ (topology の absent)
+      除外 phase2aA1/aex3-selfplan-r5/prt_f6f0b291c001NwWVrSNAGgTzxO
+            理由: 関係が不明のみ (topology の absent)
+      除外 phase2aA2/aex3-selfplan-r4/prt_f6f9f3c2d001uwh6Ss3Nw6b7oK
+            理由: 関係が不明のみ (topology の absent)
+      除外 phase2aA2/aex3-selfplan-r9/prt_f70033924001xSpik07M4Y6PyF
+            理由: 関係が不明のみ (topology の absent)
+      除外 phase2aB2/aeb1-selfplan-r10/prt_f70e2235a001PlzF7tYu221DsJ
+            理由: 関係が不明のみ (topology の absent)
+      除外 phase2aB2/aeb1-selfplan-r3/prt_f70c0bf3c001VmB5XkGguENsvz
+            理由: 関係が不明のみ (topology の absent)
+
+  水準別行数 : {'L0': 19, 'L1': 13, 'L2': 13, 'LA': 19, 'L5': 13, 'L4': 13, 'L3': 13}
+  variant 分布: {3: 4, 1: 5, 2: 4}
+  prompt_chars: min=2515 p50=2833 max=3184

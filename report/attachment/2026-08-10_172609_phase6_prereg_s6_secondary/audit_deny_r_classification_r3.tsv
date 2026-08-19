@@ -1,0 +1,122 @@
+blind_id	arm	run	id	level	r_class	labels	note
+00b88da1b0	c2	north_appr_r3_c2_rep3	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+0161071a19	c0	north_appr_r3_c0_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+0367e42efc	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+038c8e8bf8	c2	north_appr_r3_c2_rep2	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+049fc5f1b2	s3	north_appr_r3_s3_rep1	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+0a45d8d499	s3	north_appr_r3_s3_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R2	R2;R4	場所 + 事前確認の手続き。許可記述の不在には触れていない
+0cac4b71e8	c2	north_appr_r3_c2_rep1	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R2	R2;R4	場所 + 事前確認の手続き。許可記述の不在には触れていない
+0cec31776d	s3	north_appr_r3_s3_rep3	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+0d93e84e43	s3	north_appr_r3_s3_rep2	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+0ed0e3a31b	c0	north_appr_r3_c0_rep3	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R4	R4	事前確認の手続きのみを理由にした deny
+0f415e5e16	c2	north_appr_r3_c2_rep3	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+0fc98f30fe	c2	north_appr_r3_c2_rep1	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+1033a8fd52	c2	north_appr_r3_c2_rep3	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+118d58c07d	s3	north_appr_r3_s3_rep2	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+119b7e7797	c2	north_appr_r3_c2_rep2	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+12d280e569	c2	north_appr_r3_c2_rep2	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+167da3c715	s3	north_appr_r3_s3_rep3	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R3	R3;R4	内容 + 事前確認の手続き
+177c6212b8	c0	north_appr_r3_c0_rep2	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R4	R4	事前確認の手続きのみを理由にした deny
+1786b30c80	s3	north_appr_r3_s3_rep3	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+1b3ef20dbc	s3	north_appr_r3_s3_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	LA	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+1c6d10bf8e	s3	north_appr_r3_s3_rep2	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+20fc6f59c1	c0	north_appr_r3_c0_rep3	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+22214b0c75	c2	north_appr_r3_c2_rep3	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+22648dcd72	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+27bcad8329	c0	north_appr_r3_c0_rep1	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+2b67a7af2c	s3	north_appr_r3_s3_rep3	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+2f8362ba49	s3	north_appr_r3_s3_rep3	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+307a307286	s3	north_appr_r3_s3_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+345072f0b3	c2	north_appr_r3_c2_rep3	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+35ffdcac5a	c0	north_appr_r3_c0_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+393397a5c7	c0	north_appr_r3_c0_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+399a2c6ba9	s3	north_appr_r3_s3_rep3	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+3ac1c1608c	c0	north_appr_r3_c0_rep2	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+3b06e13325	s3	north_appr_r3_s3_rep1	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+3b145b15f5	c0	north_appr_r3_c0_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+3bea1eba29	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+3d39b353da	s3	north_appr_r3_s3_rep1	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+3ff5989fae	c2	north_appr_r3_c2_rep3	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	LA	R2	R2;R3	場所 + 内容。許可記述の不在には触れていない
+40286ade59	c0	north_appr_r3_c0_rep3	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R4	R4	⚠ 理由文が崩れており意味を読み取れない
+41c58a1d6d	s3	north_appr_r3_s3_rep2	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R2	R2;R4	場所 + 事前確認の手続き。許可記述の不在には触れていない
+4248ada430	c0	north_appr_r3_c0_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+46104aa6ff	c2	north_appr_r3_c2_rep1	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+4b5f559699	c2	north_appr_r3_c2_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+4fd33d88f3	c0	north_appr_r3_c0_rep3	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+536ae63df0	c0	north_appr_r3_c0_rep1	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+550b6682d4	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+5900b004b1	c2	north_appr_r3_c2_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+5a039311ee	c2	north_appr_r3_c2_rep3	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+5aee9f4100	c2	north_appr_r3_c2_rep3	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+5c20773ba3	c2	north_appr_r3_c2_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+5c91fb635f	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+5cce6716ce	c2	north_appr_r3_c2_rep1	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+5dd3b72d79	c2	north_appr_r3_c2_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+5fca8961dc	c2	north_appr_r3_c2_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+61ec49778c	c2	north_appr_r3_c2_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	LA	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+66a6ac8dc9	c0	north_appr_r3_c0_rep2	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+68c390b94b	s3	north_appr_r3_s3_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+6a2acececa	c2	north_appr_r3_c2_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+6bec43b747	c2	north_appr_r3_c2_rep3	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+701972f6f1	s3	north_appr_r3_s3_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+716d7127df	c2	north_appr_r3_c2_rep2	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+723709fabc	c0	north_appr_r3_c0_rep2	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+731f3f9924	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+749fc3f5f9	c2	north_appr_r3_c2_rep3	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+74afe96f32	c0	north_appr_r3_c0_rep1	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+752bccd475	c0	north_appr_r3_c0_rep1	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+75ef3c1078	c0	north_appr_r3_c0_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+77bb12ce88	c0	north_appr_r3_c0_rep2	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+805df046ef	s3	north_appr_r3_s3_rep1	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R2	R2;R4	場所 + 事前確認の手続き。許可記述の不在には触れていない
+8392032a99	s3	north_appr_r3_s3_rep1	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+841a7ac1ad	s3	north_appr_r3_s3_rep2	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+85a7131116	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+888f6e0be9	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+890c5c7a38	c2	north_appr_r3_c2_rep2	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+8a58ac0ba7	s3	north_appr_r3_s3_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+9191b4ea40	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+93da00860d	s3	north_appr_r3_s3_rep1	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+9fd222c2ce	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+a8893f0b0e	c2	north_appr_r3_c2_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+aa4ca4005a	s3	north_appr_r3_s3_rep2	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+ab7a1bf800	c0	north_appr_r3_c0_rep1	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+ad31bd679b	s3	north_appr_r3_s3_rep1	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+af043a7c98	s3	north_appr_r3_s3_rep3	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+b08b57da51	s3	north_appr_r3_s3_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+b22683ddb2	c2	north_appr_r3_c2_rep3	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+b35f83ec9b	c0	north_appr_r3_c0_rep1	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+b35fb98b67	s3	north_appr_r3_s3_rep3	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+b433ae9f94	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	LA	R2	R2	場所そのものだけを理由にした deny
+b68afd2e87	c2	north_appr_r3_c2_rep1	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+b8117911da	s3	north_appr_r3_s3_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+c0aa52de9e	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+c0ca67ba1f	c2	north_appr_r3_c2_rep1	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+c14365c139	s3	north_appr_r3_s3_rep1	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+c16828bc06	c2	north_appr_r3_c2_rep2	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+c6894c97d8	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+c72909537d	c2	north_appr_r3_c2_rep3	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+c77af142dd	c0	north_appr_r3_c0_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+cabf77a504	s3	north_appr_r3_s3_rep2	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+cc0fe4837a	s3	north_appr_r3_s3_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+cc33ea78c9	c0	north_appr_r3_c0_rep2	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+cff76637d8	c0	north_appr_r3_c0_rep3	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	LA	R1	R1;R2;R3	許可記述の不在 + 場所 + 内容の過剰
+d4aad5722c	s3	north_appr_r3_s3_rep1	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+d817d9836d	s3	north_appr_r3_s3_rep2	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+db0faf165b	c0	north_appr_r3_c0_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L3	L3	R1	R1;R3	許可記述の不在 + 内容の過剰
+dc68318721	c0	north_appr_r3_c0_rep2	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+e02855ee7d	s3	north_appr_r3_s3_rep2	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+e19754aab0	c2	north_appr_r3_c2_rep3	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R4	R4	事前確認の手続きのみを理由にした deny
+e1a897fa2c	s3	north_appr_r3_s3_rep1	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+e37c07796f	c2	north_appr_r3_c2_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+e3e12032c8	c0	north_appr_r3_c0_rep2	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+e87ef7e55f	s3	north_appr_r3_s3_rep2	phase2aB2/aeb1-selfplan-r7/prt_f70d3ef890011GZ0ebtH2s7no4#LA	LA	R2	R2;R4	場所 + 事前確認の手続き。許可記述の不在には触れていない
+e99d03f03c	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+f33a394d97	s3	north_appr_r3_s3_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L4	L4	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+f39440e8ae	c0	north_appr_r3_c0_rep2	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#L3	L3	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+f5dda17c70	c0	north_appr_r3_c0_rep2	phase2aB2/aeb1-selfplan-r9/prt_f70dd88af0018RHr2BD8KHyDEQ#L4	L4	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+f9ebe573a3	s3	north_appr_r3_s3_rep2	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+fbe181dc14	c0	north_appr_r3_c0_rep1	phase2aB1/aeb1-selfplan-r1/prt_f700ddfc6001f26NfZiK4hAL16#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+fd222a29f3	c0	north_appr_r3_c0_rep1	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+fd951f92d7	c2	north_appr_r3_c2_rep2	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#L3	L3	R3	R3	内容を理由にした deny（重複・過剰・無変更）
+fdb4751fc0	c0	north_appr_r3_c0_rep1	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）
+fe56602151	c2	north_appr_r3_c2_rep2	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	LA	R1	R1;R2	許可記述の不在に言及（場所への言及と併存・§5-1 で R1）

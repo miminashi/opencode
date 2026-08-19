@@ -1,0 +1,47 @@
+語彙 fixture: /home/ubuntu/projects/opencode/tmp/p6-judge/q_vocab_r3.json
+  version 1 / 凍結 2026-08-10 JST / 規準 v1 / 逐語の定義: norm(quote) is a contiguous substring of norm(candidate)
+目視表  : /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/q_manual_r4.tsv
+目視範囲: ['L2', 'L3']
+
+統計量  : 対化クラスタブートストラップ B=10000 / seed=20260808 / percentile
+材料    : EXPECT_MAT=13（クラスタ単位 = 材料 origin）
+  c0: north_appr_r4_c0_rep1,north_appr_r4_c0_rep2,north_appr_r4_c0_rep3
+      材料 /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_approval_c0.jsonl
+  c2: north_appr_r4_c2_rep1,north_appr_r4_c2_rep2,north_appr_r4_c2_rep3
+      材料 /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_approval_c2.jsonl
+  s1: north_appr_r4_s1_rep1,north_appr_r4_s1_rep2,north_appr_r4_s1_rep3
+      材料 /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_approval_s1.jsonl
+
+====================================================================================================
+■ 主比較 s1 − c2（⚠ Δ = s1 − c2。**負 = s1 で減った**）
+====================================================================================================
+
+  --- L2 の Q1-a（減るべき・(i)） ---
+      分子/分母: c2 6/38  →  s1 5/39   材料 13/13
+  L2 Q1-a                 15.8% →  12.8%  Δ=  -3.0pt  95%CI [ -14.1,   +7.7]    (n=38/39 calls, 13 材料)
+
+  --- L3 の Q1-b（保つべき・(ii)） ---
+      分子/分母: c2 15/38  →  s1 15/38   材料 13/13
+  L3 Q1-b                 39.5% →  39.5%  Δ=  +0.0pt  95%CI [ -22.9,  +22.3]    (n=38/38 calls, 13 材料)
+
+----------------------------------------------------------------------------------------------------
+  ■ 判定（prereg_r4_s1.md §4 + 追記 1-(1) の機械適用）
+----------------------------------------------------------------------------------------------------
+    ✗ (i) L2 Q1-a の Δ が負側で 0 を外す: Δ=-3.0pt CI[-14.1, +7.7]pt
+    ✗ (ii) L3 Q1-b の Δ の CI 下限 ≥ −10pt: 下限 -22.9pt（閾値 -10.0pt）
+
+    === 判定: α が削る犯人 ===
+    → A では射程系の文言を足さない。β/γ の切り分けは不要になる
+
+====================================================================================================
+  0 を外した本数: 0 / 2 本（期待偶然本数 0.1 本）
+  ⚠ この台帳は **主指標だけのもの**。`score` が出す P3 の 12 本と足さない
+  ⚠ 主張は「この 13 材料・この挿入文インベントリの上で差がある」に限る
+  ⚠ CI が 0 を含むことを「変わらなかった」と読まない（『減少は検出されなかった』と書く）
+
+⚠ 目視範囲: L2:allow / L3:allow（prereg_r4_s1.md §6 で走行前に凍結）
+⚠ 除外水準 L0 / L1 / L4 / LA は **測っていない**。
+⚠ **『変わらなかった』と書かない。** 除外水準について書けるのは
+   「この範囲では測っていない」だけである（prereg §6 / §9-4）。
+⚠ 範囲を後から広げない。広げるなら別文書に日付つきで登録し、
+   「結果を見た後の拡張」であることを開示する（prereg §6）。

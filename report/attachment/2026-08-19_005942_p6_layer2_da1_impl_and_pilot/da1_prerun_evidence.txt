@@ -1,0 +1,43 @@
+========================================================================================
+DA-1 走行前証跡
+========================================================================================
+時刻: 2026-08-18 22:09:09 (JST)
+
+■ 既存の走行結果: 0 個
+  ✓ 走行結果は 1 つも無い（走行前であることの証拠）
+
+■ 凍結物の sha256
+    9ab8457015bca969bdfdabeb3756ef92995c07025911f85262f2a2815e5435f9  da1_materials_v1.jsonl
+    889c2d2d63521cbc30aee5da336a70c3cf80f1ed763878f57e10e1253e1ce583  da1_materials_instructed_v1.jsonl
+    bbfe54669118d9209cc7e2e3bd9b21abf335ce78f38cf1dced4c7ebed5d7e23d  da1_reasons_v1.jsonl
+    1da8023d6966aa0d4a7317ee171edc3433a9515de7d7cb0de7ddb05363f4c3bf  da1_reason_templates_v1.json
+    aa71c1648cd54532b659a3d33752b38f86b93dd1d4194fbc8c0d824192a22b9e  da1_tools_v1.json
+    8c3f7d89898293a4a0166fd2c6a42d6ddcf2b6aa9c75eb7d253224adfa945b90  prereg_da1.md
+
+■ 装置の sha256
+    cf3af0b7f747d6724cedac0329fbfd168695da16aa0989dc78d3264ad9b72850  da1_paths.py
+    e3c66dcd286ac932284dbcac6f6be27509875388cd71d183079f138f7611584a  da1_bash.py
+    0f206ba21f3dd0284e0bb672a14e732f4300fc99aee45aa97029aef221755bef  freeze_materials_da1.py
+    66e9514642e09385618a493cc2b3636d302c673124b83088f9bd88e6f14506ac  capture_tools_da1.py
+    f9d6c15d9f3a960640237b6d2a0d8336f5644c7ab769f0988d64c5498acd9446  da1_history.py
+    8c3552e651f9a90c927eafed8717efffad775d3d97fc2fefafa00be68cad8aef  check_materials_da1.py
+    f18a5b08921209fb8b4eabeacb4bd80e882a88be21d4bd088d38fb4d3b06bc85  make_deny_reasons_da1.py
+    2f0081ac8e1133765a78af4ad7d88ff6e3738635bb05a965b8e11ea4a0ffab2b  classify_action_da1.py
+    afdf238310eaab27329516d3ead0bc80df6ad46b73c666c7234b73ffb8277827  denyact_replay_bench.py
+    53e0ca183215df1c195844a545b28152c4f3ec19b9ffdf832a6611ea37c18e78  da1_verdict.py
+    bd867150ef59b1cfe32ad460b50d6844c5be285ef384249348d6c9832a56fec8  detectability_da1.py
+
+■ 装置の selftest（⚠ 走行結果ゼロの状態で通す）
+    ✓ da1_paths.py                     rc=0  selftest OK（15 項目）
+    ✓ da1_bash.py                      rc=0  selftest OK（21 項目）
+    ✓ freeze_materials_da1.py          rc=0  selftest OK（14 項目）
+    ✓ capture_tools_da1.py             rc=0  selftest OK（8 項目）
+    ✓ da1_history.py                   rc=0  selftest OK（22 項目）
+    ✓ check_materials_da1.py           rc=0  selftest OK（5 項目）
+    ✓ make_deny_reasons_da1.py         rc=0  selftest OK（25 項目）
+    ✓ classify_action_da1.py           rc=0  selftest OK（30 項目）
+    ✓ denyact_replay_bench.py          rc=0  selftest OK（18 項目）
+    ✓ da1_verdict.py                   rc=0  selftest OK（25 項目）
+    ✓ detectability_da1.py             rc=0  selftest OK（11 項目）
+
+  合計 194 項目 / 失敗 0 本 

@@ -1,0 +1,5 @@
+  ✓ north_appr_c0_t02_rep1: temperature=0.2
+  ✓ north_appr_c0_t02_rep2: temperature=0.2
+  ✓ north_appr_c0_t02_rep3: temperature=0.2
+
+✓ 全 3 arm の実効 temperature が 0.2

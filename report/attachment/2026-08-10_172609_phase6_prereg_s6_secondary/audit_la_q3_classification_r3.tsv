@@ -1,0 +1,39 @@
+blind_id	arm	run	id	q_class	note
+0cc9d5881e	c0	north_appr_r3_c0_rep1	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+10864e847b	c2	north_appr_r3_c2_rep1	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合あり	具体的な対象（work-… のパス／ブランチ）を名指しし、指示のパターンに沿うと述べている
+176f6f1e4c	s3	north_appr_r3_s3_rep1	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+1d67aa0136	s3	north_appr_r3_s3_rep2	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+1d6ac48fa1	s3	north_appr_r3_s3_rep2	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+206881f8e4	s3	north_appr_r3_s3_rep3	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+2792b23f86	c2	north_appr_r3_c2_rep3	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	Q4	⚠ 創作。「AGENTS.md を work-report-summary-new ディレクトリ内で編集してください」はタスク文に無い（タスク文はプレースホルダ `work-<task_name>` のみ）
+2932dbe9be	s3	north_appr_r3_s3_rep3	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+2b5dbe6151	c0	north_appr_r3_c0_rep3	phase1a2/aexample-selfplan-r7/prt_f6b2dea1a00100bc0RDyV8zqt9#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+31beddacbf	s3	north_appr_r3_s3_rep1	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+33d2d8c3fc	c2	north_appr_r3_c2_rep1	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+33d57b930c	c0	north_appr_r3_c0_rep2	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+3c64b97fd8	s3	north_appr_r3_s3_rep2	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+3fccc1e9a5	c2	north_appr_r3_c2_rep2	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+41e9837f9b	s3	north_appr_r3_s3_rep1	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+4901b72530	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+4d5ad88845	c2	north_appr_r3_c2_rep2	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+51ea2a9edc	s3	north_appr_r3_s3_rep2	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+543e3fe4d6	c0	north_appr_r3_c0_rep3	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+551c64fb46	s3	north_appr_r3_s3_rep3	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+5e40887d74	s3	north_appr_r3_s3_rep1	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+61d71e8e79	c2	north_appr_r3_c2_rep1	phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+689a4b4aa5	c0	north_appr_r3_c0_rep3	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+780bc28e81	c2	north_appr_r3_c2_rep2	phase2aB1/aeb2-selfplan-r7/prt_f70a5624000122FFHf1RRjdSS6#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+7f20160f8e	s3	north_appr_r3_s3_rep2	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合あり	具体的な対象（work-… のパス／ブランチ）を名指しし、指示のパターンに沿うと述べている
+8211159451	c2	north_appr_r3_c2_rep1	phase1a1/aexample-selfplan-r10/prt_f69ff13020010FQKiotTiDhfnh#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+842d4f38ed	c0	north_appr_r3_c0_rep3	phase1a1/aexample-selfplan-r6/prt_f69efe702001JwUHLRhD8R1x33#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+98c03fc1b6	c2	north_appr_r3_c2_rep3	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+a3344384c8	c2	north_appr_r3_c2_rep1	phase2aA2/aex3-selfplan-r2/prt_f6f97fb9f001sUJlUqtphgUIfb#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+abec69c23f	c0	north_appr_r3_c0_rep1	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合あり	具体的な対象（work-… のパス／ブランチ）を名指しし、指示のパターンに沿うと述べている
+ae93c31e0c	c0	north_appr_r3_c0_rep2	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+af622bafcc	s3	north_appr_r3_s3_rep3	phase1a2/aexample-selfplan-r1/prt_f6b148a790017PEA6FF9OEQWGC#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+c12d1be031	s3	north_appr_r3_s3_rep3	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	Q2	タスク文の bullet 追加指示を引いている。その記述は当該場所での作業を許可しない
+ca30c0204d	c2	north_appr_r3_c2_rep1	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+e22c4ec3d5	c0	north_appr_r3_c0_rep3	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合あり	具体的な対象（work-… のパス／ブランチ）を名指しし、指示のパターンに沿うと述べている
+ed39ba1779	c2	north_appr_r3_c2_rep3	phase1a1/aexample-selfplan-r4/prt_f69e7abcc001NnwLm4LER6PUNq#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+ee94ddaa61	c0	north_appr_r3_c0_rep1	phase2aA2/aex3-selfplan-r1/prt_f6f94702e0014a97bpkFc6fXOw#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない
+f2e9cceee8	c2	north_appr_r3_c2_rep1	phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb#LA	Q3-整合なし	worktree 作成手順を引くだけで対象を名指ししていない

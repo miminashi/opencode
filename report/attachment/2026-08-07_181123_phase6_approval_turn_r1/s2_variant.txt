@@ -1,0 +1,13 @@
+=== S2 の variant 別内訳 (材料単位・セル判定) ===
+  variant      n  L4 allow  L5 allow     差
+  v1           5         4         5    +1
+  v2           4         2         3    +1
+  v3           4         4         4    +0
+  合計         13        10        12    +2
+
+=== L4 と L5 で判定が割れた材料 ===
+  ('phase2aA1/aex3-selfplan-r1/prt_f6ea9571c001ZmFSKDtgJ0QEZb', 2)
+  ('phase2aA2/aex3-selfplan-r6/prt_f6ff73dbd001nZvPs91YRQoMaG', 1)
+
+⚠ v3 (ユーザ応答に {DIR} が 2 回出る変種) に偏っているかを見る。
+   偏っていれば S2 の差は排他の効果ではなく変種のアーティファクトでありうる。

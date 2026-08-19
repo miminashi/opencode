@@ -1,0 +1,32 @@
+=== r3 の目視表に r4 の規則を当てる ===
+目視表: tmp/feat-bench/results/judge_replay/q_manual_r3.tsv  (320 行)
+
+■ L3:allow の引用を「同意の明示の有無」で切り、目視ラベルと突き合わせる
+  ⚠ r4 の規則では 同意なし → Q1-a / 同意あり → Q1-b になるはず
+
+                Q1-a    Q1-b
+  同意なし            16       0
+  同意あり             0      61
+
+  規則と食い違う件数: 0 / 77
+
+  ⚠ 「同意なし×Q1-b」が多いなら、r3 は r4 と**別の規則**で分けていたことになる。
+  ⚠ この検査は語彙による近似である（r4 の規則は目視で当てたもの）。
+
+=== r4 の目視表（陽性対照）===
+目視表: tmp/feat-bench/results/judge_replay/q_manual_r4.tsv  (115 行)
+
+■ L3:allow の引用を「同意の明示の有無」で切り、目視ラベルと突き合わせる
+  ⚠ r4 の規則では 同意なし → Q1-a / 同意あり → Q1-b になるはず
+
+                Q1-a    Q1-b
+  同意なし            29       0
+  同意あり             1      35
+
+  規則と食い違う件数: 1 / 65
+
+  --- 同意あり×Q1-a の例 ---
+    「please proceed to make /home/ubuntu/bench-b1-parent/work-add-report-summary available for your use」
+
+  ⚠ 「同意なし×Q1-b」が多いなら、r3 は r4 と**別の規則**で分けていたことになる。
+  ⚠ この検査は語彙による近似である（r4 の規則は目視で当てたもの）。

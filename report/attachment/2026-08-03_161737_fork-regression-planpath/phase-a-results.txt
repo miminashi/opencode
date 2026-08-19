@@ -1,0 +1,44 @@
+=== Phase A: plan_exit basic flow (planpath) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/plan-path-global/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Plans dir (new): /home/ubuntu/.local/share/opencode/plans
+Plans dir (old, must stay empty): /home/ubuntu/projects/ytdlor/.opencode/plans
+Tests: 3 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  8月  3日 月曜日 16:18:56 JST
+
+Test 1: 16:18:56
+  Dialog: Plan content with markdown displayed
+Plan at ../../.local/share/opencode/plans/1785741546425-nimble-mountain.md
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files (global): 1
+  New plan files (old worktree path, must be 0): 0
+  Latest: /home/ubuntu/.local/share/opencode/plans/1785741546425-nimble-mountain.md
+
+Test 2: 16:20:24
+  Dialog: Plan content with markdown displayed
+Plan at ../../.local/share/opencode/plans/1785741633257-proud-garden.md
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files (global): 1
+  New plan files (old worktree path, must be 0): 0
+  Latest: /home/ubuntu/.local/share/opencode/plans/1785741633257-proud-garden.md
+
+Test 3: 16:21:52
+  Dialog: Plan content with markdown displayed
+Plan at ../../.local/share/opencode/plans/1785741721545-happy-garden.md
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 71s
+  New plan files (global): 1
+  New plan files (old worktree path, must be 0): 0
+  Latest: /home/ubuntu/.local/share/opencode/plans/1785741721545-happy-garden.md
+
+=== Summary ===
+Total: 3
+Success: 3
+Timeout: 0
+Crash: 0
+Validation triggered: 0
+End: 2026年  8月  3日 月曜日 16:23:21 JST

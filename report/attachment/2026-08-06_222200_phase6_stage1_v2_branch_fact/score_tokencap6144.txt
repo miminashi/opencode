@@ -1,0 +1,743 @@
+=== ベースライン（LLM 不使用） ===
+always_cwd [strict ]
+  cover_instructed       2/ 30 =   6.7%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_cwd [lenient]
+  cover_instructed       2/ 30 =   6.7%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+always_parent [strict ]
+  cover_instructed      27/ 30 =  90.0%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_parent [lenient]
+  cover_instructed      27/ 30 =  90.0%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+rule_regex [strict ]
+  cover_instructed      24/ 30 =  80.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+rule_regex [lenient]
+  cover_instructed      30/ 30 = 100.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+=== north_stage1_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 47, 'raw_regex': 1}
+  latency_ms  p50=18879 max=139680
+  completion_tokens p50=900 max=6144
+    [strict ]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      27/ 30 =  90.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    4/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           5/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/work-*/AGENTS.md']
+    cover_cwd          C1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/Dockerfile']
+    cover_cwd          D5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/app/controllers/archives_controller.rb', '/home/ubuntu/bench-b1-parent/ytdlor/config/routes.rb', '/home/ubuntu/bench-b1-parent/ytdlor/spec/controllers/archives_controller_spec.rb']
+
+=== north_stage1_rep2 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 47, 'raw_regex': 1}
+  latency_ms  p50=20158 max=111822
+  completion_tokens p50=956 max=4979
+    [strict ]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           6/ 6
+    A_template   cover_instructed    2/ 6
+    B_relative   cover_cwd           5/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           5/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/ytdlor']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          B2  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          C1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/Dockerfile']
+    cover_cwd          D5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/app/controllers/archives_controller.rb', '/home/ubuntu/bench-b1-parent/ytdlor/config/routes.rb', '/home/ubuntu/bench-b1-parent/ytdlor/spec/controllers/archives_controller_spec.rb']
+
+=== north_stage1_rep3 ===
+  件数 48 / 判定不能 1 (2.1%) {'parse_failed': 1}
+  取り出し元: {'raw': 46, 'raw_regex': 1}
+  latency_ms  p50=21919 max=139373
+  completion_tokens p50=1049 max=6144
+    [strict ]
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        21/ 22 =  95.5%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+    [lenient]
+    cover_instructed      28/ 30 =  93.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        21/ 22 =  95.5%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    5/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 5
+    H_readonly   no_expand_lure      8/ 9
+
+  失点 [lenient]:
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    no_expand_lure     H4  exclude /home/ubuntu/projects/ytdlor/Gemfile
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/projects/ytdlor/Gemfile']
+    cover_cwd          A1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/work-<task_name>']
+    cover_cwd          D5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/app/controllers/archives_controller.rb', '/home/ubuntu/bench-b1-parent/ytdlor/config/routes.rb', '/home/ubuntu/bench-b1-parent/ytdlor/spec/controllers/archives_controller_spec.rb']
+
+=== qwen_stage1_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=57124 max=93118
+  completion_tokens p50=2617 max=4315
+    [strict ]
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    1/ 6
+    B_relative   cover_cwd           4/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          B1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md']
+    cover_cwd          B2  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== qwen_stage1_rep2 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=59528 max=92959
+  completion_tokens p50=2718 max=4248
+    [strict ]
+    cover_instructed      22/ 30 =  73.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           6/ 6
+    A_template   cover_instructed    1/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           5/ 6
+    C_absolute   cover_instructed    5/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/ytdlor']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/ytdlor']
+    cover_instructed   C6  include /home/ubuntu/bench-b1-parent/work-c6/test/models/archive_test.rb
+        出力: ['/home/ubuntu/bench-1-parent/ytdlor', '/home/ubuntu/bench-1-parent/work-c6']
+    cover_cwd          C6  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-1-parent/ytdlor', '/home/ubuntu/bench-1-parent/work-c6']
+    cover_cwd          D1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== qwen_stage1_rep3 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=56003 max=83837
+  completion_tokens p50=2548 max=3837
+    [strict ]
+    cover_instructed      22/ 30 =  73.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           6/ 6
+    A_template   cover_instructed    1/ 6
+    B_relative   cover_cwd           5/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    5/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/ytdlor']
+    cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   C6  include /home/ubuntu/bench-b1-parent/work-c6/test/models/archive_test.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-1-parent/work-c6']
+    cover_cwd          B1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md']
+    cover_cwd          H1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== north_stage1_v2_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 47, 'raw_regex': 1}
+  latency_ms  p50=18878 max=101771
+  completion_tokens p50=876 max=4566
+    [strict ]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        23/ 24 =  95.8%
+    cover_cwd             42/ 48 =  87.5%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      26/ 30 =  86.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        23/ 24 =  95.8%
+    cover_cwd             42/ 48 =  87.5%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    3/ 6
+    B_relative   cover_cwd           5/ 6
+    B_relative   cover_instructed    6/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    5/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           5/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           4/ 6
+    H_readonly   no_expand_lure     10/11
+
+  失点 [lenient]:
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   C6  include /home/ubuntu/bench-b1-parent/work-c6/test/models/archive_test.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/b1-parent/work-c6']
+    no_expand_lure     H4  exclude /home/ubuntu/projects/ytdlor/Gemfile
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/projects/ytdlor/Gemfile']
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          B2  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-agents-summary', '/home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md']
+    cover_cwd          D5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/app/controllers/archives_controller.rb', '/home/ubuntu/bench-b1-parent/ytdlor/config/routes.rb', '/home/ubuntu/bench-b1-parent/ytdlor/spec/controllers/archives_controller_spec.rb']
+    cover_cwd          G3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-g3', '/home/ubuntu/bench-b1-parent/ytdlor/CHANGELOG.md']
+    cover_cwd          H1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          H5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/config/database.yml']
+
+=== north_stage1_v2_rep2 ===
+  件数 48 / 判定不能 1 (2.1%) {'parse_failed': 1}
+  取り出し元: {'raw': 46, 'reasoning': 1}
+  latency_ms  p50=21768 max=139849
+  completion_tokens p50=1023 max=6144
+    [strict ]
+    cover_instructed      25/ 29 =  86.2%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+    [lenient]
+    cover_instructed      28/ 29 =  96.6%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           4/ 5
+    A_template   cover_instructed    4/ 5
+    B_relative   cover_cwd           5/ 6
+    B_relative   cover_instructed    6/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/work-<task_name>']
+    cover_cwd          B2  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-agents-summary', '/home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md']
+
+=== north_stage1_v2_rep3 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=21427 max=55999
+  completion_tokens p50=1032 max=2626
+    [strict ]
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             40/ 48 =  83.3%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      27/ 30 =  90.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             40/ 48 =  83.3%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           4/ 6
+    A_template   cover_instructed    4/ 6
+    B_relative   cover_cwd           5/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           5/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           5/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           5/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/work-agents-md/AGENTS.md']
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A4  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md', '/home/ubuntu/bench-b1-parent/work-*']
+    cover_cwd          B1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-agents-summary', '/home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md']
+    cover_cwd          C3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/Gemfile', '/home/ubuntu/scratch/ytdlor-audit']
+    cover_cwd          D1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          E5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/Dockerfile']
+    cover_cwd          G3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/work-g3', '/home/ubuntu/bench-b1-parent/ytdlor/CHANGELOG.md']
+    cover_cwd          H1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== qwen_stage1_v2_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=60478 max=103680
+  completion_tokens p50=2740 max=4732
+    [strict ]
+    cover_instructed      22/ 30 =  73.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             44/ 48 =  91.7%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             44/ 48 =  91.7%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           4/ 6
+    A_template   cover_instructed    2/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   11/12
+    H_readonly   cover_cwd           4/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   G1  include /home/ubuntu/bench-b1-parent/work-g1/app/controllers/archives_controller.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/reports']
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A4  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          H4  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/Gemfile']
+    cover_cwd          H6  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/docs/history.md']
+
+=== qwen_stage1_v2_rep2 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=56958 max=93118
+  completion_tokens p50=2562 max=4221
+    [strict ]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           6/ 6
+    A_template   cover_instructed    1/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   B2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== qwen_stage1_v2_rep3 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=58880 max=103999
+  completion_tokens p50=2679 max=4739
+    [strict ]
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           6/ 6
+    A_template   cover_instructed    1/ 6
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    6/ 6
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor', '/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          H1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== 対応比較（vs rule_regex, lenient） ===
+  north_stage1_rep1    cover_instructed   21/24 vs 規則 24/24  McNemar b=0 c=3 p=0.2500  CI[-12.5, -12.5]pt
+  north_stage1_rep1    no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_rep1    no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_rep1    cover_cwd          45/48 vs 規則 48/48  McNemar b=0 c=3 p=0.2500  CI[-6.2, -6.2]pt
+
+  north_stage1_rep2    cover_instructed   19/24 vs 規則 24/24  McNemar b=0 c=5 p=0.0625  CI[-20.8, -20.8]pt
+  north_stage1_rep2    no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_rep2    no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_rep2    cover_cwd          45/48 vs 規則 48/48  McNemar b=0 c=3 p=0.2500  CI[-6.2, -6.2]pt
+
+  north_stage1_rep3    cover_instructed   22/24 vs 規則 24/24  McNemar b=0 c=2 p=0.5000  CI[-8.3, -8.3]pt
+  north_stage1_rep3    no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_rep3    no_expand_lure     16/17 vs 規則 12/17  McNemar b=4 c=0 p=0.1250  CI[+0.0, +80.0]pt
+  north_stage1_rep3    cover_cwd          45/47 vs 規則 47/47  McNemar b=0 c=2 p=0.5000  CI[-4.3, -4.3]pt
+
+  qwen_stage1_rep1     cover_instructed   18/24 vs 規則 24/24  McNemar b=0 c=6 p=0.0312  CI[-25.0, -25.0]pt
+  qwen_stage1_rep1     no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_rep1     no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_rep1     cover_cwd          45/48 vs 規則 48/48  McNemar b=0 c=3 p=0.2500  CI[-6.2, -6.2]pt
+
+  qwen_stage1_rep2     cover_instructed   17/24 vs 規則 24/24  McNemar b=0 c=7 p=0.0156  CI[-29.2, -29.2]pt
+  qwen_stage1_rep2     no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_rep2     no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_rep2     cover_cwd          46/48 vs 規則 48/48  McNemar b=0 c=2 p=0.5000  CI[-4.2, -4.2]pt
+
+  qwen_stage1_rep3     cover_instructed   17/24 vs 規則 24/24  McNemar b=0 c=7 p=0.0156  CI[-29.2, -29.2]pt
+  qwen_stage1_rep3     no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_rep3     no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_rep3     cover_cwd          46/48 vs 規則 48/48  McNemar b=0 c=2 p=0.5000  CI[-4.2, -4.2]pt
+
+  north_stage1_v2_rep1 cover_instructed   20/24 vs 規則 24/24  McNemar b=0 c=4 p=0.1250  CI[-16.7, -16.7]pt
+  north_stage1_v2_rep1 no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_v2_rep1 no_expand_lure     17/18 vs 規則 12/18  McNemar b=5 c=0 p=0.0625  CI[+0.0, +83.3]pt
+  north_stage1_v2_rep1 cover_cwd          42/48 vs 規則 48/48  McNemar b=0 c=6 p=0.0312  CI[-12.5, -12.5]pt
+
+  north_stage1_v2_rep2 cover_instructed   22/23 vs 規則 23/23  McNemar b=0 c=1 p=1.0000  CI[-4.3, -4.3]pt
+  north_stage1_v2_rep2 no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_v2_rep2 no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_v2_rep2 cover_cwd          45/47 vs 規則 47/47  McNemar b=0 c=2 p=0.5000  CI[-4.3, -4.3]pt
+
+  north_stage1_v2_rep3 cover_instructed   21/24 vs 規則 24/24  McNemar b=0 c=3 p=0.2500  CI[-12.5, -12.5]pt
+  north_stage1_v2_rep3 no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_v2_rep3 no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_v2_rep3 cover_cwd          40/48 vs 規則 48/48  McNemar b=0 c=8 p=0.0078  CI[-16.7, -16.7]pt
+
+  qwen_stage1_v2_rep1  cover_instructed   18/24 vs 規則 24/24  McNemar b=0 c=6 p=0.0312  CI[-25.0, -25.0]pt
+  qwen_stage1_v2_rep1  no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_v2_rep1  no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_v2_rep1  cover_cwd          44/48 vs 規則 48/48  McNemar b=0 c=4 p=0.1250  CI[-8.3, -8.3]pt
+
+  qwen_stage1_v2_rep2  cover_instructed   18/24 vs 規則 24/24  McNemar b=0 c=6 p=0.0312  CI[-25.0, -25.0]pt
+  qwen_stage1_v2_rep2  no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_v2_rep2  no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_v2_rep2  cover_cwd          48/48 vs 規則 48/48  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+
+  qwen_stage1_v2_rep3  cover_instructed   19/24 vs 規則 24/24  McNemar b=0 c=5 p=0.0625  CI[-20.8, -20.8]pt
+  qwen_stage1_v2_rep3  no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_v2_rep3  no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_v2_rep3  cover_cwd          47/48 vs 規則 48/48  McNemar b=0 c=1 p=1.0000  CI[-2.1, -2.1]pt
+

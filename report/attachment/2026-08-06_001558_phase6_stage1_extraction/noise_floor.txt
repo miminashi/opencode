@@ -1,0 +1,32 @@
+=== qwen_stage1_rep1 vs qwen_stage1_rep2 ===
+  [strict ] 材料×指標 単位の不一致 6/143 = 4.2%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      C6  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep2=False
+      D1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+  [lenient] 材料×指標 単位の不一致 6/143 = 4.2%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      C6  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep2=False
+      D1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+  出力パス集合が完全一致: 40/48 = 83.3%
+
+=== north_stage1_rep1 vs north_stage1_rep2 ===
+  [strict ] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          north_stage1_rep1=False north_stage1_rep2=True
+      A1  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      A6  cover_instructed   north_stage1_rep1=False north_stage1_rep2=True
+      B2  cover_cwd          north_stage1_rep1=True north_stage1_rep2=False
+  [lenient] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          north_stage1_rep1=False north_stage1_rep2=True
+      A1  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      A3  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      B2  cover_cwd          north_stage1_rep1=True north_stage1_rep2=False
+  出力パス集合が完全一致: 38/48 = 79.2%
+
+実測の最大不一致率: 4.2%
+→ 事前登録の規則により、判定不能帯 = 8.4pt 未満の差は判定不能

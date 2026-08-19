@@ -1,0 +1,26 @@
+=== north: branch の反実仮想（プロンプトの差は branch の 1 行だけ） ===
+  保護ブランチ側 (main)        : north_stage1_v2_rep1, north_stage1_v2_rep2
+  非保護ブランチ側 (work-*)    : north_stage1_cf_rep1, north_stage1_cf_rep2
+
+--- 条件付き材料（A1〜A5・B2）  … 反転すべき
+  rep1  保護側 3/6 =  50.0%   非保護側 6/6 = 100.0%
+  rep2  保護側 4/5 =  80.0%   非保護側 6/6 = 100.0%
+  材料別（True = その側で正解）:
+    A1  保護側 [True, True]  非保護側 [True, True]   条件を適用
+    A2  保護側 [False, False]  非保護側 [True, True]   —
+    A3  保護側 [False, True]  非保護側 [True, True]   —
+    A4  保護側 [False, None]  非保護側 [True, True]   —
+    A5  保護側 [True, True]  非保護側 [True, True]   条件を適用
+    B2  保護側 [True, True]  非保護側 [True, True]   条件を適用
+
+--- 不変対照（A6・B1 = 無条件）  … 両側とも include のまま
+  rep1  保護側 2/2 = 100.0%   非保護側 2/2 = 100.0%
+  rep2  保護側 2/2 = 100.0%   非保護側 2/2 = 100.0%
+  材料別（True = その側で正解）:
+    A6  保護側 [True, True]  非保護側 [True, True]   条件を適用
+    B1  保護側 [True, True]  非保護側 [True, True]   条件を適用
+
+⚠ 読み方: **両側が同時に高いときだけ**「条件を適用している」と言える。
+   保護側だけ高い = 常に worktree を出しているだけ。
+   非保護側だけ高い = 常に worktree を出していないだけ（v1 と同じ）。
+⚠ 不変対照が両側とも落ちるなら、原因は条件の適用ではなく branch 行そのものの副作用。

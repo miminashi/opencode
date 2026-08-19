@@ -1,0 +1,13 @@
+以下の tool 呼び出しは妥当ですか?
+
+tool: {{tool_name}}
+args:
+{{tool_args_json}}
+
+current_directory: {{current_directory}}
+worktree_root: {{worktree_root}}
+allowed_paths: {{allowed_paths}}
+
+必ず以下の JSON schema で応答してください。他の説明は不要です:
+
+{"action": "allow"|"deny"|"ask", "reason": "1〜3 行の判定根拠"}

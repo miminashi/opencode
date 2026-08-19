@@ -1,0 +1,220 @@
+{
+  "corpus_a": {
+    "allowed_paths_source": {
+      "env_scenario_file": 1943,
+      "plugin_fallback": 309,
+      "unset": 219
+    },
+    "bytes": 9700549,
+    "duplicates": [
+      {
+        "calls_in_duplicate_groups": 978,
+        "duplicate_groups": 307,
+        "duplicate_ratio": 0.3958,
+        "key": "judge_prompt",
+        "largest_group": 23,
+        "unique": 1800
+      },
+      {
+        "calls_in_duplicate_groups": 979,
+        "duplicate_groups": 307,
+        "duplicate_ratio": 0.3962,
+        "key": "payload",
+        "largest_group": 23,
+        "unique": 1799
+      }
+    ],
+    "file": "corpus_a_judged.jsonl",
+    "framing": {
+      "adversarial": 3,
+      "structured": 1289,
+      "structured_v3": 1179
+    },
+    "group_units": {
+      "calls": 2471,
+      "sessions": 236,
+      "task_names": 37
+    },
+    "judge_action_x_label": {
+      "allow": {
+        "deviation": 40,
+        "needs_review": 74,
+        "ok": 2218
+      },
+      "ask": {
+        "needs_review": 1
+      },
+      "deny": {
+        "deviation": 57,
+        "needs_review": 20,
+        "ok": 61
+      }
+    },
+    "judge_failure_kind": {
+      "http_error": 22,
+      "null": 1311,
+      "parse_failed": 354,
+      "timeout": 784
+    },
+    "judge_model": {
+      "North-Mini-Code-1.0-UD-Q4_K_XL": 999,
+      "gemma-4-26B-A4B-it-UD-Q4_K_XL": 687,
+      "ornith-1.0-35b-Q4_K_M": 118,
+      "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL": 667
+    },
+    "judge_prompt_chars": {
+      "max": 5038,
+      "mean": 1426,
+      "min": 621,
+      "p50": 1220,
+      "p90": 2349,
+      "p99": 4012
+    },
+    "judge_valid": {
+      "False": 1160,
+      "True": 1311
+    },
+    "label": {
+      "deviation": 97,
+      "needs_review": 95,
+      "ok": 2279
+    },
+    "label_confidence": {
+      "exact": 1226,
+      "heuristic": 1245
+    },
+    "minority_class_spread": {
+      "deviation": {
+        "calls": 97,
+        "sessions": 60,
+        "task_names": 13
+      },
+      "needs_review": {
+        "calls": 95,
+        "sessions": 49,
+        "task_names": 10
+      }
+    },
+    "plugin_version": {
+      "v1": 219,
+      "v2": 1073,
+      "v3": 1179
+    },
+    "records": 2471,
+    "runs": {
+      "phase6bn_jgemma4_fstructured": 360,
+      "phase6bn_jgemma4_fstructured_v3": 269,
+      "phase6bn_jnorth_fstructured": 255,
+      "phase6bn_jnorth_fstructured_v3": 222,
+      "phase6bn_jnorth_fstructured_v3_evo": 19,
+      "phase6bn_jornith_fstructured": 37,
+      "phase6bn_jqwen35b_fstructured": 222,
+      "phase6bn_jqwen35b_fstructured_v3": 341,
+      "phase6bn_jqwen35b_fstructured_v3_evo": 33,
+      "phase6bn_smoke_north_v2": 6,
+      "phase6bn_step1a_smoke": 6,
+      "phase6coloc_jnorth_v3_benign": 231,
+      "phase6coloc_jnorth_v3_evo": 34,
+      "phase6coloc_jnorth_v3_evo_r610": 22,
+      "phase6coloc_smoke": 2,
+      "phase6dry": 3,
+      "phase6pilot": 68,
+      "phase6pilot_gemma4": 9,
+      "phase6pilot_gemma4_v2": 49,
+      "phase6pilot_north": 119,
+      "phase6pilot_north_v2": 83,
+      "phase6pilot_ornith": 20,
+      "phase6pilot_ornith_v2": 61
+    },
+    "scenario_class": {
+      "benign": 2129,
+      "evocative": 342
+    },
+    "sha256": "8c4eaaf82c3b10ddf0bc38146caa2369366f624131c085e9d3cf1c250c4e8cd9",
+    "tool": {
+      "bash": 1276,
+      "edit": 881,
+      "write": 314
+    },
+    "tool_status": {
+      "completed": 2325,
+      "error": 146
+    },
+    "trials": 236
+  },
+  "corpus_b": {
+    "bytes": 2349406,
+    "duplicates": [
+      {
+        "calls_in_duplicate_groups": 5245,
+        "duplicate_groups": 1330,
+        "duplicate_ratio": 0.3763,
+        "key": "payload",
+        "largest_group": 157,
+        "unique": 10022
+      }
+    ],
+    "file": "corpus_b_replay.jsonl.gz",
+    "group_units": {
+      "calls": 13937,
+      "sessions": 982,
+      "task_names": 253
+    },
+    "label": {
+      "deviation": 208,
+      "needs_review": 176,
+      "ok": 13553
+    },
+    "label_confidence": {
+      "exact": 6231,
+      "heuristic": 7706
+    },
+    "minority_class_spread": {
+      "deviation": {
+        "calls": 208,
+        "sessions": 55,
+        "task_names": 45
+      },
+      "needs_review": {
+        "calls": 176,
+        "sessions": 68,
+        "task_names": 55
+      }
+    },
+    "records": 13937,
+    "scenario_class": {
+      "benign": 294,
+      "evocative": 2,
+      "other": 13641
+    },
+    "sha256": "cc66e28e2d5bc92a5efe279d51cde2ba00d0b733edf0fee505b9766559e97f3f",
+    "tool": {
+      "bash": 7786,
+      "edit": 4349,
+      "write": 1802
+    },
+    "tool_status": {
+      "completed": 13559,
+      "error": 378
+    },
+    "trials": 982
+  },
+  "excluded_runs": [],
+  "generated_at_jst": "2026-08-03 14:58 JST",
+  "generator": "tmp/feat-bench/export_phase6_corpus.py",
+  "scan_stats": {
+    "args_matched": 2471,
+    "args_unmatched": 0,
+    "broken_verdict_lines": 0,
+    "callid_collisions": 10,
+    "excluded_replay_trials": 0,
+    "excluded_verdict_files": 0,
+    "js_dollar_special": 0,
+    "missing_template": 0,
+    "plugin_version_conflicts": 6,
+    "replay_trials": 982,
+    "skipped_trials_in_corpus_a": 236,
+    "verdict_lines": 2471
+  },
+  "schema_version": 1
+}

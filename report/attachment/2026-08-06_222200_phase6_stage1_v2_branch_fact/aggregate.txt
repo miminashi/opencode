@@ -1,0 +1,176 @@
+=== 参考: ベースライン（lenient） ===
+always_cwd
+  cover_instructed       2/ 30 =   6.7%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_parent
+  cover_instructed      27/ 30 =  90.0%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+rule_regex
+  cover_instructed      30/ 30 = 100.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+=== v1_north  (3 反復: north_stage1_rep1, north_stage1_rep2, north_stage1_rep3) ===
+    単発 rep1 (north_stage1_rep1)
+    cover_instructed      27/ 30 =  90.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep2 (north_stage1_rep2)
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep3 (north_stage1_rep3)
+    cover_instructed      28/ 30 =  93.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        21/ 22 =  95.5%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+
+    集約 和集合 (k=1)
+    cover_instructed      28/ 30 =  93.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        23/ 24 =  95.8%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 多数決 (k=2)
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 積集合 (k=3)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             43/ 48 =  89.6%
+    no_write_main_all     47/ 47 = 100.0%
+
+=== v2_north  (3 反復: north_stage1_v2_rep1, north_stage1_v2_rep2, north_stage1_v2_rep3) ===
+    単発 rep1 (north_stage1_v2_rep1)
+    cover_instructed      26/ 30 =  86.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        23/ 24 =  95.8%
+    cover_cwd             42/ 48 =  87.5%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep2 (north_stage1_v2_rep2)
+    cover_instructed      28/ 29 =  96.6%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 47 =  95.7%
+    no_write_main_all     46/ 46 = 100.0%
+    単発 rep3 (north_stage1_v2_rep3)
+    cover_instructed      27/ 30 =  90.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             40/ 48 =  83.3%
+    no_write_main_all     47/ 47 = 100.0%
+
+    集約 和集合 (k=1)
+    cover_instructed      29/ 30 =  96.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        23/ 24 =  95.8%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 多数決 (k=2)
+    cover_instructed      27/ 30 =  90.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             43/ 48 =  89.6%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 積集合 (k=3)
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             35/ 48 =  72.9%
+    no_write_main_all     47/ 47 = 100.0%
+
+=== v1_qwen  (3 反復: qwen_stage1_rep1, qwen_stage1_rep2, qwen_stage1_rep3) ===
+    単発 rep1 (qwen_stage1_rep1)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep2 (qwen_stage1_rep2)
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep3 (qwen_stage1_rep3)
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             46/ 48 =  95.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+    集約 和集合 (k=1)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 多数決 (k=2)
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 積集合 (k=3)
+    cover_instructed      23/ 30 =  76.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             42/ 48 =  87.5%
+    no_write_main_all     47/ 47 = 100.0%
+
+=== v2_qwen  (3 反復: qwen_stage1_v2_rep1, qwen_stage1_v2_rep2, qwen_stage1_v2_rep3) ===
+    単発 rep1 (qwen_stage1_v2_rep1)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             44/ 48 =  91.7%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep2 (qwen_stage1_v2_rep2)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+    単発 rep3 (qwen_stage1_v2_rep3)
+    cover_instructed      25/ 30 =  83.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+
+    集約 和集合 (k=1)
+    cover_instructed      26/ 30 =  86.7%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 多数決 (k=2)
+    cover_instructed      24/ 30 =  80.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             48/ 48 = 100.0%
+    no_write_main_all     47/ 47 = 100.0%
+    集約 積集合 (k=3)
+    cover_instructed      22/ 30 =  73.3%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             43/ 48 =  89.6%
+    no_write_main_all     47/ 47 = 100.0%
+

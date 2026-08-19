@@ -1,0 +1,17 @@
+=== rule_regex（LLM 不使用）: branch の反実仮想の両側 ===
+⚠ 事前登録外の追加分析。規則は branch を一切読まない。
+
+--- 条件付き材料（A1〜A5・B2）
+  保護側 6/6   非保護側 0/6   **両側とも正解 0/6**
+    A1  保護側 True  非保護側 False   —
+    A2  保護側 True  非保護側 False   —
+    A3  保護側 True  非保護側 False   —
+    A4  保護側 True  非保護側 False   —
+    A5  保護側 True  非保護側 False   —
+    B2  保護側 True  非保護側 False   —
+
+--- 不変対照（A6・B1 = 無条件）
+  保護側 2/2   非保護側 2/2   **両側とも正解 2/2**
+    A6  保護側 True  非保護側 True    条件を適用
+    B1  保護側 True  非保護側 True    条件を適用
+

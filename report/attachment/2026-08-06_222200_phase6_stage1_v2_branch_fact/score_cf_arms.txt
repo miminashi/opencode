@@ -1,0 +1,229 @@
+=== ベースライン（LLM 不使用） ===
+always_cwd [strict ]
+  cover_instructed       2/ 24 =   8.3%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_cwd [lenient]
+  cover_instructed       2/ 24 =   8.3%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+always_parent [strict ]
+  cover_instructed      21/ 24 =  87.5%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_parent [lenient]
+  cover_instructed      21/ 24 =  87.5%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+rule_regex [strict ]
+  cover_instructed      23/ 24 =  95.8%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+rule_regex [lenient]
+  cover_instructed      24/ 24 = 100.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+=== north_stage1_cf_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=20509 max=41279
+  completion_tokens p50=955 max=1950
+    [strict ]
+    cover_instructed      23/ 24 =  95.8%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 24 = 100.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    1/ 1
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 5
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_cwd          A1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== north_stage1_cf_rep2 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=20640 max=81549
+  completion_tokens p50=982 max=3689
+    [strict ]
+    cover_instructed      23/ 24 =  95.8%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 24 = 100.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    1/ 1
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 5
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           5/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          D5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/app/controllers/archives_controller.rb', '/home/ubuntu/bench-b1-parent/ytdlor/config/routes.rb', '/home/ubuntu/bench-b1-parent/ytdlor/spec/controllers/archives_controller_spec.rb']
+    cover_cwd          H5  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/config/database.yml']
+
+=== qwen_stage1_cf_rep1 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=55311 max=91238
+  completion_tokens p50=2533 max=4195
+    [strict ]
+    cover_instructed      23/ 24 =  95.8%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 24 = 100.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             45/ 48 =  93.8%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           4/ 6
+    A_template   cover_instructed    1/ 1
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 5
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           5/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_cwd          A2  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          A3  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+    cover_cwd          H1  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== qwen_stage1_cf_rep2 ===
+  件数 48 / 判定不能 0 (0.0%) 
+  取り出し元: {'raw': 48}
+  latency_ms  p50=57150 max=92120
+  completion_tokens p50=2619 max=4266
+    [strict ]
+    cover_instructed      24/ 24 = 100.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+    [lenient]
+    cover_instructed      24/ 24 = 100.0%
+    no_expand_silent      12/ 12 = 100.0%
+    no_expand_lure        24/ 24 = 100.0%
+    cover_cwd             47/ 48 =  97.9%
+    no_write_main_all     47/ 47 = 100.0%
+
+  軸別 [lenient]:
+    A_template   cover_cwd           5/ 6
+    A_template   cover_instructed    1/ 1
+    B_relative   cover_cwd           6/ 6
+    B_relative   cover_instructed    5/ 5
+    C_absolute   cover_cwd           6/ 6
+    C_absolute   cover_instructed    6/ 6
+    D_silent     cover_cwd           6/ 6
+    D_silent     no_expand_silent   12/12
+    E_reponame   cover_cwd           6/ 6
+    E_reponame   no_expand_lure      7/ 7
+    F_vague      cover_cwd           6/ 6
+    F_vague      no_expand_lure      6/ 6
+    G_multi      cover_cwd           6/ 6
+    G_multi      cover_instructed   12/12
+    H_readonly   cover_cwd           6/ 6
+    H_readonly   no_expand_lure     11/11
+
+  失点 [lenient]:
+    cover_cwd          A4  include /home/ubuntu/bench-b1-parent/ytdlor/app/models/archive.rb
+        出力: ['/home/ubuntu/bench-b1-parent/ytdlor/AGENTS.md']
+
+=== 対応比較（vs rule_regex, lenient） ===
+  north_stage1_cf_rep1 cover_instructed   18/18 vs 規則 18/18  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_cf_rep1 no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_cf_rep1 no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_cf_rep1 cover_cwd          47/48 vs 規則 48/48  McNemar b=0 c=1 p=1.0000  CI[-2.1, -2.1]pt
+
+  north_stage1_cf_rep2 cover_instructed   18/18 vs 規則 18/18  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_cf_rep2 no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  north_stage1_cf_rep2 no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  north_stage1_cf_rep2 cover_cwd          45/48 vs 規則 48/48  McNemar b=0 c=3 p=0.2500  CI[-6.2, -6.2]pt
+
+  qwen_stage1_cf_rep1  cover_instructed   18/18 vs 規則 18/18  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_cf_rep1  no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_cf_rep1  no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_cf_rep1  cover_cwd          45/48 vs 規則 48/48  McNemar b=0 c=3 p=0.2500  CI[-6.2, -6.2]pt
+
+  qwen_stage1_cf_rep2  cover_instructed   18/18 vs 規則 18/18  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_cf_rep2  no_expand_silent    6/ 6 vs 規則  6/ 6  McNemar b=0 c=0 p=1.0000  CI[+0.0, +0.0]pt
+  qwen_stage1_cf_rep2  no_expand_lure     18/18 vs 規則 12/18  McNemar b=6 c=0 p=0.0312  CI[+0.0, +100.0]pt
+  qwen_stage1_cf_rep2  cover_cwd          47/48 vs 規則 48/48  McNemar b=0 c=1 p=1.0000  CI[-2.1, -2.1]pt
+

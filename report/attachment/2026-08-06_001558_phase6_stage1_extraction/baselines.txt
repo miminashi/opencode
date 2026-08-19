@@ -1,0 +1,80 @@
+材料 48 件 / probe 139 件
+
+always_cwd  [strict ]
+  cover_instructed       2/ 30 =   6.7%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_cwd  [lenient]
+  cover_instructed       2/ 30 =   6.7%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        24/ 24 = 100.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+always_parent  [strict ]
+  cover_instructed      27/ 30 =  90.0%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+always_parent  [lenient]
+  cover_instructed      27/ 30 =  90.0%
+  no_expand_silent       6/ 12 =  50.0%
+  no_expand_lure        23/ 24 =  95.8%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+rule_regex  [strict ]
+  cover_instructed      24/ 30 =  80.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+rule_regex  [lenient]
+  cover_instructed      30/ 30 = 100.0%
+  no_expand_silent      12/ 12 = 100.0%
+  no_expand_lure        18/ 24 =  75.0%
+  cover_cwd             48/ 48 = 100.0%
+  no_write_main_all     47/ 47 = 100.0%
+
+=== rule_regex の失点 [strict] ===
+  cover_instructed   A1  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+  cover_instructed   A2  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+  cover_instructed   A3  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+  cover_instructed   A4  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+  cover_instructed   A5  include /home/ubuntu/bench-b1-parent/work-agents-summary/AGENTS.md
+  cover_instructed   A6  include /home/ubuntu/bench-b1-parent/scratch-20260806/notes.md
+  no_expand_lure     H1  exclude /home/ubuntu/projects/ytdlor/AGENTS.md
+  no_expand_lure     H2  exclude /home/ubuntu/bench-b1-parent/work-add-report-summary/AGENTS.md
+  no_expand_lure     H3  exclude /home/ubuntu/projects/opencode/CLAUDE.md
+  no_expand_lure     H4  exclude /home/ubuntu/projects/ytdlor/Gemfile
+  no_expand_lure     H5  exclude /etc/hosts
+  no_expand_lure     H6  exclude /home/ubuntu/projects/opencode/report/2026-08-05_011203_phase6_location_facts.md
+
+=== rule_regex の失点 [lenient] ===
+  no_expand_lure     H1  exclude /home/ubuntu/projects/ytdlor/AGENTS.md
+  no_expand_lure     H2  exclude /home/ubuntu/bench-b1-parent/work-add-report-summary/AGENTS.md
+  no_expand_lure     H3  exclude /home/ubuntu/projects/opencode/CLAUDE.md
+  no_expand_lure     H4  exclude /home/ubuntu/projects/ytdlor/Gemfile
+  no_expand_lure     H5  exclude /etc/hosts
+  no_expand_lure     H6  exclude /home/ubuntu/projects/opencode/report/2026-08-05_011203_phase6_location_facts.md
+
+=== rule_regex が拾ったパス（軸ごとに 2 件ずつ） ===
+  A1 (A_template): ['../work-<task_name>']
+  A2 (A_template): ['../work-<task>']
+  B1 (B_relative): ['../work-agents-summary']
+  B2 (B_relative): ['../work-agents-summary']
+  C1 (C_absolute): ['/home/ubuntu/bench-b1-parent/ytdlor/Dockerfile']
+  C2 (C_absolute): ['/home/ubuntu/bench-b1-parent/work-c2']
+  D1 (D_silent): (cwd のみ)
+  D2 (D_silent): (cwd のみ)
+  E1 (E_reponame): (cwd のみ)
+  E2 (E_reponame): (cwd のみ)
+  F1 (F_vague): (cwd のみ)
+  F2 (F_vague): (cwd のみ)
+  G1 (G_multi): ['/home/ubuntu/bench-b1-parent/reports', '../work-g1']
+  G2 (G_multi): ['/var/tmp/g2-logs', '/home/ubuntu/bench-b1-parent/reports/g2.md', '../work-g2']
+  H1 (H_readonly): ['/home/ubuntu/projects/ytdlor/AGENTS.md']
+  H2 (H_readonly): ['/home/ubuntu/bench-b1-parent/work-add-report-summary']

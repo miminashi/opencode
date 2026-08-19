@@ -1,0 +1,206 @@
+=== north_stage1_rep1 vs north_stage1_rep2 ===
+  [strict ] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          north_stage1_rep1=False north_stage1_rep2=True
+      A1  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      A6  cover_instructed   north_stage1_rep1=False north_stage1_rep2=True
+      B2  cover_cwd          north_stage1_rep1=True north_stage1_rep2=False
+  [lenient] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          north_stage1_rep1=False north_stage1_rep2=True
+      A1  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      A3  cover_instructed   north_stage1_rep1=True north_stage1_rep2=False
+      B2  cover_cwd          north_stage1_rep1=True north_stage1_rep2=False
+  出力パス集合が完全一致: 38/48 = 79.2%
+
+=== north_stage1_rep2 vs north_stage1_rep3 ===
+  [strict ] 材料×指標 単位の不一致 7/140 = 5.0%
+      A1  cover_cwd          north_stage1_rep2=True north_stage1_rep3=False
+      A3  cover_instructed   north_stage1_rep2=False north_stage1_rep3=True
+      A4  cover_instructed   north_stage1_rep2=False north_stage1_rep3=True
+      A6  cover_instructed   north_stage1_rep2=True north_stage1_rep3=False
+      B2  cover_cwd          north_stage1_rep2=False north_stage1_rep3=True
+      C1  cover_cwd          north_stage1_rep2=False north_stage1_rep3=True
+      H4  no_expand_lure     north_stage1_rep2=True north_stage1_rep3=False
+  [lenient] 材料×指標 単位の不一致 7/140 = 5.0%
+      A1  cover_cwd          north_stage1_rep2=True north_stage1_rep3=False
+      A1  cover_instructed   north_stage1_rep2=False north_stage1_rep3=True
+      A3  cover_instructed   north_stage1_rep2=False north_stage1_rep3=True
+      A4  cover_instructed   north_stage1_rep2=False north_stage1_rep3=True
+      B2  cover_cwd          north_stage1_rep2=False north_stage1_rep3=True
+      C1  cover_cwd          north_stage1_rep2=False north_stage1_rep3=True
+      H4  no_expand_lure     north_stage1_rep2=True north_stage1_rep3=False
+  出力パス集合が完全一致: 32/47 = 68.1%
+
+=== north_stage1_rep1 vs north_stage1_rep3 ===
+  [strict ] 材料×指標 単位の不一致 5/140 = 3.6%
+      A1  cover_instructed   north_stage1_rep1=True north_stage1_rep3=False
+      A3  cover_instructed   north_stage1_rep1=False north_stage1_rep3=True
+      A4  cover_instructed   north_stage1_rep1=False north_stage1_rep3=True
+      C1  cover_cwd          north_stage1_rep1=False north_stage1_rep3=True
+      H4  no_expand_lure     north_stage1_rep1=True north_stage1_rep3=False
+  [lenient] 材料×指標 単位の不一致 3/140 = 2.1%
+      A4  cover_instructed   north_stage1_rep1=False north_stage1_rep3=True
+      C1  cover_cwd          north_stage1_rep1=False north_stage1_rep3=True
+      H4  no_expand_lure     north_stage1_rep1=True north_stage1_rep3=False
+  出力パス集合が完全一致: 39/47 = 83.0%
+
+=== qwen_stage1_rep1 vs qwen_stage1_rep2 ===
+  [strict ] 材料×指標 単位の不一致 6/143 = 4.2%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      C6  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep2=False
+      D1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+  [lenient] 材料×指標 単位の不一致 6/143 = 4.2%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep2=True
+      C6  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep2=False
+      D1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep2=False
+  出力パス集合が完全一致: 40/48 = 83.3%
+
+=== qwen_stage1_rep2 vs qwen_stage1_rep3 ===
+  [strict ] 材料×指標 単位の不一致 4/143 = 2.8%
+      B1  cover_cwd          qwen_stage1_rep2=True qwen_stage1_rep3=False
+      C6  cover_cwd          qwen_stage1_rep2=False qwen_stage1_rep3=True
+      D1  cover_cwd          qwen_stage1_rep2=False qwen_stage1_rep3=True
+      H1  cover_cwd          qwen_stage1_rep2=True qwen_stage1_rep3=False
+  [lenient] 材料×指標 単位の不一致 4/143 = 2.8%
+      B1  cover_cwd          qwen_stage1_rep2=True qwen_stage1_rep3=False
+      C6  cover_cwd          qwen_stage1_rep2=False qwen_stage1_rep3=True
+      D1  cover_cwd          qwen_stage1_rep2=False qwen_stage1_rep3=True
+      H1  cover_cwd          qwen_stage1_rep2=True qwen_stage1_rep3=False
+  出力パス集合が完全一致: 40/48 = 83.3%
+
+=== qwen_stage1_rep1 vs qwen_stage1_rep3 ===
+  [strict ] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep3=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep3=True
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep3=False
+      H1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep3=False
+  [lenient] 材料×指標 単位の不一致 4/143 = 2.8%
+      A1  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep3=True
+      B2  cover_cwd          qwen_stage1_rep1=False qwen_stage1_rep3=True
+      C6  cover_instructed   qwen_stage1_rep1=True qwen_stage1_rep3=False
+      H1  cover_cwd          qwen_stage1_rep1=True qwen_stage1_rep3=False
+  出力パス集合が完全一致: 41/48 = 85.4%
+
+=== north_stage1_v2_rep1 vs north_stage1_v2_rep2 ===
+  [strict ] 材料×指標 単位の不一致 6/140 = 4.3%
+      C6  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      D5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      G3  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H1  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H4  no_expand_lure     north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+  [lenient] 材料×指標 単位の不一致 7/140 = 5.0%
+      A3  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      C6  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      D5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      G3  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H1  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H4  no_expand_lure     north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+      H5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep2=True
+  出力パス集合が完全一致: 35/47 = 74.5%
+
+=== north_stage1_v2_rep2 vs north_stage1_v2_rep3 ===
+  [strict ] 材料×指標 単位の不一致 8/140 = 5.7%
+      B1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      B2  cover_cwd          north_stage1_v2_rep2=False north_stage1_v2_rep3=True
+      B2  cover_instructed   north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      C3  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      D1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      E5  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      G3  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      H1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+  [lenient] 材料×指標 単位の不一致 9/140 = 6.4%
+      A3  cover_instructed   north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      B1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      B2  cover_cwd          north_stage1_v2_rep2=False north_stage1_v2_rep3=True
+      B2  cover_instructed   north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      C3  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      D1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      E5  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      G3  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+      H1  cover_cwd          north_stage1_v2_rep2=True north_stage1_v2_rep3=False
+  出力パス集合が完全一致: 33/47 = 70.2%
+
+=== north_stage1_v2_rep1 vs north_stage1_v2_rep3 ===
+  [strict ] 材料×指標 単位の不一致 12/143 = 8.4%
+      A4  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      A4  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      B1  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      B2  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      B2  cover_instructed   north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      C3  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      C6  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      D1  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      D5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      E5  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      H4  no_expand_lure     north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      H5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+  [lenient] 材料×指標 単位の不一致 12/143 = 8.4%
+      A4  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      A4  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      B1  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      B2  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      B2  cover_instructed   north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      C3  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      C6  cover_instructed   north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      D1  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      D5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      E5  cover_cwd          north_stage1_v2_rep1=True north_stage1_v2_rep3=False
+      H4  no_expand_lure     north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+      H5  cover_cwd          north_stage1_v2_rep1=False north_stage1_v2_rep3=True
+  出力パス集合が完全一致: 34/48 = 70.8%
+
+=== qwen_stage1_v2_rep1 vs qwen_stage1_v2_rep2 ===
+  [strict ] 材料×指標 単位の不一致 6/143 = 4.2%
+      A3  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      A4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      A6  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      G1  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      H4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      H6  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+  [lenient] 材料×指標 単位の不一致 6/143 = 4.2%
+      A3  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      A4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      A5  cover_instructed   qwen_stage1_v2_rep1=True qwen_stage1_v2_rep2=False
+      G1  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      H4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+      H6  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep2=True
+  出力パス集合が完全一致: 39/48 = 81.2%
+
+=== qwen_stage1_v2_rep2 vs qwen_stage1_v2_rep3 ===
+  [strict ] 材料×指標 単位の不一致 2/143 = 1.4%
+      B2  cover_instructed   qwen_stage1_v2_rep2=False qwen_stage1_v2_rep3=True
+      H1  cover_cwd          qwen_stage1_v2_rep2=True qwen_stage1_v2_rep3=False
+  [lenient] 材料×指標 単位の不一致 2/143 = 1.4%
+      B2  cover_instructed   qwen_stage1_v2_rep2=False qwen_stage1_v2_rep3=True
+      H1  cover_cwd          qwen_stage1_v2_rep2=True qwen_stage1_v2_rep3=False
+  出力パス集合が完全一致: 44/48 = 91.7%
+
+=== qwen_stage1_v2_rep1 vs qwen_stage1_v2_rep3 ===
+  [strict ] 材料×指標 単位の不一致 8/143 = 5.6%
+      A3  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      A4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      A6  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      B2  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      G1  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      H1  cover_cwd          qwen_stage1_v2_rep1=True qwen_stage1_v2_rep3=False
+      H4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      H6  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+  [lenient] 材料×指標 単位の不一致 8/143 = 5.6%
+      A3  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      A4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      A5  cover_instructed   qwen_stage1_v2_rep1=True qwen_stage1_v2_rep3=False
+      B2  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      G1  cover_instructed   qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      H1  cover_cwd          qwen_stage1_v2_rep1=True qwen_stage1_v2_rep3=False
+      H4  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+      H6  cover_cwd          qwen_stage1_v2_rep1=False qwen_stage1_v2_rep3=True
+  出力パス集合が完全一致: 37/48 = 77.1%
+
+実測の最大不一致率: 8.4%
+→ 事前登録の規則により、判定不能帯 = 16.8pt 未満の差は判定不能

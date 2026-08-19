@@ -16,6 +16,18 @@ git log --oneline HEAD..upstream/dev
 
 差分がなければ「既に最新です」と報告して終了する。
 
+## 1.5. ベンチ前提確認（pre-flight）
+
+マージ後に `feature-bench` の `mode=regression`（既定 `full`=30）で fork コアの非回帰を確認するのが後続フロー（§5.1 の `fork-regression-test` とは別の follow-up）。その regression が成立する前提＝**走らせる全シナリオに現行ベースラインがあること**を、**マージ前のこの時点で**確認しておく（マージ後はバイナリが変わり、前提確認＝必要なら pre-merge バイナリでの baseline 計測の最後の機会を逃すため）。
+
+```
+SET=full python3 /home/ubuntu/projects/opencode/tmp/feat-bench/bench_preflight.py
+```
+
+- `OK`（全シナリオに現行ベースライン）なら次へ進む。
+- `MISSING` の場合は、マージ前の現バイナリで `feature-bench` skill の `mode=baseline` を先に実行し、当該シナリオ×版のベースラインを確立してからマージに進む。
+- これは**軽量チェック（網羅＋版一致のみ）**であり、毎回の再計測を強制するものではない（版変更/未登録時だけ baseline を促す）。
+
 ## 2. ワークツリーを作成
 
 `.claude/worktrees/` 配下にワークツリーを作成する。ブランチ名は `merge-upstream-N`（N は連番）とする。
@@ -37,6 +49,15 @@ git -C .claude/worktrees/merge-upstream-N merge upstream/dev
 ```
 
 コンフリクトがあれば解消する。解消方法をレポートに記録すること。
+
+### 既知の恒久的な衝突点（fork 独自の変更が upstream 由来ファイルに入っているもの）
+
+- **`packages/opencode/src/session/session.ts` の `Session.plan()`** —
+  fork では計画文書の保存先を**グローバル一本化**している（`vcs` 分岐を撤廃し、
+  常に `Global.Path.data/plans` を返す。2026-08-03 マージ、`f4510ab80f`）。
+  upstream 側は `instance.project.vcs` で `<worktree>/.opencode/plans` と
+  グローバルを出し分けているため、この関数に upstream の変更が入るたびに衝突する。
+  **fork 側（グローバル一本化）を維持すること。** 理由は関数直上のコメントに記載。
 
 ## 4. ビルド
 
@@ -83,6 +104,8 @@ num_plan_a  = 5   # 標準。時間制約があれば 3 まで下げてよい
 skill が生成するレポート (`report/{ts}_fork-regression-{label}.md`) の Phase A-E が
 すべて pass または warn の場合のみ §6 へ進む。fail が 1 件でも検出されれば原因を調査し、
 §4.1 に戻って修正コミットを作成すること。
+
+> **後続フロー（機能追加ベンチ）**: `fork-regression-test`（fork 独自機能の E2E）とは別に、ローカル LLM の機能追加能力に回帰が無いかは `feature-bench` skill の `mode=regression`（既定 `full`=30・マージ後の dist を `binary_path`）で別途確認する（本ワークフローの後の follow-up）。その前提（全シナリオのベースライン現存）は §1.5 の pre-flight で既に担保済み。
 
 ### 5.2. 最小スモーク (緊急マージ時のみ)
 

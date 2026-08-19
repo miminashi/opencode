@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r3",
+  "score": 1,
+  "categories": {
+    "correctness": 1,
+    "idiomaticity": 1,
+    "completeness": 1,
+    "test_quality": 1
+  },
+  "reason": "**実装ゼロ（diff 0 ファイル）**。build が『.page(params[:page]).per(20) 適用済み・paginate 追加済み・kaminari インストール済み』と幻覚し何も変更せず終了。実機は全25件1ページ（firstPageCount=25・nav 無し）・functional NO。merge26/27/28 で既出の確率的『実装済み幻覚』故障モード。self_exit 遷移は正常。"
+}

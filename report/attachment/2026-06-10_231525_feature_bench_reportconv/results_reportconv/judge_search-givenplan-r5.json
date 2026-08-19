@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "与プラン通り ILIKE＋@q＋form_with。テスト 16＋33 行で最も手厚い。実機12件絞込・functional YES。与プランは全5試行 search_by_title ILIKE に完全収束。"
+}

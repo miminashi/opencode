@@ -1,0 +1,131 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..68e41fb 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,9 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
++    query = params[:search].to_s.strip
+     @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = @archives.search(query) if query.present?
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..c1bde2e 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(query) { where.not(title: nil).where('title ILIKE ?', "%#{query}%") }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..08c8292 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -11,6 +11,13 @@
+ 
+   <%= turbo_frame_tag(Archive.new) %>
+ 
++  <div class="search-form">
++    <%= form_with url: archives_path, method: :get, local: true, class: "search-form__input" do |f| %>
++      <%= text_field_tag :search, params[:search], placeholder: "タイトルで検索...", class: "search-form__text" %>
++      <%= submit_tag "検索", class: "btn" %>
++    <% end %>
++  </div>
++
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..620bd48 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -8,6 +8,10 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     #@archive.update_title
+     #@archive.update_thumbnail
+     #@archive.update_video
++
++    @search_archive1 = Archive.create!(original_url: "https://example.com/1", title: "Ruby on Rails 入門")
++    @search_archive2 = Archive.create!(original_url: "https://example.com/2", title: "Rubyプログラミング")
++    @search_archive3 = Archive.create!(original_url: "https://example.com/3", title: "Pythonで機械学習")
+   end
+ 
+   test "should get index" do
+@@ -62,10 +66,37 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
+-  #test "should get edit" do
+-  #  get edit_archive_url(@archive)
+-  #  assert_response :success
+-  #end
++  test "should search archives by title partial match" do
++    get archives_url, params: { search: "Ruby" }
++    assert_response :success
++    assert_select ".article__title", count: 2
++  end
++
++  test "should return all archives when search is empty" do
++    get archives_url
++    assert_response :success
++    total_count = Archive.count
++    assert_select ".article__title", count: total_count
++  end
++
++  test "should return all archives when search is blank string" do
++    get archives_url, params: { search: "   " }
++    assert_response :success
++    total_count = Archive.count
++    assert_select ".article__title", count: total_count
++  end
++
++  test "should be case insensitive search" do
++    get archives_url, params: { search: "ruby" }
++    assert_response :success
++    assert_select ".article__title", count: 2
++  end
++
++  test "should return empty when no match" do
++    get archives_url, params: { search: "zzzzz_not_found" }
++    assert_response :success
++    assert_select ".article__title", count: 0
++  end
+ 
+   #test "should update archive" do
+   #  patch archive_url(@archive), params: { archive: { original_url: @archive.original_url, status: @archive.status, title: @archive.title } }
+diff --git a/test/system/archives_test.rb b/test/system/archives_test.rb
+index 9751efc..ff9841a 100644
+--- a/test/system/archives_test.rb
++++ b/test/system/archives_test.rb
+@@ -38,4 +38,25 @@ class ArchivesTest < ApplicationSystemTestCase
+     assert_selector "h1", text: "保存したビデオ"
+     assert_text "test_10s.mov"
+   end
++
++  test "should display search form" do
++    visit archives_path
++    assert_selector "input[name='search']", visible: true
++    assert_selector "input[type='submit'][value='検索']", visible: true
++  end
++
++  test "should filter archives by title in search" do
++    archive = Archive.create!(original_url: "https://example.com/ruby", title: "Rubyテスト動画")
++    visit archives_path
++    fill_in "search", with: "Ruby"
++    click_on "検索"
++    assert_text "Rubyテスト動画"
++  end
++
++  test "should show no results when no match" do
++    visit archives_path
++    fill_in "search", with: "zzzzz_not_found_test"
++    click_on "検索"
++    assert_no_text "Мимinaし"
++  end
+ end

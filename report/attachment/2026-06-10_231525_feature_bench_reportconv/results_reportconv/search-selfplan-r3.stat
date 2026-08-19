@@ -1,0 +1,9 @@
+ app/controllers/archives_controller.rb       |  2 ++
+ app/models/archive.rb                        |  1 +
+ app/views/archives/index.html.erb            |  7 +++++++
+ test/controllers/archives_controller_test.rb | 30 ++++++++++++++++++++++++++++
+ 4 files changed, 40 insertions(+)
+2	0	app/controllers/archives_controller.rb
+1	0	app/models/archive.rb
+7	0	app/views/archives/index.html.erb
+30	0	test/controllers/archives_controller_test.rb

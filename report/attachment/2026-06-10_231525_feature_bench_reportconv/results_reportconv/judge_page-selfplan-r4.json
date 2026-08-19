@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari .page.per(20)＋kaminari view テンプレート一式（14 ファイル）生成＋config＋controller 15 行テスト。実機 20/5/nav・functional YES。build 980s と長め。"
+}

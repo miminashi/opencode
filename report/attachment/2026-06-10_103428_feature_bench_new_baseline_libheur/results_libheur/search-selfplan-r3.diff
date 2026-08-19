@@ -1,0 +1,128 @@
+diff --git a/app/assets/stylesheets/form.css b/app/assets/stylesheets/form.css
+index 029b8fc..87de63a 100644
+--- a/app/assets/stylesheets/form.css
++++ b/app/assets/stylesheets/form.css
+@@ -29,3 +29,17 @@
+   padding: var(--space-xxs) var(--space-xs);
+   flex: 1;
+ }
++
++.search-form {
++  display: flex;
++  gap: 8px;
++  margin: 16px 0;
++}
++
++.search-input {
++  flex: 1;
++  padding: 8px 12px;
++  border: var(--border);
++  border-radius: var(--border-radius);
++  font-size: 14px;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e0d13d1 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.search(params[:q]).ordered.with_attached_thumbnail.with_attached_video
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..f5c5e5a 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(query) { where('title ILIKE ?', "%#{query}%") if query.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..30528f4 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -9,6 +9,11 @@
+                 class: "btn btn--primary") %>
+   </div>
+ 
++  <%= form_with url: archives_path, method: :get, local: true, class: "search-form" do |f| %>
++    <%= f.text_field :q, value: params[:q], placeholder: "タイトルで検索", class: "search-input" %>
++    <%= f.submit "検索", class: "btn" %>
++  <% end %>
++
+   <%= turbo_frame_tag(Archive.new) %>
+ 
+   <%= turbo_frame_tag("archives") do %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..6c9ed45 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,47 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should search archives by title (partial match)" do
++    get archives_url, params: { q: "Done Video" }
++    assert_response :success
++    assert_select ".article__title", count: 2
++  end
++
++  test "should return empty when no title matches" do
++    get archives_url, params: { q: "NonExistentTitle12345" }
++    assert_response :success
++    assert_select ".article__title", count: 0
++  end
++
++  test "should return all archives when no search parameter" do
++    get archives_url
++    assert_response :success
++    assert_equal Archive.count, response.body.scan(/class="article__title"/).count
++  end
++
++  test "should return search results in correct order (id descending)" do
++    get archives_url, params: { q: "Tutorial" }
++    assert_response :success
++    titles = response.body.scan(/<h2 class="article__title">([^<]+)<\/h2>/)
++    assert_equal 1, titles.size
++    assert_equal "Done Video - Tutorial Part 1", titles[0][0]
++  end
++
++  test "should return search results in correct order (id descending) with multiple matches" do
++    get archives_url, params: { q: "Done Video" }
++    assert_response :success
++    titles = response.body.scan(/<h2 class="article__title">([^<]+)<\/h2>/)
++    assert titles.size >= 2, "Expected at least 2 results"
++    assert_equal "Done Video - Tutorial Part 1", titles[0][0]
++    assert_equal "Done Video", titles[1][0]
++  end
++
++  test "should be case-insensitive search (ILIKE)" do
++    get archives_url, params: { q: "done video" }
++    assert_response :success
++    assert_select ".article__title", count: 2
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/fixtures/archives.yml b/test/fixtures/archives.yml
+index 645b22b..53bb107 100644
+--- a/test/fixtures/archives.yml
++++ b/test/fixtures/archives.yml
+@@ -29,3 +29,8 @@ processing_archive:
+   title: Processing Video
+   original_url: https://vimeo.com/1192937
+   status: processing
++
++done_tutorial_archive:
++  title: Done Video - Tutorial Part 1
++  original_url: https://vimeo.com/1202937
++  status: done

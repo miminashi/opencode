@@ -1,0 +1,39 @@
+{
+  "trial": "page-givenplan-r3",
+  "task": "page",
+  "pattern": "givenplan",
+  "transition": "self_exit",
+  "plan_sec": 283,
+  "build_sec": 380,
+  "build_time": "6m20s",
+  "appup_rc": "0",
+  "indep_test": "33 runs, 67 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 0,
+  "diff_insertions": 0,
+  "gem_choice": "-",
+  "report_artifacts": [],
+  "browser": {
+    "mode": "page",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 25,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "page1",
+        "articles": 25
+      }
+    ],
+    "notes": [
+      "ページネーションリンクが見つからない"
+    ],
+    "firstPageCount": 25,
+    "paginationNavFound": false,
+    "pageLinkCount": 0,
+    "ok": false
+  },
+  "functional": false,
+  "functional_note": "firstPage=25 nav=False secondPage=None"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り kaminari per(20) 実装。実機 20/5/nav・functional YES。build 2020s と最長。与プランは全5試行 kaminari per(20) に収束（r3 の実装ゼロを除く）。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "kaminari 1.2.2 の .page(params[:page]).per(20)＋paginate @archives。「20件超でページ分割」境界テスト（controller 17 行）も記述。実機 20/5/nav・functional YES。"
+}

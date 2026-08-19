@@ -1,0 +1,39 @@
+{
+  "trial": "page-selfplan-r2",
+  "task": "page",
+  "pattern": "selfplan",
+  "transition": "self_exit",
+  "plan_sec": 194,
+  "build_sec": 320,
+  "build_time": "5m20s",
+  "appup_rc": "0",
+  "indep_test": "35 runs, 79 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 7,
+  "diff_insertions": 91,
+  "gem_choice": "kaminari",
+  "report_artifacts": [],
+  "browser": {
+    "mode": "page",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 25,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "page1",
+        "articles": 25
+      }
+    ],
+    "notes": [
+      "ページネーションリンクが見つからない"
+    ],
+    "firstPageCount": 25,
+    "paginationNavFound": true,
+    "pageLinkCount": 0,
+    "ok": false
+  },
+  "functional": false,
+  "functional_note": "firstPage=25 nav=True secondPage=None"
+}

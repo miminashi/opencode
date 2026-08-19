@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r2",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 4,
+    "completeness": 2,
+    "test_quality": 2
+  },
+  "reason": "kaminari 採用も **.per(20) 欠落**（.page(params[:page]) のみ）。kaminari default per_page=25・シード25件のため全件1ページ表示（firstPageCount=25）でページ分割が発生せず・functional NO。pagination.css と integration/controller テストは書いたが per 欠落を捕捉できず通過。Playwright が捕捉。境界検証ヒューリスティックが説く per(20) ギャップの典型故障。"
+}

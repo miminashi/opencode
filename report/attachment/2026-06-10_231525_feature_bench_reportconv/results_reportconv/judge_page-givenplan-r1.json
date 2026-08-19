@@ -1,0 +1,11 @@
+{
+  "trial": "page-givenplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り kaminari .page.per(20)＋paginate @archives。実機 20/5/nav・functional YES。新規テストはプラン要求外で無し。"
+}

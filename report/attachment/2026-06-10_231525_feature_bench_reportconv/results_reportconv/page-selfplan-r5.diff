@@ -1,0 +1,147 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..046b1af 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -48,6 +48,9 @@ gem "bootsnap", require: false
+ # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+ gem "image_processing", "~> 1.2"
+ 
++# Pagination
++gem "kaminari"
++
+ # for background jobs
+ gem "solid_queue"
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..5041e48 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -291,6 +303,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5707bb6 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,10 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <% if @archives.total_pages > 1 %>
++    <nav class="pagination">
++      <%= paginate @archives %>
++    </nav>
++  <% end %>
+ </main>
+diff --git a/config/initializers/kaminari_config.rb b/config/initializers/kaminari_config.rb
+new file mode 100644
+index 0000000..dbf1712
+--- /dev/null
++++ b/config/initializers/kaminari_config.rb
+@@ -0,0 +1,4 @@
++# Kaminari configuration
++Kaminari.configure do |config|
++  config.default_per_page = 20
++end
+diff --git a/config/initializers/pagy.rb b/config/initializers/pagy.rb
+new file mode 100644
+index 0000000..39ffe6d
+--- /dev/null
++++ b/config/initializers/pagy.rb
+@@ -0,0 +1,2 @@
++# Pagy configuration
++# Default items per page is 20 (Pagy::DEFAULT[:limit] => 20)
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..8feec88 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -15,6 +15,51 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_response :success
+   end
+ 
++  test "should paginate archives with more than 20 records" do
++    # Create 25 archives to test pagination (more than one page)
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/test#{i}", status: "waiting", title: "Test Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_select "nav.pagination"
++  end
++
++  test "should show 20 records on first page" do
++    # Create 25 archives
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/test#{i}", status: "waiting", title: "Test Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    
++    # Should have 20 records on the first page (plus the setup archive)
++    # The response should contain at least 20 article elements
++    assert_response :success
++  end
++
++  test "should access second page" do
++    # Create 25 archives
++    25.times do |i|
++      Archive.create!(original_url: "https://vimeo.com/test#{i}", status: "waiting", title: "Test Video #{i}")
++    end
++
++    get archives_url, params: { page: 2 }
++    assert_response :success
++    assert_select "nav.pagination"
++  end
++
++  test "should not show pagination when less than 20 records" do
++    # Delete all archives except the setup one
++    Archive.where.not(id: @archive.id).destroy_all
++
++    get archives_url
++    assert_response :success
++    assert_select "nav.pagination", false
++  end
++
+   test "should get new" do
+     get new_archive_url
+     assert_response :success

@@ -1,0 +1,11 @@
+ app/controllers/archives_controller.rb       |  2 ++
+ app/models/archive.rb                        |  1 +
+ app/views/archives/index.html.erb            |  7 +++++
+ test/controllers/archives_controller_test.rb | 39 +++++++++++++++++++++++++---
+ test/system/archives_test.rb                 | 21 +++++++++++++++
+ 5 files changed, 66 insertions(+), 4 deletions(-)
+2	0	app/controllers/archives_controller.rb
+1	0	app/models/archive.rb
+7	0	app/views/archives/index.html.erb
+35	4	test/controllers/archives_controller_test.rb
+21	0	test/system/archives_test.rb

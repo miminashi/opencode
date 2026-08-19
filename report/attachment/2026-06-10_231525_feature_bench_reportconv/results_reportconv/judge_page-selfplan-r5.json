@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r5",
+  "score": 4,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 4,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "kaminari .page.per(20)＋config.default_per_page=20＋controller 45 行テスト。実機 20/5/nav・functional YES。ただし config/initializers/pagy.rb（2 行）も併せて生成しており未使用の混入が軽微な瑕疵。build 1340s。"
+}

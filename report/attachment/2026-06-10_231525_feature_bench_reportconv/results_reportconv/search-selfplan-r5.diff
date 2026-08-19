@@ -1,0 +1,127 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e0d13d1 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.search(params[:q]).ordered.with_attached_thumbnail.with_attached_video
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..10e48a8 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search, ->(query) { query.present? ? where("title ILIKE ?", "%#{query}%") : all }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..530bce5 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -9,6 +9,11 @@
+                 class: "btn btn--primary") %>
+   </div>
+ 
++  <%= form_with url: archives_path, method: :get, class: "search-form" do %>
++    <%= text_field_tag :q, params[:q], placeholder: "タイトルで検索", class: "search-input" %>
++    <%= submit_tag "検索", class: "btn" %>
++  <% end %>
++
+   <%= turbo_frame_tag(Archive.new) %>
+ 
+   <%= turbo_frame_tag("archives") do %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..4de645f 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,30 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get index with search query" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails Tutorial")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Python Programming")
++
++    get archives_url, params: { q: "rails" }
++    assert_response :success
++    assert_select "h1", text: /保存したビデオ/
++  end
++
++  test "should get index with empty search query returns all" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Video One")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Video Two")
++
++    get archives_url, params: { q: "" }
++    assert_response :success
++  end
++
++  test "should get index with no matching search query" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails Tutorial")
++
++    get archives_url, params: { q: "zxcvbn" }
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/models/archive_test.rb b/test/models/archive_test.rb
+index 677ed49..b9c38ac 100644
+--- a/test/models/archive_test.rb
++++ b/test/models/archive_test.rb
+@@ -142,4 +142,46 @@ test "default_title increments for duplicate titles" do
+     assert_equal "processing", Archive::Status::PROCESSING
+     assert_equal "failed", Archive::Status::FAILED
+   end
++
++  test "search scope returns matching archives by partial title match" do
++    archive1 = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails Tutorial")
++    archive2 = Archive.create!(original_url: "https://vimeo.com/1132937", title: "Rails API Basics")
++    archive3 = Archive.create!(original_url: "https://vimeo.com/1182937", title: "Python Programming")
++
++    results = Archive.search("rails")
++    assert_equal 2, results.count
++    assert_includes results, archive1
++    assert_includes results, archive2
++    assert_not_includes results, archive3
++  end
++
++  test "search scope is case insensitive" do
++    archive = Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails Tutorial")
++
++    results_upper = Archive.search("RUBY")
++    results_lower = Archive.search("ruby")
++    results_mixed = Archive.search("RuBy")
++
++    assert_equal 1, results_upper.count
++    assert_includes results_upper, archive
++    assert_equal 1, results_lower.count
++    assert_includes results_lower, archive
++    assert_equal 1, results_mixed.count
++    assert_includes results_mixed, archive
++  end
++
++  test "search scope with empty query returns all archives" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Video One")
++    Archive.create!(original_url: "https://vimeo.com/1132937", title: "Video Two")
++
++    results = Archive.search("")
++    assert_equal Archive.all.count, results.count
++  end
++
++  test "search scope with no match returns empty result" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails Tutorial")
++
++    results = Archive.search("zxcvbn")
++    assert_equal 0, results.count
++  end
+ end

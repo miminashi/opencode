@@ -1,0 +1,29 @@
+ Gemfile                                      |  2 ++
+ Gemfile.lock                                 | 18 ++++++++++++++
+ app/assets/stylesheets/pagination.css        | 37 ++++++++++++++++++++++++++++
+ app/controllers/archives_controller.rb       |  2 +-
+ app/views/archives/index.html.erb            |  2 ++
+ app/views/kaminari/_first_page.html.erb      | 11 +++++++++
+ app/views/kaminari/_gap.html.erb             |  8 ++++++
+ app/views/kaminari/_last_page.html.erb       | 11 +++++++++
+ app/views/kaminari/_next_page.html.erb       | 11 +++++++++
+ app/views/kaminari/_page.html.erb            | 12 +++++++++
+ app/views/kaminari/_paginator.html.erb       | 25 +++++++++++++++++++
+ app/views/kaminari/_prev_page.html.erb       | 11 +++++++++
+ config/initializers/kaminari_config.rb       |  1 +
+ test/controllers/archives_controller_test.rb | 15 +++++++++++
+ 14 files changed, 165 insertions(+), 1 deletion(-)
+2	0	Gemfile
+18	0	Gemfile.lock
+37	0	app/assets/stylesheets/pagination.css
+1	1	app/controllers/archives_controller.rb
+2	0	app/views/archives/index.html.erb
+11	0	app/views/kaminari/_first_page.html.erb
+8	0	app/views/kaminari/_gap.html.erb
+11	0	app/views/kaminari/_last_page.html.erb
+11	0	app/views/kaminari/_next_page.html.erb
+12	0	app/views/kaminari/_page.html.erb
+25	0	app/views/kaminari/_paginator.html.erb
+11	0	app/views/kaminari/_prev_page.html.erb
+1	0	config/initializers/kaminari_config.rb
+15	0	test/controllers/archives_controller_test.rb

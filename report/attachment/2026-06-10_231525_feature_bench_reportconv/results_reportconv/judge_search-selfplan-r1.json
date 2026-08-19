@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search で title ILIKE（where.not(title: nil) ガード付）。controller で query.present? ガード、view に検索フォーム、controller 39 行＋system 21 行テスト。実機12件絞込・functional YES。"
+}

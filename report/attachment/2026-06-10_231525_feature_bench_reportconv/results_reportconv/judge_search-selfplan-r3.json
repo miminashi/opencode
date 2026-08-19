@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r3",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "scope :search ILIKE（present? ガード）＋form_with。controller 30 行テスト。実機12件絞込・functional YES。"
+}

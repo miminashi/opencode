@@ -1,0 +1,42 @@
+{
+  "trial": "page-givenplan-r5",
+  "task": "page",
+  "pattern": "givenplan",
+  "transition": "self_exit",
+  "plan_sec": 163,
+  "build_sec": 2440,
+  "build_time": "40m40s",
+  "appup_rc": "0",
+  "indep_test": "33 runs, 67 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 4,
+  "diff_insertions": 23,
+  "gem_choice": "kaminari",
+  "browser": {
+    "mode": "page",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 20,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "page1",
+        "articles": 20
+      },
+      {
+        "step": "page2",
+        "articles": 5,
+        "screenshot": "03_page2.png"
+      }
+    ],
+    "notes": [],
+    "firstPageCount": 20,
+    "paginationNavFound": true,
+    "pageLinkCount": 3,
+    "secondPageCount": 5,
+    "ok": true
+  },
+  "functional": true,
+  "functional_note": "firstPage=20 nav=True secondPage=5"
+}

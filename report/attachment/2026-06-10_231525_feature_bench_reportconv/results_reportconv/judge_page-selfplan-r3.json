@@ -1,0 +1,11 @@
+{
+  "trial": "page-selfplan-r3",
+  "score": 2,
+  "categories": {
+    "correctness": 2,
+    "idiomaticity": 4,
+    "completeness": 3,
+    "test_quality": 3
+  },
+  "reason": "kaminari 採用も **.per(20) 欠落**で全件1ページ（firstPageCount=25）・functional NO。境界テスト（『20件超で2ページ目』）は記述したが、実装の per(20) を落としたままテストが通過（per 未指定でも作成件数では分岐するため）。実装と検証の不一致。"
+}

@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り ILIKE＋@q＋form_with。テスト 14＋24 行。実機12件絞込・functional YES。"
+}

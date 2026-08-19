@@ -1,0 +1,111 @@
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..b075022 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,8 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @q = params[:q]
++    @archives = Archive.ordered.search_by_title(@q).with_attached_thumbnail.with_attached_video
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/models/archive.rb b/app/models/archive.rb
+index c34ef3a..ba5a76f 100644
+--- a/app/models/archive.rb
++++ b/app/models/archive.rb
+@@ -44,6 +44,7 @@ class Archive < ApplicationRecord
+   # scope
+   scope :ordered, -> { order({:id => :desc}) }
+   scope :failed, -> { where({:status => Status::FAILED}) }
++  scope :search_by_title, ->(q) { where("title ILIKE ?", "%#{q}%") if q.present? }
+ 
+   # コールバック
+   before_save do
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..1454e5e 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -9,6 +9,11 @@
+                 class: "btn btn--primary") %>
+   </div>
+ 
++  <%= form_with url: archives_path, method: :get, data: { turbo_frame: "_top" } do |f| %>
++    <%= f.text_field :q, value: @q, placeholder: "タイトルで検索" %>
++    <%= f.submit "検索" %>
++  <% end %>
++
+   <%= turbo_frame_tag(Archive.new) %>
+ 
+   <%= turbo_frame_tag("archives") do %>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..1dd563b 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,22 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "index with q parameter filters by title" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Search Test Video A")
++    Archive.create!(original_url: "https://vimeo.com/1084538", title: "Different Title B")
++
++    get archives_url, params: { q: "Search" }
++    assert_response :success
++    assert_select "h2", text: /Search Test Video A/
++  end
++
++  test "index with q parameter returns no results when no match" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Some Video Title")
++
++    get archives_url, params: { q: "Zzzz nonexistent" }
++    assert_response :success
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/models/archive_test.rb b/test/models/archive_test.rb
+index 677ed49..9ae0df3 100644
+--- a/test/models/archive_test.rb
++++ b/test/models/archive_test.rb
+@@ -142,4 +142,37 @@ test "default_title increments for duplicate titles" do
+     assert_equal "processing", Archive::Status::PROCESSING
+     assert_equal "failed", Archive::Status::FAILED
+   end
++
++  test "search_by_title returns matching archives" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails 入門")
++    Archive.create!(original_url: "https://vimeo.com/1084538", title: "Python 基礎講座")
++    Archive.create!(original_url: "https://vimeo.com/1084539", title: "JavaScript 応用")
++
++    result = Archive.search_by_title("Rails")
++    assert_equal 1, result.count
++    assert_includes result, Archive.find_by(title: "Ruby on Rails 入門")
++  end
++
++  test "search_by_title is case insensitive" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails 入門")
++
++    result = Archive.search_by_title("rails")
++    assert_equal 1, result.count
++  end
++
++  test "search_by_title returns all when q is blank" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Test Video A")
++    Archive.create!(original_url: "https://vimeo.com/1084538", title: "Test Video B")
++    count_before = Archive.count
++
++    result = Archive.search_by_title("")
++    assert_equal count_before, result.count
++  end
++
++  test "search_by_title returns empty when no match" do
++    Archive.create!(original_url: "https://vimeo.com/1084537", title: "Ruby on Rails 入門")
++
++    result = Archive.search_by_title("Zzzz nonexistent")
++    assert_equal 0, result.count
++  end
+ end

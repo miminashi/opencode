@@ -1,0 +1,32 @@
+{
+  "trial": "search-selfplan-r4",
+  "task": "search",
+  "pattern": "selfplan",
+  "transition": "self_exit",
+  "plan_sec": 299,
+  "build_sec": 160,
+  "build_time": "2m40s",
+  "appup_rc": "0",
+  "indep_test": "33 runs, 67 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 0,
+  "diff_insertions": 0,
+  "gem_choice": "-",
+  "browser": {
+    "mode": "search",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 25,
+        "screenshot": "01_index.png"
+      }
+    ],
+    "notes": [
+      "検索入力が見つからない"
+    ],
+    "searchInputFound": false,
+    "ok": false
+  },
+  "functional": false,
+  "functional_note": "searchRubyCount=None allTitlesRuby=None"
+}

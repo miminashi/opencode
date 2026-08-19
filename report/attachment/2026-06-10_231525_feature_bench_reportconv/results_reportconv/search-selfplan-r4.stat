@@ -1,0 +1,13 @@
+ app/assets/stylesheets/form.css              | 25 ++++++++++
+ app/controllers/archives_controller.rb       |  3 +-
+ app/models/archive.rb                        |  9 ++++
+ app/views/archives/index.html.erb            | 12 +++++
+ test/controllers/archives_controller_test.rb | 18 ++++++++
+ test/models/archive_test.rb                  | 68 ++++++++++++++++++++++++++++
+ 6 files changed, 134 insertions(+), 1 deletion(-)
+25	0	app/assets/stylesheets/form.css
+2	1	app/controllers/archives_controller.rb
+9	0	app/models/archive.rb
+12	0	app/views/archives/index.html.erb
+18	0	test/controllers/archives_controller_test.rb
+68	0	test/models/archive_test.rb

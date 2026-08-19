@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r4",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search ILIKE＋専用 css、model_test 68 行（最も手厚い）＋controller 18 行。実機12件絞込・functional YES。"
+}

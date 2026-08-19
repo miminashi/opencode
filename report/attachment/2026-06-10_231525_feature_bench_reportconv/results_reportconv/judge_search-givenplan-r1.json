@@ -1,0 +1,11 @@
+{
+  "trial": "search-givenplan-r1",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "与プラン通り search_by_title ILIKE＋@q＋form_with。model 19＋controller 8 行テスト。実機12件絞込・functional YES。"
+}

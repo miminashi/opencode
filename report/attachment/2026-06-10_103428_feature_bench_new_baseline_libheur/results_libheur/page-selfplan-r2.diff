@@ -1,0 +1,170 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..4fc4def 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -69,8 +69,11 @@ group :development do
+   gem "annotate"
+ end
+ 
++gem "kaminari"
++
+ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+   gem "cuprite"
++  gem "rails-controller-testing"
+ end
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..3589aab 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -208,6 +220,10 @@ GEM
+       activesupport (= 8.1.3)
+       bundler (>= 1.15.0)
+       railties (= 8.1.3)
++    rails-controller-testing (1.0.5)
++      actionpack (>= 5.0.1.rc1)
++      actionview (>= 5.0.1.rc1)
++      activesupport (>= 5.0.1.rc1)
+     rails-dom-testing (2.3.0)
+       activesupport (>= 5.0.0)
+       minitest
+@@ -291,9 +307,11 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
++  rails-controller-testing
+   redis (~> 4.0)
+   solid_queue
+   sprockets-rails
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..5f6cdfd 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,37 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should paginate archives with more than 20 items" do
++    # Create 21 archives to test pagination boundary
++    21.times do |i|
++      Archive.create!(original_url: "https://example.com/video/#{i}", status: Archive::Status::DONE, title: "Paginated Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_equal 20, assigns(:archives).size
++  end
++
++  test "should support page parameter for pagination" do
++    # Clear existing archives to have exact control over count
++    Archive.delete_all
++
++    # Create 21 archives to ensure there is a second page
++    21.times do |i|
++      Archive.create!(original_url: "https://example.com/video/#{i}", status: Archive::Status::DONE, title: "Page Test Video #{i}")
++    end
++
++    # First page
++    get archives_url, params: { page: "1" }
++    assert_response :success
++    assert_equal 20, assigns(:archives).size
++
++    # Second page
++    get archives_url, params: { page: "2" }
++    assert_response :success
++    assert_equal 1, assigns(:archives).size
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success
+diff --git a/test/system/archives_test.rb b/test/system/archives_test.rb
+index 9751efc..cece6d9 100644
+--- a/test/system/archives_test.rb
++++ b/test/system/archives_test.rb
+@@ -38,4 +38,37 @@ class ArchivesTest < ApplicationSystemTestCase
+     assert_selector "h1", text: "保存したビデオ"
+     assert_text "test_10s.mov"
+   end
++
++  test "ページネーション - 1ページ以内の件数ではページネーションリンクが表示されない" do
++    15.times do |i|
++      Archive.create!(original_url: "https://example.com/paginate/#{i}", status: Archive::Status::DONE, title: "Pagination Test #{i}")
++    end
++
++    visit archives_path
++
++    assert_no_selector ".pagination"
++  end
++
++  test "ページネーション - ちょうど20件の場合、2ページ目のリンクは表示されない" do
++    20.times do |i|
++      Archive.create!(original_url: "https://example.com/paginate/#{i}", status: Archive::Status::DONE, title: "Pagination Boundary #{i}")
++    end
++
++    visit archives_path
++
++    assert_no_selector ".pagination"
++  end
++
++  test "ページネーション - 20件超えの場合、2ページ目に遷移できる" do
++    21.times do |i|
++      Archive.create!(original_url: "https://example.com/paginate/#{i}", status: Archive::Status::DONE, title: "Pagination Overflow #{i}")
++    end
++
++    visit archives_path
++
++    assert_selector ".pagination"
++    click_on "2"
++
++    assert_selector ".pagination"
++  end
+ end

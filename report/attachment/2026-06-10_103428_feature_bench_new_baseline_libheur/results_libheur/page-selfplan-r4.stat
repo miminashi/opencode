@@ -1,0 +1,15 @@
+ Gemfile                                     |  2 +
+ Gemfile.lock                                | 13 ++++++
+ app/assets/stylesheets/application.css      |  7 +--
+ app/assets/stylesheets/pagination.css       | 46 ++++++++++++++++++++
+ app/controllers/archives_controller.rb      |  2 +-
+ app/views/archives/index.html.erb           |  2 +
+ test/integration/archive_pagination_test.rb | 67 +++++++++++++++++++++++++++++
+ 7 files changed, 135 insertions(+), 4 deletions(-)
+2	0	Gemfile
+13	0	Gemfile.lock
+4	3	app/assets/stylesheets/application.css
+46	0	app/assets/stylesheets/pagination.css
+1	1	app/controllers/archives_controller.rb
+2	0	app/views/archives/index.html.erb
+67	0	test/integration/archive_pagination_test.rb

@@ -1,0 +1,53 @@
+{
+  "trial": "search-givenplan-r1",
+  "task": "search",
+  "pattern": "givenplan",
+  "transition": "self_exit",
+  "plan_sec": 133,
+  "build_sec": 320,
+  "build_time": "5m20s",
+  "appup_rc": "0",
+  "indep_test": "37 runs, 74 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 5,
+  "diff_insertions": 35,
+  "gem_choice": "-",
+  "report_artifacts": [],
+  "browser": {
+    "mode": "search",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 25,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "search_ruby",
+        "articles": 12,
+        "screenshot": "03_search_results.png"
+      }
+    ],
+    "notes": [],
+    "searchInputFound": true,
+    "searchSelector": "input[name=\"q\"]",
+    "searchRubyCount": 12,
+    "sampleTitles": [
+      "Ruby Tutorial 12",
+      "Ruby Tutorial 11",
+      "Ruby Tutorial 10",
+      "Ruby Tutorial 09",
+      "Ruby Tutorial 08",
+      "Ruby Tutorial 07",
+      "Ruby Tutorial 06",
+      "Ruby Tutorial 05",
+      "Ruby Tutorial 04",
+      "Ruby Tutorial 03",
+      "Ruby Tutorial 02",
+      "Ruby Tutorial 01"
+    ],
+    "allTitlesContainRuby": true,
+    "ok": true
+  },
+  "functional": true,
+  "functional_note": "searchRubyCount=12 allTitlesRuby=True"
+}

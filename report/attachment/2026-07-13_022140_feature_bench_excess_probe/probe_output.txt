@@ -1,0 +1,183 @@
+# 過剰実装（要件外ファイル変更）予備実験結果
+
+- 対象試行数: 105
+- 対象 run: rerun_m33, rerun_baseline_scen_repaired_1, rerun_baseline_scen_repaired_2
+- 仮案許可集合: wide, medium, strict_task, strict_scenario
+
+## 1. 変更ファイル頻度分布 (task × pattern 別)
+
+### search-selfplan (n=15)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `app/controllers/archives_controller.rb` | 15 | 100.0% |
+| `app/models/archive.rb` | 15 | 100.0% |
+| `app/views/archives/index.html.erb` | 15 | 100.0% |
+| `test/controllers/archives_controller_test.rb` | 15 | 100.0% |
+| `test/fixtures/archives.yml` | 11 | 73.3% |
+| `test/models/archive_test.rb` | 5 | 33.3% |
+| `app/assets/stylesheets/form.css` | 4 | 26.7% |
+| `app/assets/stylesheets/article.css` | 1 | 6.7% |
+
+### search-givenplan (n=15)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `app/controllers/archives_controller.rb` | 15 | 100.0% |
+| `app/models/archive.rb` | 15 | 100.0% |
+| `app/views/archives/index.html.erb` | 15 | 100.0% |
+| `test/controllers/archives_controller_test.rb` | 15 | 100.0% |
+| `test/models/archive_test.rb` | 15 | 100.0% |
+| `test/fixtures/archives.yml` | 1 | 6.7% |
+
+### page-selfplan (n=30)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `Gemfile` | 30 | 100.0% |
+| `Gemfile.lock` | 30 | 100.0% |
+| `app/controllers/archives_controller.rb` | 30 | 100.0% |
+| `app/views/archives/index.html.erb` | 30 | 100.0% |
+| `test/controllers/archives_controller_test.rb` | 27 | 90.0% |
+| `app/views/kaminari/_first_page.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_gap.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_last_page.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_next_page.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_page.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_paginator.html.erb` | 9 | 30.0% |
+| `app/views/kaminari/_prev_page.html.erb` | 9 | 30.0% |
+| `test/system/archives_test.rb` | 3 | 10.0% |
+| `test/fixtures/archives.yml` | 3 | 10.0% |
+| `app/assets/stylesheets/pagination.css` | 2 | 6.7% |
+| `test/integration/archive_creation_flow_test.rb` | 2 | 6.7% |
+| `test/integration/archives_pagination_test.rb` | 1 | 3.3% |
+| `test/integration/archive_pagination_test.rb` | 1 | 3.3% |
+| `app/controllers/application_controller.rb` | 1 | 3.3% |
+| `app/views/archives/_pagination.html.erb` | 1 | 3.3% |
+| `app/views/archives/_paginator.html.erb` | 1 | 3.3% |
+| `app/assets/stylesheets/kaminari.css` | 1 | 3.3% |
+
+### page-givenplan (n=15)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `Gemfile` | 15 | 100.0% |
+| `Gemfile.lock` | 15 | 100.0% |
+| `app/controllers/archives_controller.rb` | 15 | 100.0% |
+| `app/views/archives/index.html.erb` | 15 | 100.0% |
+
+### disk-selfplan (n=15)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `app/views/archives/index.html.erb` | 14 | 93.3% |
+| `app/helpers/archives_helper.rb` | 10 | 66.7% |
+| `test/controllers/archives_controller_test.rb` | 8 | 53.3% |
+| `test/helpers/archives_helper_test.rb` | 5 | 33.3% |
+| `app/models/disk_usage.rb` | 4 | 26.7% |
+| `test/models/disk_usage_test.rb` | 4 | 26.7% |
+| `app/controllers/archives_controller.rb` | 4 | 26.7% |
+| `app/assets/stylesheets/disk-usage.css` | 3 | 20.0% |
+| `test/integration/disk_usage_display_test.rb` | 3 | 20.0% |
+| `app/models/archive.rb` | 3 | 20.0% |
+| `test/models/archive_test.rb` | 3 | 20.0% |
+| `test/integration/archive_creation_flow_test.rb` | 2 | 13.3% |
+| `app/assets/stylesheets/storage_info.css` | 1 | 6.7% |
+| `app/models/storage_info.rb` | 1 | 6.7% |
+| `test/integration/storage_info_display_test.rb` | 1 | 6.7% |
+| `test/models/storage_info_test.rb` | 1 | 6.7% |
+| `test/helpers/archives_helper_disk_usage_test.rb` | 1 | 6.7% |
+| `app/assets/stylesheets/application.css` | 1 | 6.7% |
+| `app/helpers/application_helper.rb` | 1 | 6.7% |
+| `app/services/disk_usage_service.rb` | 1 | 6.7% |
+| `test/helpers/application_helper_test.rb` | 1 | 6.7% |
+| `test/services/disk_usage_service_test.rb` | 1 | 6.7% |
+| `app/assets/stylesheets/disk_stats.css` | 1 | 6.7% |
+| `test/test_helper.rb` | 1 | 6.7% |
+| `app/assets/stylesheets/disk_usage.css` | 1 | 6.7% |
+
+### disk-givenplan (n=15)
+
+| path | 出現試行数 | 比率 |
+|---|---:|---:|
+| `Gemfile` | 15 | 100.0% |
+| `Gemfile.lock` | 15 | 100.0% |
+| `app/controllers/archives_controller.rb` | 15 | 100.0% |
+| `app/models/disk_usage.rb` | 15 | 100.0% |
+| `app/views/archives/index.html.erb` | 15 | 100.0% |
+| `test/models/disk_usage_test.rb` | 15 | 100.0% |
+
+## 2. 仮案許可集合 × 6 シナリオでの検出件数
+
+| scenario | n | wide (平均/発生率) | medium | strict_task | strict_scenario |
+|---|---:|---|---|---|---|
+| search-selfplan | 15 | 0.00 / 0/15 (0%) | 1.07 / 12/15 (80%) | 1.07 / 12/15 (80%) | 1.07 / 12/15 (80%) |
+| search-givenplan | 15 | 0.00 / 0/15 (0%) | 0.07 / 1/15 (7%) | 0.07 / 1/15 (7%) | 0.07 / 1/15 (7%) |
+| page-selfplan | 30 | 0.00 / 0/30 (0%) | 0.23 / 6/30 (20%) | 3.53 / 30/30 (100%) | 0.23 / 6/30 (20%) |
+| page-givenplan | 15 | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) |
+| disk-selfplan | 15 | 0.00 / 0/15 (0%) | 1.13 / 10/15 (67%) | 3.33 / 15/15 (100%) | 1.13 / 10/15 (67%) |
+| disk-givenplan | 15 | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) | 0.00 / 0/15 (0%) |
+
+## 3. 代表的な要件外候補パス (medium 仮案・出現数上位)
+
+### search-selfplan
+
+| path | 出現試行数 |
+|---|---:|
+| `test/fixtures/archives.yml` | 11 |
+| `app/assets/stylesheets/form.css` | 4 |
+| `app/assets/stylesheets/article.css` | 1 |
+
+### search-givenplan
+
+| path | 出現試行数 |
+|---|---:|
+| `test/fixtures/archives.yml` | 1 |
+
+### page-selfplan
+
+| path | 出現試行数 |
+|---|---:|
+| `test/fixtures/archives.yml` | 3 |
+| `app/assets/stylesheets/pagination.css` | 2 |
+| `app/controllers/application_controller.rb` | 1 |
+| `app/assets/stylesheets/kaminari.css` | 1 |
+
+### page-givenplan: なし
+
+### disk-selfplan
+
+| path | 出現試行数 |
+|---|---:|
+| `test/helpers/archives_helper_test.rb` | 5 |
+| `app/models/archive.rb` | 3 |
+| `test/models/archive_test.rb` | 3 |
+| `test/helpers/archives_helper_disk_usage_test.rb` | 1 |
+| `app/helpers/application_helper.rb` | 1 |
+| `app/services/disk_usage_service.rb` | 1 |
+| `test/helpers/application_helper_test.rb` | 1 |
+| `test/services/disk_usage_service_test.rb` | 1 |
+| `test/test_helper.rb` | 1 |
+
+### disk-givenplan: なし
+
+## 4. 粒度 A/B 差分 (strict_task 共有 vs strict_scenario 別)
+
+strict_scenario は givenplan で prompt 明示ファイルのみに絞る。selfplan は medium と同じ許容範囲。
+
+| scenario | strict_task 検出合計 | strict_scenario 検出合計 | 差分 |
+|---|---:|---:|---:|
+| search-selfplan | 16 | 16 | +0 |
+| search-givenplan | 1 | 1 | +0 |
+| page-selfplan | 106 | 7 | -99 |
+| page-givenplan | 0 | 0 | +0 |
+| disk-selfplan | 50 | 17 | -33 |
+| disk-givenplan | 0 | 0 | +0 |
+
+## 5. サマリ
+
+- **wide**: 全 105 試行中 0 試行で要件外変更検出 (0.0%)、外部ファイル総数 0
+- **medium**: 全 105 試行中 29 試行で要件外変更検出 (27.6%)、外部ファイル総数 41
+- **strict_task**: 全 105 試行中 58 試行で要件外変更検出 (55.2%)、外部ファイル総数 173
+- **strict_scenario**: 全 105 試行中 29 試行で要件外変更検出 (27.6%)、外部ファイル総数 41
+

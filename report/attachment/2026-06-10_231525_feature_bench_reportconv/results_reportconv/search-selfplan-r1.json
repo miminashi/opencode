@@ -1,0 +1,53 @@
+{
+  "trial": "search-selfplan-r1",
+  "task": "search",
+  "pattern": "selfplan",
+  "transition": "self_exit",
+  "plan_sec": 299,
+  "build_sec": 360,
+  "build_time": "6m0s",
+  "appup_rc": "0",
+  "indep_test": "38 runs, 77 assertions, 0 failures, 0 errors, 0 skips",
+  "diff_files": 5,
+  "diff_insertions": 66,
+  "gem_choice": "-",
+  "report_artifacts": [],
+  "browser": {
+    "mode": "search",
+    "base": "http://localhost:3010/",
+    "steps": [
+      {
+        "step": "index",
+        "articles": 25,
+        "screenshot": "01_index.png"
+      },
+      {
+        "step": "search_ruby",
+        "articles": 12,
+        "screenshot": "03_search_results.png"
+      }
+    ],
+    "notes": [],
+    "searchInputFound": true,
+    "searchSelector": "form input[type=\"text\"]",
+    "searchRubyCount": 12,
+    "sampleTitles": [
+      "Ruby Tutorial 12",
+      "Ruby Tutorial 11",
+      "Ruby Tutorial 10",
+      "Ruby Tutorial 09",
+      "Ruby Tutorial 08",
+      "Ruby Tutorial 07",
+      "Ruby Tutorial 06",
+      "Ruby Tutorial 05",
+      "Ruby Tutorial 04",
+      "Ruby Tutorial 03",
+      "Ruby Tutorial 02",
+      "Ruby Tutorial 01"
+    ],
+    "allTitlesContainRuby": true,
+    "ok": true
+  },
+  "functional": true,
+  "functional_note": "searchRubyCount=12 allTitlesRuby=True"
+}

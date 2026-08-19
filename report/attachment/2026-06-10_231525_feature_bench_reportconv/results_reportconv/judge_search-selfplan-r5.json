@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r5",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 5
+  },
+  "reason": "scope :search ILIKE＋all ガード、form_tag、model 42 行＋controller 24 行テスト。実機12件絞込・functional YES。"
+}

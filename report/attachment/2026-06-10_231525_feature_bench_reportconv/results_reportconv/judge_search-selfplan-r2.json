@@ -1,0 +1,11 @@
+{
+  "trial": "search-selfplan-r2",
+  "score": 5,
+  "categories": {
+    "correctness": 5,
+    "idiomaticity": 5,
+    "completeness": 5,
+    "test_quality": 4
+  },
+  "reason": "scope :search_by_title ILIKE（present? ガード内蔵）＋form_with。controller 30 行テスト。実機12件絞込・functional YES。"
+}

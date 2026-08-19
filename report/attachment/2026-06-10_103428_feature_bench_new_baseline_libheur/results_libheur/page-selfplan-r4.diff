@@ -1,0 +1,209 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..11e1c89 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -69,6 +69,8 @@ group :development do
+   gem "annotate"
+ end
+ 
++gem "kaminari", "~> 1.2"
++
+ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..c82ed9b 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -291,6 +303,7 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari (~> 1.2)
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
+diff --git a/app/assets/stylesheets/application.css b/app/assets/stylesheets/application.css
+index a46ee49..76576d5 100644
+--- a/app/assets/stylesheets/application.css
++++ b/app/assets/stylesheets/application.css
+@@ -10,7 +10,8 @@
+  * files in this directory. Styles in this file should be added after the last require_* statement.
+  * It is generally better to create a new file per style scope.
+  *
+- *= require reset.css
+- *= require_tree .
+- *= require_self
++*= require reset.css
++*= require pagination
++*= require_tree .
++*= require_self
+  */
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..e085465
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,46 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  gap: 0.5rem;
++  margin-top: 2rem;
++  padding: 1rem 0;
++}
++
++.pagination .page,
++.pagination .gap,
++.pagination .current {
++  display: inline-block;
++}
++
++.pagination a.page,
++.pagination span.page,
++.pagination span.current {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  min-width: 2rem;
++  height: 2rem;
++  padding: 0 0.5rem;
++  text-decoration: none;
++  border: 1px solid #ddd;
++  border-radius: 4px;
++  color: #333;
++  font-size: 0.9rem;
++}
++
++.pagination a.page:hover {
++  background-color: #f5f5f5;
++  border-color: #ccc;
++}
++
++.pagination span.current {
++  background-color: #007bff;
++  border-color: #007bff;
++  color: #fff;
++}
++
++.pagination .gap {
++  padding: 0 0.5rem;
++  color: #999;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>
+diff --git a/test/integration/archive_pagination_test.rb b/test/integration/archive_pagination_test.rb
+new file mode 100644
+index 0000000..d07c290
+--- /dev/null
++++ b/test/integration/archive_pagination_test.rb
+@@ -0,0 +1,67 @@
++require "test_helper"
++
++class ArchivePaginationTest < ActionDispatch::IntegrationTest
++  test "index page shows 20 archives on first page" do
++    (1..25).each do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{1084537 + i}", title: "Pagination Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_select ".article", count: 20
++  end
++
++  test "index page shows remaining archives on second page" do
++    (1..25).each do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{1084537 + i}", title: "Pagination Video #{i}")
++    end
++
++    # fixtures have 4 records + 25 test records = 29 total
++    # page 1: 20, page 2: 9
++    get archives_url, params: { page: "2" }
++    assert_response :success
++    assert_select ".article", count: 9
++  end
++
++  test "pagination links are displayed when there are more than 20 archives" do
++    (1..25).each do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{1084537 + i}", title: "Pagination Video #{i}")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_select ".pagination"
++  end
++
++  test "pagination is not displayed when all archives fit on one page" do
++    get archives_url
++    assert_response :success
++    count = response.body.scan(/class="article"/).length
++    assert count <= 20
++    assert_select ".pagination", false
++  end
++
++  test "page parameter correctly switches pages" do
++    (1..45).each do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{2084537 + i}", title: "Page Switch Video #{i}")
++    end
++
++    # fixtures have 4 records + 45 test records = 49 total
++    # page 1: 20, page 2: 20, page 3: 9
++    get archives_url, params: { page: "3" }
++    assert_response :success
++    assert_select ".article", count: 9
++  end
++
++  test "first page shows the most recent archives" do
++    (1..25).each do |i|
++      Archive.create!(original_url: "https://vimeo.com/#{1084537 + i}", title: "Pagination Video #{i}")
++    end
++
++    latest = Archive.create!(original_url: "https://vimeo.com/9999999", title: "Latest Video")
++
++    get archives_url
++    assert_response :success
++    assert_select "h2", "Latest Video"
++  end
++end

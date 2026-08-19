@@ -1,0 +1,295 @@
+diff --git a/Gemfile b/Gemfile
+index 3a0165f..9ddc510 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -66,6 +66,7 @@ group :development do
+   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+   # gem "spring"
+ 
++  gem "kaminari"
+   gem "annotate"
+ end
+ 
+@@ -73,4 +74,5 @@ group :test do
+   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+   gem "capybara"
+   gem "cuprite"
++  gem "rails-controller-testing"
+ end
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9ae9004..3589aab 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -141,6 +141,18 @@ GEM
+       actionview (>= 5.0.0)
+       activesupport (>= 5.0.0)
+     json (2.19.3)
++    kaminari (1.2.2)
++      activesupport (>= 4.1.0)
++      kaminari-actionview (= 1.2.2)
++      kaminari-activerecord (= 1.2.2)
++      kaminari-core (= 1.2.2)
++    kaminari-actionview (1.2.2)
++      actionview
++      kaminari-core (= 1.2.2)
++    kaminari-activerecord (1.2.2)
++      activerecord
++      kaminari-core (= 1.2.2)
++    kaminari-core (1.2.2)
+     logger (1.7.0)
+     loofah (2.25.1)
+       crass (~> 1.0.2)
+@@ -208,6 +220,10 @@ GEM
+       activesupport (= 8.1.3)
+       bundler (>= 1.15.0)
+       railties (= 8.1.3)
++    rails-controller-testing (1.0.5)
++      actionpack (>= 5.0.1.rc1)
++      actionview (>= 5.0.1.rc1)
++      activesupport (>= 5.0.1.rc1)
+     rails-dom-testing (2.3.0)
+       activesupport (>= 5.0.0)
+       minitest
+@@ -291,9 +307,11 @@ DEPENDENCIES
+   image_processing (~> 1.2)
+   importmap-rails
+   jbuilder
++  kaminari
+   pg (~> 1.1)
+   puma (~> 6.0)
+   rails (~> 8.1.0)
++  rails-controller-testing
+   redis (~> 4.0)
+   solid_queue
+   sprockets-rails
+diff --git a/app/assets/stylesheets/pagination.css b/app/assets/stylesheets/pagination.css
+new file mode 100644
+index 0000000..77adf9c
+--- /dev/null
++++ b/app/assets/stylesheets/pagination.css
+@@ -0,0 +1,37 @@
++.pagination {
++  display: flex;
++  justify-content: center;
++  align-items: center;
++  gap: 4px;
++  margin-top: 32px;
++  padding: 16px 0;
++}
++
++.pagination a,
++.pagination span {
++  display: inline-block;
++  padding: 8px 12px;
++  border: 1px solid #ddd;
++  border-radius: 4px;
++  text-decoration: none;
++  color: #333;
++  font-size: 14px;
++  min-width: 36px;
++  text-align: center;
++}
++
++.pagination a:hover {
++  background-color: #f0f0f0;
++  border-color: #ccc;
++}
++
++.pagination .current {
++  background-color: #007bff;
++  color: #fff;
++  border-color: #007bff;
++}
++
++.pagination .disabled {
++  color: #ccc;
++  pointer-events: none;
++}
+diff --git a/app/controllers/archives_controller.rb b/app/controllers/archives_controller.rb
+index f29361b..e78b48d 100644
+--- a/app/controllers/archives_controller.rb
++++ b/app/controllers/archives_controller.rb
+@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
+ 
+   # GET /archives or /archives.json
+   def index
+-    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video
++    @archives = Archive.ordered.with_attached_thumbnail.with_attached_video.page(params[:page]).per(20)
+   end
+ 
+   # GET /archives/1 or /archives/1.json
+diff --git a/app/views/archives/index.html.erb b/app/views/archives/index.html.erb
+index 993e337..5044cbc 100644
+--- a/app/views/archives/index.html.erb
++++ b/app/views/archives/index.html.erb
+@@ -14,4 +14,6 @@
+   <%= turbo_frame_tag("archives") do %>
+     <%= render @archives %>
+   <% end %>
++
++  <%= paginate @archives %>
+ </main>
+diff --git a/app/views/kaminari/_first_page.html.erb b/app/views/kaminari/_first_page.html.erb
+new file mode 100644
+index 0000000..0cc83b9
+--- /dev/null
++++ b/app/views/kaminari/_first_page.html.erb
+@@ -0,0 +1,11 @@
++<%# Link to the "First" page
++  - available local variables
++    url:           url to the first page
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="first">
++  <%= link_to_unless current_page.first?, t('views.pagination.first').html_safe, url, remote: remote %>
++</span>
+diff --git a/app/views/kaminari/_gap.html.erb b/app/views/kaminari/_gap.html.erb
+new file mode 100644
+index 0000000..bbb0f98
+--- /dev/null
++++ b/app/views/kaminari/_gap.html.erb
+@@ -0,0 +1,8 @@
++<%# Non-link tag that stands for skipped pages...
++  - available local variables
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="page gap"><%= t('views.pagination.truncate').html_safe %></span>
+diff --git a/app/views/kaminari/_last_page.html.erb b/app/views/kaminari/_last_page.html.erb
+new file mode 100644
+index 0000000..bc777b4
+--- /dev/null
++++ b/app/views/kaminari/_last_page.html.erb
+@@ -0,0 +1,11 @@
++<%# Link to the "Last" page
++  - available local variables
++    url:           url to the last page
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="last">
++  <%= link_to_unless current_page.last?, t('views.pagination.last').html_safe, url, remote: remote %>
++</span>
+diff --git a/app/views/kaminari/_next_page.html.erb b/app/views/kaminari/_next_page.html.erb
+new file mode 100644
+index 0000000..3b0d054
+--- /dev/null
++++ b/app/views/kaminari/_next_page.html.erb
+@@ -0,0 +1,11 @@
++<%# Link to the "Next" page
++  - available local variables
++    url:           url to the next page
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="next">
++  <%= link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote %>
++</span>
+diff --git a/app/views/kaminari/_page.html.erb b/app/views/kaminari/_page.html.erb
+new file mode 100644
+index 0000000..393bfc4
+--- /dev/null
++++ b/app/views/kaminari/_page.html.erb
+@@ -0,0 +1,12 @@
++<%# Link showing page number
++  - available local variables
++    page:          a page object for "this" page
++    url:           url to this page
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="page<%= ' current' if page.current? %>">
++  <%= link_to_unless page.current?, page, url, {remote: remote, rel: page.rel} %>
++</span>
+diff --git a/app/views/kaminari/_paginator.html.erb b/app/views/kaminari/_paginator.html.erb
+new file mode 100644
+index 0000000..5525f48
+--- /dev/null
++++ b/app/views/kaminari/_paginator.html.erb
+@@ -0,0 +1,25 @@
++<%# The container tag
++  - available local variables
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++    paginator:     the paginator that renders the pagination tags inside
++-%>
++<%= paginator.render do -%>
++  <nav class="pagination" role="navigation" aria-label="pager">
++    <%= first_page_tag unless current_page.first? %>
++    <%= prev_page_tag unless current_page.first? %>
++    <% each_page do |page| -%>
++      <% if page.display_tag? -%>
++        <%= page_tag page %>
++      <% elsif !page.was_truncated? -%>
++        <%= gap_tag %>
++      <% end -%>
++    <% end -%>
++    <% unless current_page.out_of_range? %>
++      <%= next_page_tag unless current_page.last? %>
++      <%= last_page_tag unless current_page.last? %>
++    <% end %>
++  </nav>
++<% end -%>
+diff --git a/app/views/kaminari/_prev_page.html.erb b/app/views/kaminari/_prev_page.html.erb
+new file mode 100644
+index 0000000..0f32af4
+--- /dev/null
++++ b/app/views/kaminari/_prev_page.html.erb
+@@ -0,0 +1,11 @@
++<%# Link to the "Previous" page
++  - available local variables
++    url:           url to the previous page
++    current_page:  a page object for the currently displayed page
++    total_pages:   total number of pages
++    per_page:      number of items to fetch per page
++    remote:        data-remote
++-%>
++<span class="prev">
++  <%= link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote %>
++</span>
+diff --git a/config/initializers/kaminari_config.rb b/config/initializers/kaminari_config.rb
+new file mode 100644
+index 0000000..89df87b
+--- /dev/null
++++ b/config/initializers/kaminari_config.rb
+@@ -0,0 +1 @@
++require "kaminari"
+diff --git a/test/controllers/archives_controller_test.rb b/test/controllers/archives_controller_test.rb
+index bfe6e04..8a7f342 100644
+--- a/test/controllers/archives_controller_test.rb
++++ b/test/controllers/archives_controller_test.rb
+@@ -62,6 +62,21 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
+     assert_match %r{text/vnd.turbo-stream.html}, response.content_type
+   end
+ 
++  test "should get paginated index with more than 20 archives" do
++    base_count = Archive.count
++    21.times do
++      Archive.create(original_url: "https://vimeo.com/1084537", status: "waiting")
++    end
++
++    get archives_url
++    assert_response :success
++    assert_equal 20, assigns(:archives).count
++
++    get archives_url, params: { page: 2 }
++    assert_response :success
++    assert_equal base_count + 1, assigns(:archives).count
++  end
++
+   #test "should get edit" do
+   #  get edit_archive_url(@archive)
+   #  assert_response :success

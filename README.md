@@ -210,4 +210,7 @@ If you are working on a project that's related to OpenCode and is using "opencod
 
 ---
 
+> [!NOTE]
+> Phase 2 実験のログは `report/` ディレクトリを参照。
+
 **Join our community** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)

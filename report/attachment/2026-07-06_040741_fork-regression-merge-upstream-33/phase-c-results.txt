@@ -1,0 +1,15 @@
+=== Phase C: TUI stability smoke (merge-upstream-33) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-33/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+C-1: --prompt flag launch
+  Command: opencode /home/ubuntu/projects/ytdlor --prompt "hi"
+  Result: PASS (no BindingError/panic; Build TUI + spinner visible within 10s)
+
+C-2: OSC52 sequence in binary
+  Command: strings binary | grep -cE 'OSC.{0,4}52|tmux.*passthrough'
+  Count: 14
+  Result: PASS (>=1)
+
+C-3: TUI exit
+  Command: Ctrl+C twice
+  Result: PASS (shell prompt returned)

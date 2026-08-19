@@ -1,0 +1,35 @@
+=== Phase E: truncation / llama-server error handling (merge-upstream-33) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-33/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+E-1: Rolling truncation marker (bash tool with `seq 1 3000`)
+  Command executed via opencode TUI in ytdlor
+  Prompt: "bash ツールで実際に `seq 1 3000` を実行し、その全出力を見せてください。..."
+  Truncation marker detected at iteration 8 (~80s)
+  Result: PASS
+
+E-2: Retry code for truncated tool calls
+  File: packages/opencode/src/session/prompt.ts
+  Lines matched:
+    1092: let truncationRetryCount = 0
+    1382: // Detect truncated tool calls due to output token limit
+    1387: const truncatedTools = assistantParts
+    1394: if (truncatedTools.length > 0) {
+    1395:   truncationRetryCount++
+  Result: PASS
+
+E-3: llama-server error handling
+  File: packages/llm/src/provider-error.ts (moved from provider/error.ts per merge-upstream-30)
+    L13: /exceeds the available context size/i, // llama.cpp server
+  File: packages/opencode/src/session/retry.ts
+    L71: // Detect server-side tool call parse failures (e.g. llama.cpp)
+  Result: PASS
+
+E-4: TUI exit
+  Command: Ctrl+C x 2
+  Result: PASS (shell prompt returned)
+
+=== Summary ===
+E-1: PASS
+E-2: PASS
+E-3: PASS
+E-4: PASS

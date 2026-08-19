@@ -1,0 +1,16 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-31) ===
+Model: mi25/unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL (mi25)
+Start: 2026年  6月 21日 日曜日 12:40:54 JST
+
+B-0: dialog wait result=DIALOG
+B-1 markdown: WARN (count=0)
+B-2 scroll: PASS (viewport changed)
+B-3 option3: PASS (stayed in Plan)
+B-4 redialog1 result=DIALOG
+B-4 placeholder: PASS
+B-4 typed-text: PASS
+B-4 redialog2 result=DIALOG
+B-4 custom-feedback: PASS (dialog reappeared)
+B-5 option1: PASS (switched to Build)
+B-6 exit: PASS
+End: 2026年  6月 21日 日曜日 12:45:02 JST

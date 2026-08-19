@@ -1,0 +1,4 @@
+=== Phase C: TUI stabilization smoke (merge-upstream-29) ===
+C-1 (--prompt launch, no crash): PASS - TUI started with --prompt "hi", spinner visible, no BindingError/panic (SSE race fix OK)
+C-2 (OSC52 sequence in binary): PASS - 11 matches for OSC52 patterns (\x1b]52 / ;c; / tmux;) in dist binary; base OSC52-over-SSH preserved after clipboard migration to packages/tui/src/clipboard.ts
+C-3 (TUI exit): PASS - exited to shell on C-c

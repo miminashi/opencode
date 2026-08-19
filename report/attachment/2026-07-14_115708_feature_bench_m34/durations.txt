@@ -1,0 +1,46 @@
+trial                      total(s)
+-------------------------------------
+search-selfplan-r1           866
+search-selfplan-r2           745
+search-selfplan-r3           958
+search-selfplan-r4           887
+search-selfplan-r5           960
+search-givenplan-r1          664
+search-givenplan-r2          611
+search-givenplan-r3          535
+search-givenplan-r4          497
+search-givenplan-r5          592
+page-selfplan-r1             645
+page-selfplan-r2             830
+page-selfplan-r3            3848   # 突出 (~64 分)
+page-selfplan-r4             948
+page-selfplan-r5             879
+page-selfplan-r6            1571
+page-selfplan-r7             783
+page-selfplan-r8            2138   # 突出 (~36 分)
+page-selfplan-r9             972
+page-selfplan-r10            867
+page-givenplan-r1            503
+page-givenplan-r2            599
+page-givenplan-r3            503
+page-givenplan-r4            626
+page-givenplan-r5            511
+disk-selfplan-r1             863
+disk-selfplan-r2            1431
+disk-selfplan-r3             934
+disk-selfplan-r4            1189
+disk-selfplan-r5            1207
+disk-givenplan-r1            820
+disk-givenplan-r2            864
+disk-givenplan-r3            829
+disk-givenplan-r4           2838   # 突出 (~47 分)
+disk-givenplan-r5            943
+-------------------------------------
+MEAN                        1013 (~17 分)
+SUM                        35456 (~9h51m)
+
+wallclock JST: 2026-07-14T02:03:42 - 2026-07-14T11:54:40  (9h50m50s)
+n_ok: 35/35
+
+Note: plan_s / build_s の内訳は master log の transition マーカーの解析に失敗したため未取得。
+突出試行 (page-selfplan-r3 / page-selfplan-r8 / disk-givenplan-r4) は build phase の伸長が主要因と推測される。

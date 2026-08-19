@@ -1,0 +1,53 @@
+=== Phase A: plan_exit basic flow (merge-upstream-31) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-31/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Model: mi25/unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL (mi25 / 10.1.4.13:8000)
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  6月 21日 日曜日 12:28:53 JST
+
+Test 1: 12:28:53
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 130s
+  New plan files: 1
+  Latest: 1782012544555-gentle-nebula.md
+
+Test 2: 12:31:21
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 91s
+  New plan files: 1
+  Latest: 1782012692282-gentle-comet.md
+
+Test 3: 12:33:10
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 90s
+  New plan files: 1
+  Latest: 1782012800696-neon-mountain.md
+
+Test 4: 12:34:58
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 100s
+  New plan files: 1
+  Latest: 1782012908464-curious-squid.md
+
+Test 5: 12:36:56
+  Dialog: Plan content with markdown displayed
+  Build Agent: NOT detected yet (dialog ok)
+  Result: SUCCESS (dialog ok)
+  Elapsed: 80s
+  New plan files: 1
+  Latest: 1782013027072-calm-lagoon.md
+
+=== Summary ===
+Total: 5
+Success: 5
+Timeout: 0
+Crash: 0
+Validation triggered: 0
+End: 2026年  6月 21日 日曜日 12:38:34 JST

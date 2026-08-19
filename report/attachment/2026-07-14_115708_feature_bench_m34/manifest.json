@@ -1,0 +1,48 @@
+{
+  "run_id": "m34",
+  "mode": "regression",
+  "date_jst": "2026-07-14 11:57",
+  "trials": "35",
+  "set": "full",
+  "bench_spec_version": "v2",
+  "bench_spec_file": "/home/ubuntu/projects/opencode/tmp/feat-bench/specs/v2_libheur.md",
+  "bench_spec_sha256": "d7f298bf",
+  "scenario_fingerprint": [
+    { "scenario_id": "search-selfplan",  "scenario_version": "2", "prompt_sha": "d6e2a8ca" },
+    { "scenario_id": "search-givenplan", "scenario_version": "2", "prompt_sha": "4e512433" },
+    { "scenario_id": "page-selfplan",    "scenario_version": "3", "prompt_sha": "a860e52a" },
+    { "scenario_id": "page-givenplan",   "scenario_version": "3", "prompt_sha": "407cab93" },
+    { "scenario_id": "disk-selfplan",    "scenario_version": "3", "prompt_sha": "80a5c69a" },
+    { "scenario_id": "disk-givenplan",   "scenario_version": "3", "prompt_sha": "3441ca4a" }
+  ],
+  "grader_version": "6",
+  "judge_rubric_version": "1",
+  "judge_model": "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL",
+  "opencode_version": "0.0.0-dev-202607131655",
+  "opencode_bin_path": "/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode",
+  "llama_cpp_commit": "0843245cb",
+  "llama_server_url": "http://10.1.4.14:8000",
+  "llama_server_started_at": "2026-07-14T02:03:26+09:00",
+  "llama_server_snapshot": {
+    "reachable": true,
+    "url": "http://10.1.4.14:8000",
+    "props": {
+      "model_path": "/home/llm/.cache/huggingface/hub/models--unsloth--Qwen3.6-35B-A3B-GGUF/snapshots/a483e9e6cbd595906af30beda3187c2663a1118c/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+      "n_ctx": 131072,
+      "chat_template_source": null
+    },
+    "slots": { "count": 1, "any_processing": false }
+  },
+  "model": "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL",
+  "sampler_params": "temperature=0.55, top_k=20, top_p=1, min_p=0",
+  "results": {
+    "total": 35,
+    "functional": "33/35",
+    "functional_by_pattern": { "selfplan": "18/20", "givenplan": "15/15" },
+    "test_pass": "35/35",
+    "transition_self_exit": "35/35",
+    "page_gem": { "kaminari": 15 },
+    "score_mean": null
+  },
+  "report_path": "report/2026-07-14_115708_feature_bench_m34.md"
+}

@@ -1,0 +1,9 @@
+=== Phase C: TUI stability smoke (merge-upstream-34) ===
+
+C-1: --prompt flag startup — TUI rendered "hi" greeting, LLM responded
+     ("Hi! How can I help you today?"). No BindingError/panic. PASS
+     (Note: "Update Available" modal appeared post-startup, dismissed with Escape)
+C-2: OSC52 sequences in binary — 18 matches for OSC52/tmux passthrough. PASS
+C-3: TUI exited cleanly on Ctrl+C. PASS
+
+Summary: C-1..C-3 all PASS

@@ -1,0 +1,46 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-33) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-33/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Start: 2026-07-06 04:16 JST (approx)
+
+B-0: Plan agent launched with 'Rakefile の冒頭にプロジェクトの説明コメントを追加してください'
+  - Update Available modal detected at iter 1 -> dismissed with Escape
+  - ask_question fallback detected at iter 3 -> recovery sent 'plan_exit ツールを使って計画を確定してください'
+  - plan_exit dialog appeared at iter 4 (~40s)
+  Result: PASS (dialog appeared, though via ask_question fallback)
+
+B-1: Markdown rendering
+  Result: PASS (## 目的 / ## 調査内容 / ## 実施手順 / ## 変更対象ファイル displayed)
+
+B-2: Scroll test (Ctrl+d twice)
+  Result: WARN (short plan fits in viewport - scroll produced no change)
+
+B-3: Option 3 (No) - stay in Plan
+  Result: PASS (Plan agent remained; no Build switch)
+  Note: After option 3, the LLM continued and eventually called plan_exit again in a second turn (due to residual "plan_exit ツールを使って..." recovery text still queued). But no visible dialog reopened; LLM went idle. Session terminated (Ctrl+C) and restarted fresh for B-4/B-5.
+
+B-4: Custom feedback (option 4)
+  Fresh session started after B-3 cleanup
+  - Plan agent relaunched -> dialog appeared at iter 6 (60s)
+  - Option 4 pressed -> textarea placeholder 'Type your own answer' visible: PASS
+  - Typed marker 'FORK_REGRESSION_MARK_902743' -> visible in textarea: PASS
+  - Cleared marker (Ctrl+U), typed '計画を3ステップで再構成し、plan_exitツールを使って再提示してください' + Enter
+  - Dialog re-appeared with 3-step re-structured plan (ステップ 1/2/3): PASS
+  Result: PASS
+
+B-5: Option 1 (Yes) - switch to Build
+  - Option 1 pressed -> 'Build · unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL' appeared within 15s
+  - No BindingError/panic
+  Result: PASS
+
+B-6: TUI exit
+  - Ctrl+C returned shell prompt within 5s
+  Result: PASS
+
+=== Summary ===
+B-0: PASS (dialog appeared)
+B-1: PASS (markdown rendered)
+B-2: WARN (short plan, no scroll needed)
+B-3: PASS (Plan stayed)
+B-4: PASS (feedback interpreted, dialog re-displayed)
+B-5: PASS (Build agent switched)
+B-6: PASS (shell prompt returned)

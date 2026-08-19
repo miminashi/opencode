@@ -1,0 +1,4 @@
+=== Phase C: TUI stabilization smoke (merge-upstream-30) ===
+C-1 (--prompt non-crash): PASS (spinner/prompt visible, no BindingError/panic)
+C-2 (OSC52 sequence in binary): PASS (14 matches via strings)
+C-3 (TUI exit): PASS (returned to shell prompt)

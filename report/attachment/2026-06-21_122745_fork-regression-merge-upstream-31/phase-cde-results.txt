@@ -1,0 +1,8 @@
+=== Phase C/D/E (merge-upstream-31, mi25) ===
+Start: 2026年  6月 21日 日曜日 12:47:05 JST
+
+C-1 prompt-crash: PASS (spinner/prompt visible, no crash)
+D reasoning_line=1 answer_line=2
+D reasoning-streaming: PASS (reasoning before answer)
+E-1 rolling-truncation: IDLE_BREAK
+End: 2026年  6月 21日 日曜日 12:51:12 JST

@@ -1,0 +1,29 @@
+{
+  "run_id": "m29",
+  "mode": "regression",
+  "date_jst": "2026-06-14 10:45",
+  "trials": "20",
+  "bench_spec_version": "v2",
+  "bench_spec_file": "/home/ubuntu/projects/opencode/tmp/feat-bench/specs/v2_libheur.md",
+  "bench_spec_sha256": "d7f298bf",
+  "opencode_version": "0.0.0-dev-202606132102",
+  "opencode_bin_path": "/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode",
+  "llama_cpp_commit": "e37abd6b5",
+  "model": "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_XL",
+  "sampler_params": "temp0.55/top_k20/top_p1.0/min_p0/presence1.0/dry0 (server defaults temp0.6/top_p0.95)",
+  "results": {
+    "total": 20,
+    "functional": "19/20",
+    "functional_by_pattern": {
+      "selfplan": "9/10",
+      "givenplan": "10/10"
+    },
+    "test_pass": "19/20",
+    "transition_self_exit": "20/20",
+    "page_gem": {
+      "kaminari": 10
+    },
+    "score_mean": 4.65
+  },
+  "report_path": "report/2026-06-14_104524_feature_bench_m29.md"
+}

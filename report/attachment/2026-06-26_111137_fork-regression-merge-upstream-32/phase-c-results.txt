@@ -1,0 +1,19 @@
+=== Phase C: TUI stability smoke (merge-upstream-32) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-32/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+C-1: --prompt 起動非クラッシュ
+  - "/path/opencode /home/ubuntu/projects/ytdlor --prompt 'hi'" → spinner / Thinking 表示
+  - BindingError / panic 無し
+  - 結果: PASS
+
+C-2: OSC52 シーケンス
+  - strings | grep -cE '\\x1b\\]52|OSC.{0,4}52|tmux.*passthrough' = 15
+  - packages/tui/src/clipboard.ts 存在
+  - 結果: PASS
+
+C-3: TUI 終了
+  - Ctrl+C × 1 でシェル復帰
+  - 結果: PASS
+
+=== Summary ===
+C-1 PASS / C-2 PASS / C-3 PASS

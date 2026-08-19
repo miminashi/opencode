@@ -1,0 +1,37 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-32) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-32/packages/opencode/dist/opencode-linux-x64/bin/opencode
+TMUX_TARGET: %66
+
+B-0: Plan agent 起動 → dialog 出現 90秒 (PASS)
+
+B-1: Markdown 描画
+  - 検出ヘッダ数: 5 (`#`, `##` 含む)
+  - 結果: PASS
+
+B-2: スクロール検証
+  - Ctrl+D × 2 → diff 0 行
+  - short plan で viewport に収まる
+  - 結果: WARN (skill 仕様の許容範囲)
+
+B-3: Option 3 (No)
+  - "3" 送信 → Plan agent 継続表示
+  - "Build " ヘッダ未検出
+  - 結果: PASS
+
+B-4: Custom feedback
+  - "計画を 3 ステップで再構成し..." 送信 → 再 dialog 出現 ~80秒
+  - "4" 押下 → "Type your own answer" placeholder 表示 (PASS)
+  - "FORK_REGRESSION_MARK_32" 入力 → textarea に反映 (PASS)
+  - Enter 送信 → dialog 再出現 ~80秒 (PASS)
+  - 結果: PASS
+
+B-5: Option 1 (Yes, keep context)
+  - "1" 送信 → "Build " agent 表示 / クラッシュなし
+  - 結果: PASS
+
+B-6: TUI 終了
+  - Ctrl+C → シェルプロンプト復帰
+  - 結果: PASS
+
+=== Summary ===
+B-1 PASS / B-2 WARN / B-3 PASS / B-4 PASS / B-5 PASS / B-6 PASS

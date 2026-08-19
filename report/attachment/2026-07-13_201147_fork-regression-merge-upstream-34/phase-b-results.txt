@@ -1,0 +1,15 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-34) ===
+
+B-0: Plan agent started, dialog detected at iter=4 (40s wait). PASS
+B-1: Markdown headers (# / ##) rendered in dialog. PASS
+B-2: Ctrl+d produced diff (19 lines difference). PASS
+B-3: Option 3 (No) — stayed in Plan agent, "Build " not detected. PASS
+B-4: Option 4 (Provide feedback)
+  - Textarea placeholder "Type your own answer" rendered. PASS
+  - Typed marker "FORK_REGRESSION_MARK_M34" visible in textarea. PASS
+  - Dialog re-appeared after Enter (iter=2, ~20s). PASS
+B-5: Option 1 (Yes, keep context) — switched to "Build · unsloth/..." agent. PASS
+     No BindingError/panic detected.
+B-6: TUI exited cleanly on Ctrl+C. PASS
+
+Summary: B-1..B-6 all PASS

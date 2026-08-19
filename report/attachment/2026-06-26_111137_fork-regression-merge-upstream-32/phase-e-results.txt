@@ -1,0 +1,26 @@
+=== Phase E: tool output truncation / llama-server resilience (merge-upstream-32) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-32/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+E-1: Rolling truncation 検証 (build agent)
+  - "bash で `seq 1 3000`" 要求 → GPU アイドル 3 分継続検出 → WARN break
+  - 原因: tool execution が起動されず、LLM がプロンプト受信前にスピンアウトした可能性
+  - 結果: WARN (skill 仕様の早期 break ルール適用、static 検査 E-2/E-3 で健在性確認)
+
+E-2: Tool call truncation retry コード存在
+  - packages/opencode/src/session/prompt.ts:1195,1484-1497 に truncationRetryCount / truncated tools 検知ロジック存在
+  - 結果: PASS
+
+E-3a: llama-server context overflow パターン
+  - packages/llm/src/provider-error.ts:13 に `/exceeds the available context size/i` (llama.cpp server)
+  - 結果: PASS
+
+E-3b: llama.cpp tool call parse failure 検知
+  - packages/opencode/src/session/retry.ts:71 に `// Detect server-side tool call parse failures (e.g. llama.cpp)`
+  - 結果: PASS
+
+E-4: TUI 終了
+  - Ctrl+C → シェルプロンプト復帰
+  - 結果: PASS
+
+=== Summary ===
+E-1 WARN / E-2 PASS / E-3a PASS / E-3b PASS / E-4 PASS

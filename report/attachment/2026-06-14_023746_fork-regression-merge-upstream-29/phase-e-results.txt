@@ -1,0 +1,21 @@
+=== Phase E: tool output truncation / llama-server resilience (merge-upstream-29) ===
+
+E-1 (rolling truncation, build agent): PASS
+  - Prompt: bash `seq 1 3000` (3000 lines > MAX_LINES=2000)
+  - Truncation marker detected after 70s (2nd attempt; 1st attempt blocked by "Update Available" modal, dismissed with Escape)
+  - Model received truncated output: "The output was truncated due to the 3000 lines. The full output is saved to a file."
+  - Full output saved to /home/ubuntu/.local/share/opencode/tool-output/tool_ec2281598001g69bplBIlrOkxg
+  - rolling truncation + save-to-file mechanism working end-to-end
+
+E-2 (truncation retry code in prompt.ts): PASS
+  - truncationRetryCount / MAX_TRUNCATION_RETRIES / detection at prompt.ts:1443-1464 present
+  - (fork log calls here converted to Effect.logInfo during merge-29 fix)
+
+E-3 (llama-server error handling code): PASS
+  - retry.ts:71 "Detect server-side tool call parse failures (e.g. llama.cpp)" present
+  - NOTE: provider/error.ts no longer carries the "exceeds the available context size" OVERFLOW_PATTERNS
+    string-match. Upstream replaced reactive string-matching with PROACTIVE token-count overflow
+    detection (session/overflow.ts isOverflow). This is an upstream architectural change (works for all
+    providers incl. llama.cpp), NOT a fork regression. fork's llama.cpp tool-call-parse-error retry is intact.
+
+E-4 (TUI exit): PASS - exited to shell on C-c

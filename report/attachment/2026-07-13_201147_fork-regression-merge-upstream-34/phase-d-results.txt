@@ -1,0 +1,10 @@
+=== Phase D: CLI reasoning streaming (merge-upstream-34) ===
+
+Command: opencode --dir /home/ubuntu/projects/ytdlor run "What is 2 plus 2? Answer with a single digit."
+Output:
+  L1: Thinking: The user is asking a simple math question. The answer is 4.
+  L2: 4
+
+Reasoning marker ("Thinking:") position: L1
+Answer marker ("4"): L2
+Result: PASS (reasoning appeared before answer)

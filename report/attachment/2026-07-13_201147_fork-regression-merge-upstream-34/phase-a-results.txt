@@ -1,0 +1,46 @@
+=== Phase A: plan_exit basic flow (merge-upstream-34) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-34/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  7月 13日 月曜日 20:12:59 JST
+
+Test 1: 20:12:59
+  Result: TIMEOUT
+  Elapsed: 602s
+  New plan files: 1
+  Latest: 1783941188739-curious-falcon.md
+
+Test 2: 20:23:07
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 0
+  Latest: 1783941188739-curious-falcon.md
+
+Test 3: 20:33:14
+  Result: TIMEOUT
+  Elapsed: 601s
+  New plan files: 1
+  Latest: 1783942403045-tidy-nebula.md
+
+Test 4: 20:43:21
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 331s
+  New plan files: 0
+  Latest: 1783942403045-tidy-nebula.md
+
+Test 5: 20:49:10
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1783943358821-sunny-circuit.md
+
+=== Summary ===
+Total: 5
+Success: 2
+Timeout: 3
+Crash: 0
+Validation triggered: 0
+End: 2026年  7月 13日 月曜日 20:50:41 JST

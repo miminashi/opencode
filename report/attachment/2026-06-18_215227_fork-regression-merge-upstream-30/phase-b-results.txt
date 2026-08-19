@@ -1,0 +1,19 @@
+=== Phase B: plan_exit dialog branches (merge-upstream-30) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-30/packages/opencode/dist/opencode-linux-x64/bin/opencode
+
+B-0: Plan agent launched, plan_exit dialog appeared at iter 9 (~90s)
+B-1 (markdown rendering): PASS
+  - Dialog rendered markdown headers (# Rakefile..., ## 概要, ## 実施内容, ## 変更前/後) and code fences
+  - line-head grep returned 0 only due to box indentation; content confirmed via full capture
+B-2 (scroll): PASS
+  - Ctrl+d x2 changed the viewport (before != after)
+B-3 (option 3 / No): PASS
+  - Stayed with plan agent; "Build " not shown, no crash
+B-4 (custom feedback / option 4): PASS
+  - B-4a placeholder "Type your own answer" rendered: PASS
+  - B-4b typed marker FORK_REGRESSION_MARK_1339984 visible in textarea: PASS
+  - dialog re-appeared after re-plan instruction (iter 1) and after feedback submission (iter 1)
+B-5 (option 1 / Yes keep context): PASS
+  - Switched to Build agent, no crash
+B-6 (TUI exit): PASS
+  - Returned to shell prompt after Ctrl+C

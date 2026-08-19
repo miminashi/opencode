@@ -1,0 +1,52 @@
+=== Phase A: plan_exit basic flow (merge-upstream-30) ===
+Binary: /home/ubuntu/projects/opencode/.claude/worktrees/merge-upstream-30/packages/opencode/dist/opencode-linux-x64/bin/opencode
+Tests: 5 (no OPENCODE_EXPERIMENTAL_PLAN_MODE env var)
+Start: 2026年  6月 18日 木曜日 21:53:28 JST
+
+Test 1: 21:53:28
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 60s
+  New plan files: 1
+  Latest: 1781787217955-proud-rocket.md
+
+Test 2: 21:54:49
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1781787299835-happy-forest.md
+
+Test 3: 21:56:20
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 70s
+  New plan files: 1
+  Latest: 1781787390664-playful-lagoon.md
+
+Test 4: 21:57:51
+  Dialog: No markdown content
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 60s
+  New plan files: 1
+  Latest: 1781787481777-jolly-nebula.md
+
+Test 5: 21:59:13
+  Dialog: Plan content with markdown displayed
+  Build Agent: Started
+  Result: SUCCESS
+  Elapsed: 100s
+  New plan files: 1
+  Latest: 1781787563075-sunny-squid.md
+
+=== Summary ===
+Total: 5
+Success: 5
+Timeout: 0
+Crash: 0
+Validation triggered: 0
+End: 2026年  6月 18日 木曜日 22:01:11 JST

@@ -1,0 +1,22 @@
+=== Phase E: tool output truncation / llama-server resilience (merge-upstream-30) ===
+
+E-1 (rolling truncation marker, interactive): WARN
+  - Build agent + `seq 1 3000` request; waited up to 10 min
+  - GPU idle break at iter 18 (~3 min idle), truncation marker not captured in viewport
+  - Per skill: WARN (not fail) — truncation code path confirmed via E-2 static check
+
+E-2 (tool call truncation/retry in prompt.ts): PASS
+  - 10 occurrences of truncation/truncated
+  - includes: truncationRetryCount, "Detect truncated tool calls due to output token limit",
+    truncatedTools, MAX_TRUNCATION_RETRIES retry-limit logic
+
+E-3a (llama.cpp overflow pattern): PASS
+  - Pattern relocated by upstream provider restructure:
+    packages/llm/src/provider-error.ts:13  /exceeds the available context size/i,
+  - (formerly packages/opencode/src/provider/error.ts)
+
+E-3b (llama.cpp tool call parse failure detection): PASS
+  - packages/opencode/src/session/retry.ts:71
+    "// Detect server-side tool call parse failures (e.g. llama.cpp)"
+
+E-4 (TUI exit): PASS (returned to shell prompt after Escape + Ctrl+C)

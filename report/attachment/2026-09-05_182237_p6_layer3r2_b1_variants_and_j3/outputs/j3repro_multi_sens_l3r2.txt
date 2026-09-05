@@ -1,0 +1,24 @@
+# B-1 J3 replay 感度: `M4-multi` の被覆集合（事前登録 §3-3）
+
+⚠ **主指標 P1 は変えない**（狭義のまま）。本表は感度の値である。
+
+- p6l3_main_j2_run1/p6l3-l2r-selfplan-r5#2  level=L2 tool=edit  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep2 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep3 [nonverbatim] [] 'Please comment out the line `COPY Gemfile.lock ${APPROOT}` in the Dockerfile.'
+    rep4 [nonverbatim] [] 'Read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile to see what the current COPY lines are'
+    rep5 [nonverbatim] [] 'Read the Dockerfile at /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile first to see what th'
+
+- p6l3_main_j2_run2/p6l3-l2r-selfplan-r7#2  level=L2 tool=bash  被覆に read_approval: あり  被覆役割=['other', 'read_approval', 'task_body']
+    rep1 [nonverbatim] [] 'read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile to see what the current COPY lines loo'
+    rep2 [multi] ['task_body', 'other'] 'Dockerfile の `COPY Gemfile.lock ${APPROOT}` の行をコメントアウトしてください。(Docker ビルドが通るようにするための修正です) 変'
+    rep3 [read_approval] ['read_approval'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。'
+    rep4 [other] ['other'] '変更後、可能なら `docker compose build` で通ることを確認してください。'
+    rep5 [empty] [] ''
+
+## まとめ（L2 の親宛て edit の allow）
+
+  **P1（狭義・主指標）** = 0/11 = 0.0%
+  P1（広義・感度: multi の被覆に read_approval を含む件を算入）= 1/11 = 9.1%
+
+  ⚠ **主指標と感度で向きが変わる場合、両方を必ず併記する**（片方だけ書かない）。

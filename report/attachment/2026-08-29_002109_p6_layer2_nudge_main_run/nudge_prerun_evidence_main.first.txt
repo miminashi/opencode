@@ -1,0 +1,100 @@
+========================================================================================
+② 促しラウンド **main** 走行前証跡
+========================================================================================
+時刻: 2026-08-26 00:26:52 (JST)
+⚠ DA-1 の証跡（da1/da1_prerun_evidence*.txt）は上書きしていない。
+⚠ 本証跡の全項目は **GPU 無し**で実行している（DA-1 の宿題 J）。
+
+■ `denyact_nudge_main_*` の既存出力: 0 個（⚠ 0 個が走行前の証拠）
+  ✓ 出力は 1 つも無い
+
+■ DA-1 の出力: 10 個（⚠ 残っているのが正しい。上書きしていない証拠）
+
+■ ② の凍結物の sha256
+    6b9cfc98497589dc330ca53f8144d0e7c02f07f05f1888211bd4ef5035f7abdb  nudge_reasons_v1.jsonl
+    6e163d6debd07052f848e99d347de68d555cd437a82e94eed86081185b9f3413  nudge_reason_templates_v1.json
+    61e3a240411d814ce2b80ce5cc1aad63845b9feed555d3108e9419a1afcf8aa3  prereg_nudge.md
+    8199adad082fb5d5339befa303f2645c34776b9187c5a6404a27a3d5b4dbac42  design_nudge.md
+
+■ DA-1 からそのまま読む凍結物の sha256（⚠ 改変していないことの記録）
+    9ab8457015bca969bdfdabeb3756ef92995c07025911f85262f2a2815e5435f9  da1/da1_materials_v1.jsonl
+    889c2d2d63521cbc30aee5da336a70c3cf80f1ed763878f57e10e1253e1ce583  da1/da1_materials_instructed_v1.jsonl
+    aa71c1648cd54532b659a3d33752b38f86b93dd1d4194fbc8c0d824192a22b9e  da1/da1_tools_v1.json
+    bbfe54669118d9209cc7e2e3bd9b21abf335ce78f38cf1dced4c7ebed5d7e23d  da1/da1_reasons_v1.jsonl
+    1da8023d6966aa0d4a7317ee171edc3433a9515de7d7cb0de7ddb05363f4c3bf  da1/da1_reason_templates_v1.json
+    e7527b0b92bdac211feeb360340293386e39f4b5e9de37127915f06d60c2f5f2  da1/prereg_da1.md
+    fd598992b33d9af7379c46d0909d008f571a261f21edcc14cea79f2640f4ee88  da1/rubric_v3_casebook.md
+
+■ 規準と語彙の sha256
+    2748cdc6481965e5c9f8767a37f9c972c9f4d53a5ecab297dc7a3559dd552798  layer2_action_rubric.md
+    095ba706f57495d993b1e623a1bcfa4594f323ab7bb53cf1855e0bdd50064204  layer2_action_labels.json
+    3368d6f611e6b27df94d7deb01e1cfda9070618a051e5827f93ed8456b86dfe1  layer2_action_rubric_v3.md
+    d9774deb94c0efde4e429398e91c174da2afb2c61d6f6d99b82423876a9d5b7f  layer2_action_labels_v2.json
+    42aba2360b2b4aca1b94361d8aff0a18d7c33b0abb0e186a976705961ad364be  MEASURE_SPEC.md
+
+■ ② の装置の sha256
+    c63d74baa97a67f20ff90c707289fa7eb75e8cb524f2acfdb58ac0fca21df756  nudge_paths.py
+    cf91c0713f0b90f8c62fd4f510d957cef764dc124d06dcc7956156993696e60b  make_deny_reasons_nudge.py
+    f2c88bc93f7fd336fbf0564e9754a0c21cac81308d0cd5299477b04f3a5a1198  classify_action_nudge.py
+    f00bde7f49111dbc3ea0c5ba43a6d0d96776915414f16445513fecaf729dd593  denyact_replay_bench_nudge.py
+    f8f429d9ade24c2eb2dbe0b389623747d5bcbb6c55091391519074b08e302b93  rubric_v3_impact.py
+    c951b7d679c66fcddbd3f61f9f4180679154774a26afc7c6ee202e167c5fd530  cluster_sizes_nudge.py
+    e3ccd800e569790eb7dc5d264aaf2c910b1235a258c1e1ac93ec1419cc5727a0  gates_nudge.py
+    5346d05894e74e50bb71cc035b12cb5d3f0e4c347e5e226973c39fd6e083d9d5  run_detectability_nudge.sh
+    cd6ceb330bc4aeb5bc4d127aeec8648f79f9a015c94a17f5b6e36889f7b959ce  detectability_nudge.txt
+    e40d725ee19b0db6ceba503b7bd79dc37c670ad84cc947b1c7ce4b4baf2a7ce0  rubric_v3_impact.txt
+    898958409f2639c434cce8535d01ff1abc8dee77276977984af0ee639a541fad  run_denyact_nudge_pilot.sh
+    089b23d111803e9d910a3450990b17c7453bfad1629bc02f74887b72bced7ba1  run_denyact_nudge_main.sh
+    0446e2f1fbd90df9e42d84bedaf0a5c54590d4ce6323b1b450af24eee593eaab  save_prerun_evidence_nudge.py
+
+■ DA-1 から再利用する装置の sha256（⚠ 改変していないことの記録）
+    cf3af0b7f747d6724cedac0329fbfd168695da16aa0989dc78d3264ad9b72850  da1/da1_paths.py
+    e3c66dcd286ac932284dbcac6f6be27509875388cd71d183079f138f7611584a  da1/da1_bash.py
+    f9d6c15d9f3a960640237b6d2a0d8336f5644c7ab769f0988d64c5498acd9446  da1/da1_history.py
+    0f206ba21f3dd0284e0bb672a14e732f4300fc99aee45aa97029aef221755bef  da1/freeze_materials_da1.py
+    d56be912c9f7d08f3d7accae9c4348359e3f256d2cc28c00bbe3cad3359c8f80  da1/capture_tools_da1.py
+    8c3552e651f9a90c927eafed8717efffad775d3d97fc2fefafa00be68cad8aef  da1/check_materials_da1.py
+    2c625fc2458e7dfa75dba09d7de68d7a5cb6d305d2fbcfe9631f33b76cdcf8c3  da1/classify_action_da1.py
+    6490cab94a0a415f11ab616b2b7ff42eb3116f26633a783496b4f4abe487e574  da1/da1_verdict.py
+    d920cc25c3baa9ada5d0b02f8fdc7ea9fb8c6aaa682c9fdb8b21423285710acd  da1/detectability_da1.py
+    7c49c13bc5e404424647898294d31d52caffbfbc85056950a13531c0310ebc55  da1/smoke_gate_da1.py  ⚠ selftest 無し
+    7c32660ac5f8089b9d74840d268e9430fcaea15f6c764aa53b51dd93448ed37a  da1/blind_sheet_main_da1.py  ⚠ selftest 無し
+    fae48eea3329603d31d0067999c4796b938b71548700af34d2d6f52d9100cedc  da1/make_scoring_batches_da1.py  ⚠ selftest 無し
+    62caee55f4205de60489bd316229784f6fb4b07d03a06c86ccfec39f27a8af92  da1/apply_rubric_da1.py  ⚠ selftest 無し
+
+■ 装置の selftest（⚠ GPU 不要）
+    ✓ nudge_paths.py                       rc=0  selftest OK（27 項目）
+    ✓ make_deny_reasons_nudge.py           rc=0  selftest OK（61 項目）
+    ✓ classify_action_nudge.py             rc=0  selftest OK（51 項目）
+    ✓ denyact_replay_bench_nudge.py        rc=0  selftest OK（52 項目）
+    ✓ rubric_v3_impact.py                  rc=0  selftest OK（22 項目）
+    ✓ cluster_sizes_nudge.py               rc=0  selftest OK（12 項目）
+    ✓ gates_nudge.py                       rc=0  selftest OK（15 項目）
+    ✓ da1/da1_paths.py                     rc=0  selftest OK（15 項目）
+    ✓ da1/da1_bash.py                      rc=0  selftest OK（21 項目）
+    ✓ da1/da1_history.py                   rc=0  selftest OK（22 項目）
+    ✓ da1/freeze_materials_da1.py          rc=0  selftest OK（14 項目）
+    ✓ da1/capture_tools_da1.py             rc=0  selftest OK（8 項目）
+    ✓ da1/check_materials_da1.py           rc=0  selftest OK（5 項目）
+    ✓ da1/classify_action_da1.py           rc=0  selftest OK（41 項目）
+    ✓ da1/da1_verdict.py                   rc=0  selftest OK（25 項目）
+    ✓ da1/detectability_da1.py             rc=0  selftest OK（21 項目）
+
+  合計 412 項目 / 失敗 0 本 
+
+■ 走行前ゲート（`gates_nudge.py`・⚠ 成果物側から検査する）
+    ============================================================================
+    ② 促しラウンド 走行前の機械ゲート（⚠ GPU 不要）
+    ============================================================================
+    G-N10 検査対象: 理由文 177 件 / 凍結 sha 16 件
+    G-N1 (ii-N) = (ii-L) + NUDGE: 177/177 件
+    G-N2 代替を含むのは (i) だけ: 172 件で検査（alt を持つ材料）
+    G-N3 NUDGE の長さ: path=45字 / workdir=44字 / regenerate=44字
+    G-N4 理由文 sha256: 一致
+    G-N5 DA-1 の原本が無改変: 16/16 件
+    G-N6 分類ラベル: v1 と同一 / 水準 ['i', 'ii', 'iiL', 'iiN', 'iii', 'iv']
+    G-N7 規準 v3: v2 の条文 7/7 を逐語で保持 / 新設条文 6/6
+    G-N8 走らせる水準: ['i', 'iiL', 'iiN']
+    G-N9 ARMS 未指定 → 既存の denyact_nudge_* を列挙: ['denyact_nudge_pilot2_iiL_deny', 'denyact_nudge_pilot2_iiN_deny', 'denyact_nudge_pilot2_sham_deny', 'denyact_nudge_pilot_iiL_deny', 'denyact_nudge_pilot_iiN_deny', 'denyact_nudge_pilot_sham_deny']
+    
+    ✓ すべてのゲートを通過した

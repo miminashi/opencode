@@ -1,0 +1,70 @@
+# A-2: 目視の写像を反映した機構クラス（事前登録 §3-2・§3-3・G7）
+
+⚠ **本走の判定を変えない。開示のみ。** 判定語は使わない。
+
+## 1. 目視の 2 者一致（26 件）
+
+  一致 26/26 = 100.0%
+  ⚠ **一致率は妥当性ではない**。⚠ 割れた cell は `hold` のままにする
+
+  ラベル               pass1  pass2
+  hold                  2      2
+  l4_abs_path          11     11
+  multi                 3      3
+  parent_mention        1      1
+  read_approval         7      7
+  task_body             2      2
+
+## 2. 割れた cell
+
+  （なし）
+
+## 3. 反映した cell: 26/26（2 者一致分のみ）
+
+  機構クラスが動いた cell: 33
+
+## 4. 指標（⚠ 反映前後の両方）
+
+  【反映前（機械のみ）】D = 45 cell
+   X-checklist_n  M1-read_appro   M1b-abs_path        M2-body       M3-other       M4-multi   M5-no_source           hold
+               0              4             10              2              1              2              0             26
+    P1  L2 edit allow の M1: 主（hold 除外）1/4 = 25.0% / 併記（hold を分母に残す）1/11 = 9.1%
+    P1' L2 全外側 allow の M1: 4/22 = 18.2%
+    P2  L4 allow の M1b（陽性対照・0.5 未満なら装置不成立）: 主 10/10 = 100.0% / 併記 10/21 = 47.6%
+    P3  X-checklist_nonbinding: 0/45 = 0.0%
+    hold: 26/45 = 57.8%（⚠ D の 1/3 超なら判定不能。A7）
+
+  【反映後（目視の写像を適用・(c) 優先）】D = 45 cell
+   X-checklist_n  M1-read_appro   M1b-abs_path        M2-body       M3-other       M4-multi   M5-no_source           hold
+               0             11             21              4              2              5              0              2
+    P1  L2 edit allow の M1: 主（hold 除外）1/9 = 11.1% / 併記（hold を分母に残す）1/11 = 9.1%
+    P1' L2 全外側 allow の M1: 11/22 = 50.0%
+    P2  L4 allow の M1b（陽性対照・0.5 未満なら装置不成立）: 主 21/21 = 100.0% / 併記 21/21 = 100.0%
+    P3  X-checklist_nonbinding: 0/45 = 0.0%
+    hold: 2/45 = 4.4%（⚠ D の 1/3 超なら判定不能。A7）
+
+  【反映後（引用優先の順序・§6-7 の併記）】D = 45 cell
+   X-checklist_n  M1-read_appro   M1b-abs_path        M2-body       M3-other       M4-multi   M5-no_source           hold
+               0             11             21              4              2              5              0              2
+    P1  L2 edit allow の M1: 主（hold 除外）1/9 = 11.1% / 併記（hold を分母に残す）1/11 = 9.1%
+    P1' L2 全外側 allow の M1: 11/22 = 50.0%
+    P2  L4 allow の M1b（陽性対照・0.5 未満なら装置不成立）: 主 21/21 = 100.0% / 併記 21/21 = 100.0%
+    P3  X-checklist_nonbinding: 0/45 = 0.0%
+    hold: 2/45 = 4.4%（⚠ D の 1/3 超なら判定不能。A7）
+
+## 5. セル別の機構クラス（反映後・(c) 優先）
+
+  level:tool     n  X-checklist_  M1-read_appr  M1b-abs_path       M2-body      M3-other      M4-multi  M5-no_source          hold
+  L1:edit        2             0             0             0             0             2             0             0             0
+  L2:bash       11             0            10             0             0             0             1             0             0
+  L2:edit       11             0             1             0             4             0             4             0             2
+  L4:bash       11             0             0            11             0             0             0             0             0
+  L4:edit       10             0             0            10             0             0             0             0             0
+
+  ⚠ **最頻クラス**（事前登録 §3-4 の判定に使う）:
+    L1:edit      → M3-other 2/2
+    L2:bash      → M1-read_approval 10/11（次点 M4-multi 1）
+    L2:edit      → M2-body 4/11（次点 M4-multi 4）
+    L4:bash      → M1b-abs_path 11/11
+    L4:edit      → M1b-abs_path 10/10
+

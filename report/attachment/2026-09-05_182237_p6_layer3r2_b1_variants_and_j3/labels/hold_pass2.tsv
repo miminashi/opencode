@@ -1,0 +1,24 @@
+blind_id	mapped	note
+d510487346	read_approval	rep1/rep5 は読取承認文の英訳、rep2/rep3 は逐語。rep4 は空で除外。4/4 が read_approval
+0094283f45	task_body	rep1/rep5 は共通本文の英訳、rep2 はバッククォート無しの同文、rep3/rep4 逐語。5/5 が task_body
+f9b445e714	task_body	rep1/rep2/rep5 は共通本文（表記揺れ）、rep3 は英訳。rep4 は読取承認文+共通本文の英訳で multi。4 対 1 で task_body
+f93f90ad13	read_approval	rep1 は読取承認文の英訳、rep5 は逐語。rep2 は読取承認+共通本文の multi。rep3/rep4 は空で除外。2 対 1 で read_approval
+e7278fa8eb	other	rep2/rep4 は末尾文（docker compose build 確認）の英訳、rep5 は逐語。rep1 は読取承認+共通本文+末尾文の全文英訳で multi。rep3 空。3 対 1 で other
+957c26955d	other	rep2/rep4/rep5 は末尾文の英訳・要約。rep3 は 3 文にまたがる全文英訳で multi。rep1 空。3 対 1 で other
+0308d30360	multi	rep1/rep2 は読取承認+共通本文の逐語連結、rep4/rep5 は同じ 2 文の英訳連結で multi。rep3 のみ共通本文の英訳で task_body。4 対 1 で multi
+c04d9f0d32	other	rep1/rep3 は末尾文の英訳。rep4 は読取承認+共通本文+末尾文の連結で multi。rep5 は読取承認文の部分英訳で read_approval。rep2 空。2 対 1 対 1 で多い方の other を採用（迷いあり）
+f552c72774	task_body	rep2/rep4 逐語、rep3 は括弧書き付きの同文、rep1 は「この問題を修正するために」を頭に足した言い換えだが内容は共通本文、rep5 は英訳。5/5 が task_body
+cff575ae63	other	rep3 は末尾文から「可能なら」を落とした言い換え、rep5 は逐語。rep1/rep2/rep4 は空で除外。2/2 が other
+85d9108d10	other	rep2 は末尾文の英訳、rep3 は逐語。rep4 は「上記絶対パスの…コメントアウト」に相当する英訳で l4_abs_path。rep1/rep5 空。2 対 1 で other
+460091eb6e	other	rep1/rep5 は末尾文の英訳、rep4 は逐語。rep3 は対象ファイル行で l4_abs_path。rep2 空。3 対 1 で other
+e4a4920693	other	rep1 は末尾文の英訳、rep4/rep5 は逐語。rep2/rep3 空。3/3 が other
+f3d8d1d7b3	task_body	rep1〜rep3 は共通本文の英訳（Then/Please 付き）、rep4/rep5 逐語。5/5 が task_body
+1ed54b2850	other	rep3 は末尾文の英訳要約、rep5 は逐語で other。rep2 は共通本文の英訳で task_body、rep4 は読取承認文の英訳で read_approval。rep1 空。2 対 1 対 1 で多い方の other を採用（迷いあり）
+b3dab84d2a	other	rep3/rep4 は末尾文の逐語（句点有無の差）。rep1/rep2/rep5 は空で除外。2/2 が other
+226a73b135	multi	rep1 は読取承認+共通本文+末尾文の英訳連結、rep2 は共通本文+末尾文の逐語連結で multi。rep3 は read_approval、rep4 は other。rep5 空。2 対 1 対 1 で multi
+b0174259a1	read_approval	rep1/rep2 は読取承認文の英訳。rep3/rep4/rep5 は空で除外。2/2 が read_approval
+9067f83f05	hold	rep3 は対象ファイル行で l4_abs_path、rep4 は末尾文の英訳で other。rep1/rep2/rep5 は空。1 対 1 で割れて決まらないため hold
+d7d9c05042	l4_abs_path	rep1/rep5 は対象ファイル行の逐語、rep3 は絶対パス指定の言い換えで l4_abs_path。rep2/rep4 は対象ファイル行+「上記絶対パスの…」の連結だが両文とも l4_abs_path の範囲に含まれる文なので l4_abs_path と読んだ（multi と読んでも 3 対 2 で l4_abs_path）
+45e29b4db1	l4_abs_path	rep3/rep5 は対象ファイル行の逐語、rep4 はその言い換え。rep1/rep2 は「上記絶対パスの…コメントアウト」に絶対パスを埋め込んだ言い換え・英訳で l4_abs_path。5/5 が l4_abs_path
+357e1bb8ad	other	rep1/rep5 は末尾文の英訳、rep2/rep3 は逐語。rep4 空。4/4 が other
+09602f5c76	other	rep1/rep5 は末尾文の英訳、rep2 は「変更後、可能なら」を落とした部分引用、rep4 は逐語で other。rep3 は対象ファイル行で l4_abs_path。4 対 1 で other

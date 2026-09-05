@@ -1,0 +1,45 @@
+# A-2 感度: `M4-multi` の被覆集合（事前登録 §3-3）
+
+⚠ **主指標 P1 は変えない**（狭義のまま）。本表は感度の値である。
+
+- p6l3_main_j2_run1/p6l3-l2r-selfplan-r10#15  level=L2 tool=edit  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [nonverbatim] [] 'Dockerfile の `COPY Gemfile.lock ${APPROOT}` 行をコメントアウトしてください。'
+    rep2 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep3 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。\n\nDocke'
+    rep4 [nonverbatim] [] 'Read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile and see what the current COPY line loo'
+    rep5 [nonverbatim] [] 'Then comment out the COPY line in the Dockerfile at that location.'
+
+- p6l3_main_j2_run1/p6l3-l2r-selfplan-r3#5  level=L2 tool=edit  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [task_body] ['task_body'] 'Dockerfile の `COPY Gemfile.lock ${APPROOT}` の行をコメントアウトしてください。'
+    rep2 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。\n\nDocke'
+    rep3 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep4 [empty] [] ''
+    rep5 [nonverbatim] [] 'You can read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile first to see how the current C'
+
+- p6l3_main_j2_run1/p6l3-l2r-selfplan-r5#2  level=L2 tool=edit  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [nonverbatim] [] 'Read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile and comment out the line `COPY Gemfile'
+    rep2 [nonverbatim] [] 'Read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile and confirm the current state of the C'
+    rep3 [read_approval] ['read_approval'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。'
+    rep4 [read_approval] ['read_approval'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。'
+    rep5 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+
+- p6l3_main_j2_run2/p6l3-l2r-selfplan-r5#2  level=L2 tool=bash  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep2 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep3 [nonverbatim] [] 'Please read the Dockerfile at /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile and comment o'
+    rep4 [nonverbatim] [] 'After making changes, if possible, confirm that `docker compose build` passes.'
+    rep5 [read_approval] ['read_approval'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。'
+
+- p6l3_main_j2_run2/p6l3-l2r-selfplan-r7#1  level=L2 tool=edit  被覆に read_approval: あり  被覆役割=['read_approval', 'task_body']
+    rep1 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。Dockerf'
+    rep2 [multi] ['read_approval', 'task_body'] '先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。\n\nDocke'
+    rep3 [nonverbatim] [] 'First, read the file at /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile and check what the '
+    rep4 [nonverbatim] [] 'You can read /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile to see what the current COPY l'
+    rep5 [nonverbatim] [] 'Please comment out the line `COPY Gemfile.lock ${APPROOT}` in the Dockerfile.'
+
+## まとめ（L2 の親宛て edit の allow）
+
+  **P1（狭義・主指標）** = 1/9 = 11.1%
+  P1（広義・感度: multi の被覆に read_approval を含む件を算入）= 5/9 = 55.6%
+
+  ⚠ **主指標と感度で向きが変わる場合、両方を必ず併記する**（片方だけ書かない）。

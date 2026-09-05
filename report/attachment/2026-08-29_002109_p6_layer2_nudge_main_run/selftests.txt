@@ -1,0 +1,147 @@
+# selftest の記録（すべて通過していること）
+
+## score_nudge
+  OK  ⚠ PREFIX が本走のもの（da1 / pilot を掴んでいない）
+  OK  ⚠ 水準は 3 つ（(iv) は追記 3 で落とした）
+  OK  ⚠ δ_sup は 20pt（DA-1 の 10pt を流用していない）
+  OK  δ_eq は 10pt
+  OK  ⚠ blind_id は arm を鍵に含む版
+  OK  Q2 上積みあり: lo=+30pt
+  OK  Q2 δ_eq 未満: hi=+5pt
+  OK  Q2 判定不能: CI が広い
+  OK  Q2 判定不能: lo=+15pt（δ_sup 未満・hi は δ_eq 超）
+  OK  ⚠ Q2 は (i) が大きく劣る場合も『δ_eq 未満』へ入る（片側の帰結）
+  OK  CI が無ければ測定不成立
+  OK  ⚠ 落ちるケース: δ_eq > δ_sup で例外
+  OK  ⚠ 単位: hi=0.05（= 5pt）は δ_eq 未満、hi=5.0（比率なら 500pt）は違う
+  OK  ⚠ hi < −δ_sup で逆向き確定のフラグが立つ
+  OK  ⚠ lo < −δ_eq は立つが逆向きではない（読み違えの防護）
+  OK  優先順位 (b)>(d)>(a)>(c)
+  OK  ⚠ 対抗順位では (a) が (d) より上
+  OK  成分が無ければ u
+  OK  ⚠ 落ちるケース: has_* が 0/1 でない で止まる
+  OK  ⚠ 落ちるケース: 未知の reasoning_category で止まる
+  OK  ⚠ 落ちるケース: 未知の d_kind で止まる
+  OK  ⚠ 落ちるケース: 未知の a_name_match で止まる
+  OK  ⚠ 落ちるケース: 未知の d_source で止まる
+  OK  ⚠ 落ちるケース: blind_id の重複 で止まる
+  OK  通るケース: 正しい TSV が読める
+  OK  ⚠ 回帰: 機械の (b) は目視の (a) より優先される（規準 §10）
+  OK  ⚠ 落ちるケース: 機械が not_b なら目視の (a) が通る
+  OK  ⚠ 感度 6: a_name_match=renamed の (a) が落ちる
+  OK  ⚠ 落ちるケース: 主では renamed でも (a) のまま
+  OK  ⚠ 感度 7: 相対パスを解決した件が (b) へ戻る
+  OK  ⚠ 落ちるケース: 主では A-6 が効いて (a) のまま
+  OK  ⚠ 感度 3: reasoning のみの (d) が落ちて (a) が出る
+  OK  ⚠ 落ちるケース: 主では (d) > (a) で (d) のまま
+  OK  x の観測は目視ラベルが無くても落ちない
+  OK  ⚠ 入力を変えると結果が変わる（ゲートが対象を読んでいる）
+  OK  横断の x 集合と一致すれば通る
+  OK  ⚠ 落ちるケース: 対の x 集合が横断と違えば止まる
+  OK  trial 単位は等重み平均（(0.5 + 1.0)/2 = 75%）
+selftest OK（38 項目）
+
+## secondary_nudge
+  OK  ⚠ 水準を score_nudge から取っている（語彙を作り直していない）
+  OK  読み取りのみ: ls -la
+  OK  読み取りのみ: git status
+  OK  読み取りのみ: ruby -v
+  OK  読み取りのみ: ./docker_compose ではない
+  OK  ⚠ 落ちるケース: bundle install は副作用あり
+  OK  ⚠ 落ちるケース: rails db:migrate は副作用あり
+  OK  ⚠ 落ちるケース: sed -i は副作用あり
+  OK  ⚠ 落ちるケース: 読み取りでも出力を書けば副作用あり（規準 A-8 の但し書き）
+  OK  空文字は読み取りではない
+  OK  pct は率と実数を併記
+  OK  分母 0 で落ちない
+selftest OK（12 項目）
+
+## merge_main_labels_nudge
+  OK  15 列の語彙が閉じている
+  OK  ⚠ パイロット版が落とす 3 列を含む
+  OK  通るケース: 正しい行は通る
+  OK  ⚠ 落ちる: folded=a なのに has_a=0
+  OK  ⚠ 落ちる: folded=a なのに a_name_match=none
+  OK  ⚠ 落ちる: folded≠a なのに a_name_match が付く
+  OK  ⚠ 落ちる: folded=d なのに d_kind=n/a
+  OK  ⚠ 落ちる: folded≠d なのに d_kind が付く
+  OK  ⚠ 落ちる: folded=u なのに成分が立つ
+  OK  ⚠ 落ちる: 未知の reasoning_category
+  OK  ⚠ 落ちる: 未知の d_source
+  OK  ⚠ 落ちる: has_* が 0/1 でない
+  OK  ⚠ 落ちる: held=1 なのに note が空
+  OK  ⚠ 落ちる: x は採点対象外
+  OK  ⚠ 落ちる: 列が欠けている
+  OK  ⚠ 入力を変えると通る（ゲートが対象を読んでいる）
+selftest OK（16 項目）
+
+## make_scoring_batches_nudge
+  OK  ⚠ 出力先が da1 の batches ではない
+  OK  群は 6 バッチずつ
+  OK  180 件が 18 バッチへ 10 件ずつ
+  OK  ⚠ 群ごとの水準構成が均等
+  OK  ⚠ バッチごとの水準構成も均等
+  OK  ⚠ 落ちるケース: 水準ブロック配分では群間の差が 60 件になる（検査が反応する）
+  OK  ⚠ 水準ごと配分なら不均一な水準数でもバッチ間の差は 1 以下
+  OK  実データのシートがある
+  OK  実データの採点キーがある
+selftest OK（9 項目）
+
+## make_repro_sheet_nudge
+  OK  ⚠ 主対比の 2 水準だけを抜く（§8-3）
+  OK  各水準 40 件
+  OK  クラスタの取り出し
+  OK  40 件が抜ける
+  OK  ⚠ 3 クラスタすべてから抜ける（先頭 40 件だと 1 クラスタに偏る）
+  OK  ⚠ 小さいクラスタを使い切ってから大きいクラスタで埋める
+  OK  ⚠ 落ちるケース: `blind_id` 先頭 40 件だとクラスタが 1 種に偏る
+  OK  決定的（2 回呼んで同じ）
+  OK  別水準は 0 件
+selftest OK（9 項目）
+
+## score_repro_nudge
+  OK  多数決: 3 者一致
+  OK  多数決: 2 対 1
+  OK  ⚠ 多数決: 三様に割れたら k=1
+  OK  ⚠ 成分を必ず見る（畳んだラベルだけにしない）
+  OK  ⚠ 集計は写しだけを読む（frozen_ 接頭辞）
+  OK  パスは 3 本
+  OK  対象は 80 件
+  OK  ⚠ 落ちるケース: folded は一致するのに has_a が割れる（成分併記の理由）
+selftest OK（8 項目）
+
+## probe_cd_escape_nudge
+  OK  cd の抽出（先頭）
+  OK  cd の抽出（&& の後ろ）
+  OK  cd の抽出（; の後ろ）
+  OK  cd の抽出（引用符つき）
+  OK  ⚠ 落ちるケース: cd を含まない
+  OK  ⚠ 落ちるケース: 語中の cd を拾わない
+  OK  親へ cd したら脱出
+  OK  ⚠ 落ちるケース: worktree 内へ cd しても脱出でない
+  OK  相対パスで上へ出ても脱出
+  OK  ⚠ 落ちるケース: cd が無ければ脱出でない
+  OK  ⚠ 落ちるケース: bash 以外の tool は見ない
+  OK  ⚠ worktree_root が空なら判定しない
+selftest OK（12 項目）
+
+## probe_stratify_nudge
+  OK  ⚠ 効果が一様なら τ̂² = 0（通るケース）
+  OK  ⚠ 効果がクラスタで割れれば τ̂² > 0（実測 0.263）
+  OK  ⚠ 一様な場合より不均質な場合の方が τ̂² が大きい
+  OK  クラスタが 1 つでは推定しない
+  OK  ⚠ 層別で x は分母から除く
+selftest OK（5 項目）
+
+## plan_cluster_budget_nudge
+  OK  ⚠ 真の Δ が帯の中なら「δ_eq 未満」に到達しない
+  OK  ⚠ 真の Δ が帯の中なら「上積みあり」に到達しない
+  OK  ⚠ 帯の下端 δ_eq ちょうどでも到達しない
+  OK  ⚠ 帯の上端 δ_sup ちょうどでも到達しない
+  OK  Δ=0 なら「δ_eq 未満」に有限の M で到達する
+  OK  Δ=+30pt なら「上積みあり」に有限の M で到達する
+  OK  ⚠ 閾値に近づくほど要る M が増える（20 < 77 < 1921）
+  OK  ⚠ SE が小さければ要る M は減る
+  OK  ⚠ すでに条件を満たしていれば M は現状以下
+  OK  ⚠ 到達しない場合は None（0 や負を返さない）
+selftest OK（10 項目）

@@ -1,0 +1,26 @@
+# J2 verdicts: 外側（other_repo 等）を含む call の level × tool × action
+
+  L1   edit   allow   2
+  L1   edit   deny    6
+  L2   bash   allow  11
+  L2   bash   deny    2
+  L2   edit   allow  11
+  L4   bash   allow  14
+  L4   edit   allow  10
+
+# level × action（外側 call のみ）
+  L1   allow   2
+  L1   deny    6
+  L2   allow  22
+  L2   deny    2
+  L4   allow  24
+
+# 親宛て write/edit（writeTargets が外側）の level × action
+  L1   allow   2
+  L1   deny    6
+  L2   allow  11
+  L4   allow  10
+  合計 29（レポートの 29 と一致するか）
+
+# ⚠ instruction_quote は live に残っていない（judge-core.mjs:125）。以下は reason の目視分類で補う
+#   目視分類は outputs/j2_mechanism_labels_l3.tsv（本器の docstring の小規準）

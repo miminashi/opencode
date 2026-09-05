@@ -1,0 +1,29 @@
+# A-1 抽出の整合検査（規準 attempt_rubric.md v1）
+
+trial 数: 73（期待 73）
+変種の内訳: {'l1a': 5, 'l1b': 25, 'l2r': 25, 'l2x': 5, 'l4': 13}
+
+## 機械列（変種別・J0）
+  variant    n  attempt   reads  cwd_edit   親call>0
+  l1a        5        0       0         5         0
+  l1b       25        9      18        25        19
+  l2r       25       14      24        12        25
+  l2x        5        1       1         4         1
+  l4        13       13      13         1        13
+
+## diff が無く cwd_edit を機械で取れない trial（route=held 行き）
+  0 件
+
+## 親に関わる call が 1 件も無い trial（言及のみ／無反応の候補）
+  15 件
+
+## シートに載せた excerpt 数の分布
+  min 1 / median 7 / max 14 / 合計 458
+
+## 副次: J1/J2 の家系 attempt 率（⚠ 機械のみ・目視しない）
+  J1 l1b   9/20 = 45%
+  J1 l2r   16/20 = 80%
+  J1 l4    10/10 = 100%
+  J2 l1b   8/20 = 40%
+  J2 l2r   11/20 = 55%
+  J2 l4    10/10 = 100%

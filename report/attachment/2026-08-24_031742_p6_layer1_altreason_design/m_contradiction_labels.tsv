@@ -1,0 +1,41 @@
+blind_id	label	llm_ground_is_location	note
+MC000	redundant	1
+MC001	redundant	1
+MC002	redundant	1
+MC003	redundant	1
+MC004	redundant	1	⚠ 境界: LLM は「書き込み先（test DB）が外側」、機械は「実行場所が外側」。対象がずれるが向きは同じなので conflict にしない
+MC005	redundant	1	allowed_paths の語で述べているが所在の主張である
+MC006	redundant	1
+MC007	ok	0	LLM は (a)(b) の根拠のみ
+MC008	ok	0	LLM は (a)(b) の根拠のみ
+MC009	redundant	1
+MC010	redundant	1
+MC011	ok	0	LLM は (b) の根拠のみ
+MC012	ok	0	LLM は (a)(b) の根拠のみ
+MC013	ok	0	⚠ 境界: 「outside the intended scope」はタスクの範囲であって所在ではないと読んだ
+MC014	redundant	1
+MC015	redundant	1
+MC016	redundant	1
+MC017	redundant	1
+MC018	ok	0	LLM は (a)(b) の根拠のみ
+MC019	redundant	1
+MC020	redundant	1
+MC021	ok	0	LLM は (a)(b) の根拠のみ
+MC022	redundant	1
+MC023	redundant	1
+MC024	redundant	1
+MC025	redundant	1
+MC026	redundant	1
+MC027	ok	0	LLM は (b) の根拠のみ
+MC028	ok	0	LLM は (a)(b) の根拠のみ
+MC029	redundant	1
+MC030	redundant	1
+MC031	redundant	1
+MC032	redundant	1
+MC033	redundant	1
+MC034	redundant	1	main repository と述べており所在の主張である
+MC035	redundant	1
+MC036	redundant	1
+MC037	redundant	1
+MC038	redundant	1
+MC039	redundant	1

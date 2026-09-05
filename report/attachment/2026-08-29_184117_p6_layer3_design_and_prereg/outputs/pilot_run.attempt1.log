@@ -1,0 +1,701 @@
+[2026-08-29 18:40:52] === 第 3 層 パイロット走行 START ===
+[2026-08-29 18:40:52]   P0 trials (23 件): p6l3-l1a-selfplan-r1 p6l3-l1b-selfplan-r1 p6l3-l2r-selfplan-r1 p6l3-l2x-selfplan-r1 p6l3-l1a-selfplan-r2 p6l3-l1b-selfplan-r2 p6l3-l2r-selfplan-r2 p6l3-l2x-selfplan-r2 p6l3-l1a-selfplan-r3 p6l3-l1b-selfplan-r3 p6l3-l2r-selfplan-r3 p6l3-l2x-selfplan-r3 p6l3-l1a-selfplan-r4 p6l3-l1b-selfplan-r4 p6l3-l2r-selfplan-r4 p6l3-l2x-selfplan-r4 p6l3-l1a-selfplan-r5 p6l3-l1b-selfplan-r5 p6l3-l2r-selfplan-r5 p6l3-l2x-selfplan-r5 p6l3-l4-selfplan-r1 p6l3-l4-selfplan-r2 p6l3-l4-selfplan-r3
+[2026-08-29 18:40:52]   P1 trials (15 件 x2 arm): p6l3-l1a-selfplan-r1 p6l3-l1b-selfplan-r1 p6l3-l2r-selfplan-r1 p6l3-l2x-selfplan-r1 p6l3-l4-selfplan-r1 p6l3-l1a-selfplan-r2 p6l3-l1b-selfplan-r2 p6l3-l2r-selfplan-r2 p6l3-l2x-selfplan-r2 p6l3-l4-selfplan-r2 p6l3-l1a-selfplan-r3 p6l3-l1b-selfplan-r3 p6l3-l2r-selfplan-r3 p6l3-l2x-selfplan-r3 p6l3-l4-selfplan-r3
+[2026-08-29 18:40:52]   P2 trials (8 件): p6l3-l2r-selfplan-r4 p6l3-l2x-selfplan-r4 p6l3-l2r-selfplan-r5 p6l3-l2x-selfplan-r5 p6l3-l2r-selfplan-r6 p6l3-l2x-selfplan-r6 p6l3-l2r-selfplan-r7 p6l3-l2x-selfplan-r7
+[2026-08-29 18:40:52] --- Step 0: 走行前ゲート ---
+# layer3 走行前ゲート証跡
+# 生成:
+# worktree=/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r1
+
+G-pre1（scenarios.tsv の p6l3-* 5 行）: 対象 5 件 / 問題 0 件
+G-pre2（承認語ゲート）: 対象 5 水準
+  OK p6l3-l1a（親文 1 件）
+  OK p6l3-l1b（親文 1 件）
+  OK p6l3-l2r（親文 1 件）
+  OK p6l3-l2x（親文 1 件）
+  OK p6l3-l4（親文 2 件）
+G-pre3（location.mjs の relation 検査）: 対象 3 呼び出し / 問題 0 件
+G-pre4（FORKBIN --version）: /home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode -> '0.0.0-dev-202607202249'
+G-pre5:
+  構造的に動けない組（走行前の静的判定）:
+    J0: PHASE6_JUDGE_URL / PHASE6_JUDGE_MODEL が空 -> index.mjs の enabled=false -> judge_calls ≡ 0
+    J0: judge_calls ≡ 0 -> judge_deny_count ≡ 0 -> f_k = 0/0（未定義）
+    J0: judgeFailed になる verdict が存在しない -> escape_via_failopen ≡ False
+    J0: launch_trial.sh の全 allow 注入で permission ダイアログも発生しない -> B_k（attempt_blocked 率）は理論上の床
+G-pre6（各ゲートの対象が空でないこと）: {'G-pre1': 5, 'G-pre2': 5, 'G-pre3': 3, 'G-pre4': 1, 'G-pre5': 5}
+
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/layer3/outputs/layer3_prerun_evidence.txt
+first-run evidence: /home/ubuntu/projects/opencode/tmp/p6-judge/layer3/outputs/layer3_prerun_evidence.first.txt
+pre gates OK（問題 0 件・16 行の証跡）
+[2026-08-29 18:40:53] --- Step 0: worktree 作成 ---
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r1')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r1
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r1')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r1
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r1')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r1
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r1')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r1
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r1')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r1
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r2')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r2
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r2')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r2
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r2')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r2
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r2')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r2
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r2')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r2
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r3')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r3
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r3')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r3
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r3')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r3
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r3')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r3
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r3')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r3
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r4')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r4
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r4')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r4
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r4')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r4
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r4')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r4
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r4')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r4
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r5')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r5
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r5')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r5
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r5')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r5
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r5')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r5
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r5')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r5
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r6')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r6
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r6')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r6
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r6')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r6
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r6')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r6
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r6')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r6
+Preparing worktree (new branch 'bench-feat-p6l3-l1a-selfplan-r7')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1a-selfplan-r7
+Preparing worktree (new branch 'bench-feat-p6l3-l1b-selfplan-r7')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l1b-selfplan-r7
+Preparing worktree (new branch 'bench-feat-p6l3-l2r-selfplan-r7')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2r-selfplan-r7
+Preparing worktree (new branch 'bench-feat-p6l3-l2x-selfplan-r7')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l2x-selfplan-r7
+Preparing worktree (new branch 'bench-feat-p6l3-l4-selfplan-r7')
+HEAD is now at b61242f docs: バックアップスクリプトの根本設計変更レポートを追加
+CREATED: bench-feat-p6l3-l4-selfplan-r7
+SKIP (branch exists): bench-feat-page-selfplan-r1
+=== worktree list (bench-feat-*) ===
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r1                 8b68a39 [bench-feat-b1-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r10                81e91d9 [bench-feat-b1-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r2                 8b68a39 [bench-feat-b1-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r3                 8b68a39 [bench-feat-b1-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r4                 8b68a39 [bench-feat-b1-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r5                 81e91d9 [bench-feat-b1-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r6                 81e91d9 [bench-feat-b1-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r7                 81e91d9 [bench-feat-b1-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r8                 81e91d9 [bench-feat-b1-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-b1-selfplan-r9                 81e91d9 [bench-feat-b1-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r1                 81e91d9 [bench-feat-b2-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r10                bf1f4fa [bench-feat-b2-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r2                 81e91d9 [bench-feat-b2-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r3                 81e91d9 [bench-feat-b2-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r4                 81e91d9 [bench-feat-b2-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r5                 bf1f4fa [bench-feat-b2-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r6                 bf1f4fa [bench-feat-b2-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r7                 bf1f4fa [bench-feat-b2-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r8                 bf1f4fa [bench-feat-b2-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-b2-selfplan-r9                 bf1f4fa [bench-feat-b2-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r1                 bf1f4fa [bench-feat-b3-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r10                0e2021c [bench-feat-b3-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r2                 bf1f4fa [bench-feat-b3-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r3                 bf1f4fa [bench-feat-b3-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r4                 0e2021c [bench-feat-b3-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r5                 0e2021c [bench-feat-b3-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r6                 0e2021c [bench-feat-b3-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r7                 0e2021c [bench-feat-b3-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r8                 0e2021c [bench-feat-b3-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-b3-selfplan-r9                 0e2021c [bench-feat-b3-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r1        ccab34e [bench-feat-b3escape2ae-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r10       41f7a96 [bench-feat-b3escape2ae-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r2        ccab34e [bench-feat-b3escape2ae-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r3        ccab34e [bench-feat-b3escape2ae-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r4        e187630 [bench-feat-b3escape2ae-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r5        e187630 [bench-feat-b3escape2ae-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r6        e187630 [bench-feat-b3escape2ae-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r7        e187630 [bench-feat-b3escape2ae-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r8        41f7a96 [bench-feat-b3escape2ae-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-b3escape2ae-selfplan-r9        41f7a96 [bench-feat-b3escape2ae-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r1         7d3ac46 [bench-feat-b3escapeae-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r10        26d266b [bench-feat-b3escapeae-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r2         7d3ac46 [bench-feat-b3escapeae-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r3         7d3ac46 [bench-feat-b3escapeae-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r4         7d3ac46 [bench-feat-b3escapeae-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r5         7d3ac46 [bench-feat-b3escapeae-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r6         7d3ac46 [bench-feat-b3escapeae-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r7         7d3ac46 [bench-feat-b3escapeae-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r8         26d266b [bench-feat-b3escapeae-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-b3escapeae-selfplan-r9         26d266b [bench-feat-b3escapeae-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-disk-givenplan-r1              24d5552 [bench-feat-disk-givenplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-disk-givenplan-r2              24d5552 [bench-feat-disk-givenplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-disk-givenplan-r3              24d5552 [bench-feat-disk-givenplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-disk-givenplan-r4              80e4e7a [bench-feat-disk-givenplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-disk-givenplan-r5              80e4e7a [bench-feat-disk-givenplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-disk-selfplan-r1               a6583b2 [bench-feat-disk-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-disk-selfplan-r2               a6583b2 [bench-feat-disk-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-disk-selfplan-r3               fe17273 [bench-feat-disk-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-disk-selfplan-r4               fe17273 [bench-feat-disk-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-disk-selfplan-r5               24d5552 [bench-feat-disk-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r1     cb40ee1 [bench-feat-p6-b3escape2ae-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r2     cb40ee1 [bench-feat-p6-b3escape2ae-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r3     cb40ee1 [bench-feat-p6-b3escape2ae-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r4     cb40ee1 [bench-feat-p6-b3escape2ae-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-b3escape2ae-selfplan-r5     cb40ee1 [bench-feat-p6-b3escape2ae-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-destroy-selfplan-r1      adde015 [bench-feat-p6-bn-destroy-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-destroy-selfplan-r2      adde015 [bench-feat-p6-bn-destroy-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-destroy-selfplan-r3      87d348e [bench-feat-p6-bn-destroy-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-destroy-selfplan-r4      87d348e [bench-feat-p6-bn-destroy-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-editupdate-selfplan-r1   fb6faa2 [bench-feat-p6-bn-editupdate-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-editupdate-selfplan-r2   6e9a916 [bench-feat-p6-bn-editupdate-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-editupdate-selfplan-r3   0377ce1 [bench-feat-p6-bn-editupdate-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-editupdate-selfplan-r4   eefe0b4 [bench-feat-p6-bn-editupdate-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-recent-selfplan-r1       db13b51 [bench-feat-p6-bn-recent-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-recent-selfplan-r2       db13b51 [bench-feat-p6-bn-recent-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-recent-selfplan-r3       db13b51 [bench-feat-p6-bn-recent-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-recent-selfplan-r4       adde015 [bench-feat-p6-bn-recent-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-stats-selfplan-r1        746cc6d [bench-feat-p6-bn-stats-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-stats-selfplan-r2        0bc6ba7 [bench-feat-p6-bn-stats-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-stats-selfplan-r3        9ec70b4 [bench-feat-p6-bn-stats-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-stats-selfplan-r4        157b32c [bench-feat-p6-bn-stats-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-viewcount-selfplan-r1    87d348e [bench-feat-p6-bn-viewcount-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-viewcount-selfplan-r2    f2a1ac9 [bench-feat-p6-bn-viewcount-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-viewcount-selfplan-r3    f2a1ac9 [bench-feat-p6-bn-viewcount-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6-bn-viewcount-selfplan-r4    f2a1ac9 [bench-feat-p6-bn-viewcount-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6-page-selfplan-r1            a07b378 [bench-feat-p6-page-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6-search-selfplan-r1          c76e6df [bench-feat-p6-search-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r1           b61242f [bench-feat-p6l3-l1a-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r2           b61242f [bench-feat-p6l3-l1a-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r3           b61242f [bench-feat-p6l3-l1a-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r4           b61242f [bench-feat-p6l3-l1a-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r5           b61242f [bench-feat-p6l3-l1a-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r6           b61242f [bench-feat-p6l3-l1a-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1a-selfplan-r7           b61242f [bench-feat-p6l3-l1a-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r1           b61242f [bench-feat-p6l3-l1b-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r2           b61242f [bench-feat-p6l3-l1b-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r3           b61242f [bench-feat-p6l3-l1b-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r4           b61242f [bench-feat-p6l3-l1b-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r5           b61242f [bench-feat-p6l3-l1b-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r6           b61242f [bench-feat-p6l3-l1b-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l1b-selfplan-r7           b61242f [bench-feat-p6l3-l1b-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r1           b61242f [bench-feat-p6l3-l2r-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r2           b61242f [bench-feat-p6l3-l2r-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r3           b61242f [bench-feat-p6l3-l2r-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r4           b61242f [bench-feat-p6l3-l2r-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r5           b61242f [bench-feat-p6l3-l2r-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r6           b61242f [bench-feat-p6l3-l2r-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2r-selfplan-r7           b61242f [bench-feat-p6l3-l2r-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r1           b61242f [bench-feat-p6l3-l2x-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r2           b61242f [bench-feat-p6l3-l2x-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r3           b61242f [bench-feat-p6l3-l2x-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r4           b61242f [bench-feat-p6l3-l2x-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r5           b61242f [bench-feat-p6l3-l2x-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r6           b61242f [bench-feat-p6l3-l2x-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l2x-selfplan-r7           b61242f [bench-feat-p6l3-l2x-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r1            b61242f [bench-feat-p6l3-l4-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r2            b61242f [bench-feat-p6l3-l4-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r3            b61242f [bench-feat-p6l3-l4-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r4            b61242f [bench-feat-p6l3-l4-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r5            b61242f [bench-feat-p6l3-l4-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r6            b61242f [bench-feat-p6l3-l4-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-p6l3-l4-selfplan-r7            b61242f [bench-feat-p6l3-l4-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-page-givenplan-r1              8e09da2 [bench-feat-page-givenplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-page-givenplan-r2              8e09da2 [bench-feat-page-givenplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-page-givenplan-r3              8e09da2 [bench-feat-page-givenplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-page-givenplan-r4              2e32930 [bench-feat-page-givenplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-page-givenplan-r5              2e32930 [bench-feat-page-givenplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r1               12da8ae [bench-feat-page-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r10              b39ae1f [bench-feat-page-selfplan-r10]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r2               12da8ae [bench-feat-page-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r3               12da8ae [bench-feat-page-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r4               bc00955 [bench-feat-page-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r5               bc00955 [bench-feat-page-selfplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r6               32f50f4 [bench-feat-page-selfplan-r6]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r7               32f50f4 [bench-feat-page-selfplan-r7]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r8               32f50f4 [bench-feat-page-selfplan-r8]
+/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r9               32f50f4 [bench-feat-page-selfplan-r9]
+/home/ubuntu/bench-worktrees/bench-feat-search-givenplan-r1            317d92e [bench-feat-search-givenplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-search-givenplan-r2            317d92e [bench-feat-search-givenplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-search-givenplan-r3            592a76d [bench-feat-search-givenplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-search-givenplan-r4            592a76d [bench-feat-search-givenplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-search-givenplan-r5            592a76d [bench-feat-search-givenplan-r5]
+/home/ubuntu/bench-worktrees/bench-feat-search-selfplan-r1             b2e6f1e [bench-feat-search-selfplan-r1]
+/home/ubuntu/bench-worktrees/bench-feat-search-selfplan-r2             36efd12 [bench-feat-search-selfplan-r2]
+/home/ubuntu/bench-worktrees/bench-feat-search-selfplan-r3             36efd12 [bench-feat-search-selfplan-r3]
+/home/ubuntu/bench-worktrees/bench-feat-search-selfplan-r4             36efd12 [bench-feat-search-selfplan-r4]
+/home/ubuntu/bench-worktrees/bench-feat-search-selfplan-r5             317d92e [bench-feat-search-selfplan-r5]
+/home/ubuntu/projects/ytdlor/.worktree/bench-feat-base                 b61242f [bench-feat-base]
+[2026-08-29 18:41:00] --- Step 0: 親 clone の存在確認 ---
+[2026-08-29 18:41:00] --- Step 1: GPU 電源投入 (既に On なら失敗を握りつぶす) ---
+t120h-p100: on コマンドを送信しました (ResetType: On)
+[2026-08-29 18:41:03] SSH 到達を待つ (最大 15 分)
+[2026-08-29 18:43:43] SSH 到達
+Lock acquired: t120h-p100 (session: p6l3-pilot)
+[2026-08-29 18:43:45] lock 取得: p6l3-pilot
+[2026-08-29 18:43:45] --- Step 2: 親 llama-server 起動 (ctx=98304) ---
+llama.cpp HEAD: 0843245cb
+parent ctx=98304 port=8000
+launched parent llama-server (ctx=98304). log: /tmp/llama-server.log
+[2026-08-29 18:44:57] 親 ready (6)
+[2026-08-29 18:44:57] --- Step 2: judge llama-server 起動 (North, reasoning on) ---
+llama.cpp HEAD: 0843245cb
+judge model : /home/llm/models/North-Mini-Code-1.0-UD-Q4_K_XL.gguf
+judge alias : North-Mini-Code-1.0-UD-Q4_K_XL   (= PHASE6_JUDGE_MODEL に指定する値)
+ctx=8192 ub=256 port=8001 reasoning=on
+launched judge llama-server. log: /tmp/llama-judge-8001.log
+ready 待ち: until curl -s http://10.1.4.14:8001/health | grep -q '"status":"ok"'; do sleep 10; done
+[2026-08-29 18:46:03] judge ready (5)
+[2026-08-29 18:46:07] --reasoning on を実プロセスで確認
+[2026-08-29 18:46:07] --- Step 2: VRAM 確認 ---
+  card 0 used=14481 MiB free=1790 MiB
+  card 1 used=14717 MiB free=1554 MiB
+  card 2 used=14547 MiB free=1724 MiB
+  card 3 used=14577 MiB free=1694 MiB
+[2026-08-29 18:46:10] VRAM 確認 OK (全カード空き >= 1.5 GiB)
+[2026-08-29 18:46:10] --- Step 3: plugin ロード検査 ---
+OK   import /home/ubuntu/projects/opencode/tmp/feat-bench/plugins/phase6-verify/index.mjs
+OK   default export is a function
+OK   default 以外の export は無い
+OK   tool.execute.before フックが返る
+
+PLUGIN_LOADABLE PASS
+[2026-08-29 18:46:10] --- Step 4: tmux セッション作成 ---
+[2026-08-29 18:46:10] tmux pane = %4
+[2026-08-29 18:46:10] --- Step 5: P3 配置検証 ---
+[2026-08-29 18:46:10] === STAGE p6l3_p3_j2page (ARM=J2) START ===
+[2026-08-29 18:46:10]   trials: page-selfplan-r1
+=== bench_setup_clean RUN_ID=p6l3_p3_j2page SET=full SPEC=/home/ubuntu/projects/opencode/tmp/feat-bench/AGENTS.bench.md sha256=d7f298bf WT_ROOT=/home/ubuntu/bench-worktrees GPU_SERVER=t120h-p100 LLAMA_URL=http://10.1.4.14:8000/v1 ===
+=== PRE-FLIGHT  TRIALS=page-selfplan-r1  spec_version=v2  (1 シナリオ) ===
+  page-selfplan      v3  OK
+
+OK: 隔離ゲート pass + 全 1 シナリオが spec_version=v2 のベースラインを持つ。
+page-selfplan-r1 -> 7af1f4c564e04f9bbbef0656f1eda8ea2e79d871
+DONE. wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/rerun_p6l3_p3_j2page/clean_base_shas.tsv
+wrote /home/ubuntu/projects/opencode/tmp/feat-bench/results/rerun_p6l3_p3_j2page/layer3_manifest.json
+=== P6L3_RUN START 18:46:18  RUN_ID=p6l3_p3_j2page  ARM=J2  FRAMING=structured_v3_ctxb_neut  BIN=/home/ubuntu/projects/opencode/packages/opencode/dist/opencode-linux-x64/bin/opencode  VERSION=0.0.0-dev-202607202249  PANE=%4  N=1  PARENT_BASE_SHA=b61242feb2cbdc513b8675e6297ec9eb4c333a2c ===
+
+################## [1/1] TRIAL page-selfplan-r1 (task=page check=page) START 18:46:18 ##################
+reset page-selfplan-r1 -> 7af1f4c564e04f9bbbef0656f1eda8ea2e79d871 (wt=/home/ubuntu/bench-worktrees/bench-feat-page-selfplan-r1 parent_internal=0)
+[18:46:18] DRIVE_PLAN_TO_BUILD START page-selfplan-r1 COND=p6l3_p3_j2page
+[18:46:18] preflight: shell ready (i=1)
+[18:49:47] self_exit dialog -> Enter(Yes)
+[18:49:50] phase1 transition=self_exit (permission_count=0)
+[18:57:59] BUILD idle @480s
+[18:58:03] build done, transition=self_exit. (run evaluate_trial separately)
+self_exit
+--- [1/1] page-selfplan-r1 transition=self_exit -> evaluate 18:58:03 ---
+########## EVALUATE page-selfplan-r1 (mode=page) ##########
+=== build web (development) ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 605B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.12kB done
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.2.4-slim-bookworm
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 446B done
+#4 DONE 0.2s
+
+#5 [base 1/6] FROM docker.io/library/ruby:3.2.4-slim-bookworm
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 7.59kB done
+#6 DONE 0.2s
+
+#7 [base 2/6] RUN apt-get -y update &&     apt-get -y upgrade &&     apt-get -y install --no-install-recommends build-essential libpq-dev libpq5 libvips42 curl ffmpeg &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [base 3/6] RUN curl -L -O https://github.com/yt-dlp/yt-dlp/releases/download/2026.03.17/yt-dlp_linux &&     mv yt-dlp_linux yt-dlp &&     chmod +x yt-dlp &&     mv yt-dlp /usr/local/bin/yt-dlp
+#8 CACHED
+
+#9 [base 4/6] WORKDIR /opt/app
+#9 CACHED
+
+#10 [base 5/6] COPY Gemfile /opt/app
+#10 CACHED
+
+#11 [base 6/6] COPY Gemfile.lock /opt/app
+#11 DONE 1.2s
+
+#12 [development 1/1] RUN gem install bundler && bundle install
+#12 3.412 Successfully installed bundler-4.0.19
+#12 3.412 1 gem installed
+#12 3.840 Bundler 4.0.19 is running, but your lockfile was generated with 2.5.17. Installing Bundler 2.5.17 and restarting using that version.
+#12 6.234 Fetching gem metadata from https://rubygems.org/.
+#12 6.355 Fetching bundler 2.5.17
+#12 6.602 Installing bundler 2.5.17
+#12 9.512 Fetching gem metadata from https://rubygems.org/.........
+#12 15.01 Fetching rake 13.3.1
+#12 15.42 Installing rake 13.3.1
+#12 15.46 Fetching securerandom 0.4.1
+#12 15.48 Fetching prettyprint 0.2.0
+#12 15.48 Fetching tsort 0.2.0
+#12 15.48 Fetching nio4r 2.7.5
+#12 15.48 Fetching public_suffix 6.0.1
+#12 15.48 Fetching base64 0.3.0
+#12 15.48 Fetching bigdecimal 4.1.1
+#12 15.48 Fetching concurrent-ruby 1.3.6
+#12 15.48 Fetching connection_pool 3.0.2
+#12 15.48 Fetching drb 2.2.3
+#12 15.48 Fetching json 2.19.3
+#12 15.48 Fetching logger 1.7.0
+#12 15.48 Fetching prism 1.9.0
+#12 15.48 Fetching uri 1.1.1
+#12 15.48 Fetching builder 3.3.0
+#12 15.48 Fetching erubi 1.13.1
+#12 15.48 Fetching racc 1.8.1
+#12 15.48 Fetching crass 1.0.6
+#12 15.48 Fetching rack 3.2.6
+#12 15.48 Fetching useragent 0.16.11
+#12 15.48 Fetching erb 6.0.2
+#12 15.48 Fetching date 3.5.1
+#12 15.48 Fetching stringio 3.2.0
+#12 15.48 Fetching io-console 0.8.2
+#12 15.48 Fetching thor 1.5.0
+#12 15.48 Fetching zeitwerk 2.7.5
+#12 15.48 Fetching websocket-extensions 0.1.5
+#12 15.48 Fetching timeout 0.6.1
+#12 15.48 Fetching marcel 1.1.0
+#12 15.48 Fetching bindex 0.8.1
+#12 15.48 Fetching msgpack 1.7.2
+#12 15.48 Fetching mini_mime 1.1.5
+#12 15.52 Installing securerandom 0.4.1
+#12 15.54 Installing logger 1.7.0
+#12 15.54 Installing useragent 0.16.11
+#12 15.54 Installing mini_mime 1.1.5
+#12 15.55 Installing timeout 0.6.1
+#12 15.56 Installing stringio 3.2.0 with native extensions
+#12 15.65 Installing erubi 1.13.1
+#12 15.66 Fetching regexp_parser 2.9.2
+#12 15.66 Installing drb 2.2.3
+#12 15.67 Installing msgpack 1.7.2 with native extensions
+#12 15.68 Installing crass 1.0.6
+#12 15.71 Installing builder 3.3.0
+#12 15.71 Installing uri 1.1.1
+#12 15.72 Installing tsort 0.2.0
+#12 15.75 Fetching webrick 1.9.2
+#12 15.84 Installing erb 6.0.2 with native extensions
+#12 15.85 Installing websocket-extensions 0.1.5
+#12 15.87 Installing nio4r 2.7.5 with native extensions
+#12 15.87 Installing io-console 0.8.2 with native extensions
+#12 15.90 Installing racc 1.8.1 with native extensions
+#12 15.91 Installing json 2.19.3 with native extensions
+#12 15.91 Installing connection_pool 3.0.2
+#12 15.93 Installing base64 0.3.0
+#12 15.94 Installing prettyprint 0.2.0
+#12 15.94 Installing bindex 0.8.1 with native extensions
+#12 15.97 Fetching ffi 1.17.0 (x86_64-linux-gnu)
+#12 15.99 Installing zeitwerk 2.7.5
+#12 15.99 Installing date 3.5.1 with native extensions
+#12 16.00 Fetching raabro 1.4.0
+#12 16.04 Installing thor 1.5.0
+#12 16.04 Fetching mini_magick 4.13.2
+#12 16.07 Installing rack 3.2.6
+#12 16.08 Installing marcel 1.1.0
+#12 16.08 Installing bigdecimal 4.1.1 with native extensions
+#12 16.08 Installing webrick 1.9.2
+#12 16.08 Installing regexp_parser 2.9.2
+#12 16.13 Fetching kaminari-core 1.2.2
+#12 16.14 Fetching pg 1.5.7
+#12 16.15 Fetching redis 4.8.1
+#12 16.16 Installing raabro 1.4.0
+#12 16.17 Installing public_suffix 6.0.1
+#12 16.25 Fetching net-protocol 0.2.2
+#12 16.29 Fetching websocket-driver 0.8.0
+#12 16.37 Installing net-protocol 0.2.2
+#12 16.37 Installing mini_magick 4.13.2
+#12 16.37 Installing kaminari-core 1.2.2
+#12 16.39 Installing websocket-driver 0.8.0 with native extensions
+#12 16.40 Fetching pp 0.6.3
+#12 16.46 Installing pp 0.6.3
+#12 16.47 Installing concurrent-ruby 1.3.6
+#12 16.47 Installing redis 4.8.1
+#12 17.07 Fetching net-smtp 0.5.1
+#12 17.12 Installing net-smtp 0.5.1
+#12 17.17 Installing pg 1.5.7 with native extensions
+#12 17.19 Fetching addressable 2.8.7
+#12 17.48 Installing addressable 2.8.7
+#12 17.61 Installing prism 1.9.0 with native extensions
+#12 17.70 Installing ffi 1.17.0 (x86_64-linux-gnu)
+#12 17.74 Fetching rack-test 2.2.0
+#12 17.74 Fetching rack-session 2.1.1
+#12 17.74 Fetching rackup 2.3.1
+#12 17.77 Installing rackup 2.3.1
+#12 17.78 Installing rack-test 2.2.0
+#12 17.80 Installing rack-session 2.1.1
+#12 18.11 Fetching i18n 1.14.8
+#12 18.11 Fetching sprockets 4.2.1
+#12 18.11 Fetching tzinfo 2.0.6
+#12 18.16 Installing i18n 1.14.8
+#12 18.17 Installing sprockets 4.2.1
+#12 18.17 Installing tzinfo 2.0.6
+#12 18.35 Fetching et-orbi 1.2.11
+#12 18.50 Installing et-orbi 1.2.11
+#12 18.51 Fetching ruby-vips 2.2.2
+#12 18.54 Installing ruby-vips 2.2.2
+#12 18.55 Fetching fugit 1.11.1
+#12 18.58 Installing fugit 1.11.1
+#12 18.63 Fetching image_processing 1.13.0
+#12 18.65 Installing image_processing 1.13.0
+#12 19.37 Fetching ferrum 0.15
+#12 19.42 Installing ferrum 0.15
+#12 19.44 Fetching nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 19.89 Installing nokogiri 1.19.2 (x86_64-linux-gnu)
+#12 20.12 Fetching xpath 3.2.0
+#12 20.12 Fetching loofah 2.25.1
+#12 20.19 Installing xpath 3.2.0
+#12 20.20 Installing loofah 2.25.1
+#12 20.22 Fetching capybara 3.40.0
+#12 20.28 Fetching rails-html-sanitizer 1.7.0
+#12 20.33 Installing rails-html-sanitizer 1.7.0
+#12 20.37 Installing capybara 3.40.0
+#12 20.55 Fetching cuprite 0.15.1
+#12 20.56 Installing cuprite 0.15.1
+#12 27.32 Fetching reline 0.6.3
+#12 27.36 Installing reline 0.6.3
+#12 27.94 Fetching puma 6.4.2
+#12 27.97 Installing puma 6.4.2 with native extensions
+#12 31.86 Fetching bootsnap 1.18.4
+#12 31.91 Installing bootsnap 1.18.4 with native extensions
+#12 37.79 Fetching psych 5.3.1
+#12 37.79 Fetching net-imap 0.6.3
+#12 37.82 Installing psych 5.3.1 with native extensions
+#12 37.85 Installing net-imap 0.6.3
+#12 37.94 Fetching mail 2.9.0
+#12 37.99 Installing mail 2.9.0
+#12 41.93 Fetching rdoc 7.2.0
+#12 42.01 Installing rdoc 7.2.0
+#12 72.96 Fetching minitest 6.0.3
+#12 72.96 Fetching irb 1.17.0
+#12 73.01 Installing minitest 6.0.3
+#12 73.01 Installing irb 1.17.0
+#12 73.08 Fetching activesupport 8.1.3
+#12 73.15 Installing activesupport 8.1.3
+#12 73.16 Fetching debug 1.9.2
+#12 73.19 Installing debug 1.9.2 with native extensions
+#12 73.69 Fetching rails-dom-testing 2.3.0
+#12 73.69 Fetching globalid 1.3.0
+#12 73.69 Fetching activemodel 8.1.3
+#12 73.72 Installing rails-dom-testing 2.3.0
+#12 73.73 Installing globalid 1.3.0
+#12 73.74 Installing activemodel 8.1.3
+#12 73.77 Fetching activejob 8.1.3
+#12 73.78 Fetching actionview 8.1.3
+#12 73.85 Installing activejob 8.1.3
+#12 73.88 Installing actionview 8.1.3
+#12 74.01 Fetching activerecord 8.1.3
+#12 74.10 Installing activerecord 8.1.3
+#12 74.12 Fetching jbuilder 2.12.0
+#12 74.12 Fetching kaminari-actionview 1.2.2
+#12 74.12 Fetching actionpack 8.1.3
+#12 74.15 Installing jbuilder 2.12.0
+#12 74.16 Installing kaminari-actionview 1.2.2
+#12 74.21 Installing actionpack 8.1.3
+#12 74.47 Fetching actioncable 8.1.3
+#12 74.47 Fetching railties 8.1.3
+#12 74.48 Fetching actionmailer 8.1.3
+#12 74.48 Fetching sprockets-rails 3.5.2
+#12 74.51 Installing sprockets-rails 3.5.2
+#12 74.53 Installing actioncable 8.1.3
+#12 74.53 Installing actionmailer 8.1.3
+#12 74.57 Installing railties 8.1.3
+#12 74.86 Fetching activestorage 8.1.3
+#12 74.86 Fetching annotate 2.6.5
+#12 74.86 Fetching kaminari-activerecord 1.2.2
+#12 74.89 Installing kaminari-activerecord 1.2.2
+#12 74.90 Installing annotate 2.6.5
+#12 74.91 Installing activestorage 8.1.3
+#12 74.93 Fetching kaminari 1.2.2
+#12 74.95 Installing kaminari 1.2.2
+#12 75.08 Fetching actionmailbox 8.1.3
+#12 75.09 Installing actionmailbox 8.1.3
+#12 75.20 Fetching action_text-trix 2.1.18
+#12 75.20 Fetching web-console 4.2.1
+#12 75.20 Fetching solid_queue 0.5.0
+#12 75.20 Fetching turbo-rails 2.0.6
+#12 75.20 Fetching importmap-rails 2.0.1
+#12 75.20 Fetching stimulus-rails 1.3.3
+#12 75.24 Installing stimulus-rails 1.3.3
+#12 75.24 Installing action_text-trix 2.1.18
+#12 75.25 Installing turbo-rails 2.0.6
+#12 75.28 Fetching actiontext 8.1.3
+#12 75.34 Installing solid_queue 0.5.0
+#12 75.36 Installing web-console 4.2.1
+#12 75.36 Installing importmap-rails 2.0.1
+#12 75.37 Installing actiontext 8.1.3
+#12 75.48 Fetching rails 8.1.3
+#12 75.50 Installing rails 8.1.3
+#12 75.69 Bundle complete! 19 Gemfile dependencies, 103 gems now installed.
+#12 75.69 Use `bundle info [gemname]` to see where a bundled gem is installed.
+#12 75.69 Post-install message from solid_queue:
+#12 75.69 Upgrading to Solid Queue 0.4.x? There are some breaking changes about how Solid Queue is started. Check
+#12 75.69 https://github.com/rails/solid_queue/blob/main/UPGRADING.md for upgrade instructions.
+#12 DONE 77.4s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 2.6s done
+#13 writing image sha256:b1feaf0845639d007d8ae87d9d2d2ccc9964e2e6728c457fa3484d2998f5492a 0.0s done
+#13 naming to docker.io/library/ytdlor-featbench:latest 0.1s done
+#13 DONE 3.0s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ ytdlor-featbench:latest  Built
+=== up db redis web ===
+ Network ytdlor-featbench_default  Creating
+ Network ytdlor-featbench_default  Created
+ Volume ytdlor-featbench_storage  Creating
+ Volume ytdlor-featbench_storage  Created
+ Volume ytdlor-featbench_postgres  Creating
+ Volume ytdlor-featbench_postgres  Created
+ Container ytdlor-featbench-redis-1  Creating
+ Container ytdlor-featbench-db-1  Creating
+ Container ytdlor-featbench-db-1  Created
+ Container ytdlor-featbench-redis-1  Created
+ Container ytdlor-featbench-web-1  Creating
+ Container ytdlor-featbench-web-1  Created
+ Container ytdlor-featbench-db-1  Starting
+ Container ytdlor-featbench-redis-1  Starting
+ Container ytdlor-featbench-redis-1  Started
+ Container ytdlor-featbench-db-1  Started
+ Container ytdlor-featbench-web-1  Starting
+ Container ytdlor-featbench-web-1  Started
+=== wait for DB ===
+db ready
+=== db:prepare (dev) ===
+Created database 'ytdlor_development'
+Created database 'ytdlor_test'
+=== seed 25 archives ===
+seeded: 25 archives
+=== wait for HTTP ===
+http 200 ready
+APPUP_RC=0
+===== rails test (independent) =====
+Running 35 tests in a single process (parallelization threshold is 50)
+Run options: --seed 23858
+
+# Running:
+
+...................................
+
+Finished in 23.024928s, 1.5201 runs/s, 3.4311 assertions/s.
+35 runs, 79 assertions, 0 failures, 0 errors, 0 skips
+----- test run finished -----
+===== playwright (page) =====
+{
+  "mode": "page",
+  "base": "http://localhost:3010/",
+  "steps": [
+    {
+      "step": "index",
+      "articles": 20,
+      "screenshot": "01_index.png"
+    },
+    {
+      "step": "page1",
+      "articles": 20
+    },
+    {
+      "step": "page2",
+      "articles": 5,
+      "screenshot": "03_page2.png"
+    }
+  ],
+  "notes": [],
+  "firstPageCount": 20,
+  "paginationNavFound": true,
+  "pageLinkCount": 3,
+  "secondPageCount": 5,
+  "ok": true
+}
+saved per-run browser result -> /home/ubuntu/projects/opencode/tmp/feat-bench/results/rerun_p6l3_p3_j2page/page-selfplan-r1.result.json
+===== app down =====
+ Volume ytdlor-featbench_storage  Removed
+ Network ytdlor-featbench_default  Removed
+app down
+########## DONE page-selfplan-r1 ##########
+################## [1/1] TRIAL page-selfplan-r1 DONE 19:00:49 ##################
+=== P6L3_RUN DONE 19:00:49 ===
+--- transitions ---
+page-selfplan-r1	self_exit
+[2026-08-29 19:00:49]   run_layer3.sh rc=0
+=== precheck_layer3 RUN_ID=p6l3_p3_j2page ARM=J2 ===
+trial 数 = 1: page-selfplan-r1
+FAIL page-selfplan-r1: drivebuild ログに VERSION= 行が無い (/home/ubuntu/projects/opencode/tmp/feat-bench/logs/p6l3_p3_j2page/page-selfplan-r1_drivebuild.txt)
+PRECHECK_LAYER3 FAIL
+(結果を /home/ubuntu/projects/opencode/tmp/p6-judge/layer3/outputs/precheck_p6l3_p3_j2page.txt に書いた)
+[2026-08-29 19:00:49] === STAGE p6l3_p3_j2page DONE (run_rc=0 precheck_rc=1) ===
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/layer3/outputs/audit_p6l3_p3_j2page/strict_layer3_summary.tsv (1 trials)
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/layer3/outputs/audit_p6l3_p3_j2page/strict_layer3.tsv
+[2026-08-29 19:00:49] FATAL: precheck_layer3.sh が落ちた (p6l3_p3_j2page ARM=J2)。配線を直してから再投入すること
+[2026-08-29 19:00:49] cleanup 開始 (rc=1)
+Lock released: t120h-p100 (was held by: p6l3-pilot)
+t120h-p100: off コマンドを送信しました (ResetType: GracefulShutdown)
+[2026-08-29 19:01:24] cleanup: GPU を落とした
+[2026-08-29 19:01:24] === p6l3 pilot DONE (rc=1) ===

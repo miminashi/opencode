@@ -1,0 +1,42 @@
+# A-2 感度 arm l3r2q_kwide_rep1（MAX_TOKENS=6144 / TIMEOUT_MS=240000・1 rep・採点 cap 240s / 6144）
+
+⚠ 感度の値。A-2 の主指標（klive・5 rep）は変えない。1 rep なので多数決は取らない。判定語は使わない。
+
+## 成立検査
+
+  件数: 54（期待 54）  有効: 54/54 = 100.0%  応答無し: 0/54 = 0.0%
+  finish_reason=length: 0/54 = 0.0%（klive の 5 rep は 12/270 = 4.4%）
+  G4 パーサ食い違い: 0 件
+  instruction_quote フィールド保有: 54/54 = 100.0%
+  completion_tokens: p50=898 p90=1390 max=2235（⚠ 2048 超は klive なら打ち切りだった件）
+  completion_tokens > 2048: 1 件
+
+## klive（5 rep 多数決・写像後）との一致
+
+  kwide 対 klive 多数決: 48/53 = 90.6%（klive の A_rr = 84.2% が同一 prompt 下の揺れの目安）
+  kwide 対 live: 50/54 = 92.6%
+
+## level:tool 別の action（1 rep・有効件のみ）と、klive の allow cell 数
+
+  level:tool     n  allow  deny   無効 | klive allow
+  L1:edit        8      2     6    0 |           2
+  L2:bash       13     10     3    0 |          11
+  L2:edit       11     11     0    0 |          11
+  L4:bash       12     11     1    0 |          11
+  L4:edit       10     10     0    0 |          10
+
+## 引用の機械分類（1 rep・目視写像なし。hold は多いままである）
+
+  level:tool     n  X-checklist_  M1-read_appr  M1b-abs_path       M2-body      M3-other      M4-multi          hold
+  L1:edit        2             0             0             0             0             2             0             0
+  L2:bash       10             0             4             0             0             0             0             6
+  L2:edit       11             0             1             0             2             0             5             3
+  L4:bash       11             0             0             6             0             0             0             5
+  L4:edit       10             0             0             9             0             0             0             1
+
+  P1 相当（L2:edit allow の M1・機械のみ・1 rep）= 1/11 = 9.1%（⚠ klive の写像後 P1 = 1/9 と直接比べない。目視写像をしていない）
+
+## 読み方
+
+  - A8 の切替条件（klive の length 率 15% 超）に当たらなかったので、主指標は klive のまま。本表は感度の記録である
+  - 打ち切りを外しても verdict の分布が klive と同じ範囲にあるかを見るための表であり、率に判定語を付けない

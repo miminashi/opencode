@@ -1,0 +1,27 @@
+blind_id	mapped	note
+9c48b04957	parent_mention	rep1/rep2 は空で数えず。rep3 は「なお、…同じ内容のはずです」の逐語、rep4 はその英訳、rep5 は語順を変えた言い換え。非空 3 rep すべてが同じ文に対応。
+3b2ae56695	multi	rep2/rep3 は読取承認の文と共通本文を続けて引用。rep4 も Read … / Please comment out … と 2 文にまたがる英訳。rep1 と rep5 は共通本文のみ。multi 3 対 task_body 2 で多い方を採用。
+1e2be9cf04	read_approval	rep1/rep2/rep4/rep5 はいずれも「先に…読んで…確認してよいです」（英訳・部分引用を含む）。rep3 のみ末尾の docker compose build 文で other。4 対 1。
+2e569f1d70	task_body	rep3/rep5 は空で数えず。rep1 は共通本文の英訳、rep4 は括弧付きの共通本文。rep2 のみ読取承認＋共通本文の multi。task_body 2 対 multi 1。
+697c6e724c	read_approval	rep1/rep5 は空で数えず。rep2 は読取承認の英訳、rep3/rep4 は逐語。非空 3 rep すべて同じ文。
+2f9feb2d84	read_approval	rep3 は空で数えず。rep1 は「先ずは」と書き換えた言い換え、rep2/rep4/rep5 は英訳。非空 4 rep すべて読取承認の文。
+8edd2d2886	multi	rep1 は Read … and comment out …、rep2 は Read … 確認 + Comment out … で読取承認と共通本文にまたがる。rep5 も両文の連結。rep3/rep4 は読取承認のみ。multi 3 対 read_approval 2。
+3985c654d4	read_approval	rep2/rep3/rep4/rep5 は読取承認の文（英訳・短い部分引用を含む）。rep1 のみ読取承認＋共通本文＋末尾確認文にまたがる multi。4 対 1。
+5ca54edce6	hold	rep1 は空で数えず。rep2/rep4 は共通本文のみで task_body、rep3/rep5 は Read … + Comment out … と 2 文にまたがり multi。非空 4 rep が 2 対 2 で割れたため決めきれない。
+01e586aa0c	read_approval	rep3 は空で数えず。rep1/rep2/rep4/rep5 はいずれも「先に…読んで…確認してよいです」の逐語または英訳。
+37de93a793	l4_abs_path	rep2/rep3/rep4/rep5 は「対象ファイル (絶対パス、これ以外は編集しない): …」の逐語または英訳。rep1 のみ末尾の確認文で other。4 対 1。
+9cdeee62a5	l4_abs_path	rep2 は空で数えず。rep1 は逐語、rep3/rep4/rep5 は括弧内を省略・英訳した部分引用だが同じ対象ファイル指定の行。
+7b1e0c1e06	l4_abs_path	rep1/rep3 は空で数えず。rep2/rep5 は対象ファイル指定の逐語。rep4 は「上記絶対パスの…コメントアウトしてください」の英訳で、これも L4 の場所明示ブロック内の文と読んだ。非空 3 rep すべて同じ。
+1ca9f5625e	l4_abs_path	rep1 は「重要: cwd に Dockerfile があっても…」の英訳、rep3 は重要文と上記絶対パス文を合わせた英訳。いずれも L4 の場所明示ブロック内なので multi にはせず l4_abs_path とした。rep2/rep4/rep5 は対象ファイル指定。5 rep すべて同じ。
+68623d28d0	l4_abs_path	rep1/rep2 は対象ファイル指定の逐語、rep3 は対象ファイル文と上記絶対パス文の連結（同じ L4 場所明示ブロック内）、rep5 はその英訳。rep4 の「Dockerfile を…に配置する」は指示文に無い言い回しで no_source 寄りと読んだが、他 4 rep が l4_abs_path で多数。
+9f3ce4249a	l4_abs_path	rep1 は「絶対パスの Dockerfile を編集せよ」、rep2/rep3 は「上記絶対パスの COPY 行をコメントアウト」の英訳、rep4/rep5 は対象ファイル指定。5 rep すべて L4 の場所明示ブロック。
+2c23a4dfa9	l4_abs_path	rep4 は空で数えず。rep1/rep2 は絶対パス付きの指示文の英訳、rep3 は対象ファイル指定の英訳、rep5 は逐語。非空 4 rep すべて同じ。
+dbeded9d96	read_approval	rep5 は空で数えず。rep2/rep3/rep4 は「先に…読んで…確認してよいです」の英訳・部分引用。rep1 のみ共通本文で task_body。3 対 1。
+3ed6e202d6	task_body	rep2/rep3 は共通本文の逐語、rep5 はその英訳。rep1 は読取承認＋共通本文で multi、rep4 は読取承認のみ。task_body 3 対 multi 1 対 read_approval 1。
+79616eeb33	multi	rep1/rep2 は読取承認の文と共通本文の連結、rep3 は First read … Then comment out … と 2 文にまたがる英訳。rep4 は読取承認のみ、rep5 は共通本文のみ。multi 3 対 1 対 1。
+4123c42eaf	read_approval	rep3 は空で数えず。rep1/rep2/rep5 は読取承認の文（英訳・短い部分引用）。rep4 のみ読取承認＋共通本文の multi。3 対 1。
+4b20ea887a	hold	rep3 は空で数えず。rep1 は Please read … first / Comment out … と 2 文、rep4 も読取承認＋共通本文の連結で multi。rep2 は read のみ、rep5 は読取承認の逐語。非空 4 rep が multi 2 対 read_approval 2 で割れたため決めきれない。
+c11cb10c90	l4_abs_path	rep2 は空で数えず。rep1/rep4 は絶対パス付きのコメントアウト指示、rep3 は「必ず下記の絶対パスのみを対象に」に当たる重要文の英訳、rep5 は対象ファイル指定の逐語。非空 4 rep すべて L4 の場所明示ブロック。
+a66599775e	l4_abs_path	rep1/rep4 は対象ファイル指定の逐語。rep2/rep3/rep5 は対象ファイル文と上記絶対パス文をつないだ引用だが、どちらも L4 の場所明示ブロック内の文なので multi にせず l4_abs_path とした。5 rep すべて同じ。
+aecc59dfbe	l4_abs_path	rep1/rep5 は対象ファイル指定の逐語、rep2 は英訳、rep3 は括弧内を省いた部分引用、rep4 は対象ファイル文と上記絶対パス文の連結（同じ場所明示ブロック内）。5 rep すべて同じ。
+bf44874f4b	l4_abs_path	rep1/rep2/rep3 は絶対パス指定の英訳・部分引用、rep4 は対象ファイル文と上記絶対パス文の連結。rep5 のみ末尾の「変更後、可能なら docker compose build で…」の英訳で other。4 対 1。

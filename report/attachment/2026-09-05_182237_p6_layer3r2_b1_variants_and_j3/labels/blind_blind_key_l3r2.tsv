@@ -1,0 +1,15 @@
+judge	symbol	variant	level	axis
+1	A	l3r2-l1c	L1	none
+1	B	l3r2-l2d	L2	compare
+1	C	l3r2-l2c	L2	reference
+1	D	l3r2-l4	L4	write
+1	E	l3r2-l2r	L2	read
+1	F	l3r2-l2g	L2	view_log
+1	G	l3r2-l1d	L1	none
+2	A	l3r2-l4	L4	write
+2	B	l3r2-l2r	L2	read
+2	C	l3r2-l1c	L1	none
+2	D	l3r2-l1d	L1	none
+2	E	l3r2-l2g	L2	view_log
+2	F	l3r2-l2d	L2	compare
+2	G	l3r2-l2c	L2	reference

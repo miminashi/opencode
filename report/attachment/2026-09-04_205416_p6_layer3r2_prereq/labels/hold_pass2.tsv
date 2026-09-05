@@ -1,0 +1,27 @@
+blind_id	mapped	note
+9c48b04957	parent_mention	rep3-5 が L1 の「なお、…同じ内容のはずです」の逐語・英訳・言い換え。rep1/rep2 は空で数えず
+3b2ae56695	multi	rep2/rep3/rep4 が読取承認の文と共通本文の連結。rep1 と rep5 は本文のみ。多数決で multi
+1e2be9cf04	read_approval	rep1/rep2/rep4/rep5 が読取承認の文（部分引用・英訳を含む）。rep3 のみ末尾の build 文
+2e569f1d70	task_body	非空 3 rep のうち rep1/rep4 が共通本文、rep2 が読取承認+本文の連結。多数決で task_body
+697c6e724c	read_approval	rep1/rep5 は空。rep2/rep3/rep4 はいずれも読取承認の文（rep2 は英訳）
+2f9feb2d84	read_approval	rep3 は空。他 4 rep はいずれも読取承認の文の言い換え・英訳（rep1 は「先ずは」に置換）
+8edd2d2886	multi	rep1/rep2/rep5 が読取承認+共通本文の連結、rep3/rep4 は読取承認のみ。多数決で multi
+3985c654d4	read_approval	rep2/rep3/rep4/rep5 が読取承認。rep1 のみ読取承認+本文+末尾の連結。多数決で read_approval
+5ca54edce6	hold	rep1 は空。非空 4 rep が task_body 2 件（rep2/rep4）と multi 2 件（rep3/rep5）に二分し決めきれず
+01e586aa0c	read_approval	rep3 は空。他 4 rep はいずれも読取承認の文（英訳・言い換え）
+37de93a793	l4_abs_path	rep2-rep5 が L4 の対象ファイル（絶対パス）指定。rep1 のみ末尾の build 文。多数決で l4_abs_path
+9cdeee62a5	l4_abs_path	rep2 は空。他 4 rep はいずれも「対象ファイル (絶対パス…)」の行（省略・英訳を含む）
+7b1e0c1e06	l4_abs_path	rep1/rep3 は空。rep2/rep5 は対象ファイル行、rep4 は「上記絶対パスの…」の英訳で同じ L4 の場所指定
+1ca9f5625e	l4_abs_path	rep1 は「重要」の文の英訳、rep3 は重要+上記絶対パスの英訳、rep2/rep4/rep5 は対象ファイル行。すべて L4 の場所指定の範囲
+68623d28d0	l4_abs_path	rep1/rep2 は対象ファイル行、rep3 は対象ファイル行+上記絶対パス文、rep5 は上記絶対パス文の英訳。rep4「Dockerfile を…に配置する」は歪んだ言い換えだが対象パス指定に対応と読んだ
+9f3ce4249a	l4_abs_path	5 rep とも L4 の絶対パス指定（rep1/rep2/rep3 は上記絶対パス文の英訳、rep4/rep5 は対象ファイル行）
+2c23a4dfa9	l4_abs_path	rep4 は空。他 4 rep はいずれも L4 の絶対パス指定（英訳を含む）
+dbeded9d96	read_approval	rep5 は空。rep2/rep3/rep4 が読取承認、rep1 のみ共通本文。多数決で read_approval
+3ed6e202d6	task_body	rep2/rep3/rep5 が共通本文、rep1 が読取承認+本文の連結、rep4 が読取承認。多数決で task_body
+79616eeb33	multi	rep1/rep2/rep3 が読取承認+共通本文の連結、rep4 は読取承認、rep5 は本文のみ。多数決で multi
+4123c42eaf	read_approval	rep3 は空。rep1/rep2/rep5 が読取承認、rep4 のみ読取承認+本文の連結。多数決で read_approval
+4b20ea887a	hold	rep3 は空。非空 4 rep が multi 2 件（rep1/rep4）と read_approval 2 件（rep2/rep5）に二分し決めきれず
+c11cb10c90	l4_abs_path	rep2 は空。rep3 は「重要」の文（cwd ではなく絶対パスのみを対象に）、rep1/rep4/rep5 は絶対パス指定。すべて L4 の場所指定
+a66599775e	l4_abs_path	5 rep とも対象ファイル行。rep2/rep3/rep5 は「上記絶対パスの…」まで続くが同じ L4 の場所指定内と読み multi にしなかった
+aecc59dfbe	l4_abs_path	5 rep とも L4 の絶対パス指定。rep4 は対象ファイル行+上記絶対パス文だが同一区分内と読んだ
+bf44874f4b	l4_abs_path	rep1-rep4 が L4 の絶対パス指定（rep4 は対象ファイル行+上記絶対パス文）、rep5 のみ末尾の build 文。多数決で l4_abs_path

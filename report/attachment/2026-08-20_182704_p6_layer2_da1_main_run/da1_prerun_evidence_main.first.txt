@@ -1,0 +1,77 @@
+========================================================================================
+DA-1 **本走**（段 S2）走行前証跡
+========================================================================================
+時刻: 2026-08-19 20:29:46 (JST)
+⚠ パイロットの証跡（da1_prerun_evidence.txt）は上書きしていない。
+
+■ 本走の既存出力: 0 個（⚠ 0 個が走行前の証拠）
+  ✓ 本走の出力は 1 つも無い
+
+■ パイロットの出力: 6 個（残っているのが正しい）
+    - denyact_da1_pilot_iv  raw 20 行
+    - denyact_da1_pilot_iv2  raw 20 行
+    - denyact_da1_pilot_iv3  raw 20 行
+    - denyact_da1_pilot_sham  raw 20 行
+    - denyact_da1_pilot_smoke  raw 3 行
+    - denyact_da1_pilot_smoke2  raw 4 行
+
+■ 凍結物の sha256
+    9ab8457015bca969bdfdabeb3756ef92995c07025911f85262f2a2815e5435f9  da1_materials_v1.jsonl
+    889c2d2d63521cbc30aee5da336a70c3cf80f1ed763878f57e10e1253e1ce583  da1_materials_instructed_v1.jsonl
+    bbfe54669118d9209cc7e2e3bd9b21abf335ce78f38cf1dced4c7ebed5d7e23d  da1_reasons_v1.jsonl
+    1da8023d6966aa0d4a7317ee171edc3433a9515de7d7cb0de7ddb05363f4c3bf  da1_reason_templates_v1.json
+    aa71c1648cd54532b659a3d33752b38f86b93dd1d4194fbc8c0d824192a22b9e  da1_tools_v1.json
+    1a6551a64f2953a949340c185dab167a5923d7b346ae1bf0aba2ef7b2c694204  prereg_da1.md
+    2748cdc6481965e5c9f8767a37f9c972c9f4d53a5ecab297dc7a3559dd552798  layer2_action_rubric.md
+    095ba706f57495d993b1e623a1bcfa4594f323ab7bb53cf1855e0bdd50064204  layer2_action_labels.json
+
+■ 装置の sha256
+    cf3af0b7f747d6724cedac0329fbfd168695da16aa0989dc78d3264ad9b72850  da1_paths.py
+    e3c66dcd286ac932284dbcac6f6be27509875388cd71d183079f138f7611584a  da1_bash.py
+    0f206ba21f3dd0284e0bb672a14e732f4300fc99aee45aa97029aef221755bef  freeze_materials_da1.py
+    d56be912c9f7d08f3d7accae9c4348359e3f256d2cc28c00bbe3cad3359c8f80  capture_tools_da1.py
+    f9d6c15d9f3a960640237b6d2a0d8336f5644c7ab769f0988d64c5498acd9446  da1_history.py
+    8c3552e651f9a90c927eafed8717efffad775d3d97fc2fefafa00be68cad8aef  check_materials_da1.py
+    f18a5b08921209fb8b4eabeacb4bd80e882a88be21d4bd088d38fb4d3b06bc85  make_deny_reasons_da1.py
+    2c625fc2458e7dfa75dba09d7de68d7a5cb6d305d2fbcfe9631f33b76cdcf8c3  classify_action_da1.py
+    b4132a756883ec027d74f22609bca0572bce54f9d1f95639dc3e23f444d59db2  denyact_replay_bench.py
+    53e0ca183215df1c195844a545b28152c4f3ec19b9ffdf832a6611ea37c18e78  da1_verdict.py
+    d920cc25c3baa9ada5d0b02f8fdc7ea9fb8c6aaa682c9fdb8b21423285710acd  detectability_da1.py
+    62caee55f4205de60489bd316229784f6fb4b07d03a06c86ccfec39f27a8af92  apply_rubric_da1.py
+    5ebc8b2370535c1fed280b4e39d70ea8c6a86c3433b02221b77cb11ccf1b0dda  score_main_da1.py
+    a500f9c7b4df4b3ae5d070ba6c2a088a6bba2f98d320fefc2c1c8a5822158ff3  blind_sheet_main_da1.py
+    bd867150ef59b1cfe32ad460b50d6844c5be285ef384249348d6c9832a56fec8  detectability_da1.prev.py
+    0ca5f29ea5510fe7786ce3d16405c628a3870bd7163afb010066c20c1c97a646  regress_detectability_da1.py
+    a4405f59412eb532416319553302d5be22987edce36765e075478b5e6ea6a82c  verify_rubric_quotes.py
+    630c49b7d32097ff661c5b274a72e92fb4b5f81d286fb61074ea96bdb53882ff  check_da1_main_dirs.py
+    7c49c13bc5e404424647898294d31d52caffbfbc85056950a13531c0310ebc55  smoke_gate_da1.py
+    a35dbf9172ec282cb07e0c30fc7f5e3766d12497f22b3dda5676319df15e08b0  run_denyact_da1_main.sh
+    c4640dc6e7e5ac23d94a20d696a065e3073047676f9089a4cf8a585b382e6a8c  probe_bash_workdir_gap.py
+    2ce96eb2ea802cebf775122539b1c322d781916dac6f0cfbbc97df6d97615561  probe_u_semantics.py
+    42afde1a300e662b171cfa49d5f88ecf355bd1936d17bd618716222db6e37ce6  run_sensitivity_da1.sh
+    1ab1e094f34464efade8c4f9f931f42966c92f4a599958c479f623731a00e965  make_manual_features_pilot.py
+    9e23acbfeaf455f4f7c16d260e7b6929a1b5cd816e92182b15e5e6be9a54dff1  da1_manual_features_pilot.tsv
+    180989149be4c5f8e7dd81f04d7439935fc9723d93e435191bbdc94766fdace8  dump_pilot_cases.py
+    3f2f042b7b3796acc18f63b474230400c5aaf640de2926cd6c7fced38a01d19d  save_prerun_evidence_main_da1.py
+
+■ 装置の selftest
+    ✓ da1_paths.py                     rc=0  selftest OK（15 項目）
+    ✓ da1_bash.py                      rc=0  selftest OK（21 項目）
+    ✓ freeze_materials_da1.py          rc=0  selftest OK（14 項目）
+    ✓ capture_tools_da1.py             rc=0  selftest OK（8 項目）
+    ✓ da1_history.py                   rc=0  selftest OK（22 項目）
+    ✓ check_materials_da1.py           rc=0  selftest OK（5 項目）
+    ✓ make_deny_reasons_da1.py         rc=0  selftest OK（25 項目）
+    ✓ classify_action_da1.py           rc=0  selftest OK（41 項目）
+    ✓ denyact_replay_bench.py          rc=0  selftest OK（28 項目）
+    ✓ da1_verdict.py                   rc=0  selftest OK（25 項目）
+    ✓ detectability_da1.py             rc=0  selftest OK（21 項目）
+    ✓ apply_rubric_da1.py              rc=0  selftest OK（12 項目）
+    ✓ score_main_da1.py                rc=0  selftest OK（8 項目）
+    ✓ blind_sheet_main_da1.py          rc=0  selftest OK（10 項目）
+
+  合計 255 項目 / 失敗 0 本 
+
+■ selftest を持たない検査（別立てで走らせる）
+    ✓ regress_detectability_da1.py     rc=0  回帰 OK（3 ケースで stdout が完全一致）
+    ✓ verify_rubric_quotes.py          rc=0  逐語の出所 OK（14 件）

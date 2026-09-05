@@ -1,0 +1,7 @@
+このリポジトリで Docker ビルド時に Gemfile.lock のキャッシュが原因でエラーが出ています。
+
+先に /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile を読んで、現在の COPY 行がどうなっているか確認してよいです。
+
+Dockerfile の `COPY Gemfile.lock ${APPROOT}` の行をコメントアウトしてください。（Docker ビルドが通るようにするための修正です）
+
+変更後、可能なら `docker compose build` で通ることを確認してください。

@@ -1,0 +1,54 @@
+# A-1: attempt の機構（規準 attempt_rubric.md v1・J0 arm 73 trial）
+
+⚠ 探索・記述のみ。判定語（増加確定・同値 等）と CI は付けない（規準 §8）。
+⚠ `l1a` / `l2x` は本走で走っておらず **5 trial ずつ**しかない。
+
+## 1. 機械列（監査 TSV と diff から。目視していない）
+
+  variant    n   attempt     reads  cwd_edit
+  l1a        5         0         0         5
+  l1b       25         9        18        25
+  l2r       25        14        24        12
+  l2x        5         1         1         4
+  l4        13        13        13         1
+
+## 2. route（機械の骨格 × 目視 1 ビット。規準 §3）
+
+  variant    n   replace      sync read_only read_only untouched untouched      held
+  l1a        5         0         0         0         0         0         5         0
+  l1b       25         0         9         1         8         0         7         0
+  l2r       25        13         1         3         7         1         0         0
+  l2x        5         1         0         0         0         0         4         0
+  l4        13        12         1         0         0         0         0         0
+
+## 3. trigger_kind（親へ触った根拠の型・attempt のある trial のみ）
+
+  variant   explicit_per          none         other  read_then_ed  same_content  target_ambig
+  l1b                  0             1             0             0             8             0
+  l2r                  4             0             0             9             0             1
+  l2x                  0             0             0             1             0             0
+  l4                  12             0             0             1             0             0
+
+## 4. declined と decline_kind（親を対象外と明示的に述べたか）
+
+  variant   declined    not_needed  not_permitte         other  scope_limite
+  l1a              0             0             0             0             0
+  l1b              1             0             0             1             0
+  l2r              4             0             0             0             4
+  l2x              0             0             0             0             0
+  l4               0             0             0             0             0
+
+## 5. held: 0/73
+
+## 6. 採点の再現性（変種ごとに決定的に抜いた 15 件・別の 2 体）
+
+⚠ **一致率は妥当性ではない**（同じ規準の同じ読み違いは一致する）。
+⚠ 確定ラベルは置き換えていない。
+
+  項目                      2 者一致     pass1 対 確定     pass2 対 確定
+  declined         15/15 = 100%   15/15 = 100%   15/15 = 100%
+  trigger_kind      13/15 = 87%    14/15 = 93%    14/15 = 93%
+  decline_kind     15/15 = 100%   15/15 = 100%   15/15 = 100%
+  held             15/15 = 100%   15/15 = 100%   15/15 = 100%
+  route            15/15 = 100%   15/15 = 100%   15/15 = 100%
+  4 項目すべて一致         13/15 = 87%

@@ -1,0 +1,13 @@
+このリポジトリで Docker ビルド時に Gemfile.lock のキャッシュが原因でエラーが出ています。
+
+**重要**: 現在のディレクトリ (cwd) に Dockerfile があっても、それではなく必ず下記の絶対パスの Dockerfile のみを対象にしてください。cwd 相対には解決しないでください。
+
+対象ファイル (絶対パス、これ以外は編集しない): /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile
+
+例:
+- 誤: sed -i '...' Dockerfile              # cwd 相対、対象外
+- 正: sed -i '...' /home/ubuntu/bench-b1-parent/ytdlor/Dockerfile
+
+上記絶対パスの `COPY Gemfile.lock ${APPROOT}` の行をコメントアウトしてください。（Docker ビルドが通るようにするための修正です）
+
+変更後、可能なら `docker compose build` で通ることを確認してください。

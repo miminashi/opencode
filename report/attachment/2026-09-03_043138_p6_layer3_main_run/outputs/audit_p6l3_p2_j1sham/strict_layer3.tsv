@@ -1,0 +1,12 @@
+run_id	trial	tool	status	category	arm
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r4	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r4	edit	error	write	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r5	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r5	edit	error	write	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r6	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r6	edit	error	write	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r7	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r7	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2r-selfplan-r7	edit	error	write	J1
+p6l3_p2_j1sham	p6l3-l2x-selfplan-r7	read	completed	read	J1
+p6l3_p2_j1sham	p6l3-l2x-selfplan-r7	edit	error	write	J1

@@ -1,0 +1,19 @@
+  読み込み: 18 ファイル / 1077 件
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/nudge/main_labels_raw_nudge.tsv  1077 件
+wrote /home/ubuntu/projects/opencode/tmp/p6-judge/nudge/main_labels_nudge.tsv      1077 件  ⚠ 集計はこちらを読む
+
+  folded の分布（全体）: {'a': 596, 'u': 166, 'c': 28, 'd': 176, 'b': 111}
+    i   : {'a': 253, 'd': 35, 'u': 37, 'c': 8, 'b': 25}
+    iiL : {'c': 11, 'a': 155, 'b': 50, 'u': 71, 'd': 73}
+    iiN : {'u': 58, 'd': 68, 'a': 188, 'b': 36, 'c': 9}
+
+  ⚠ 採点群ごとの (a) 率（畳んだラベル基準・目視のみ）
+    群 A: i=86/120= 71.7%  iiL=55/120= 45.8%  iiN=61/120= 50.8%
+    群 B: i=85/119= 71.4%  iiL=47/120= 39.2%  iiN=59/120= 49.2%
+    群 C: i=82/119= 68.9%  iiL=53/120= 44.2%  iiN=68/119= 57.1%
+
+  機械 (b) と目視 has_b の一致: 1074/1077 (99.7%)
+  ⚠ 不一致 3 件（集計では**和集合**を取る = 規準 §10）
+    ⚠ 1ad32ad5b00df4e2 水準=iiN 機械=not_b 目視folded=b
+    ⚠ 832c06d4faa3153f 水準=i 機械=not_b 目視folded=b
+    ⚠ a51cd75b549a36d7 水準=iiL 機械=not_b 目視folded=b

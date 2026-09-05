@@ -1,0 +1,168 @@
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/altr_verdict.py --selftest ##########
+    （参考）+25pt の検出率: δ_sup=10pt → 0.80 / 20pt → 0.10   効果 0 の同値到達率 0.57
+    （決定性の指紋）ci05.lo = 0.5  delta = 0.5
+  OK  語彙は version 2
+  OK  畳んだラベルは R1/R1b/R2/R3/R4/R5 の 6 種
+  OK  ⚠ fold() が fixture の rule と全組で一致する
+  OK  到達しうる組をすべて覆う（網羅）
+  OK  同時に 2 つの分類にならない（排他）
+  OK  R5 の rule は自然文なので機械評価しない
+  OK  ⚠ 畳み方を壊すと検査が落ちる（反例の注入）
+  OK  alt_given=0 なのに alt_correct が入っていたら NG
+  OK  alt_given=1 なのに alt_correct が null なら NG
+  OK  正常な成分は通る
+  OK  held が 0/1 でなければ NG
+  OK  ceil5 は 5pt 刻みで切り上げる
+  OK  ⚠ sham が無ければ δ_sup は 10pt
+  OK  ⚠ sham が小さくても δ_sup は 10pt を下回らない
+  OK  |Δ_sham|=11.2pt なら δ_sup=15pt
+  OK  ⚠ sham が大きくても δ_sup は 30pt で頭打ち
+  OK  ⚠ 符号は絶対値で見る（負の sham も同じ δ_sup）
+  OK  4 値が排他（同時に 2 つ成立しない）
+  OK  4 値すべてに到達する
+  OK  δ_eq > δ_sup は例外（落ちるケース）
+  OK  ⚠ 境界 lo == δ_sup は増加確定にしない（等号を含めない）
+  OK  lo が δ_sup をわずかに超えれば増加確定
+  OK  負側に大きく外れたら逆向き確定
+  OK  幅が広ければ判定不能
+  OK  狭く 0 を挟めば同値
+  OK  ⚠ δ_sup=15pt では +25pt 級でも増加確定に届かないことがある（追記 1 (D) の型）
+  OK  P3: lo > 0 なら『増えた』
+  OK  P3: lo == 0 は『増えたとは言えない』
+  OK  P3: 0 を跨げば『増えたとは言えない』
+  OK  ⚠ P3 に pt マージンを当てると床からの増加を見落とす（穴の実証）
+  OK  pt() は 100 倍する
+  OK  pt(None) は None
+  OK  ⚠ 比率のまま pt 閾値に当てると全件が同値に化ける（穴の実証）
+  OK  正常系は成立検査を通る
+  OK  ⚠ allow と判定された件は分母に入るが分子には入らない
+  OK  target に集合を渡せる（感度 3: R1b の合算）
+  OK  target=allow は action を見る（P4）
+  OK  target=deny_action は action を見る（P5）
+  OK  G1 クラスタ集合が違えば不成立（落ちるケース）
+  OK  G2 クラスタ数が登録と違えば不成立
+  OK  G3a R5 率が高ければ不成立
+  OK  ⚠ G3b arm 間の R5 率の差は警告に出る（不成立にはしない）
+  OK  G4 応答が返らなかった件が半数超なら不成立
+  OK  ⚠ G5 両 arm とも R1 が 0 件なら不成立（分子 0 の同値化を塞ぐ）
+  OK  ⚠ 検査が無ければ分子 0 は『同値』に化ける（穴の実証）
+  OK  ⚠ compare は成立検査を判定より前に置く（順序の固定）
+  OK  G6 対照の deny 率が 100% なら不成立
+  OK  G6 対照の deny 率が 0% でも不成立
+  OK  G7 C0 と C0s が全件同一なら不成立（実効 temperature 0）
+  OK  ⚠ G7 sham を渡さないと『未検査』の警告が出る（黙って通さない）
+  OK  G8 観測されない分類（R1b）は警告に出る
+  OK  ⚠ R5 は call 単位で両 arm から落とす
+  OK  R5 の内訳: 応答なし
+  OK  R5 の内訳: JSON が読めない
+  OK  parse_ok なら R5 ではない
+  OK  ⚠ P4 は CI 下限が −m 以上でも『保持確認』と書かない
+  OK  ⚠ P4 は CI 下限が −m を下回ったら『劣化の疑い』
+  OK  ⚠ P4 は『劣化確定』と書かない
+  OK  ⚠ 大きい効果（+45pt）なら増加確定に到達する（通るケース）
+  OK  効果 0 で増加確定はほぼ出ない（偽陽性の水準）
+  OK  ⚠ 効果 0 なら同値に到達できる（DA-1 と違い同値を出せる設計）
+  OK  ⚠ δ_sup を上げると +25pt の検出率が落ちる（回帰）
+  OK  ⚠ 観測数が増えると CI が狭くなる
+  OK  同一入力で同一判定
+selftest OK（64 項目）
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/check_determinism_altr.py ##########
+========================================================================
+① altreason — 決定性の検査（別プロセス・別 PYTHONHASHSEED）
+========================================================================
+  PYTHONHASHSEED=0       ['（決定性の指紋）ci05.lo = 0.5  delta = 0.5']
+  PYTHONHASHSEED=1       ['（決定性の指紋）ci05.lo = 0.5  delta = 0.5']
+  PYTHONHASHSEED=random  ['（決定性の指紋）ci05.lo = 0.5  delta = 0.5']
+
+決定性の検査: 合格（3 プロセスで指紋が一致）
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/score_altr.py --selftest ##########
+  OK  PREFIX がこのラウンドのもの
+  OK  クラスタは (run, trial)
+  OK  ⚠ 感度 1: 対照の held は分子へ倒す
+  OK  ⚠ 感度 1: 介入の held は分子の外へ倒す
+  OK  ⚠ 感度 1 は Δ を縮める向きにしか働かない
+  OK  感度 6: call をクラスタにするとクラスタ数が件数になる
+  OK  ⚠ 感度 8: A1 の R5 は R4 として分母に残る
+  OK  ⚠ 感度 8: 対化のため対照側の同じ id も残る
+  OK  感度 2: kind を除ける
+selftest OK（9 項目）
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/score_repro_altr.py --selftest ##########
+  OK  一致率が計算できる
+  OK  ⚠ 1 件ずらすと一致率が下がる（反例の注入）
+  OK  band の境界 90%
+  OK  band の境界 80%
+  OK  ⚠ 凍結版だけを読む設定になっている
+  OK  None 同士は一致とみなす（alt_given=0 の alt_correct）
+  OK  None と 0 は一致しない
+  OK  畳み方は本家（altr_verdict.fold）を使う
+selftest OK（8 項目）
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/verify_manifest_fold_altr.py ##########
+==========================================================================
+① altreason — 畳み方の一意性と標本マニフェストの突合
+==========================================================================
+
+[1] 静的: `fold()` を定義しているファイル
+  OK  畳み方の定義は altr_verdict.py だけ — ['altr_verdict.py']
+
+[2] 同一性: 各装置が import した `fold` が同じ関数オブジェクト
+  OK  score_altr の fold が本家と同一
+  OK  score_repro_altr の fold が本家と同一
+  OK  make_repro_sheet_altr の fold が本家と同一
+  OK  merge_labels_altr の fold が本家と同一
+
+[3] 突合: 標本マニフェストの `folded` 列
+  OK  マニフェストの畳んだ値が本家と全件一致 — 60 件中 0 件が不一致
+
+==========================================================================
+畳み方の検査: 全件合格
+
+########## python3 /home/ubuntu/projects/opencode/tmp/p6-judge/altreason/integration_selftest_altr.py ##########
+==========================================================================
+① altreason — 統合検査（合成データ。⚠ 走行結果には触らない）
+==========================================================================
+
+合成: 材料 20 件 / クラスタ 4 / arm 7
+
+[1] 盲検シート
+  OK  blind_sheet_altr.py が通る
+  OK  シートに deny 件だけが入る — 51 件
+
+[2] バッチ分割
+  OK  make_scoring_batches_altr.py が通る
+  OK  GROUPS.tsv が出る
+  OK  INSTRUCTIONS.md が出る
+  OK  ⚠ 既存の出力があれば FATAL（配ったバッチを黙って作り直さない）
+
+[3] 採点結果の結合（⚠ 反例の注入）
+  OK  merge_labels_altr.py が通る
+  OK  結合結果が全件そろう
+  OK  ⚠ 1 件でも採点漏れがあれば FATAL
+  OK  ⚠ 未知の値があれば FATAL
+  OK  ⚠ 採点者が R* を書いたら FATAL（規準 §2 違反の検出）
+  OK  ⚠ FATAL のときは出力を書かない
+
+[4] 記述統計と判定
+  OK  score_altr.py --stage=gates が通る
+  OK  score_altr.py --stage=judge が通る
+  OK  δ_sup が sham から決まる
+  OK  P1 の判定が出る
+  OK  P3 の 2 値判定が出る
+  OK  ⚠ P4 は保持判定を出さない
+  OK  感度 1〜8 が出る
+  OK  次にやることが出る
+
+[5] ⚠ ラベルを 1 件抜くと判定が FATAL する（分母から静かに落とさない）
+  OK  ⚠ 採点漏れがあれば judge 段が FATAL
+
+[6] ⚠ 分子 0 の合成で「測定不成立」になる（G5）
+  OK  ⚠ 分子 0 なら『測定不成立』（同値に化けない）
+
+==========================================================================
+統合検査: 全件合格（⚠ 走行結果には触れていない）
+
+採点装置の検査: すべて合格

@@ -1,0 +1,2 @@
+# B-1: J3 replay で L2:edit が deny になった cell の reason（rw_distinction 目視の材料）
+

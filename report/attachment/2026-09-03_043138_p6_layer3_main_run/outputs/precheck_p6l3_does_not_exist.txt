@@ -1,0 +1,2 @@
+=== precheck_layer3 RUN_ID=p6l3_does_not_exist ARM=J0 ===
+FAIL 対象が空 (xdg/p6l3_does_not_exist/* に trial ディレクトリが無い)

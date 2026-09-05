@@ -1,0 +1,4 @@
+=== precheck_layer3 RUN_ID=p6l3_p3_j2page ARM=J2 ===
+trial 数 = 1: page-selfplan-r1
+OK   fork version = 0.0.0-dev-202607202249
+PRECHECK_LAYER3 PASS

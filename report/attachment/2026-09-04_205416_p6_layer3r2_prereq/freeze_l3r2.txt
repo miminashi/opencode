@@ -1,0 +1,14 @@
+# 第 3 層 第 2 ラウンド A-2 走行時点の sha256 — 2026-09-04 20:46 JST（走行完了直後・C-2 適用前）
+#
+# ⚠ A-2（`l3r2q_*` の 324 呼び出し・2026-09-04 18:44〜20:45）はこの版で走った。
+#    C-2（`instruction_quote` のログ拡張）はこの記録の**後**に適用する。
+#    走行の忠実性を後から検証するときは、この sha を基準にする。
+
+286e433a3b74054e83397245dab0f57b0feb421338598088f52339b2a1e00623  tmp/feat-bench/plugins/phase6-verify/judge-core.mjs
+2d826d60d2b97e19db8a0beb58979657c2597b5090fa51d93712fca239a34131  tmp/feat-bench/plugins/phase6-verify/index.mjs
+88c018596879d653f61944e32f65499704575c504cdfefa8d67317e11e984fb0  tmp/feat-bench/plugins/phase6-verify/location.mjs
+52633456083d848c59ede35867d1b0b5714f7097a71fe64fe69a6fbc1d855f5a  tmp/feat-bench/plugins/phase6-verify/prompts/structured_v3_ctxb_neut.txt
+
+# ⚠ うち index.mjs と structured_v3_ctxb_neut.txt は `layer3/outputs/freeze_layer3.txt` の
+#    2026-08-29 / 08-30 の 2 エントリ（本走を挟む前後）と一致する = **外部アンカーがある**。
+#    location.mjs と judge-core.mjs は freeze_layer3.txt に無く、**外部アンカーが無い**（限界として開示）。

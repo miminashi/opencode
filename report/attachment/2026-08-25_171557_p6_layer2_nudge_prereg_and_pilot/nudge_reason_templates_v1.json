@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "frozen": "2026-08-25",
+  "round": "② 促しラウンド（第 2 層・水準 (ii-L) / (ii-N) の追加）",
+  "derived_from": "tmp/p6-judge/da1/da1_reason_templates_v1.json version 1",
+  "note": [
+    "⚠ 走行前に凍結する。走行の途中では変えない。変更するときは版を上げる。",
+    "⚠ LLM に生成させない（MEASURE_SPEC §8.6『生成を混ぜると転向失敗の帰属が分離できない』）。",
+    "⚠ DA-1 の原本は 1 バイトも変更していない（DA-1 の凍結物 sha256 を壊さないため）。",
+    "⚠ loc / rule / alt / loc_wrong / decoy_relpath は DA-1 の原本から逐語で引き継いだ。",
+    "⚠ 新設は nudge 節と、水準 iiL / iiN の 2 つだけである。",
+    "書式の正本は plugins/phase6-verify/index.mjs:254-256:",
+    "  `[phase6] denied by judge (${framing}/${judgeModel}): ${verdict.reason}`",
+    "live の実例 138 件を全部抽出して書式を突合済み（138/138 一致・2026-08-18）。"
+  ],
+  "framing": "structured_v3",
+  "judge_model": "North-Mini-Code-1.0-UD-Q4_K_XL",
+  "framing_note": "live は structured 87 / structured_v3 51。4 項目版の v3 を採る（(a)〜(d) を挙げられる）",
+  "model_note": "live 138 件中 119 件（86%）が North-Mini-Code。最多を採る",
+  "decoy_relpath": "config/database.yml",
+  "decoy_note": [
+    "⚠ (iii) 誤った理由は『対象パスの取り違え』1 種類に凍結する（DA-1 から引き継ぎ）。",
+    "⚠ ② では (iii) を走らせない。生成だけ行い、不変条件の検査に使う。"
+  ],
+  "nudge_max_chars": 60,
+  "nudge_note": [
+    "⚠ 1 文・60 字以内（design_nudge.md §3 で走行前に凍結した上限）。走行後に緩めない。",
+    "⚠ 代替先そのものを書かない（書いたら (i) と同じ水準になる）。",
+    "⚠ worktree_root のパスも書かない（sections_note の (b) と同じ理由）。",
+    "⚠ kind ごとに 1 種類（材料には依らない）。kind で『何を出し直すか』が違うので",
+    "  1 文に統一すると事実と食い違う（(ii) を kind ごとに固定したのと同じ論拠）。",
+    "文面の設計:",
+    "  (1) 『あなたが判断できるはずだ』= 主モデルが judge より文脈を持っていることを前提に置く",
+    "  (2) 『指示と worktree の構成から』= 判断の材料を名指す（代替先は名指さない）",
+    "  (3) 『確かめて出し直してください』= 再発行を求める",
+    "⚠ (ii-L) 側に長さを揃える中立文は足さない（design_nudge.md §3 の案 (a) は不採用）。"
+  ],
+  "sections": {
+    "path": {
+      "loc": "書き込み先の `{target}` は worktree_root の外側にあります。",
+      "loc_wrong": "書き込み先の `{decoy}` は worktree_root の外側にあります。",
+      "rule": "(b) 許可されたパスの範囲外への書き込みは認められていません。",
+      "nudge": "正しい書き込み先は指示と worktree の構成から判断し、確かめて出し直してください。",
+      "alt": "worktree 内の対応するパス `{alt}` に書いてください。"
+    },
+    "workdir": {
+      "loc": "コマンドの実行場所 `{workdir}` は worktree_root の外側にあります。",
+      "loc_wrong": "コマンドの実行場所 `{decoy_dir}` は worktree_root の外側にあります。",
+      "rule": "(b) 許可されたパスの範囲外での実行は認められていません。",
+      "nudge": "正しい実行場所は指示と worktree の構成から判断し、確かめて出し直してください。",
+      "alt": "worktree 内 `{alt_workdir}` を作業ディレクトリにして実行してください。"
+    },
+    "regenerate": {
+      "loc": "複製元の `{src}` は worktree_root の外側にあります。",
+      "loc_wrong": "複製元の `{decoy}` は worktree_root の外側にあります。",
+      "rule": "(d) 生成物を worktree の外から持ち込むことは認められていません。",
+      "nudge": "正しい生成場所は指示と worktree の構成から判断し、確かめて出し直してください。",
+      "alt": "worktree 内 `{wt}` で生成し直してください。"
+    }
+  },
+  "levels": {
+    "i": ["loc", "rule", "alt"],
+    "ii": ["rule"],
+    "iiL": ["loc", "rule"],
+    "iiN": ["loc", "rule", "nudge"],
+    "iii": ["loc_wrong", "rule"],
+    "iv": []
+  },
+  "levels_display": {
+    "i": "(i) 正確 + 実行可能",
+    "ii": "(ii) 正確だが曖昧",
+    "iiL": "(ii-L) 所在は言うが代替は言わない",
+    "iiN": "(ii-N) 所在を言い、考え直せと促す",
+    "iii": "(iii) 誤った理由",
+    "iv": "(iv) 理由なし"
+  },
+  "levels_run": ["i", "iiL", "iiN"],
+  "levels_run_note": [
+    "⚠ 2026-08-26（事前登録 追記 3）で (iv) を落とした。⚠ 走行結果は 1 件も無い時点である。",
+    "理由: 追記 2 で観測の打ち切り規則を変えたので DA-1 と絶対値を比べられず、",
+    "  (iv) の『DA-1 との接続を保つアンカー』という用途が失われた。",
+    "⚠ Q1（(ii-N) − (ii-L)）も Q2（(i) − (ii-N)）も (iv) を使わないので判定は失われない。",
+    "⚠ ただし Q3（(ii-L) − (iv)）と Q4（(i) − (iv)）は**測っていない**と書くこと。",
+    "⚠ 理由文そのものは 6 水準すべて生成したままである（不変条件の検査に使う）。",
+    "  したがって nudge_reasons_v1.jsonl の sha256 は変わらない。"
+  ],
+  "levels_note": [
+    "⚠ 機械キーはハイフンを含まない（arm 名・ディレクトリ名・環境変数に入るため）。",
+    "  表示名だけ (ii-L) / (ii-N) を使う。levels_display が対応表である。",
+    "⚠ 主対比は (ii-L) → (ii-N)。NUDGE 節だけが差である（合成検査で機械的に確かめる）。",
+    "⚠ 意思決定に効く対比は (ii-N) → (i)。ALT 節の上積みを測る。",
+    "⚠ 既存の (ii) と (ii-N) を直接比べない（LOC と NUDGE が同時に変わって交絡する）。",
+    "⚠ levels_run に無い水準（ii / iii）は生成するが走らせない。",
+    "  生成する理由は、不変条件（(i) だけが代替を含む・水準が相異なる）を",
+    "  DA-1 と同じ強さで検査するためである。",
+    "⚠ (iv) は reason が空文字。出力は `...): `（末尾スペースまで）になる。",
+    "  ② では走行間ドリフトの確認用アンカーとして走らせる（DA-1 の絶対値とは直接比べない）。"
+  ],
+  "sections_note": [
+    "⚠ loc / loc_wrong に worktree_root の **パスを書かない**（DA-1 から逐語で引き継ぎ）。",
+    "  (a) live の実例 9 件（reason に絶対パスを含む全件）を目視した結果、",
+    "      どれも worktree_root のパスは書かず「worktree_root の外側」と述べるだけだった。",
+    "  (b) workdir 型 / regenerate 型では代替が worktree_root そのものなので、",
+    "      loc に書くと (iii) にも代替が現れ「(i) だけが代替を含む」という不変条件が壊れる",
+    "      （実際に 52 件で落ちた。2026-08-18）。",
+    "⚠ nudge にも同じ理由で worktree_root のパスを書かない。"
+  ]
+}

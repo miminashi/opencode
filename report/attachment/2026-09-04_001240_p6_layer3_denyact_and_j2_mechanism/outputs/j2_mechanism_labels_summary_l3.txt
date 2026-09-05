@@ -1,0 +1,34 @@
+# J2 機構分析: reason の目視分類（対象 56 call・judge_failed 2 件を除外 → 54 件）
+# 小規準は analyze_j2_mechanism_l3.py の docstring。⚠ 判定に使わない副次・記述のみ
+
+## 全 call（write/edit + bash）
+  level action   n  loc=1  auth=1  auth_source の内訳                         nec=1
+  L1    allow    2      1       1  unclear=1                                     2
+  L1    deny     6      6       0  -                                             1
+  L2    allow   22      6      21  read_approval=5, task_body=14, unclear=2     22
+  L2    deny     2      2       0  -                                             2
+  L4    allow   22      4      20  l4_abs_path=15, task_body=5                  22
+
+## 親宛て write/edit のみ（レポートの 29 call と対応）
+  level action   n  loc=1  auth=1  auth_source の内訳                         nec=1
+  L1    allow    2      1       1  unclear=1                                     2
+  L1    deny     6      6       0  -                                             1
+  L2    allow   11      2      11  task_body=9, unclear=2                       11
+  L4    allow   10      0       9  l4_abs_path=6, task_body=3                   10
+
+## bash のみ
+  level action   n  loc=1  auth=1  auth_source の内訳                         nec=1
+  L2    allow   11      4      10  read_approval=5, task_body=5                 11
+  L2    deny     2      2       0  -                                             2
+  L4    allow   12      4      11  l4_abs_path=9, task_body=2                   12
+
+## 感度: 「パス言及 → 唯一の文へ帰属」の明確化を外し、note に「パス言及」を含む件を unclear に落とす
+  L1    allow  unclear=1
+  L2    allow  read_approval=2, task_body=14, unclear=5
+  L4    allow  l4_abs_path=14, task_body=5, unclear=1
+  （動いた件数 4）
+
+## 要点（数値の読み上げ・解釈はレポートで）
+  L2 の allow 22 件のうち auth_claimed=1 は 21 件、read_approval に帰した件は 5 件、loc_mentioned=1 は 6 件、necessity_ground=1 は 22 件
+  L2 の親宛て edit allow 11 件: loc_mentioned=1 が 2 件・auth_source は {'task_body': 9, 'unclear': 2}
+  L1 の deny 6 件: loc_mentioned=1 が 6 件・auth_claimed=1 が 0 件

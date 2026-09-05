@@ -1,0 +1,5 @@
+=== sham（p6l3_main_j0_run1 vs p6l3_main_j0_run2、同一水準・別走行の走行間ドリフト）===
+C: 25/25=100.0%（p6l3_main_j0_run1）→ 25/25=100.0%（p6l3_main_j0_run2）  |ΔC|=0.0pt
+A: 8/20=40.0%（p6l3_main_j0_run1）→ 9/20=45.0%（p6l3_main_j0_run2）  |ΔA|=5.0pt
+→ m_pt 候補（5pt 切り上げ・[10,30] クリップ）= 10pt
+→ delta_a_pt 候補（同上）= 10pt

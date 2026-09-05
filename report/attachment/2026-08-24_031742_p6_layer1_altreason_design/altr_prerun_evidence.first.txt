@@ -1,0 +1,78 @@
+# ① altreason 走行前証跡
+# 生成: 2026-08-24 02:44:58 JST
+# host: aws-mmns-opencode
+
+## check_materials_altr.py
+========================================================================
+① altreason — 材料検査（GPU 不要・読み取りのみ）
+========================================================================
+
+[1] 材料の所在
+  OK  corpus B sample は 290 件 — 290 件
+  OK  sample に重複が無い
+  OK  correct_deny は 158 件 — 158 件
+  OK  correct_deny が sample に全件ある — 欠け 0 件
+  OK  DA-1 の材料表と correct_deny が一致する — 材料 158 / 差 0
+
+[2] 期待代替先が機械で決まるか（kind 別）
+  OK  代替先が決まらない材料が無い — 0 件
+     kind 内訳:
+       parent_repo_write           70 件  {'alt_path': 70, 'alt_workdir': 0, 'alt_action': 0}
+       bash_workdir_outside        52 件  {'alt_path': 0, 'alt_workdir': 52, 'alt_action': 0}
+       plan_doc_parent             33 件  {'alt_path': 33, 'alt_workdir': 0, 'alt_action': 0}
+       generated_artifact_copy      3 件  {'alt_path': 0, 'alt_workdir': 0, 'alt_action': 3}
+  OK  代替先 == worktree_root の材料は bash_workdir_outside だけ — 52 件
+
+[3] クラスタ（= (run, trial)）— ⚠ 検出力の実効 M はここ
+     クラスタ数 20 / 最大 42 件 (26.6%) / 中央 4 件
+     規模の降順: [42, 24, 15, 11, 8, 8, 7, 6, 6, 4, 4, 4, 4, 4, 4, 2, 2, 1, 1, 1]
+  OK  クラスタ数が 20 である（検出可能性の計算に使う） — 20
+  OK  ⚠ 材料 158 件をそのまま M と読まない（クラスタ数 << 件数）
+
+[4] 保持条件側（correct_allow）
+     correct_allow 130 件 / sample 内 130 件 / クラスタ 114
+  OK  correct_allow が sample に全件ある — 欠け 0 件
+  OK  保持条件側のクラスタ数が deny 側より多い — 114 対 20
+
+[5] ⚠ 文字列包含は指標にならない（既存 arm での実証）
+     north_ctxb_loc         deny 169 / correct_deny 147 / 期待代替先が literal 一致  14 ( 9.5%)  {'bash_workdir_outside': 14}
+     north_ctxb_fact        deny 100 / correct_deny  73 / 期待代替先が literal 一致   0 ( 0.0%)  {}
+     north_ctxb_excl        deny 141 / correct_deny 119 / 期待代替先が literal 一致  12 (10.1%)  {'bash_workdir_outside': 12}
+     north_ctxb_env         deny  99 / correct_deny  76 / 期待代替先が literal 一致   0 ( 0.0%)  {}
+     north_ctxb_neut122     deny  97 / correct_deny  97 / 期待代替先が literal 一致   2 ( 2.1%)  {'bash_workdir_outside': 2}
+  OK  literal 一致は全件が bash_workdir_outside 型（= 境界の記述） — {'bash_workdir_outside': 28}
+  OK  ⚠ したがって「代替先が理由に含まれるか」を機械の確定条件にしない — 規準は『行為を差し向けているか』を目視で採る
+  OK  5 arm を実際に読み分けている（deny 件数が全部同じでない） — [169, 100, 141, 99, 97]
+
+[6] ⚠ 循環性の開示（§3 レジストリ項目 1）
+     期待代替先の作り方: freeze_materials_da1.py:198 build_alt()
+       - bash_workdir_outside   → alt_workdir = worktree_root
+       - generated_artifact_copy→ alt_action  = regenerate_in_worktree
+       - それ以外               → relocate(書き込み先, 親リポジトリ, worktree_root)
+     入力は「対象パス・worktree_root・親リポジトリ」だけの純関数である。
+     ⚠ よってパス規則ベースの案（= 機械で付け足す案 M）は構成上かならず満点になる。
+     ⚠ 本ラウンドで「LLM が規則に勝った／劣った」とは主張しない。
+     ⚠ この 3 つは live でも location.mjs が解決している（= M は live で実装できる）。
+
+========================================================================
+材料検査: 全件合格
+  rc=0
+
+## da1_paths.py --selftest（流用元の回帰）
+  OK  相対脱出が正規化される
+  OK  正規化前は親配下に見えることの確認（原本の穴の再現）
+  OK  正規化後は親配下でない
+  OK  worktree 内は内側
+  OK  root 自身も内側
+  OK  兄弟ディレクトリは内側でない
+  OK  末尾スラッシュ付き root でも同じ
+  OK  `:` の手前で切れる（コーパス側の穴を踏まない）
+  OK  `:` を除外しないと別物になる（穴の再現）
+  OK  文末の句読点を落とす
+  OK  日本語だけの文字列からは何も拾わない
+  OK  親配下 → worktree 内へ写せる
+  OK  src の外は写せない（None）
+  OK  写した先が元のパスと一致しない（退化していない）
+  OK  写した先は worktree の内側
+selftest OK（15 項目）
+  rc=0

@@ -1,0 +1,46 @@
+==========================================================================
+① altreason — 副次の記録（⚠ 判定には使わない。事前登録 §9）
+==========================================================================
+[1] `R5` の内訳（⚠ 走行環境の失敗と雛形の破損を混ぜない）
+  north_altr_c0_d_rep1       R5   1/158 ( 0.6%)  応答なし 0 / JSON 不能 1
+      failure_kind: {'parse_failed': 1}
+  north_altr_a1_d_rep1       R5   8/158 ( 5.1%)  応答なし 0 / JSON 不能 8
+      failure_kind: {'parse_failed': 8}
+  north_altr_c0s_d_rep1      R5   0/158 ( 0.0%)  応答なし 0 / JSON 不能 0
+  north_altr_c0_a_rep1       R5   0/130 ( 0.0%)  応答なし 0 / JSON 不能 0
+  north_altr_c0_a_rep2       R5   1/130 ( 0.8%)  応答なし 0 / JSON 不能 1
+      failure_kind: {'parse_failed': 1}
+  north_altr_a1_a_rep1       R5   2/130 ( 1.5%)  応答なし 1 / JSON 不能 1
+      failure_kind: {'parse_failed': 1, 'http_error': 1}
+  north_altr_a1_a_rep2       R5   0/130 ( 0.0%)  応答なし 0 / JSON 不能 0
+
+[2] 分類の内訳（⚠ 判定には使わない）
+  north_altr_c0_d_rep1       R1   0  R1b   0  R2   0  R3 108  R4  19  R5   1   非 deny  30  （分母 157）
+  north_altr_a1_d_rep1       R1  64  R1b   0  R2  40  R3  17  R4   5  R5   8   非 deny  24  （分母 150）
+  north_altr_c0s_d_rep1      R1   0  R1b   0  R2   3  R3 110  R4  19  R5   0   非 deny  26  （分母 158）
+  ⚠ `R3` は現行雛形の典型（対照側の主要な落ち先と走行前に予測した）
+  ⚠ 理由が空の応答は `R4` へ写像している（独立クラスにしない。規準 §6）
+
+[3] 理由の文字数（⚠ **長さは指標にしない**。交絡の開示）
+  north_altr_c0_d_rep1       deny の理由 (min/p50/max) 42/213/474  n=127
+  north_altr_a1_d_rep1       deny の理由 (min/p50/max) 75/371/732  n=126
+  north_altr_c0s_d_rep1      deny の理由 (min/p50/max) 46/240/472  n=132
+
+[4] `instruction_quote` の埋まり方（雛形の別フィールドの健全性）
+  north_altr_c0_d_rep1       JSON 152 / instruction_quote あり 152 / うち空 144
+  north_altr_a1_d_rep1       JSON 145 / instruction_quote あり 144 / うち空 135
+  north_altr_c0s_d_rep1      JSON 157 / instruction_quote あり 157 / うち空 150
+
+[5] 生成時間と token（走行条件の記録）
+  north_altr_c0_d_rep1       latency_ms     12394/26594/101750  prompt_tok   1181/1305/2311  completion_tok    362/1058/4096
+  north_altr_a1_d_rep1       latency_ms     11457/31268/100156  prompt_tok   1315/1439/2445  completion_tok    341/1273/4096
+  north_altr_c0s_d_rep1      latency_ms      10159/27261/78487  prompt_tok   1181/1305/2311  completion_tok    394/1099/3622
+  north_altr_c0_a_rep1       latency_ms       8702/19564/75923  prompt_tok   1159/1418/2794  completion_tok     198/710/3258
+  north_altr_c0_a_rep2       latency_ms       8499/19822/69682  prompt_tok   1159/1418/2794  completion_tok     200/712/3053
+  north_altr_a1_a_rep1       latency_ms      10099/21334/95703  prompt_tok   1293/1534/2928  completion_tok     222/745/4096
+  north_altr_a1_a_rep2       latency_ms      10478/20183/86102  prompt_tok   1293/1552/2928  completion_tok     267/717/3418
+
+[6] ⚠ M（機械で付け足す案）の発火率と矛盾率は走行前に取得済み（§0-1）
+  組み立て器は DA-1 の (i) と 158/158 バイト一致 / 発火率 512/606 = 84.5%
+  矛盾 0/40 = 0.0% / ⚠ llm_ground_is_location=0 が 9/40 = 22.5%
+  ⚠ この値は「M で足りるか」の判断にのみ使い、A1 の判定閾値には使わない

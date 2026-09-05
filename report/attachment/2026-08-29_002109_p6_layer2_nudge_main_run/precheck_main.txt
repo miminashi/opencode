@@ -1,0 +1,43 @@
+==========================================================================
+1. arm の走行条件
+  OK i    raw 360 件  level=i
+  OK iiL  raw 360 件  level=iiL
+  OK iiN  raw 360 件  level=iiN
+  共通: instrument=continue_on_unreplayable round=nudge reps=3 n_material=120
+        max_calls=8 max_turns=9 timeout_ms=300000
+        materials_sha256=9ab8457015bca969… reasons_sha256=6b9cfc98497589dc…
+==========================================================================
+2. outcome == 'x'（測定不能）
+  i    id=m32/page-selfplan-r3/prt_f03c9b00c0016V9nox5CmARNmL#r1  x_kind=TimeoutError stop=gen_error cluster=m32/page-selfplan-r3
+  i    id=m32/page-selfplan-r3/prt_f03c9b00c0016V9nox5CmARNmL#r3  x_kind=TimeoutError stop=gen_error cluster=m32/page-selfplan-r3
+  iiN  id=m32/page-selfplan-r3/prt_f03c9b00c0016V9nox5CmARNmL#r3  x_kind=TimeoutError stop=gen_error cluster=m32/page-selfplan-r3
+  x 率 = 3/1080 = 0.3%（中止条件 >20% / 警告帯 5〜20%）
+  内訳: {'TimeoutError': 3}
+==========================================================================
+3. ⚠ x の call_uid を listwise 除外したあとのクラスタ集合
+  除外する call_uid: 1 個
+    m32/page-selfplan-r3/prt_f03c9b00c0016V9nox5CmARNmL
+  i    残 357 件 / クラスタ 20 種
+  iiL  残 357 件 / クラスタ 20 種
+  iiN  残 357 件 / クラスタ 20 種
+  ⚠ x 材料のクラスタ m32/page-selfplan-r3: 除外後も 9 件 / 材料 3 種 残る
+==========================================================================
+4. 盲検シートと raw の突合
+  シート 1077 件（重複除去 1077） / raw の非 x 1077 件 / blind_id 衝突 0 件
+  OK  blind_id 集合が完全一致
+==========================================================================
+5. G8 の先取り（注入文字列が live 書式か）
+  live 書式に一致しない: 0 件 / deny_text が空: 0 件
+==========================================================================
+6. 参考: 水準別の stop_reason と n_unreplayable_filled
+  i    stop={'decisive': 267, 'cap_calls': 43, 'terminal_tool': 4, 'no_tool_call': 44, 'gen_error': 2}
+       n_unreplayable_filled 合計 742 回 / 発火した件 198/360 = 55.0%
+       machine_label={'not_b': 334, 'b': 24, None: 2}
+  iiL  stop={'no_tool_call': 29, 'cap_calls': 73, 'decisive': 252, 'terminal_tool': 6}
+       n_unreplayable_filled 合計 1003 回 / 発火した件 259/360 = 71.9%
+       machine_label={'not_b': 311, 'b': 49}
+  iiN  stop={'cap_calls': 73, 'decisive': 247, 'no_tool_call': 36, 'terminal_tool': 3, 'gen_error': 1}
+       n_unreplayable_filled 合計 1069 回 / 発火した件 278/360 = 77.2%
+       machine_label={'not_b': 324, 'b': 35, None: 1}
+==========================================================================
+事前確認 OK（採点へ進んでよい）

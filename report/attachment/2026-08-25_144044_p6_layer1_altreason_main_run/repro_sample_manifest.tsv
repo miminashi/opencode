@@ -1,0 +1,61 @@
+blind_id	arm	batch	group	folded	loc_correct	alt_given	alt_correct	held	alt_unverifiable
+000f27d08c17be76	north_altr_c0_d_rep1	altr_batch_01	1	R4	0	0		0	0
+032398ccb457f1fe	north_altr_c0s_d_rep1	altr_batch_01	1	R3	1	0		0	0
+0535d7961af3433a	north_altr_a1_d_rep1	altr_batch_01	1	R1	1	1	1	0	0
+0bc0a40e1103e9e3	north_altr_c0_d_rep1	altr_batch_01	1	R3	1	0		0	0
+1025578b2388a05a	north_altr_c0s_d_rep1	altr_batch_01	1	R3	1	0		0	0
+153f01a25052b68f	north_altr_c0s_d_rep1	altr_batch_02	2	R3	1	0		0	0
+1a603f0505b7ebba	north_altr_c0_d_rep1	altr_batch_02	2	R3	1	0		0	0
+1ba6490224652818	north_altr_a1_d_rep1	altr_batch_02	2	R1	1	1	1	0	0
+22204955e6457065	north_altr_c0s_d_rep1	altr_batch_02	2	R3	1	0		0	0
+264e19f338783cf2	north_altr_a1_d_rep1	altr_batch_02	2	R2	1	1	0	0	0
+2bb38c89782c3994	north_altr_c0_d_rep1	altr_batch_03	3	R3	1	0		0	0
+2f8a0a103cff97bb	north_altr_c0_d_rep1	altr_batch_03	3	R3	1	0		0	0
+336b65dca5aa89e9	north_altr_c0s_d_rep1	altr_batch_03	3	R4	0	0		0	0
+36431210b427844b	north_altr_c0s_d_rep1	altr_batch_03	3	R2	1	1	0	1	0
+3c0c3f9c2c593dfa	north_altr_a1_d_rep1	altr_batch_03	3	R1	1	1	1	0	0
+3faced213049a25f	north_altr_a1_d_rep1	altr_batch_04	1	R1	1	1	1	1	0
+43586b942bd6559f	north_altr_c0_d_rep1	altr_batch_04	1	R3	1	0		0	0
+4658f62101f6994e	north_altr_c0_d_rep1	altr_batch_04	1	R3	1	0		0	0
+505364a3c211f5a0	north_altr_c0s_d_rep1	altr_batch_04	1	R4	0	0		0	0
+5720cff2f81af548	north_altr_c0_d_rep1	altr_batch_05	2	R3	1	0		0	0
+5fe14d602aa71452	north_altr_c0s_d_rep1	altr_batch_05	2	R3	1	0		0	0
+6351b95cfa1b444a	north_altr_a1_d_rep1	altr_batch_05	2	R1	1	1	1	0	0
+66e14febda4c4c4f	north_altr_c0s_d_rep1	altr_batch_05	2	R3	1	0		0	0
+69ef727eda250cdf	north_altr_a1_d_rep1	altr_batch_05	2	R1	1	1	1	0	0
+6d2ca2d8e22b7d44	north_altr_c0s_d_rep1	altr_batch_06	3	R3	1	0		0	0
+71783bebece86151	north_altr_a1_d_rep1	altr_batch_06	3	R2	1	1	0	1	0
+75607f2a7a7949a6	north_altr_c0_d_rep1	altr_batch_06	3	R3	1	0		0	0
+78f41842ac4335de	north_altr_c0_d_rep1	altr_batch_06	3	R3	1	0		0	0
+7b3f938a534f4534	north_altr_a1_d_rep1	altr_batch_06	3	R1	1	1	1	0	0
+7e191383f0851bd8	north_altr_a1_d_rep1	altr_batch_07	1	R2	1	1	0	0	0
+884f5163d7c82934	north_altr_c0s_d_rep1	altr_batch_07	1	R3	1	0		0	0
+8f2566972cc16513	north_altr_c0s_d_rep1	altr_batch_07	1	R3	1	0		0	0
+931dd33a13100838	north_altr_c0_d_rep1	altr_batch_07	1	R3	1	0		0	0
+969d75e41b489b3f	north_altr_c0s_d_rep1	altr_batch_08	2	R3	1	0		0	0
+99fed18095409cf7	north_altr_c0_d_rep1	altr_batch_08	2	R3	1	0		0	0
+9b90a6454a2d67ee	north_altr_c0_d_rep1	altr_batch_08	2	R3	1	0		0	0
+9fc6ba47c784fbe8	north_altr_c0_d_rep1	altr_batch_08	2	R4	0	0		0	0
+a3d7382721b1bb29	north_altr_c0_d_rep1	altr_batch_08	2	R3	1	0		0	0
+a8c39534531559f6	north_altr_a1_d_rep1	altr_batch_09	3	R3	1	0		1	0
+a9df42530fddbc20	north_altr_a1_d_rep1	altr_batch_09	3	R1	1	1	1	0	0
+add540a46dd6b396	north_altr_a1_d_rep1	altr_batch_09	3	R1	1	1	1	0	0
+b0bfd023e96faf0a	north_altr_c0s_d_rep1	altr_batch_09	3	R3	1	0		0	0
+b45b3f87a4db9a2b	north_altr_c0s_d_rep1	altr_batch_09	3	R3	1	0		0	0
+b925f6e05679a0fb	north_altr_c0s_d_rep1	altr_batch_10	1	R3	1	0		0	0
+c1a6b5f10c36f734	north_altr_c0s_d_rep1	altr_batch_10	1	R3	1	0		0	0
+c5b24f437429df8c	north_altr_c0s_d_rep1	altr_batch_10	1	R3	1	0		0	0
+c9906c259411010e	north_altr_a1_d_rep1	altr_batch_10	1	R2	1	1	0	0	0
+cb2a2bbb9767c37e	north_altr_c0_d_rep1	altr_batch_11	2	R3	1	0		0	0
+cda852aad7ea7950	north_altr_a1_d_rep1	altr_batch_11	2	R2	1	1	0	0	0
+d1d184da9d85ec8b	north_altr_a1_d_rep1	altr_batch_11	2	R2	1	1	0	0	0
+d39bc75a03bbb547	north_altr_c0_d_rep1	altr_batch_11	2	R3	1	0		0	0
+dac40c0dd477d293	north_altr_c0_d_rep1	altr_batch_11	2	R4	0	0		0	0
+deb95a56e879c329	north_altr_c0_d_rep1	altr_batch_12	3	R3	1	0		0	0
+e540092d9af657f0	north_altr_a1_d_rep1	altr_batch_12	3	R3	1	0		0	0
+e80b90a811c9b283	north_altr_c0_d_rep1	altr_batch_12	3	R3	1	0		0	0
+ea7f604693de94dc	north_altr_c0_d_rep1	altr_batch_12	3	R3	1	0		0	0
+ebd5019eb5184dc5	north_altr_c0_d_rep1	altr_batch_12	3	R3	1	0		0	0
+eeed57b1ec744205	north_altr_c0s_d_rep1	altr_batch_13	1	R3	1	0		0	0
+f2416f402edb3677	north_altr_a1_d_rep1	altr_batch_13	1	R2	1	1	0	0	0
+f60ff8e38e7c7991	north_altr_c0_d_rep1	altr_batch_13	1	R3	1	0		0	0

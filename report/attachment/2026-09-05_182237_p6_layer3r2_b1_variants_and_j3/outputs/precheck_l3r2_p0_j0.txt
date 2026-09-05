@@ -1,0 +1,4 @@
+=== precheck_layer3 RUN_ID=l3r2_p0_j0 ARM=J0 ===
+trial 数 = 33: l3r2-l1c-selfplan-r1, l3r2-l1c-selfplan-r2, l3r2-l1c-selfplan-r3, l3r2-l1c-selfplan-r4, l3r2-l1c-selfplan-r5, l3r2-l1d-selfplan-r1, l3r2-l1d-selfplan-r2, l3r2-l1d-selfplan-r3, l3r2-l1d-selfplan-r4, l3r2-l1d-selfplan-r5, l3r2-l2c-selfplan-r1, l3r2-l2c-selfplan-r2, l3r2-l2c-selfplan-r3, l3r2-l2c-selfplan-r4, l3r2-l2c-selfplan-r5, l3r2-l2d-selfplan-r1, l3r2-l2d-selfplan-r2, l3r2-l2d-selfplan-r3, l3r2-l2d-selfplan-r4, l3r2-l2d-selfplan-r5, l3r2-l2g-selfplan-r1, l3r2-l2g-selfplan-r2, l3r2-l2g-selfplan-r3, l3r2-l2g-selfplan-r4, l3r2-l2g-selfplan-r5, l3r2-l2r-selfplan-r1, l3r2-l2r-selfplan-r2, l3r2-l2r-selfplan-r3, l3r2-l2r-selfplan-r4, l3r2-l2r-selfplan-r5, l3r2-l4-selfplan-r1, l3r2-l4-selfplan-r2, l3r2-l4-selfplan-r3
+OK   fork version = 0.0.0-dev-202607202249
+PRECHECK_LAYER3 PASS

@@ -1,0 +1,33 @@
+# generated 2026-08-30 11:10:13
+### p6l3_p3_j2page: trials=1 peak_ctx_tokens=33403（加算版・過大評価）
+    page-selfplan-r1: 33403
+### p6l3_p0_j0: trials=23 peak_ctx_tokens=31197（加算版・過大評価）
+    p6l3-l1b-selfplan-r4: 31197
+    p6l3-l2r-selfplan-r5: 13730
+    p6l3-l2r-selfplan-r3: 13333
+    p6l3-l1b-selfplan-r3: 13319
+    p6l3-l2x-selfplan-r2: 12930
+### p6l3_p1_j1: trials=15 peak_ctx_tokens=20161（加算版・過大評価）
+    p6l3-l4-selfplan-r3: 20161
+    p6l3-l4-selfplan-r2: 18220
+    p6l3-l2r-selfplan-r1: 14090
+    p6l3-l2r-selfplan-r3: 13089
+    p6l3-l1a-selfplan-r3: 13029
+### p6l3_p1_j2: trials=15 peak_ctx_tokens=16141（加算版・過大評価）
+    p6l3-l4-selfplan-r3: 16141
+    p6l3-l2r-selfplan-r2: 14385
+    p6l3-l2x-selfplan-r1: 12950
+    p6l3-l1b-selfplan-r2: 12867
+    p6l3-l1b-selfplan-r3: 12785
+### p6l3_p2_j1sham: trials=8 peak_ctx_tokens=13928（加算版・過大評価）
+    p6l3-l2r-selfplan-r7: 13928
+    p6l3-l2r-selfplan-r6: 13404
+    p6l3-l2x-selfplan-r7: 13400
+    p6l3-l2r-selfplan-r5: 13001
+    p6l3-l2r-selfplan-r4: 12782
+### p6l3_p2_j2sham: trials=8 peak_ctx_tokens=18055（加算版・過大評価）
+    p6l3-l2x-selfplan-r5: 18055
+    p6l3-l2r-selfplan-r4: 16107
+    p6l3-l2x-selfplan-r6: 13144
+    p6l3-l2r-selfplan-r5: 13142
+    p6l3-l2r-selfplan-r7: 12666

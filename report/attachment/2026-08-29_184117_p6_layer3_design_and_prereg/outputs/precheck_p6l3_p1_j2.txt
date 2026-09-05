@@ -1,0 +1,4 @@
+=== precheck_layer3 RUN_ID=p6l3_p1_j2 ARM=J2 ===
+trial 数 = 15: p6l3-l1a-selfplan-r1, p6l3-l1a-selfplan-r2, p6l3-l1a-selfplan-r3, p6l3-l1b-selfplan-r1, p6l3-l1b-selfplan-r2, p6l3-l1b-selfplan-r3, p6l3-l2r-selfplan-r1, p6l3-l2r-selfplan-r2, p6l3-l2r-selfplan-r3, p6l3-l2x-selfplan-r1, p6l3-l2x-selfplan-r2, p6l3-l2x-selfplan-r3, p6l3-l4-selfplan-r1, p6l3-l4-selfplan-r2, p6l3-l4-selfplan-r3
+OK   fork version = 0.0.0-dev-202607202249
+PRECHECK_LAYER3 PASS

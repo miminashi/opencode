@@ -1,0 +1,37 @@
+{
+  "arm": "l3r2j3_klive_rep2",
+  "judge_url": "http://10.1.4.14:8001",
+  "judge_model": "North-Mini-Code-1.0-UD-Q4_K_XL",
+  "max_tokens": 2048,
+  "timeout_ms": 60000,
+  "no_think": false,
+  "temperature": 0.6,
+  "framing_env": "structured_v3",
+  "sample": "/home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay/sample_j3repro.jsonl",
+  "seed": 0,
+  "corpus_dir_env": "/home/ubuntu/projects/opencode/report/attachment/2026-07-30_211456_phase6_verdict_corpus_v2",
+  "n_sample": 54,
+  "sample_sha256": "ef0f3237021f358b5b32bcdfd75b9dd254a80b1791ea49df7032e90cbc27e722",
+  "sample_prompt_provenance": {
+    "live_reconstructed": 54
+  },
+  "sample_stratum": {
+    "L1_edit_deny": 6,
+    "L2_bash_allow": 11,
+    "L2_edit_allow": 11,
+    "L2_bash_deny": 2,
+    "L4_edit_allow": 10,
+    "L4_bash_allow": 12,
+    "L1_edit_allow": 2
+  },
+  "sample_label": {
+    "null": 54
+  },
+  "sample_context_level": {
+    "minimal": 54
+  },
+  "sample_context_source": {
+    "blocks_l3r2": 54
+  },
+  "note": "framing_env/corpus_dir_env は run 実行時の env であって sample の生成条件ではない"
+}

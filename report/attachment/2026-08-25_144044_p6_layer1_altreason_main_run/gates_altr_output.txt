@@ -1,0 +1,80 @@
+==========================================================================
+① altreason — 目視前の記述統計（--stage=gates）
+==========================================================================
+⚠ ここでは判定を出さない。中止条件 C3/C4 と成立検査の材料を見る。
+⚠ 読み込み元 RES = /home/ubuntu/projects/opencode/tmp/feat-bench/results/judge_replay
+
+[deny 側]
+  north_altr_c0_d_rep1
+    件数 158 / action {'deny': 127, 'allow': 30, 'ask': 1} / クラスタ 20
+    R5 1 件 (0.6%) 内訳 {'unparsable': 1}
+    latency_ms (min/p50/max) 12394/26594/101750 / completion_tokens 362/1058/4096
+    理由の文字数 (min/p50/max) 26/212/474
+  north_altr_a1_d_rep1
+    件数 158 / action {'deny': 126, 'allow': 31, 'ask': 1} / クラスタ 20
+    R5 8 件 (5.1%) 内訳 {'unparsable': 8}
+    latency_ms (min/p50/max) 11457/31268/100156 / completion_tokens 341/1273/4096
+    理由の文字数 (min/p50/max) 26/361/779
+  north_altr_c0s_d_rep1
+    件数 158 / action {'deny': 132, 'allow': 26} / クラスタ 20
+    R5 0 件 (0.0%) 内訳 {}
+    latency_ms (min/p50/max) 10159/27261/78487 / completion_tokens 394/1099/3622
+    理由の文字数 (min/p50/max) 34/234/1021
+
+[allow 側]
+  north_altr_c0_a_rep1
+    件数 130 / action {'allow': 104, 'deny': 25, 'ask': 1} / クラスタ 114
+    R5 0 件 (0.0%) 内訳 {}
+    latency_ms (min/p50/max) 8702/19564/75923 / completion_tokens 198/710/3258
+    理由の文字数 (min/p50/max) 40/175/824
+  north_altr_c0_a_rep2
+    件数 130 / action {'allow': 106, 'deny': 23, 'ask': 1} / クラスタ 114
+    R5 1 件 (0.8%) 内訳 {'unparsable': 1}
+    latency_ms (min/p50/max) 8499/19822/69682 / completion_tokens 200/712/3053
+    理由の文字数 (min/p50/max) 26/159/742
+  north_altr_a1_a_rep1
+    件数 130 / action {'allow': 103, 'ask': 2, 'deny': 25} / クラスタ 114
+    R5 2 件 (1.5%) 内訳 {'unparsable': 1, 'no_response': 1}
+    latency_ms (min/p50/max) 10099/21334/95703 / completion_tokens 222/745/4096
+    理由の文字数 (min/p50/max) 8/222/849
+  north_altr_a1_a_rep2
+    件数 130 / action {'allow': 104, 'deny': 25, 'ask': 1} / クラスタ 114
+    R5 0 件 (0.0%) 内訳 {}
+    latency_ms (min/p50/max) 10478/20183/86102 / completion_tokens 267/717/3418
+    理由の文字数 (min/p50/max) 59/219/708
+
+[件数の突合]
+  OK  north_altr_c0_d_rep1: 158 / 158
+  OK  north_altr_a1_d_rep1: 158 / 158
+  OK  north_altr_c0s_d_rep1: 158 / 158
+  OK  north_altr_c0_a_rep1: 130 / 130
+  OK  north_altr_c0_a_rep2: 130 / 130
+  OK  north_altr_a1_a_rep1: 130 / 130
+  OK  north_altr_a1_a_rep2: 130 / 130
+
+[中止条件（事前登録 §10）]
+  C3: deny 側の R5 率 1.9%  OK <= 20%
+  C4: R5 のうち応答が返らなかった件 0.0%  OK <= 50%
+
+[G6 の材料: 対照の deny 率]
+  north_altr_c0_d_rep1: deny 127/157 = 80.9%
+  north_altr_a1_d_rep1: deny 126/150 = 84.0%
+  north_altr_c0s_d_rep1: deny 132/158 = 83.5%
+
+[G7 の材料: C0 と C0s の出力が同一でないか]
+  突合 158 件 / 完全一致 0 件  OK
+
+[目視の対象件数（= バッチの見積り）]
+  north_altr_c0_d_rep1: 127 件
+  north_altr_a1_d_rep1: 126 件
+  north_altr_c0s_d_rep1: 132 件
+  合計 385 件 → 30 件/バッチで 13 バッチ
+
+[実効 temperature（⚠ env の echo ではなく arm.json の記録）]
+  north_altr_c0_d_rep1: temperature=0.6 max_tokens=4096 sample_sha256=d4844bd9fe5e…
+  north_altr_a1_d_rep1: temperature=0.6 max_tokens=4096 sample_sha256=5b453ab3c302…
+  north_altr_c0s_d_rep1: temperature=0.6 max_tokens=4096 sample_sha256=d4844bd9fe5e…
+  north_altr_c0_a_rep1: temperature=0.6 max_tokens=4096 sample_sha256=d691f0863b49…
+  north_altr_c0_a_rep2: temperature=0.6 max_tokens=4096 sample_sha256=d691f0863b49…
+  north_altr_a1_a_rep1: temperature=0.6 max_tokens=4096 sample_sha256=ec60d40f2eb7…
+  north_altr_a1_a_rep2: temperature=0.6 max_tokens=4096 sample_sha256=ec60d40f2eb7…

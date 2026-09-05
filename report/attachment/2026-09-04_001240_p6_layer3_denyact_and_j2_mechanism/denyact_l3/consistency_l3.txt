@@ -1,0 +1,133 @@
+# 整合検査（追記 18 の 10）: MAX_CALLS=8 MAX_TURNS=9
+  OK  p6l3_main_j1_run1/search-selfplan-r1  db=6 verdicts=6 summary_judge=6 summary_phase6=6 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-givenplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l1b-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r1  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l4-selfplan-r1  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-selfplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-givenplan-r2  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r2  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l4-selfplan-r2  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-selfplan-r3  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-givenplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-givenplan-r3  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l1b-selfplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l4-selfplan-r3  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r4  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l1b-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l4-selfplan-r4  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-selfplan-r5  db=8 verdicts=8 summary_judge=8 summary_phase6=8 callid=True sdir=True
+  OK  p6l3_main_j1_run1/search-givenplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r5  db=6 verdicts=6 summary_judge=6 summary_phase6=6 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l4-selfplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r7  db=6 verdicts=6 summary_judge=6 summary_phase6=6 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l1b-selfplan-r7  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r7  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r8  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r9  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r9  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run1/page-selfplan-r10  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run1/p6l3-l2r-selfplan-r10  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-selfplan-r1  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-givenplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-selfplan-r1  db=26 verdicts=26 summary_judge=26 summary_phase6=26 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l4-selfplan-r1  db=6 verdicts=6 summary_judge=6 summary_phase6=6 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-selfplan-r2  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-givenplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-selfplan-r2  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-givenplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l4-selfplan-r2  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-selfplan-r3  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-givenplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-givenplan-r3  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l4-selfplan-r3  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l4-selfplan-r4  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-selfplan-r5  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run2/search-givenplan-r5  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l4-selfplan-r5  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-selfplan-r6  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r7  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r7  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-selfplan-r8  db=10 verdicts=10 summary_judge=10 summary_phase6=10 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/page-selfplan-r9  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l1b-selfplan-r9  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j1_run2/p6l3-l2r-selfplan-r9  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l1b-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/search-selfplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-selfplan-r2  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r2  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l4-selfplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/search-givenplan-r3  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l1b-selfplan-r3  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r3  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j2_run1/search-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l4-selfplan-r4  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/search-givenplan-r5  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-selfplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l1b-selfplan-r5  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r5  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l1b-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r6  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-selfplan-r9  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r9  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/page-selfplan-r10  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l1b-selfplan-r10  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run1/p6l3-l2r-selfplan-r10  db=14 verdicts=14 summary_judge=14 summary_phase6=14 callid=True sdir=True
+  OK  p6l3_main_j2_run2/search-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r1  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l2r-selfplan-r1  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l4-selfplan-r1  db=34 verdicts=34 summary_judge=34 summary_phase6=34 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r2  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r3  db=4 verdicts=4 summary_judge=4 summary_phase6=4 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l4-selfplan-r3  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/search-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r4  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-givenplan-r4  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l2r-selfplan-r4  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l4-selfplan-r4  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-givenplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r5  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r6  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r7  db=6 verdicts=6 summary_judge=6 summary_phase6=6 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l2r-selfplan-r8  db=1 verdicts=1 summary_judge=1 summary_phase6=1 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r9  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l1b-selfplan-r9  db=5 verdicts=5 summary_judge=5 summary_phase6=5 callid=True sdir=True
+  OK  p6l3_main_j2_run2/p6l3-l2r-selfplan-r9  db=2 verdicts=2 summary_judge=2 summary_phase6=2 callid=True sdir=True
+  OK  p6l3_main_j2_run2/page-selfplan-r10  db=3 verdicts=3 summary_judge=3 summary_phase6=3 callid=True sdir=True
+# 一致 121 / 不一致 0 / 除外 0 trial
+# event 総数 329（measured 329 / x 0）
+# arm×level: J1:L1=10, J1:L2=18, J1:L4=33, J1:core=127, J2:L1=21, J2:L2=37, J2:L4=41, J2:core=42
+# stop_reason: {'next_deny': 195, 'cap_calls': 36, 'session_end': 98}
+# kind: {'inside_worktree_nonlocation': 258, 'parent_repo_write': 57, 'outside_read_only': 14}
+# side: {'instructed': 290, 'deny': 39}
+# crossed_terminal_tool: 69
+# same_step_calls_after_deny>0: 4
+# user_msgs_in_window>0: 34
+# n_calls_to_cut_raw（9 = 9 以上）: {0: 6, 1: 121, 2: 59, 3: 25, 4: 28, 5: 21, 6: 19, 7: 11, 8: 5, 9: 34}
+# machine_label: {'not_b': 302, 'b': 27}

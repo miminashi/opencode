@@ -119,8 +119,8 @@
 
 ## 🗂 版管理の状態（⚠ `git status` で確かめること）
 
-- **未コミット**: `report/` の未コミット 12 本 + 添付（本セッションの `2026-09-05_182237_*` を含む）、`NEXT_SESSION.md`、`CLAUDE.md`、`tmp/`（`.gitignore` 配下）
-  ⚠ うち `2026-08-26_001355_p6_needs_review_labeling.md` は**並行セッションの成果物**である。触らないこと
+- **コミット済み**（09-05 19:35・dev）: `report/` の 11 本 + 添付（本セッションの `2026-09-05_182237_*` を含む・`9c24928b6c`）、`NEXT_SESSION.md`・`CLAUDE.md`（`c13ae6dfc7`）
+- **未コミット**: `report/2026-08-26_001355_p6_needs_review_labeling.md` + 添付（⚠ **並行セッションの成果物**。触らない・コミットもしない）、`tmp/`（`.gitignore` 配下）
 - `tmp/feat-bench/scenarios.tsv` に `l3r2-*` 7 行を追記（`.gitignore` 配下）。`plugins/phase6-verify/{index,judge-core}.mjs` は本セッションで**触っていない**（sha は `freeze_l3r2_b1.txt`）
 
 ## 🧹 掃除の申し送り
